@@ -1,0 +1,161 @@
+﻿<Page x:Class="MasterSaveDemo.View.RutTien_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MasterSaveDemo.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        DataContext="{StaticResource RutTienVM}"
+      
+      Name="RutTien"
+      Title="RutTien_Page">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày rút" IsEnabled="False"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding NgayRut, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra" />
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="181*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="0,8,0,7" />
+                </Grid>
+                <Grid Grid.Row="3">
+                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding SoTienRut, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+                <Grid Grid.Row="4">
+
+                </Grid>
+                <Grid Grid.Row="5">
+                    <Button Command="{Binding }" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
+                        Kiểm tra họp lệ
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="6">
+
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
+                             Text="{Binding TenLoaiLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Xem loại tiết kiệm" />
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+
+                </Grid>
+                <Grid Grid.Row="3">
+                    <ComboBox Width="50" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
+                        <ComboBoxItem IsSelected="True">
+                            VND
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            USD
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            EUR
+                        </ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="4">
+
+                </Grid>
+                <Grid Grid.Row="5">
+                    <Button Command="{Binding }" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" >
+                        Thực hiện giao dịch
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" />
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <materialDesign:Card Background="{StaticResource PrimaryHueDarkBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                 Padding="0" Margin="10" VerticalAlignment="Top" Width="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Margin="16 16 16 4" Style="{StaticResource MaterialDesignHeadline5TextBlock}">
+                        Thông báo
+                    </TextBlock>
+                    <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Binding message ở đây">
+                    </TextBlock>
+
+                </Grid>
+            </materialDesign:Card>
+
+            <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" Height="50" HorizontalAlignment="Left"
+                                materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Binding cái tham số ở đây" Margin="10" >
+                    <TextBlock Text="Quy định rút tiền" />
+                </Button>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Page>

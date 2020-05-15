@@ -10,7 +10,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
+        TextElement.FontSize="18"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -108,7 +108,7 @@
 
                 </Grid>
                 <Grid Grid.Row="3">
-                    <ComboBox Width="50" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
+                    <ComboBox Width="80" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
                         <ComboBoxItem IsSelected="True">
                             VND
                         </ComboBoxItem>

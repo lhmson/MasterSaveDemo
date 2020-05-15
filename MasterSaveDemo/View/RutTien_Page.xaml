@@ -105,7 +105,7 @@
 
                 </Grid>
                 <Grid Grid.Row="3">
-                    <ComboBox Width="50" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
+                    <ComboBox Width="80" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
                         <ComboBoxItem IsSelected="True">
                             VND
                         </ComboBoxItem>

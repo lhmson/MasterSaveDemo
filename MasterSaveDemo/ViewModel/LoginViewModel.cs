@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterSaveDemo.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,7 @@ namespace MasterSaveDemo.ViewModel
                 Password = p.Password;
             });
 
+            
         }
     }
 }

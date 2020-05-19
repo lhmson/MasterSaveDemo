@@ -31,7 +31,7 @@ namespace MasterSaveDemo.Model
         public double LaiSuatApDung { get; set; }
         public System.DateTime NgayDaoHanKeTiep { get; set; }
         public decimal SoDu { get; set; }
-        public System.DateTime NgayDongSo { get; set; }
+        public Nullable<System.DateTime> NgayDongSo { get; set; }
     
         public virtual LOAITIETKIEM LOAITIETKIEM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

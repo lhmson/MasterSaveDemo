@@ -68,13 +68,13 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <PasswordBox x:Name="FloatingPasswordBox" materialDesign:HintAssist.Hint="Mật khẩu"
-                                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" >
-                                <!--<i:Interaction.Triggers>
+                                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                                <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PasswordChanged">
                                         <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
                                                        CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
                                     </i:EventTrigger>
-                                </i:Interaction.Triggers>-->
+                                </i:Interaction.Triggers>
                             </PasswordBox>
                         </Grid>
                         <Grid Grid.Row="2">

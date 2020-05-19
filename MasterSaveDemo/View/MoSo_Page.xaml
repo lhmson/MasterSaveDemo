@@ -52,9 +52,9 @@
                 <Grid Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ" IsEnabled="False"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"                         
                              Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Lấy mã sổ" />
+                        <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Lấy mã sổ" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -64,8 +64,8 @@
                 </Grid>
                 <Grid Grid.Row="3">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Địa chỉ"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Top"
+                             Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,8,0,0"/>
                 </Grid>
                 <Grid Grid.Row="4">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi ban đầu"
@@ -73,12 +73,12 @@
                              Text="{Binding SoTienGuiBanDau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding }" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
+                    <Button Command="{Binding CheckValidCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
                         Kiểm tra họp lệ
                     </Button>
                 </Grid>
                 <Grid Grid.Row="6">
-                    
+
                 </Grid>
             </Grid>
             <Grid Grid.Column="1">
@@ -99,10 +99,9 @@
                 <Grid Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <ComboBox Width="150" materialDesign:HintAssist.Hint="Loại tiết kiệm"
-                                  ItemsSource="{Binding TenLoaiTietKiem}" SelectedItem="{Binding SelectedTenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
-                            
+                                  ItemsSource="{Binding TenLoaiTietKiem}" Text ="{Binding CbxTenLoaiTietKiem}" SelectedItem="{Binding SelectedTenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
                         </ComboBox>
-                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Xem ngày đáo hạn kế tiếp" />
+                        <Button  Command="{Binding ResetLTKCommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Xem ngày đáo hạn kế tiếp" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -111,10 +110,10 @@
                              Text="{Binding CMND}" />
                 </Grid>
                 <Grid Grid.Row="3">
-                    
+
                 </Grid>
                 <Grid Grid.Row="4">
-                    <ComboBox Width="60" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
+                    <ComboBox Width="60" Text ="{Binding DonVi}" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
                         <ComboBoxItem IsSelected="True">
                             VND
                         </ComboBoxItem>
@@ -127,14 +126,14 @@
                     </ComboBox>
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding }" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" />
+                    <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" />
                 </Grid>
                 <Grid Grid.Row="6">
                     <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" />
                 </Grid>
             </Grid>
         </Grid>
-        
+
         <Grid Grid.Column="1">
             <materialDesign:Card Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto">

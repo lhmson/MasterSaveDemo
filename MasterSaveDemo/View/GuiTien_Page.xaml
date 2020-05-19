@@ -101,30 +101,25 @@
                         <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
                              Text="{Binding TenLoaiLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Xem loại tiết kiệm" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
-
+                    <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Số CMND"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
+                             Text="{Binding SoCMND, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <Grid Grid.Row="3">
-                    <ComboBox Width="80" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
-                        <ComboBoxItem IsSelected="True">
-                            VND
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            USD
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            EUR
-                        </ComboBoxItem>
-                    </ComboBox>
+                    <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
+                             Text="{Binding NgayDaoHanKeTiep, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
                 </Grid>
+
                 <Grid Grid.Row="4">
 
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding }" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" >
+                    <Button Command="{Binding CheckoutCommand}" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" >
                         Thực hiện giao dịch
                     </Button>
                 </Grid>

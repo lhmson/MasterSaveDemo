@@ -19,6 +19,9 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand MSTK_TextChangedCommand { get; set; }
 		public ICommand KiemTraCommand { get; set; }
 		public ICommand Click_GiaoDichCommand { get; set; }
+		public ICommand STR_TextChangedCommand { get; set; }
+		public ICommand TKH_TextChangedCommand { get; set; }
+
 		#region Biding tu view
 		//Ngay Rut, kieu string
 		private string _NgayRut;
@@ -130,6 +133,7 @@ namespace MasterSaveDemo.ViewModel
 					TenLoaiTietKiem = "";
 					NgayDaoHan = "";
 					ThongBao = "";
+					Result_KiemTraHopLe = false;
 				}
 				catch (Exception e)
 				{
@@ -145,11 +149,37 @@ namespace MasterSaveDemo.ViewModel
 				};
 			});
 			//Lenh thuc hien giao dich
-			Click_GiaoDichCommand = new RelayCommand<Button>((p) => { KiemTraHopLe(); return Result_KiemTraHopLe; }, (p) =>
+			Click_GiaoDichCommand = new RelayCommand<Button>((p) => { return Result_KiemTraHopLe; }, (p) =>
 			{
 				if (!ThucHienGiaoDich())
 				{
 					ThongBao = "Không thể thưc hiện giao dịch do lỗi không xác định.";
+				}
+				else
+				{
+					ThongBao = "Đã tạo phiếu rút thành công.";
+				}
+			});
+			STR_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
+			{
+				try
+				{
+					Result_KiemTraHopLe = false;
+				}
+				catch (Exception e)
+				{
+
+				}
+			});
+			TKH_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
+			{
+				try
+				{
+					Result_KiemTraHopLe = false;
+				}
+				catch (Exception e)
+				{
+
 				}
 			});
 		}
@@ -166,15 +196,22 @@ namespace MasterSaveDemo.ViewModel
 					ThongBao += "Chưa đủ số ngày gửi tối thiểu.\n";
 					Result_KiemTraHopLe = false;
 				}
-				if (info_loaitietkiem.SoTienDuocRut == 0 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
+				if (SoTienRut == null)
 				{
-					ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
-					Result_KiemTraHopLe = false;
+					ThongBao += "Vui lòng nhập số tiền rút.\n";
 				}
-				if(decimal.Parse(SoTienRut)>decimal.Parse(SoDu))
+				else
 				{
-					ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
-					Result_KiemTraHopLe = false;
+					if (info_loaitietkiem.SoTienDuocRut == 0 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
+					{
+						ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
+						Result_KiemTraHopLe = false;
+					}
+					if (decimal.Parse(SoTienRut) > decimal.Parse(SoDu))
+					{
+						ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
+						Result_KiemTraHopLe = false;
+					}
 				}
 				return true; 
 			}

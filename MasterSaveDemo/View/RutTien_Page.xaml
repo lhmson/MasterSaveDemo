@@ -76,7 +76,14 @@
                     </Grid.ColumnDefinitions>
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding TenKhachHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,8,0,7" />
+                             Text="{Binding TenKhachHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,8,0,7">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding TKH_TextChangedCommand}"
+                                                               CommandParameter="{Binding MaSoTietKiemTB}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                    </TextBox>
                 </Grid>
                 <Grid Grid.Row="3">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư tài khoản"
@@ -87,7 +94,14 @@
                 <Grid Grid.Row="4">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5" />
+                             Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5">
+                             <i:Interaction.Triggers>
+                                 <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding STR_TextChangedCommand}"
+                                                           CommandParameter="{Binding MaSoTietKiemTB}"/>
+                                </i:EventTrigger>
+                             </i:Interaction.Triggers>
+                    </TextBox>
                 </Grid>
                 <Grid Grid.Row="5">
                     <Button Command="{Binding KiemTraCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" Content="Kiểm tra họp lệ" Margin="14,9,16,15" />

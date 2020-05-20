@@ -134,6 +134,11 @@
     <Compile Include="Model\THAMSO.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ResourceXAML\ThayDoiQuyDinh_Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ThayDoiQuyDinh_Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\BaoCaoDoanhSo_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoMoDong_ViewModel.cs" />
     <Compile Include="ViewModel\GuiTien_ViewModel.cs" />
@@ -262,6 +267,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceXAML\ThayDoiQuyDinh_Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ThayDoiQuyDinh_Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EntityDeploy Include="Model\QLSTKModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

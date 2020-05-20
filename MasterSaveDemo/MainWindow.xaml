@@ -65,11 +65,15 @@
                 </HamburgerMenu:HamburgerMenu>
             </Grid>
             <Grid Grid.Column="1">
-                <Frame x:Name="main" Margin="10" NavigationUIVisibility="Hidden">
-                    
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="333*"/>
+                    <RowDefinition Height="215*"/>
+                </Grid.RowDefinitions>
+                <Frame x:Name="main" Margin="10,10,10.4,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
+
                 </Frame>
             </Grid>
         </Grid>
-        
+
     </Grid>
 </Window>

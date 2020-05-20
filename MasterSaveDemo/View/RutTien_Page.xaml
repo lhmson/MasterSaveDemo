@@ -81,7 +81,8 @@
                 <Grid Grid.Row="3">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư tài khoản"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                        Text="{Binding SoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
+                        Text="{Binding SoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" 
+                        IsReadOnly="True"/>
                 </Grid>
                 <Grid Grid.Row="4">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
@@ -89,7 +90,7 @@
                              Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5" />
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding ''}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" Content="Kiểm tra họp lệ" Margin="14,9,16,15" />
+                    <Button Command="{Binding KiemTraCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" Content="Kiểm tra họp lệ" Margin="14,9,16,15" />
                 </Grid>
                 <Grid Grid.Row="6"/>
             </Grid>
@@ -115,7 +116,8 @@
                 <Grid Grid.Row="2">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số CMND"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                        Text="{Binding CMND, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,8,0,7" />
+                        Text="{Binding CMND, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,8,0,7" 
+                        IsReadOnly="True"/>
                 </Grid>
                 <Grid Grid.Row="3">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp"
@@ -127,7 +129,7 @@
                     <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="0,0,92,0" />
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding ''}" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" Content="Thực hiện giao dịch" Margin="10,10,20,14" />
+                    <Button Command="{Binding Click_GiaoDichCommand}" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" Content="Thực hiện giao dịch" Margin="10,10,20,14" />
                 </Grid>
                 <Grid Grid.Row="6"/>
             </Grid>
@@ -144,7 +146,9 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Margin="16 16 16 4" Style="{StaticResource MaterialDesignHeadline5TextBlock}"><Run Text="Thông báo"/></TextBlock>
                     <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Binding message ở đây"/>
+                    <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Style="{StaticResource MaterialDesignBody2TextBlock}"
+                               Text="{Binding ThongBao, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
                 </Grid>
             </materialDesign:Card>

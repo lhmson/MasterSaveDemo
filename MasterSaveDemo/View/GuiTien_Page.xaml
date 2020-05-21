@@ -46,6 +46,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày gửi" IsEnabled="False"
+                             IsReadOnly="true" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding NgayGui, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
@@ -63,6 +64,7 @@
                         <ColumnDefinition Width="181*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
+                             IsReadOnly="true" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="0,8,0,7" />
                 </Grid>
@@ -75,7 +77,7 @@
 
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding }" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
+                    <Button Command="{Binding CheckCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
                         Kiểm tra họp lệ
                     </Button>
                 </Grid>
@@ -100,16 +102,19 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
-                             Text="{Binding TenLoaiLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                             IsReadOnly="true" 
+                                 Text="{Binding TenLoaiLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
                     <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Số CMND"
+                             IsReadOnly="true" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
                              Text="{Binding SoCMND, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <Grid Grid.Row="3">
                     <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn"
+                             IsReadOnly="true" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
                              Text="{Binding NgayDaoHanKeTiep, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 

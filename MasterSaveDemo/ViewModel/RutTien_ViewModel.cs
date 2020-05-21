@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
 using MasterSaveDemo.Model;
+using MasterSaveDemo.Helper;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -21,6 +22,8 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand Click_GiaoDichCommand { get; set; }
 		public ICommand STR_TextChangedCommand { get; set; }
 		public ICommand TKH_TextChangedCommand { get; set; }
+		public ICommand Click_CapNhatCommand { get; set; }
+		
 
 		#region Biding tu view
 		//Ngay Rut, kieu string
@@ -180,6 +183,17 @@ namespace MasterSaveDemo.ViewModel
 				catch (Exception e)
 				{
 
+				}
+			});
+			Click_CapNhatCommand = new RelayCommand<Button>((p) => { return true; }, (p) =>
+			{
+				if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))
+				{
+					ThongBao = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
+				}
+				else
+				{
+					ThongBao = "Đã cập nhật lãi vào số dư";
 				}
 			});
 		}

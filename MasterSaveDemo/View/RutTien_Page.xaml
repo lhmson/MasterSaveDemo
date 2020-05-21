@@ -77,12 +77,12 @@
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding TenKhachHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,8,0,7">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="TextChanged">
-                                        <i:InvokeCommandAction Command="{Binding TKH_TextChangedCommand}"
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding TKH_TextChangedCommand}"
                                                                CommandParameter="{Binding MaSoTietKiemTB}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </TextBox>
                 </Grid>
                 <Grid Grid.Row="3">
@@ -95,12 +95,12 @@
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5">
-                             <i:Interaction.Triggers>
-                                 <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction Command="{Binding STR_TextChangedCommand}"
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding STR_TextChangedCommand}"
                                                            CommandParameter="{Binding MaSoTietKiemTB}"/>
-                                </i:EventTrigger>
-                             </i:Interaction.Triggers>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </TextBox>
                 </Grid>
                 <Grid Grid.Row="5">
@@ -121,10 +121,9 @@
                 <Grid Grid.Row="0"/>
                 <Grid Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
+                        <TextBox Width="196" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsReadOnly="True"
-                             Text="{Binding TenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Xem loại tiết kiệm" />
+                             Text="{Binding TenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -134,10 +133,15 @@
                         IsReadOnly="True"/>
                 </Grid>
                 <Grid Grid.Row="3">
-                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBox FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                         Text="{Binding NgayDaoHan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        IsReadOnly="True" Margin="0,0,0,8"/>
+                        IsReadOnly="True" Margin="0,0,0,8" Width="188"/>
+                        <Button Margin="0,16" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra"
+                        Command="{Binding Click_CapNhatCommand}"/>
+                    </StackPanel>
+
                 </Grid>
                 <Grid Grid.Row="4">
                     <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="0,0,92,0" />

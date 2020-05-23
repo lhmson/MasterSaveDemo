@@ -29,5 +29,10 @@ namespace MasterSaveDemo.View
         {
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(listViewLTK.Width.ToString());
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MasterSaveDemo.ViewModel
@@ -49,25 +50,45 @@ namespace MasterSaveDemo.ViewModel
             }
             return "0";
         }
+        private int search_KyHan(string MaLTK)
+        {
+            ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+
+            foreach (LOAITIETKIEM LTK in List_LTK)
+            {
+                if (LTK.MaLoaiTietKiem == MaLTK)
+                    return LTK.KyHan;
+
+                //debug += "\n" + LTK.TenLoaiTietKiem + "a";
+            }
+            return 0;
+        }
+        private decimal search_STG(string MaLTK)
+        {
+            ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+
+            foreach (LOAITIETKIEM LTK in List_LTK)
+            {
+                if (LTK.MaLoaiTietKiem == MaLTK)
+                    return LTK.SoTienDuocRut;
+
+                //debug += "\n" + LTK.TenLoaiTietKiem + "a";
+            }
+            return 0;
+        }
         #endregion
         #region CheckValid
         private string CheckValid()
         {
+            SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
             string error = "";
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
                 error += "Sổ chưa được tạo mã sổ";
-            //if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null)
-              //  error += "\nSổ chưa chọn hình thức loại tiết kiệm";
-            if (TenKhachHang == "" || TenKhachHang == null)
-                error += "\nTên khách hàng chưa được nhập";
-            //if (CMND == "" || CMND == null)
-             //   error += "\nCMND chưa được nhập";
-           // if (DiaChi == "" || DiaChi == null)
-            //    error += "\nĐịa chỉ chưa được nhập";
-            //if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
-           //     error += "\nSố tiền gửi của khách hàng chưa được nhập";
-          // if (DonVi == "" || DonVi == null)
-           //     error += "\nĐơn vị tiền tệ chưa được xác định";
+
+            if (int.Parse(SoTienGui) <= int.Parse(search_STG(stk.MaLoaiTietKiem).ToString()))
+                error += "\n Số tiền gửi tối thiểu không đủ";
+            if (NgayGui != NgayDaoHanKeTiep)
+                error += "\n Không thể gửi hôm nay";
             return error;
 
         }
@@ -78,6 +99,12 @@ namespace MasterSaveDemo.ViewModel
             string date_NgayDaoHan = DateTime.Today.AddDays(d).ToString();
             date_NgayDaoHan = formatDate(date_NgayDaoHan);
             return date_NgayDaoHan;
+        }
+        private string GetCodeMPG()
+        {
+            ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
+            int tmp = List_PG.Count();
+            return "PG" + (tmp + 1).ToString();
         }
         #endregion
         #region variables
@@ -132,18 +159,63 @@ namespace MasterSaveDemo.ViewModel
         #endregion
         public ICommand CheckoutCommand { get; set; }
         public ICommand CheckCommand { get; set; }
+        public ICommand ShowINFO { get; set; }
         public GuiTien_ViewModel()
         {
+
             NgayGui = formatDate(DateTime.Now.ToString());
-            SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
-            if (stk!=null)
+            ShowINFO = new RelayCommand<object>((p) =>
             {
-                TenKhachHang = stk.TenKhachHang;
-                NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString();
-                TenLoaiLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
-                SoCMND = stk.SoCMND;
-            }
-            
+                return true;
+            }, (p) =>
+            {
+                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
+                if (stk != null)
+                {
+                    TenKhachHang = stk.TenKhachHang;
+                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString();
+                    TenLoaiLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
+                    SoCMND = stk.SoCMND;
+                }
+            });
+            CheckCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                string error = CheckValid();
+                if (error == "") System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                else
+                    System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK);
+            });
+
+            //Button Mo So 
+            CheckoutCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                string error = CheckValid();
+                if (error != "") System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK);
+                else
+                {
+                    System.Windows.MessageBox.Show("Đã tao phiếu gửi");
+                    PHIEUGUI Phieugui = new PHIEUGUI();
+                    Phieugui.MaPhieuGui = GetCodeMPG();
+                    Phieugui.MaSoTietKiem = MaSoTietKiem;
+                    Phieugui.NgayGui = DateTime.Parse(NgayGui);
+                    Phieugui.SoTienGui = int.Parse(SoTienGui);
+                    
+                    DataProvider.Ins.DB.PHIEUGUIs.Add(Phieugui);
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    var SotietKiem = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == MaSoTietKiem).SingleOrDefault();
+                    SotietKiem.SoDu += decimal.Parse(SoTienGui);
+                    SotietKiem.NgayDaoHanKeTiep = DateTime.Parse(Cal_NgayDaoHan(search_KyHan(SotietKiem.MaLoaiTietKiem)));
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+            });
+
         }
     }
 }

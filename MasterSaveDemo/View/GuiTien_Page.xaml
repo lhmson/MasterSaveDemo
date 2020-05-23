@@ -55,7 +55,8 @@
                         <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra" />
+                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra" 
+                                Command="{Binding ShowINFO}"/>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">

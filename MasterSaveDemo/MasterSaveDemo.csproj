@@ -99,6 +99,7 @@
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataProvider.cs" />
+    <Compile Include="Model\ListTraCuuSTK.cs" />
     <Compile Include="Model\LOAITIETKIEM.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MasterSaveDemo.Model;
+using System.Windows;
 
 namespace MasterSaveDemo.Helper
 {
@@ -32,8 +33,8 @@ namespace MasterSaveDemo.Helper
             try
             {
                 decimal laisuat_theongay = (decimal)laisuat/360;
-                stk.SoDu = stk.SoDu * (1 + laisuat_theongay*songay) / 100;
-                stk.NgayDaoHanKeTiep.AddDays(ltk.KyHan);
+                stk.SoDu = stk.SoDu * (1 + (laisuat_theongay/100)*songay);
+                stk.NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.AddDays(ltk.KyHan);
                 DataProvider.Ins.DB.SaveChanges();
                 return true;
             }
@@ -74,7 +75,6 @@ namespace MasterSaveDemo.Helper
                         {
                             if (!TinhLai(stk, ltk, stk.LaiSuatApDung, ltk.KyHan))
                                 return false;
-                            StartThis(MSTK, true);
                         }
                         else
                         {

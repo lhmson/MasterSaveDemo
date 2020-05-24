@@ -107,24 +107,17 @@ namespace MasterSaveDemo.ViewModel
 			NgayRut = DateTime.Today.ToString("dd/MM/yyyy");
 			//Khi click vao nut ben canh MSTK
 			Click_MSTKCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-			  {
-				  try
-				  {
-					  SOTIETKIEM temp = Tim_MSTK(MaSoTietKiem);
-					  if (temp != null)
-					  {
-						  TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
-						  TenKhachHang = temp.TenKhachHang;
-						  SoDu = temp.SoDu.ToString("0,000");
-						  CMND = temp.SoCMND;
-						  NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
-					  }
-				  }
-				  catch (Exception e)
-				  {
-
-				  }
-			  });
+			{
+				if(!CapNhatThongTin())
+				{
+					ThongBao = "Lấy thông tin thất bại";
+				}
+				else
+				{
+					Result_KiemTraHopLe = false;
+					ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
+				}
+			});
 			//khi thay doi textbox MSTK
 			MSTK_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
 			{
@@ -160,6 +153,7 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
+					Result_KiemTraHopLe = false;
 					ThongBao = "Đã tạo phiếu rút thành công.";
 				}
 			});
@@ -193,9 +187,31 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
+					Result_KiemTraHopLe = false;
 					ThongBao = "Đã cập nhật lãi vào số dư";
+
 				}
 			});
+		}
+		private bool CapNhatThongTin()
+		{
+			try
+			{
+				SOTIETKIEM temp = Tim_MSTK(MaSoTietKiem);
+				if (temp != null)
+				{
+					TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
+					TenKhachHang = temp.TenKhachHang;
+					SoDu = temp.SoDu.ToString("0,000");
+					CMND = temp.SoCMND;
+					NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+				}
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
 		}
 		private bool KiemTraHopLe()
 		{
@@ -246,19 +262,23 @@ namespace MasterSaveDemo.ViewModel
 				else
 				{
 					info_PhieuRut.MaPhieuRut = "0000000000";
-					string temp = DataProvider.Ins.DB.PHIEURUTs.Last().MaPhieuRut;
-					temp = (decimal.Parse(temp)+1).ToString();
+					decimal temp_dem = DataProvider.Ins.DB.PHIEURUTs.Count();
+					string temp = (temp_dem+1).ToString();
 					info_PhieuRut.MaPhieuRut.Remove(0, temp.Count());
 					info_PhieuRut.MaPhieuRut += temp;
 				}
 				info_PhieuRut.MaSoTietKiem = this.MaSoTietKiem;
-				info_PhieuRut.NgayRut = DateTime.Parse(this.NgayRut);
+				info_PhieuRut.NgayRut = DateTime.Today;
 				info_PhieuRut.SoTienRut = decimal.Parse(this.SoTienRut);
 				DataProvider.Ins.DB.PHIEURUTs.Add(info_PhieuRut);
 				DataProvider.Ins.DB.SaveChanges();
 
 				SOTIETKIEM stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == this.MaSoTietKiem).SingleOrDefault();
 				stk.SoDu -= decimal.Parse(this.SoTienRut);
+				if(stk.SoDu<1)
+				{
+					stk.SoDu = 0;
+				}
 				DataProvider.Ins.DB.SaveChanges();
 
 				if (stk.SoDu == 0)

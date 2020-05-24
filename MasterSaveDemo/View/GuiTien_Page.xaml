@@ -104,7 +104,7 @@
                         <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
                              IsReadOnly="true" 
-                                 Text="{Binding TenLoaiLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                 Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">

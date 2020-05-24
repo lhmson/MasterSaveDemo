@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MasterSaveDemo.ViewModel
@@ -80,16 +82,23 @@ namespace MasterSaveDemo.ViewModel
         #region CheckValid
         private string CheckValid()
         {
-            SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
-            string error = "";
-            if (MaSoTietKiem == "" || MaSoTietKiem == null)
-                error += "Sổ chưa được tạo mã sổ";
+           try
+           {
+                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
+                string error = "";
+                if (MaSoTietKiem == "" || MaSoTietKiem == null)
+                    error += "Sổ chưa được tạo mã sổ";
 
-            if (int.Parse(SoTienGui) <= int.Parse(search_STG(stk.MaLoaiTietKiem).ToString()))
-                error += "\n Số tiền gửi tối thiểu không đủ";
-            if (NgayGui != NgayDaoHanKeTiep)
-                error += "\n Không thể gửi hôm nay";
-            return error;
+                if (decimal.Parse(SoTienGui) <= decimal.Parse(search_STG(stk.MaLoaiTietKiem).ToString()))
+                    error += "\n Số tiền gửi tối thiểu không đủ";
+                if (NgayGui != NgayDaoHanKeTiep)
+                    error += "\n Không thể gửi hôm nay";
+                return error;
+            }
+            catch (Exception ex)
+            {
+                return "....";
+            }
 
         }
 
@@ -136,11 +145,11 @@ namespace MasterSaveDemo.ViewModel
             set { _TenKhachHang = value; OnPropertyChanged(); }
         }
 
-        private string _TenLoaiLoaiTietKiem;
-        public string TenLoaiLoaiTietKiem
+        private string _TenLoaiTietKiem;
+        public string TenLoaiTietKiem
         {
-            get { return _TenLoaiLoaiTietKiem; }
-            set { _TenLoaiLoaiTietKiem = value; OnPropertyChanged(); }
+            get { return _TenLoaiTietKiem; }
+            set { _TenLoaiTietKiem = value; OnPropertyChanged(); }
         }
         
         private string _SoCMND;
@@ -173,8 +182,8 @@ namespace MasterSaveDemo.ViewModel
                 if (stk != null)
                 {
                     TenKhachHang = stk.TenKhachHang;
-                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString();
-                    TenLoaiLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
+                    NgayDaoHanKeTiep = formatDate(stk.NgayDaoHanKeTiep.ToString());
+                    TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
                     SoCMND = stk.SoCMND;
                 }
             });
@@ -184,7 +193,7 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 string error = CheckValid();
-                if (error == "") System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                if (error == "") System.Windows.MessageBox.Show("Thông tin này hợp lệ! Đã có thể tạo phiếu");
                 else
                     System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK);
             });
@@ -200,18 +209,19 @@ namespace MasterSaveDemo.ViewModel
                 else
                 {
                     System.Windows.MessageBox.Show("Đã tao phiếu gửi");
-                    PHIEUGUI Phieugui = new PHIEUGUI();
-                    Phieugui.MaPhieuGui = GetCodeMPG();
-                    Phieugui.MaSoTietKiem = MaSoTietKiem;
-                    Phieugui.NgayGui = DateTime.Parse(NgayGui);
-                    Phieugui.SoTienGui = int.Parse(SoTienGui);
-                    
+                    PHIEUGUI Phieugui = new PHIEUGUI()
+                    {
+                        MaPhieuGui = GetCodeMPG(),
+                        MaSoTietKiem = MaSoTietKiem,
+                        NgayGui = DateTime.Parse(NgayGui),
+                        SoTienGui = int.Parse(SoTienGui),
+                    };
+                    //edit PhieuGui
                     DataProvider.Ins.DB.PHIEUGUIs.Add(Phieugui);
                     DataProvider.Ins.DB.SaveChanges();
-
+                    //edit SoTietKiem
                     var SotietKiem = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == MaSoTietKiem).SingleOrDefault();
-                    SotietKiem.SoDu += decimal.Parse(SoTienGui);
-                    SotietKiem.NgayDaoHanKeTiep = DateTime.Parse(Cal_NgayDaoHan(search_KyHan(SotietKiem.MaLoaiTietKiem)));
+                    SotietKiem.SoDu += decimal.Parse(SoTienGui);             
                     DataProvider.Ins.DB.SaveChanges();
                 }
             });

@@ -45,7 +45,7 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày gửi" IsEnabled="False"
+                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày gửi" IsEnabled="True"
                              IsReadOnly="true" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding NgayGui, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -102,7 +102,7 @@
                 <Grid Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="True"
                              IsReadOnly="true" 
                                  Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </StackPanel>
@@ -110,13 +110,13 @@
                 <Grid Grid.Row="2">
                     <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Số CMND"
                              IsReadOnly="true" 
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="True"
                              Text="{Binding SoCMND, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <Grid Grid.Row="3">
                     <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn"
                              IsReadOnly="true" 
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="True"
                              Text="{Binding NgayDaoHanKeTiep, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                 </Grid>
@@ -148,7 +148,7 @@
                         Thông báo
                     </TextBlock>
                     <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Binding message ở đây">
+                    <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="{Binding Notify}">
                     </TextBlock>
 
                 </Grid>

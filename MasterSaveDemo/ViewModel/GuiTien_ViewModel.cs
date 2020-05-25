@@ -85,19 +85,17 @@ namespace MasterSaveDemo.ViewModel
            try
            {
                 SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
-                string error = "";
                 if (MaSoTietKiem == "" || MaSoTietKiem == null)
-                    error += "Sổ chưa được tạo mã sổ";
-
+                    Notify += "Sổ chưa được tạo mã sổ";
                 if (decimal.Parse(SoTienGui) <= decimal.Parse(search_STG(stk.MaLoaiTietKiem).ToString()))
-                    error += "\n Số tiền gửi tối thiểu không đủ";
+                    Notify += "\n Số tiền gửi tối thiểu không đủ";
                 if (NgayGui != NgayDaoHanKeTiep)
-                    error += "\n Không thể gửi hôm nay";
-                return error;
+                    Notify += "\n Không thể gửi hôm nay";
+                return Notify;
             }
             catch (Exception ex)
             {
-                return "....";
+                return ".....";
             }
 
         }
@@ -117,6 +115,14 @@ namespace MasterSaveDemo.ViewModel
         }
         #endregion
         #region variables
+        private string _Notify;
+
+        public string Notify
+        {
+            get { return _Notify; }
+            set { _Notify = value; OnPropertyChanged(); }
+        }
+
         private string _NgayGui;
         public string NgayGui
         {
@@ -171,7 +177,6 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ShowINFO { get; set; }
         public GuiTien_ViewModel()
         {
-
             NgayGui = formatDate(DateTime.Now.ToString());
             ShowINFO = new RelayCommand<object>((p) =>
             {
@@ -192,10 +197,11 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                string error = CheckValid();
-                if (error == "") System.Windows.MessageBox.Show("Thông tin này hợp lệ! Đã có thể tạo phiếu");
+                Notify = "";
+                Notify = CheckValid();
+                if (Notify == "") Notify+="\nThông tin này hợp lệ! Đã có thể tạo phiếu";
                 else
-                    System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK);
+                    Notify+="\nThông tin không hợp lệ";
             });
 
             //Button Mo So 
@@ -204,11 +210,12 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                string error = CheckValid();
-                if (error != "") System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK);
+                Notify = "";
+                Notify = CheckValid();
+                if (Notify != "") Notify+= "\nThông tin không hợp lệ";
                 else
                 {
-                    System.Windows.MessageBox.Show("Đã tao phiếu gửi");
+                    Notify+="\nĐã tao phiếu gửi";
                     PHIEUGUI Phieugui = new PHIEUGUI()
                     {
                         MaPhieuGui = GetCodeMPG(),

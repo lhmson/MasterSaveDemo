@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using MasterSaveDemo.Model;
+using System.Data;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -40,6 +41,9 @@ namespace MasterSaveDemo.ViewModel
         private string _SelectedLTK;
         public string SelectedLTK { get => _SelectedLTK; set { _SelectedLTK = value; OnPropertyChanged(); } }
 
+        private string _SelectedMucSoDu;
+        public string SelectedMucSoDu { get => _SelectedMucSoDu; set { _SelectedMucSoDu = value; OnPropertyChanged(); } }
+
         private string _TenKH;
         public string TenKH { get => _TenKH; set { _TenKH = value; OnPropertyChanged(); } }
 
@@ -48,6 +52,9 @@ namespace MasterSaveDemo.ViewModel
 
         private DateTime _NgayDaoHan;
         public DateTime NgayDaoHan { get => _NgayDaoHan; set { _NgayDaoHan = value; OnPropertyChanged(); } }
+
+        private List<string> _MucSoDu;
+        public List<string> MucSoDu { get => _MucSoDu; set { _MucSoDu = value; OnPropertyChanged(); } }
         #endregion
 
         public ICommand SeeAllCommand { get; set; }
@@ -61,6 +68,15 @@ namespace MasterSaveDemo.ViewModel
             LoaiTietKiem = new List<string>();
             foreach (LOAITIETKIEM LTK in _List)
                 LoaiTietKiem.Add(LTK.TenLoaiTietKiem);
+
+            // Combobox MucSoDu
+            MucSoDu = new List<string>();
+            MucSoDu.Add("Tất cả");
+            MucSoDu.Add("0 VNĐ");
+            MucSoDu.Add("Dưới 5.000.000 VNĐ");
+            MucSoDu.Add("5.000.000 - 100.000.000 VNĐ");
+            MucSoDu.Add("Từ 100.000.000 - 1.000.000.000 VNĐ");
+            MucSoDu.Add("Trên 1.000.000.000 VNĐ");
 
             //Button Xem tất cả
             SeeAllCommand = new RelayCommand<object>((p) =>
@@ -94,16 +110,43 @@ namespace MasterSaveDemo.ViewModel
             {
                 ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
                 ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-                
+
                 if (MaSTK == null) MaSTK = "";
                 if (TenKH == null) TenKH = "";
+
+                decimal min = 0;
+                decimal max = -1;
+
+                if (SelectedMucSoDu == "0 VNĐ") max = 0;
+                else if (SelectedMucSoDu == "Dưới 5.000.000 VNĐ") max = 5000000;
+                else if (SelectedMucSoDu == "5.000.000 - 100.000.000 VNĐ")
+                {
+                    min = 5000000;
+                    max = 100000000;
+                }
+                else if (SelectedMucSoDu == "Từ 100.000.000 - 1.000.000.000 VNĐ")
+                {
+                    min = 100000000;
+                    max = 1000000000;
+                }
+                else
+                {
+                    min = 1000000000;
+                    max = -1;
+                }
+
+                if (SelectedMucSoDu == "Tất cả")
+                {
+                    min = 0;
+                    max = -1;
+                }
 
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               where (stk.MaSoTietKiem == MaSTK || MaSTK == "") && (stk.TenKhachHang.Contains(TenKH))
                                     && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
-                                    && (NgayDaoHan == null || NgayDaoHan.ToString("dd-MM-yyyy") == stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"))
                                     && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK)
+                                    && (stk.SoDu >= min && (stk.SoDu <= max || max ==-1))                            
                               select new ListTraCuuSTK(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
 
                 ListSoTietKiem = new ObservableCollection<ListTraCuuSTK>(results);

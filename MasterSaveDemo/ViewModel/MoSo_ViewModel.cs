@@ -93,6 +93,16 @@ namespace MasterSaveDemo.ViewModel
             }
             return "0";
         }
+
+        private double search_LaiSuat(string MaLTK)
+        {
+            double ls = 0;
+            ObservableCollection<LOAITIETKIEM> List_MaLTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+            foreach (LOAITIETKIEM LTK in List_MaLTK)
+                if (LTK.MaLoaiTietKiem == MaLTK)
+                    return LTK.LaiSuat;
+            return ls;
+        }
         #endregion
         #region CheckValid
         private string CheckValid()
@@ -110,8 +120,6 @@ namespace MasterSaveDemo.ViewModel
                 error += "\nĐịa chỉ chưa được nhập";
             if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
                 error += "\nSố tiền gửi của khách hàng chưa được nhập";
-            if (DonVi == "" || DonVi == null)
-                error += "\nĐơn vị tiền tệ chưa được xác định";
             return error;
 
         }
@@ -243,8 +251,7 @@ namespace MasterSaveDemo.ViewModel
                     SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
                     SoTietKiem.NgayDaoHanKeTiep = DateTime.Parse(NgayDaoHanKeTiep);
                     SoTietKiem.MaLoaiTietKiem = search_MaLTK(SelectedTenLoaiTietKiem);
-                    SoTietKiem.LaiSuatApDung = 0.002;
-
+                    SoTietKiem.LaiSuatApDung = search_LaiSuat(search_MaLTK(SelectedTenLoaiTietKiem));
                     DataProvider.Ins.DB.SOTIETKIEMs.Add(SoTietKiem);
                     DataProvider.Ins.DB.SaveChanges();
                 }

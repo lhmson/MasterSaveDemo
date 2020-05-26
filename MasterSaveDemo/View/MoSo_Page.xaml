@@ -101,7 +101,6 @@
                         <ComboBox Width="150" materialDesign:HintAssist.Hint="Loại tiết kiệm"
                                   ItemsSource="{Binding TenLoaiTietKiem}" Text ="{Binding CbxTenLoaiTietKiem}" SelectedItem="{Binding SelectedTenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
                         </ComboBox>
-                        <Button  Command="{Binding ResetLTKCommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Xem ngày đáo hạn kế tiếp" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -113,17 +112,7 @@
 
                 </Grid>
                 <Grid Grid.Row="4">
-                    <ComboBox Width="60" Text ="{Binding DonVi}" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
-                        <ComboBoxItem IsSelected="True">
-                            VND
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            USD
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            EUR
-                        </ComboBoxItem>
-                    </ComboBox>
+                    
                 </Grid>
                 <Grid Grid.Row="5">
                     <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" />

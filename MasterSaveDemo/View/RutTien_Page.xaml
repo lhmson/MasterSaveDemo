@@ -138,7 +138,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                         Text="{Binding NgayDaoHan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         IsReadOnly="True" Margin="0,0,0,8" Width="188"/>
-                        <Button Margin="0,16" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra"
+                        <Button Margin="0,16" Content="{materialDesign:PackIcon Refresh}" ToolTip="Cập nhật tiền lãi"
                         Command="{Binding Click_CapNhatCommand}"/>
                     </StackPanel>
 

@@ -68,6 +68,7 @@ namespace MasterSaveDemo.ViewModel
             LoaiTietKiem = new List<string>();
             foreach (LOAITIETKIEM LTK in _List)
                 LoaiTietKiem.Add(LTK.TenLoaiTietKiem);
+            LoaiTietKiem.Add("Tất cả");
 
             // Combobox MucSoDu
             MucSoDu = new List<string>();
@@ -135,7 +136,7 @@ namespace MasterSaveDemo.ViewModel
                     max = -1;
                 }
 
-                if (SelectedMucSoDu == "Tất cả")
+                if (SelectedMucSoDu == "Tất cả" || SelectedMucSoDu == null)
                 {
                     min = 0;
                     max = -1;
@@ -145,7 +146,7 @@ namespace MasterSaveDemo.ViewModel
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               where (stk.MaSoTietKiem == MaSTK || MaSTK == "") && (stk.TenKhachHang.Contains(TenKH))
                                     && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
-                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK)
+                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK=="Tất cả")
                                     && (stk.SoDu >= min && (stk.SoDu <= max || max ==-1))                            
                               select new ListTraCuuSTK(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
 

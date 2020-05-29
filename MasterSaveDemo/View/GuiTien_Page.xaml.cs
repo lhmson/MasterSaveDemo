@@ -24,5 +24,10 @@ namespace MasterSaveDemo.View
         {
             InitializeComponent();
         }
+
+        private void InvokeCommandAction_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

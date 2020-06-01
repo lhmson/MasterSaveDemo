@@ -43,11 +43,11 @@ namespace MasterSaveDemo.ViewModel
             set { _SelectedItemThamSo = value; OnPropertyChanged(); }
         }
 
-        private string _SelectedItemCbb;
-        public string SelectedItemCbb
+        private int _SelectedIndexCbb;
+        public int SelectedIndexCbb
         {
-            get => _SelectedItemCbb;
-            set { _SelectedItemCbb = value; OnPropertyChanged(); }
+            get => _SelectedIndexCbb;
+            set { _SelectedIndexCbb = value; OnPropertyChanged(); }
         }
 
         // Visibility of add elements
@@ -64,6 +64,22 @@ namespace MasterSaveDemo.ViewModel
         {
             get => _VisibilityOfEdit;
             set { _VisibilityOfEdit = value; OnPropertyChanged(); }
+        }
+
+        // Visibility of listview Loaitietkiem
+        private Visibility _VisibilityOfListLTK;
+        public Visibility VisibilityOfListLTK
+        {
+            get => _VisibilityOfListLTK;
+            set { _VisibilityOfListLTK = value; OnPropertyChanged(); }
+        }
+
+        // Visibility of listview Thamso
+        private Visibility _VisibilityOfListThamSo;
+        public Visibility VisibilityOfListThamSo
+        {
+            get => _VisibilityOfListThamSo;
+            set { _VisibilityOfListThamSo = value; OnPropertyChanged(); }
         }
 
         //MaLoaiTietKiem
@@ -114,12 +130,20 @@ namespace MasterSaveDemo.ViewModel
             set { _SoTienDuocRut = value; OnPropertyChanged(); }
         }
 
-        //SoTienGuiToiThieu
-        private string _SoTienGuiToiThieu;
-        public string SoTienGuiToiThieu
+        //Ten tham so
+        private string _TenThamSo;
+        public string TenThamSo
         {
-            get => _SoTienGuiToiThieu;
-            set { _SoTienGuiToiThieu = value; OnPropertyChanged(); }
+            get => _TenThamSo;
+            set { _TenThamSo = value; OnPropertyChanged(); }
+        }
+
+        //Gia tri cua tham so
+        private string _GiaTriThamSo;
+        public string GiaTriThamSo
+        {
+            get => _GiaTriThamSo;
+            set { _GiaTriThamSo = value; OnPropertyChanged(); }
         }
         #endregion
 
@@ -128,6 +152,12 @@ namespace MasterSaveDemo.ViewModel
         {
             ListLTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
+
+            VisibilityOfAdd = Visibility.Hidden;
+            VisibilityOfEdit = Visibility.Hidden;
+            VisibilityOfListThamSo = Visibility.Hidden;
+
+            SelectedIndexCbb = 0;
         }
         private bool CheckValidData()
         {
@@ -182,6 +212,15 @@ namespace MasterSaveDemo.ViewModel
             }
             return false;
         }
+        private void ResetTextbox()
+        {
+            MaLoaiTietKiem = "";
+            TenLoaiTietKiem = "";
+            KyHan = "";
+            LaiSuat = "";
+            ThoiGianGuiToiThieu = "";
+            SoTienDuocRut = "";
+        }
         #endregion
 
         #region ICommand
@@ -195,9 +234,6 @@ namespace MasterSaveDemo.ViewModel
 
         public ThayDoiQuyDinh_ViewModel()
         {
-            VisibilityOfAdd = Visibility.Hidden;
-            VisibilityOfEdit = Visibility.Hidden;
-
             LoadData();                 
 
             // show elements used for adding
@@ -207,8 +243,7 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfEdit = Visibility.Hidden;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
-                    ThoiGianGuiToiThieu = "";
-                    LaiSuat = "";
+                    ResetTextbox();
                 }
             );
 
@@ -285,12 +320,7 @@ namespace MasterSaveDemo.ViewModel
             {
                 if (VisibilityOfAdd == Visibility.Visible)
                 {
-                    MaLoaiTietKiem = "";
-                    TenLoaiTietKiem = "";
-                    KyHan = "";
-                    LaiSuat = "";
-                    ThoiGianGuiToiThieu = "";
-                    SoTienDuocRut = "";
+                    ResetTextbox();
                 }
                 else if (VisibilityOfEdit == Visibility.Visible)
                 {
@@ -304,8 +334,21 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                //System.Windows.MessageBox.Show(SelectedItemCbb.ToString());
-                //OnPropertyChanged("SelectedItemCbb");
+                // selected index = 0: choosing list of Loaitietkiem
+                // selected index = 1: choosing list of Thamso
+                if (SelectedIndexCbb == 0)
+                {
+                    VisibilityOfListLTK = Visibility.Visible;
+                    VisibilityOfListThamSo = Visibility.Hidden;
+                } else
+                {
+                    VisibilityOfListThamSo = Visibility.Visible;
+                    VisibilityOfListLTK = Visibility.Hidden;
+
+                    // co muon an may cai nay ko?
+                    VisibilityOfAdd = VisibilityOfEdit = Visibility.Hidden;
+                }
+
             });
         }
     }

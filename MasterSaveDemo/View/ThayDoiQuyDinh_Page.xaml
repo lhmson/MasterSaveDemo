@@ -47,11 +47,11 @@
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
             </Grid>
             <Grid Grid.Row="1">
-                <ComboBox Text="{Binding SelectedItemCbb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                          SelectedIndex="0">
+                <ComboBox x:Name="cbbChooseList" SelectedIndex="{Binding SelectedIndexCbb}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding CbbSelectionChangedCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding CbbSelectionChangedCommand}"
+                                                   CommandParameter="{Binding ElementName=cbbChooseList}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.ItemsPanel>
@@ -169,7 +169,7 @@
                     VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Row="1">
-                <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" 
+                <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" Visibility="{Binding VisibilityOfListLTK}"
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=OneWayToSource}">
                     <ListView.View>
                         <GridView>
@@ -179,6 +179,16 @@
                             <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"/>
                             <GridViewColumn Header="Thời gian gửi tối thiểu" DisplayMemberBinding="{Binding ThoiGianGuiToiThieu}"/>
                             <GridViewColumn Header="Số tiền được rút" DisplayMemberBinding="{Binding SoTienDuocRut}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}" Visibility="{Binding VisibilityOfListThamSo}"
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=OneWayToSource}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}" />
+                            <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTriThamSo}"/>
+                            
                         </GridView>
                     </ListView.View>
                 </ListView>

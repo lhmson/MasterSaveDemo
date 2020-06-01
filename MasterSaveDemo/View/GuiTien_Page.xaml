@@ -45,7 +45,8 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày gửi" IsEnabled="False"
+                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày gửi" IsEnabled="True"
+                             IsReadOnly="true" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding NgayGui, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
@@ -54,7 +55,8 @@
                         <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra" />
+                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra" 
+                                Command="{Binding ShowINFO}"/>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -63,6 +65,7 @@
                         <ColumnDefinition Width="181*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
+                             IsReadOnly="true" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="0,8,0,7" />
                 </Grid>
@@ -75,7 +78,7 @@
 
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding }" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
+                    <Button Command="{Binding CheckCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
                         Kiểm tra họp lệ
                     </Button>
                 </Grid>
@@ -99,32 +102,30 @@
                 <Grid Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
-                             Text="{Binding TenLoaiLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Xem loại tiết kiệm" />
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="True"
+                             IsReadOnly="true" 
+                                 Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
-
+                    <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Số CMND"
+                             IsReadOnly="true" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="True"
+                             Text="{Binding SoCMND, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
                 <Grid Grid.Row="3">
-                    <ComboBox Width="80" materialDesign:ComboBoxAssist.ShowSelectedItem="{Binding ElementName=DisplaySelectedItemCheckBox, Path=IsChecked}" HorizontalAlignment="Left">
-                        <ComboBoxItem IsSelected="True">
-                            VND
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            USD
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            EUR
-                        </ComboBoxItem>
-                    </ComboBox>
+                    <TextBox Width="140" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn"
+                             IsReadOnly="true" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="True"
+                             Text="{Binding NgayDaoHanKeTiep, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
                 </Grid>
+
                 <Grid Grid.Row="4">
 
                 </Grid>
                 <Grid Grid.Row="5">
-                    <Button Command="{Binding }" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" >
+                    <Button Command="{Binding CheckoutCommand}" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" >
                         Thực hiện giao dịch
                     </Button>
                 </Grid>
@@ -147,7 +148,7 @@
                         Thông báo
                     </TextBlock>
                     <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="Binding message ở đây">
+                    <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="{Binding Notify}">
                     </TextBlock>
 
                 </Grid>

@@ -28,16 +28,16 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <materialDesign:Card Grid.Row="2" Margin="9" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <ListView ItemsSource="{Binding ListSoTietKiem}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding ListSoTietKiem}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="679">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="STT" DisplayMemberBinding="{Binding }"></GridViewColumn>
-                            <GridViewColumn Header="Mã sổ" DisplayMemberBinding="{Binding }"></GridViewColumn>
-                            <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding }"></GridViewColumn>
-                            <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding }"></GridViewColumn>
-                            <GridViewColumn Header="Số dư" DisplayMemberBinding="{Binding }"></GridViewColumn>
-                            <GridViewColumn Header="Ngày đáo hạn kế tiếp" DisplayMemberBinding="{Binding }"></GridViewColumn>
-                            <GridViewColumn Header="Lãi suất áp dụng" DisplayMemberBinding="{Binding }"></GridViewColumn>
+                            <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                            <GridViewColumn Header="Mã sổ" DisplayMemberBinding="{Binding Ma}"></GridViewColumn>
+                            <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding LoaiTietKiem}"></GridViewColumn>
+                            <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding TenKH}"></GridViewColumn>
+                            <GridViewColumn Header="Số dư" DisplayMemberBinding="{Binding SoDu}"></GridViewColumn>
+                            <GridViewColumn Header="Ngày đáo hạn kế tiếp" DisplayMemberBinding="{Binding NgayDaoHan}"></GridViewColumn>
+                            <GridViewColumn Header="Lãi suất áp dụng" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -45,24 +45,30 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="22*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <materialDesign:Card Grid.Row="0" Margin="5" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+            <materialDesign:Card Grid.Row="0" Margin="187,5,91.032,5" HorizontalAlignment="Center">
                 <WrapPanel Margin="5">
-                    <TextBox Text="" materialDesign:HintAssist.Hint="Mã sổ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" />
-                    <ComboBox ItemsSource="{Binding LoaiTietKiem}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" materialDesign:HintAssist.Hint="Loại tiết kiệm" materialDesign:HintAssist.HintOpacity=".55" IsEditable="True" Margin="0 5 5 -10">
+                    <TextBox Text="{Binding MaSTK}" materialDesign:HintAssist.Hint="Mã sổ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" />
+                    <ComboBox ItemsSource="{Binding LoaiTietKiem}" SelectedItem="{Binding SelectedLTK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" materialDesign:HintAssist.Hint="Loại tiết kiệm" materialDesign:HintAssist.HintOpacity=".55" IsEditable="True" Margin="0 5 5 -10">
                     </ComboBox>
-                    <TextBox Text="" materialDesign:HintAssist.Hint="Khách hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" />
-                    <TextBox Text="" materialDesign:HintAssist.Hint="Số dư" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" />
-                    <DatePicker Width="100" Margin="0 0 6 -6" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    <TextBox Text="{Binding TenKH}" materialDesign:HintAssist.Hint="Khách hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" />
+
+                    <ComboBox ItemsSource="{Binding MucSoDu}" SelectedItem="{Binding SelectedMucSoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" materialDesign:HintAssist.Hint="Mức số dư" materialDesign:HintAssist.HintOpacity=".55" IsEditable="True" Margin="0 5 5 -10">
+                    </ComboBox>
+
                 </WrapPanel>
             </materialDesign:Card>
-            <Grid Grid.Row="1" Margin="5" HorizontalAlignment="Center">
+            <Grid Grid.Row="1" Margin="115,5,19.032,5" HorizontalAlignment="Center">
                 <WrapPanel>
-                    <Button Command="{Binding }"  Content="Tìm kiếm" Margin="5" Width="180"></Button>
-                    <Button Command="{Binding }"  Content="Xem toàn bộ" Margin="5" Width="180"></Button>
+                    <Button Command="{Binding SearchCommand}" CommandParameter="{}"  Content="Tìm kiếm" Margin="5" Width="180"></Button>
+                    <Button Command="{Binding SeeAllCommand}"  Content="Xem toàn bộ" Margin="5" Width="180"></Button>
                     <Button Command="{Binding }" Content="Nhập lãi vào vốn (KTV)" IsEnabled="{Binding Is_KTV_Admin}" Margin="5" Width="180"></Button>
                 </WrapPanel>
             </Grid>

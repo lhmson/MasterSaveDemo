@@ -34,7 +34,14 @@ namespace MasterSaveDemo.Helper
             {
                 decimal laisuat_theongay = (decimal)laisuat/360;
                 stk.SoDu = stk.SoDu * (1 + (laisuat_theongay/100)*songay);
-                stk.NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.AddDays(ltk.KyHan);
+                if (ltk.KyHan == 1)
+                {
+                    stk.NgayDaoHanKeTiep = DateTime.Today.AddDays(1);
+                }
+                else
+                {
+                    stk.NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.AddDays(ltk.KyHan);
+                }
                 DataProvider.Ins.DB.SaveChanges();
                 return true;
             }
@@ -49,36 +56,45 @@ namespace MasterSaveDemo.Helper
             {
                 SOTIETKIEM stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == MSTK).Single();
                 LOAITIETKIEM ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == stk.MaLoaiTietKiem).Single();
-                //Truong hop chua toi ngay dao han, nhung van rut ngay (da du so ngay toi thieu)
-                if (stk.NgayDaoHanKeTiep > DateTime.Today && (stk.NgayDaoHanKeTiep - DateTime.Today).TotalDays < ltk.KyHan)
+                //truong hop so khong ki han
+                if (ltk.KyHan == 1 && confirm == true && DateTime.Today.AddDays(1)> stk.NgayDaoHanKeTiep)
                 {
-                    if (confirm == true) //confirm true neu dang rut tien, nguoi nhan se duoc tinh lai ngay
-                    {
-                        if (!TinhLai(stk, ltk, DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == "001").Single().LaiSuat, ltk.KyHan - (int)(stk.NgayDaoHanKeTiep - DateTime.Today).TotalDays))
-                            return false;
-                    }
-                    else //confirm false trong truong hop dang nhap lai hang loat (chi cong lai cho tai khoan dao han), khong nhap gì
-                    {
-
-                    }
+                    if (!TinhLai(stk, ltk, stk.LaiSuatApDung, (int)(DateTime.Today.AddDays(1) - stk.NgayDaoHanKeTiep).TotalDays))
+                        return false;
                 }
                 else
                 {
-                    if (stk.NgayDaoHanKeTiep == DateTime.Today || (stk.NgayDaoHanKeTiep < DateTime.Today && confirm == false))
+                    //Truong hop chua toi ngay dao han, nhung van rut ngay (da du so ngay toi thieu)
+                    if (stk.NgayDaoHanKeTiep > DateTime.Today && (stk.NgayDaoHanKeTiep - DateTime.Today).TotalDays < ltk.KyHan)
                     {
-                        if (!TinhLai(stk, ltk, stk.LaiSuatApDung, ltk.KyHan))
-                            return false;
+                        if (confirm == true) //confirm true neu dang rut tien, nguoi nhan se duoc tinh lai ngay
+                        {
+                            if (!TinhLai(stk, ltk, DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.KyHan == 1).First().LaiSuat, ltk.KyHan - (int)(stk.NgayDaoHanKeTiep - DateTime.Today).TotalDays))
+                                return false;
+                        }
+                        else //confirm false trong truong hop dang nhap lai hang loat (chi cong lai cho tai khoan dao han), khong nhap gì
+                        {
+
+                        }
                     }
                     else
                     {
-                        if (stk.NgayDaoHanKeTiep < DateTime.Today && confirm == true)
+                        if (stk.NgayDaoHanKeTiep == DateTime.Today || (stk.NgayDaoHanKeTiep < DateTime.Today && confirm == false))
                         {
                             if (!TinhLai(stk, ltk, stk.LaiSuatApDung, ltk.KyHan))
                                 return false;
                         }
                         else
                         {
-                            return false;
+                            if (stk.NgayDaoHanKeTiep < DateTime.Today && confirm == true)
+                            {
+                                if (!TinhLai(stk, ltk, stk.LaiSuatApDung, ltk.KyHan))
+                                    return false;
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                     }
                 }

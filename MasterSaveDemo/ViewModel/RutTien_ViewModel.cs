@@ -115,7 +115,6 @@ namespace MasterSaveDemo.ViewModel
 				else
 				{
 					Result_KiemTraHopLe = false;
-					ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
 				}
 			});
 			//khi thay doi textbox MSTK
@@ -205,6 +204,18 @@ namespace MasterSaveDemo.ViewModel
 					SoDu = temp.SoDu.ToString("0,000");
 					CMND = temp.SoCMND;
 					NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+					ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
+				}
+				else
+				{
+					if (MaSoTietKiem != null)
+					{
+						ThongBao = "Không tìm thấy sổ tiết kiệm phù hợp!";
+					}
+					else
+					{
+						ThongBao = "Hãy nhập mã sổ tiết kiệm trước khi bấm kiểm tra!";
+					}
 				}
 				return true;
 			}
@@ -232,7 +243,7 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if (info_loaitietkiem.SoTienDuocRut == 0 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
+					if (info_loaitietkiem.SoTienDuocRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
 					{
 						ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
 						Result_KiemTraHopLe = false;

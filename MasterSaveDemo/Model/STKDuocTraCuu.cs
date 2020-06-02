@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MasterSaveDemo.Model
 {
-    public class ListTraCuuSTK
+    public class STKDuocTraCuu
     {
             public string STT { get; set; }
             public string Ma { get; set; }
@@ -17,7 +17,7 @@ namespace MasterSaveDemo.Model
             public string NgayDaoHan { get; set; }
             public string LaiSuat { get; set; }
 
-            public ListTraCuuSTK(string MaSo, string TenLTK, string KH, string SoDu, string NgayDH, string LS)
+            public STKDuocTraCuu(string MaSo, string TenLTK, string KH, string SoDu, string NgayDH, string LS)
             {
                 STT = "";
                 Ma = MaSo;

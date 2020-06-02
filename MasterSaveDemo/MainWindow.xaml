@@ -52,8 +52,8 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <HamburgerMenu:HamburgerMenu MaxWidth="230" Background="#49c7ab" MenuIconColor="#236084" SelectionIndicatorColor="#80fbdd" MenuItemForeground="#80fbdd" HorizontalAlignment="Left">
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/home.png" Text="Trang chủ" SelectionCommand="" Selected="Home_Page_Selected" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/new.png" Text="Giao dịch mở sổ" Selected="MoSo_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="Home_Page_Button" Icon="/Images/home.png" Text="Trang chủ" SelectionCommand="" Selected="Home_Page_Selected" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="MoSo_Page_Button" Icon="/Images/new.png" Text="Giao dịch mở sổ" Selected="MoSo_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/favorite.png" Text="Giao dịch gửi tiền" Selected="GuiTien_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/favorite.png" Text="Giao dịch rút tiền" Selected="RutTien_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/search.png" Text="Tra cứu sổ" Selected="TraCuu_Page_Selected" IsEnabled="{Binding Is_GDV_KTV_Admin}" />
@@ -66,7 +66,6 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Frame x:Name="main" Margin="10" NavigationUIVisibility="Hidden">
-                    
                 </Frame>
             </Grid>
         </Grid>

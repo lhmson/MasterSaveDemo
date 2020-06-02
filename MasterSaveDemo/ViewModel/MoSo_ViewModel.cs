@@ -176,9 +176,6 @@ namespace MasterSaveDemo.ViewModel
         private string _SoTienGuiBanDau;
         public string SoTienGuiBanDau { get => _SoTienGuiBanDau; set { _SoTienGuiBanDau = value; OnPropertyChanged(); } }
 
-        private string _DonVi;
-        public string DonVi { get => _DonVi; set { _DonVi = value; OnPropertyChanged(); } }
-
         #endregion
 
         public ICommand CheckValidCommand { get; set; }
@@ -248,7 +245,7 @@ namespace MasterSaveDemo.ViewModel
                     SoTietKiem.SoTienGuiBanDau = Decimal.Parse(SoTienGuiBanDau);
                     SoTietKiem.NgayMoSo = DateTime.Parse(NgayMoSo);
                     SoTietKiem.SoDu = Decimal.Parse(SoTienGuiBanDau);
-                    SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
+                    //SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
                     SoTietKiem.NgayDaoHanKeTiep = DateTime.Parse(NgayDaoHanKeTiep);
                     SoTietKiem.MaLoaiTietKiem = search_MaLTK(SelectedTenLoaiTietKiem);
                     SoTietKiem.LaiSuatApDung = search_LaiSuat(search_MaLTK(SelectedTenLoaiTietKiem));

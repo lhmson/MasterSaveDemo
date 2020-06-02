@@ -4,22 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e2a1eba25ea34b9b822dce2cb17e726e" Name="Diagram1">
-        <EntityTypeShape EntityType="QLSTKModel.BAOCAODOANHSO" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLSTKModel.BAOCAOMODONG" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLSTKModel.CTBCMODONG" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLSTKModel.LOAITIETKIEM" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLSTKModel.PHIEUGUI" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLSTKModel.PHIEURUT" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLSTKModel.SOTIETKIEM" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLSTKModel.THAMSO" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="QLSTKModel.FK__BAOCAODOA__MaLoa__49C3F6B7" ManuallyRouted="false" />
-        <AssociationConnector Association="QLSTKModel.FK__BAOCAOMOD__MaLoa__4E88ABD4" ManuallyRouted="false" />
-        <AssociationConnector Association="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1" ManuallyRouted="false" />
-        <AssociationConnector Association="QLSTKModel.FK__SOTIETKIE__MaLoa__3B75D760" ManuallyRouted="false" />
-        <AssociationConnector Association="QLSTKModel.FK__PHIEUGUI__MaSoTi__4222D4EF" ManuallyRouted="false" />
-        <AssociationConnector Association="QLSTKModel.FK__PHIEURUT__MaSoTi__45F365D3" ManuallyRouted="false" />
-      </Diagram>
+      <Diagram DiagramId="e2a1eba25ea34b9b822dce2cb17e726e" Name="Diagram1" ZoomLevel="70">
+        <AssociationConnector Association="QLSTKModel.FK__NGUOIDUNG__MaNho__6477ECF3" />
+        <EntityTypeShape EntityType="QLSTKModel.BAOCAODOANHSO" Width="1.5" PointX="3" PointY="11" />
+        <EntityTypeShape EntityType="QLSTKModel.BAOCAOMODONG" Width="1.5" PointX="3" PointY="8" />
+        <EntityTypeShape EntityType="QLSTKModel.CHUCNANG" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="QLSTKModel.CTBCMODONG" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="QLSTKModel.LOAITIETKIEM" Width="1.5" PointX="0.75" PointY="6.5" />
+        <EntityTypeShape EntityType="QLSTKModel.NGUOIDUNG" Width="1.5" PointX="10" PointY="6.375" />
+        <EntityTypeShape EntityType="QLSTKModel.NHOMNGUOIDUNG" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="QLSTKModel.PHANQUYEN" Width="1.5" PointX="10" PointY="3.625" />
+        <EntityTypeShape EntityType="QLSTKModel.PHIEUGUI" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="QLSTKModel.PHIEURUT" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="QLSTKModel.SOTIETKIEM" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="QLSTKModel.THAMSO" Width="1.5" PointX="7.75" PointY="10" />
+        <AssociationConnector Association="QLSTKModel.FK__BAOCAODOA__MaLoa__49C3F6B7" />
+        <AssociationConnector Association="QLSTKModel.FK__BAOCAOMOD__MaLoa__4E88ABD4" />
+        <AssociationConnector Association="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1" />
+        <AssociationConnector Association="QLSTKModel.FK__PHANQUYEN__MaChu__5EBF139D" />
+        <AssociationConnector Association="QLSTKModel.FK__SOTIETKIE__MaLoa__3B75D760" />
+        <AssociationConnector Association="QLSTKModel.FK__NGUOIDUNG__MaNho__619B8048" />
+        <AssociationConnector Association="QLSTKModel.FK__PHANQUYEN__MaNho__5DCAEF64" />
+        <AssociationConnector Association="QLSTKModel.FK__PHIEUGUI__MaSoTi__4222D4EF" />
+        <AssociationConnector Association="QLSTKModel.FK__PHIEURUT__MaSoTi__45F365D3" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MasterSaveDemo.View"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       
@@ -21,7 +22,82 @@
       Name="BaoCaoDoanhSo"
       Title="BaoCaoDoanhSo_Page">
 
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" ></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
+                    Content="Báo cáo doanh số hoạt động ngày" FontSize="18"
+                    VerticalAlignment="Top"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày lẹ"
+                            HorizontalAlignment="Right" Margin="10,0,10,0"
+                            Text="{Binding FormattedDate}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                            SelectedDate="{Binding DateReport,StringFormat='dd/MM/yyyy', Mode=TwoWay}">
+                    <!--SelectedDateFormat="Short">-->
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"
+                                               CommandParameter="{Binding ElementName=dpReport}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        HorizontalAlignment="Left"
+                        Margin="10,0,5,0" Content="Lập báo cáo"
+                        Width="150" Height="35" Command="{Binding CreateReportCommand}"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <ListView ItemsSource="{Binding ListSTT}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="STT" DisplayMemberBinding="{Binding SoThuTu}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Grid Grid.Column="1">
+                <ListView ItemsSource="{Binding ListLTK}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTieKiem}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Grid Grid.Column="2">
+                <ListView x:Name="listViewReport" ItemsSource="{Binding ListBaoCaoDoanhSo}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="200" Header="Tổng thu" DisplayMemberBinding="{Binding c}"/>
+                            <GridViewColumn Width="200" Header="Tổng chi" DisplayMemberBinding="{Binding d}"/>
+                            <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding e}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

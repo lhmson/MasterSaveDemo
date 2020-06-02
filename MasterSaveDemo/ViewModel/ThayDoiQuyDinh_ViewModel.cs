@@ -157,6 +157,7 @@ namespace MasterSaveDemo.ViewModel
             VisibilityOfEdit = Visibility.Hidden;
             VisibilityOfListThamSo = Visibility.Hidden;
 
+            // choosing list LTK
             SelectedIndexCbb = 0;
         }
         private bool CheckValidData()

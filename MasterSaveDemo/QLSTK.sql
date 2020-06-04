@@ -10,7 +10,10 @@ CREATE TABLE LOAITIETKIEM
 	KyHan INT NOT NULL,
 	LaiSuat FLOAT NOT NULL CHECK(LaiSuat>0),
 	ThoiGianGuiToiThieu INT NOT NULL CHECK(ThoiGianGuiToiThieu>0),
-	QuyDinhSoTienRut INT NOT NULL
+	--Doi ten tu SoTienDuocRut
+	QuyDinhSoTienRut INT NOT NULL,
+	---Them DangSuDung de xoa 1 loai tiet kiem, thuc ra la chuyen no ve khong su dung nua de khong bi loi du lieu ay
+	DangSuDung INT NOT NULL,
 )
 GO
 
@@ -27,8 +30,6 @@ CREATE TABLE SOTIETKIEM
 	NgayDaoHanKeTiep SMALLDATETIME NOT NULL,
 	SoDu MONEY NOT NULL CHECK (SoDu>=0), 
 	NgayDongSo SMALLDATETIME,
-	---Them DangSuDung de xoa 1 loai tiet kiem, thuc ra la chuyen no ve khong su dung nua de khong bi loi du lieu ay
-	DangSuDung INT NOT NULL,
 )
 GO
 ALTER TABLE SOTIETKIEM ADD CHECK(DATEDIFF(DAYOFYEAR,NgayMoSo,NgayDongSo)>0)

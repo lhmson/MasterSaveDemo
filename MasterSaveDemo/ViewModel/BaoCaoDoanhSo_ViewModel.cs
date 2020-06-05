@@ -48,11 +48,26 @@ namespace MasterSaveDemo.ViewModel
             get => _ListBaoCaoDoanhSo;
             set { _ListBaoCaoDoanhSo = value; OnPropertyChanged(); }
         }
+        // list Loaitietkiem
         private ObservableCollection<LOAITIETKIEM> _ListLTK;
         public ObservableCollection<LOAITIETKIEM> ListLTK
         {
             get => _ListLTK;
             set { _ListLTK = value; OnPropertyChanged(); }
+        }
+        // list Phieugui
+        private ObservableCollection<PHIEUGUI> _ListPhieuGui;
+        public ObservableCollection<PHIEUGUI> ListPhieuGui
+        {
+            get => _ListPhieuGui;
+            set { _ListPhieuGui = value; OnPropertyChanged(); }
+        }
+        // list Phieurut
+        private ObservableCollection<PHIEURUT> _ListPhieuRut;
+        public ObservableCollection<PHIEURUT> ListPhieuRut
+        {
+            get => _ListPhieuRut;
+            set { _ListPhieuRut = value; OnPropertyChanged(); }
         }
         //TenLoaiTietKiem
         private string _TenLoaiTietKiem;
@@ -62,13 +77,34 @@ namespace MasterSaveDemo.ViewModel
             set { _TenLoaiTietKiem = value; OnPropertyChanged(); }
         }
         //So Thu Tu  
-        private string _SoThuTu;
-        public string SoThuTu
+        private int _SoThuTu;
+        public int SoThuTu
         {
             get => _SoThuTu;
             set { _SoThuTu = value; OnPropertyChanged(); }
         }
-        //So Thu Tu  
+        // tong thu
+        private string _TongThu;
+        public string TongThu
+        {
+            get => _TongThu;
+            set { _TongThu = value; OnPropertyChanged(); }
+        }
+        // tong chi
+        private string _TongChi;
+        public string TongChi
+        {
+            get => _TongChi;
+            set { _TongChi = value; OnPropertyChanged(); }
+        }
+        // chenh lech thu chi
+        private string _ChechLech;
+        public string ChechLech
+        {
+            get => _ChechLech;
+            set { _ChechLech = value; OnPropertyChanged(); }
+        }
+        //
         private string _FormattedDate;
         public string FormattedDate
         {
@@ -117,7 +153,7 @@ namespace MasterSaveDemo.ViewModel
                     SelectedMonth = DateReport.Month;
                     SelectedYear = DateReport.Year;
 
-                    FormattedDate = (new DateTime(SelectedYear,SelectedMonth,SelectedDay)).ToString("dd/MM/yyyy");
+                    FormattedDate = DateReport.ToString("dd/MM/yyyy");
                     //MessageBox.Show(DateReport.ToString("dd/MM/yyyy"));
                 }
             );
@@ -125,9 +161,9 @@ namespace MasterSaveDemo.ViewModel
             // button create report
             CreateReportCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => {
-                    foreach( var loaiTietKiem in ListLTK)
+                    foreach( var maLoaiTietKiem in ListLTK)
                     {
-                        BAOCAODOANHSO baoCaoDS = FindBaoCao(loaiTietKiem);
+                        BAOCAODOANHSO baoCaoDS = FindBaoCao(maLoaiTietKiem);
                         if( baoCaoDS != null)
                         {
                             ListBaoCaoDoanhSo.Add(baoCaoDS);

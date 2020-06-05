@@ -280,7 +280,7 @@ namespace MasterSaveDemo.ViewModel
                             KyHan = Int32.Parse(KyHan),
                             LaiSuat = float.Parse(LaiSuat),
                             ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                            SoTienDuocRut = Int32.Parse(SoTienDuocRut)
+                            QuyDinhSoTienRut = Int32.Parse(SoTienDuocRut)
                         };
                         DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
                         DataProvider.Ins.DB.SaveChanges();

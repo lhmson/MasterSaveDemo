@@ -72,7 +72,7 @@ namespace MasterSaveDemo.ViewModel
             foreach (LOAITIETKIEM LTK in List_LTK)
             {
                 if (LTK.MaLoaiTietKiem == MaLTK)
-                    return LTK.SoTienDuocRut;
+                    return LTK.QuyDinhSoTienRut;
 
                 //debug += "\n" + LTK.TenLoaiTietKiem + "a";
             }

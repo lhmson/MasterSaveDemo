@@ -25,6 +25,14 @@
           <Property Name="ThangBaoCao" Type="int" Nullable="false" />
           <Property Name="NamBaoCao" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="CHUCNANG">
+          <Key>
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaChucNang" Type="int" Nullable="false" />
+          <Property Name="TenChucNang" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TenThanhPhanSuDung" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="CTBCMODONG">
           <Key>
             <PropertyRef Name="MaBaoCaoMoDong" />
@@ -44,7 +52,33 @@
           <Property Name="KyHan" Type="int" Nullable="false" />
           <Property Name="LaiSuat" Type="float" Nullable="false" />
           <Property Name="ThoiGianGuiToiThieu" Type="int" Nullable="false" />
-          <Property Name="SoTienDuocRut" Type="money" Nullable="false" />
+          <Property Name="QuyDinhSoTienRut" Type="int" Nullable="false" />
+          <Property Name="DangSuDung" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NGUOIDUNG">
+          <Key>
+            <PropertyRef Name="TenDangNhap" />
+          </Key>
+          <Property Name="TenDangNhap" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MatKhau" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaNhom" Type="int" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NHOMNGUOIDUNG">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+          </Key>
+          <Property Name="MaNhom" Type="int" Nullable="false" />
+          <Property Name="TenNhom" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PHANQUYEN">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaNhom" Type="int" Nullable="false" />
+          <Property Name="MaChucNang" Type="int" Nullable="false" />
+          <Property Name="LiDo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PHIEUGUI">
           <Key>
@@ -78,7 +112,7 @@
           <Property Name="LaiSuatApDung" Type="float" Nullable="false" />
           <Property Name="NgayDaoHanKeTiep" Type="smalldatetime" Nullable="false" />
           <Property Name="SoDu" Type="money" Nullable="false" />
-          <Property Name="NgayDongSo" Type="smalldatetime" Nullable="false" />
+          <Property Name="NgayDongSo" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="THAMSO">
           <Key>
@@ -123,6 +157,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__NGUOIDUNG__MaNho__4E88ABD4">
+          <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="1" />
+          <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHOMNGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Principal>
+            <Dependent Role="NGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHANQUYEN__MaChu__4BAC3F29">
+          <End Role="CHUCNANG" Type="Self.CHUCNANG" Multiplicity="1" />
+          <End Role="PHANQUYEN" Type="Self.PHANQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUCNANG">
+              <PropertyRef Name="MaChucNang" />
+            </Principal>
+            <Dependent Role="PHANQUYEN">
+              <PropertyRef Name="MaChucNang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHANQUYEN__MaNho__4AB81AF0">
+          <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="1" />
+          <End Role="PHANQUYEN" Type="Self.PHANQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHOMNGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Principal>
+            <Dependent Role="PHANQUYEN">
+              <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PHIEUGUI__MaSoTi__2F10007B">
           <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="1" />
           <End Role="PHIEUGUI" Type="Self.PHIEUGUI" Multiplicity="*" />
@@ -162,8 +232,12 @@
         <EntityContainer Name="QLSTKModelStoreContainer">
           <EntitySet Name="BAOCAODOANHSO" EntityType="Self.BAOCAODOANHSO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BAOCAOMODONG" EntityType="Self.BAOCAOMODONG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHUCNANG" EntityType="Self.CHUCNANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTBCMODONG" EntityType="Self.CTBCMODONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOAITIETKIEM" EntityType="Self.LOAITIETKIEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NGUOIDUNG" EntityType="Self.NGUOIDUNG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NHOMNGUOIDUNG" EntityType="Self.NHOMNGUOIDUNG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHANQUYEN" EntityType="Self.PHANQUYEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHIEUGUI" EntityType="Self.PHIEUGUI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHIEURUT" EntityType="Self.PHIEURUT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOTIETKIEM" EntityType="Self.SOTIETKIEM" Schema="dbo" store:Type="Tables" />
@@ -179,6 +253,18 @@
           <AssociationSet Name="FK__CTBCMODON__MaBao__403A8C7D" Association="Self.FK__CTBCMODON__MaBao__403A8C7D">
             <End Role="BAOCAOMODONG" EntitySet="BAOCAOMODONG" />
             <End Role="CTBCMODONG" EntitySet="CTBCMODONG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NGUOIDUNG__MaNho__4E88ABD4" Association="Self.FK__NGUOIDUNG__MaNho__4E88ABD4">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHANQUYEN__MaChu__4BAC3F29" Association="Self.FK__PHANQUYEN__MaChu__4BAC3F29">
+            <End Role="CHUCNANG" EntitySet="CHUCNANG" />
+            <End Role="PHANQUYEN" EntitySet="PHANQUYEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHANQUYEN__MaNho__4AB81AF0" Association="Self.FK__PHANQUYEN__MaNho__4AB81AF0">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
+            <End Role="PHANQUYEN" EntitySet="PHANQUYEN" />
           </AssociationSet>
           <AssociationSet Name="FK__PHIEUGUI__MaSoTi__2F10007B" Association="Self.FK__PHIEUGUI__MaSoTi__2F10007B">
             <End Role="SOTIETKIEM" EntitySet="SOTIETKIEM" />
@@ -230,6 +316,22 @@
             <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
             <End Role="PHIEURUT" EntitySet="PHIEURUTs" />
           </AssociationSet>
+          <EntitySet Name="CHUCNANGs" EntityType="QLSTKModel.CHUCNANG" />
+          <EntitySet Name="NGUOIDUNGs" EntityType="QLSTKModel.NGUOIDUNG" />
+          <EntitySet Name="NHOMNGUOIDUNGs" EntityType="QLSTKModel.NHOMNGUOIDUNG" />
+          <EntitySet Name="PHANQUYENs" EntityType="QLSTKModel.PHANQUYEN" />
+          <AssociationSet Name="FK__PHANQUYEN__MaChu__4BAC3F29" Association="QLSTKModel.FK__PHANQUYEN__MaChu__4BAC3F29">
+            <End Role="CHUCNANG" EntitySet="CHUCNANGs" />
+            <End Role="PHANQUYEN" EntitySet="PHANQUYENs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NGUOIDUNG__MaNho__4E88ABD4" Association="QLSTKModel.FK__NGUOIDUNG__MaNho__4E88ABD4">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHANQUYEN__MaNho__4AB81AF0" Association="QLSTKModel.FK__PHANQUYEN__MaNho__4AB81AF0">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
+            <End Role="PHANQUYEN" EntitySet="PHANQUYENs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="BAOCAODOANHSO">
           <Key>
@@ -274,10 +376,11 @@
           <Property Name="KyHan" Type="Int32" Nullable="false" />
           <Property Name="LaiSuat" Type="Double" Nullable="false" />
           <Property Name="ThoiGianGuiToiThieu" Type="Int32" Nullable="false" />
-          <Property Name="SoTienDuocRut" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="BAOCAODOANHSOes" Relationship="QLSTKModel.FK__BAOCAODOA__MaLoa__36B12243" FromRole="LOAITIETKIEM" ToRole="BAOCAODOANHSO" />
           <NavigationProperty Name="BAOCAOMODONGs" Relationship="QLSTKModel.FK__BAOCAOMOD__MaLoa__3B75D760" FromRole="LOAITIETKIEM" ToRole="BAOCAOMODONG" />
           <NavigationProperty Name="SOTIETKIEMs" Relationship="QLSTKModel.FK__SOTIETKIE__MaLoa__286302EC" FromRole="LOAITIETKIEM" ToRole="SOTIETKIEM" />
+          <Property Name="QuyDinhSoTienRut" Type="Int32" Nullable="false" />
+          <Property Name="DangSuDung" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PHIEUGUI">
           <Key>
@@ -313,7 +416,7 @@
           <Property Name="LaiSuatApDung" Type="Double" Nullable="false" />
           <Property Name="NgayDaoHanKeTiep" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SoDu" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="NgayDongSo" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NgayDongSo" Type="DateTime" Precision="0" />
           <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__SOTIETKIE__MaLoa__286302EC" FromRole="SOTIETKIEM" ToRole="LOAITIETKIEM" />
           <NavigationProperty Name="PHIEUGUIs" Relationship="QLSTKModel.FK__PHIEUGUI__MaSoTi__2F10007B" FromRole="SOTIETKIEM" ToRole="PHIEUGUI" />
           <NavigationProperty Name="PHIEURUTs" Relationship="QLSTKModel.FK__PHIEURUT__MaSoTi__32E0915F" FromRole="SOTIETKIEM" ToRole="PHIEURUT" />
@@ -397,6 +500,81 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CHUCNANG">
+          <Key>
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaChucNang" Type="Int32" Nullable="false" />
+          <Property Name="TenChucNang" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenThanhPhanSuDung" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PHANQUYENs" Relationship="QLSTKModel.FK__PHANQUYEN__MaChu__4BAC3F29" FromRole="CHUCNANG" ToRole="PHANQUYEN" />
+        </EntityType>
+        <EntityType Name="NGUOIDUNG">
+          <Key>
+            <PropertyRef Name="TenDangNhap" />
+          </Key>
+          <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QLSTKModel.FK__NGUOIDUNG__MaNho__4E88ABD4" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
+        </EntityType>
+        <EntityType Name="NHOMNGUOIDUNG">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+          </Key>
+          <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <Property Name="TenNhom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NGUOIDUNGs" Relationship="QLSTKModel.FK__NGUOIDUNG__MaNho__4E88ABD4" FromRole="NHOMNGUOIDUNG" ToRole="NGUOIDUNG" />
+          <NavigationProperty Name="PHANQUYENs" Relationship="QLSTKModel.FK__PHANQUYEN__MaNho__4AB81AF0" FromRole="NHOMNGUOIDUNG" ToRole="PHANQUYEN" />
+        </EntityType>
+        <EntityType Name="PHANQUYEN">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <Property Name="MaChucNang" Type="Int32" Nullable="false" />
+          <Property Name="LiDo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CHUCNANG" Relationship="QLSTKModel.FK__PHANQUYEN__MaChu__4BAC3F29" FromRole="PHANQUYEN" ToRole="CHUCNANG" />
+          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QLSTKModel.FK__PHANQUYEN__MaNho__4AB81AF0" FromRole="PHANQUYEN" ToRole="NHOMNGUOIDUNG" />
+        </EntityType>
+        <Association Name="FK__PHANQUYEN__MaChu__4BAC3F29">
+          <End Type="QLSTKModel.CHUCNANG" Role="CHUCNANG" Multiplicity="1" />
+          <End Type="QLSTKModel.PHANQUYEN" Role="PHANQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUCNANG">
+              <PropertyRef Name="MaChucNang" />
+            </Principal>
+            <Dependent Role="PHANQUYEN">
+              <PropertyRef Name="MaChucNang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NGUOIDUNG__MaNho__4E88ABD4">
+          <End Type="QLSTKModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="1" />
+          <End Type="QLSTKModel.NGUOIDUNG" Role="NGUOIDUNG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHOMNGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Principal>
+            <Dependent Role="NGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHANQUYEN__MaNho__4AB81AF0">
+          <End Type="QLSTKModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="1" />
+          <End Type="QLSTKModel.PHANQUYEN" Role="PHANQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHOMNGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Principal>
+            <Dependent Role="PHANQUYEN">
+              <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -439,7 +617,8 @@
           <EntitySetMapping Name="LOAITIETKIEMs">
             <EntityTypeMapping TypeName="QLSTKModel.LOAITIETKIEM">
               <MappingFragment StoreEntitySet="LOAITIETKIEM">
-                <ScalarProperty Name="SoTienDuocRut" ColumnName="SoTienDuocRut" />
+                <ScalarProperty Name="DangSuDung" ColumnName="DangSuDung" />
+                <ScalarProperty Name="QuyDinhSoTienRut" ColumnName="QuyDinhSoTienRut" />
                 <ScalarProperty Name="ThoiGianGuiToiThieu" ColumnName="ThoiGianGuiToiThieu" />
                 <ScalarProperty Name="LaiSuat" ColumnName="LaiSuat" />
                 <ScalarProperty Name="KyHan" ColumnName="KyHan" />
@@ -490,6 +669,42 @@
               <MappingFragment StoreEntitySet="THAMSO">
                 <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
                 <ScalarProperty Name="TenThamSo" ColumnName="TenThamSo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHUCNANGs">
+            <EntityTypeMapping TypeName="QLSTKModel.CHUCNANG">
+              <MappingFragment StoreEntitySet="CHUCNANG">
+                <ScalarProperty Name="TenThanhPhanSuDung" ColumnName="TenThanhPhanSuDung" />
+                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
+                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NGUOIDUNGs">
+            <EntityTypeMapping TypeName="QLSTKModel.NGUOIDUNG">
+              <MappingFragment StoreEntitySet="NGUOIDUNG">
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NHOMNGUOIDUNGs">
+            <EntityTypeMapping TypeName="QLSTKModel.NHOMNGUOIDUNG">
+              <MappingFragment StoreEntitySet="NHOMNGUOIDUNG">
+                <ScalarProperty Name="TenNhom" ColumnName="TenNhom" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHANQUYENs">
+            <EntityTypeMapping TypeName="QLSTKModel.PHANQUYEN">
+              <MappingFragment StoreEntitySet="PHANQUYEN">
+                <ScalarProperty Name="LiDo" ColumnName="LiDo" />
+                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -34,7 +34,7 @@ namespace MasterSaveDemo.Helper
             {
                 decimal laisuat_theongay = (decimal)laisuat/360;
                 stk.SoDu = stk.SoDu * (1 + (laisuat_theongay/100)*songay);
-                if (ltk.KyHan == 1)
+                if (ltk.KyHan == 0)
                 {
                     stk.NgayDaoHanKeTiep = DateTime.Today.AddDays(1);
                 }
@@ -50,6 +50,29 @@ namespace MasterSaveDemo.Helper
                 return false;
             }
         }
+        public bool AllToday()
+        {
+            try
+            {
+                List<SOTIETKIEM> list_stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.NgayDaoHanKeTiep == DateTime.Today).ToList();
+                if (list_stk.Count == 0)
+                {
+                    //Them vao thong bao rang da nhap lai vao von cua hom nay roi!
+                }
+                else
+                {
+                    foreach (SOTIETKIEM stk in list_stk)
+                    {
+                        NhapLaiVaoVon.Ins.StartThis(stk.MaSoTietKiem, false);
+                    }
+                }
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
         public bool StartThis(string MSTK, bool confirm)
         {
             try
@@ -57,7 +80,7 @@ namespace MasterSaveDemo.Helper
                 SOTIETKIEM stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == MSTK).Single();
                 LOAITIETKIEM ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == stk.MaLoaiTietKiem).Single();
                 //truong hop so khong ki han
-                if (ltk.KyHan == 1 && confirm == true && DateTime.Today.AddDays(1)> stk.NgayDaoHanKeTiep)
+                if (ltk.KyHan == 0 && confirm == true && DateTime.Today.AddDays(1)> stk.NgayDaoHanKeTiep)
                 {
                     if (!TinhLai(stk, ltk, stk.LaiSuatApDung, (int)(DateTime.Today.AddDays(1) - stk.NgayDaoHanKeTiep).TotalDays))
                         return false;

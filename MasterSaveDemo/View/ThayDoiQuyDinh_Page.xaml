@@ -5,6 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MasterSaveDemo.View"
       mc:Ignorable="d" 
+      
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      
       d:DesignHeight="450" d:DesignWidth="800"
       
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"

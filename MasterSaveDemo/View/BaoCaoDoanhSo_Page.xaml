@@ -21,7 +21,7 @@
       
       Name="BaoCaoDoanhSo"
       Title="BaoCaoDoanhSo_Page">
-    
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -44,10 +44,9 @@
             <Grid Grid.Column="0">
                 <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày lẹ"
                             HorizontalAlignment="Right" Margin="10,0,10,0"
-                            Text="{Binding FormattedDate}"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                            SelectedDate="{Binding DateReport,StringFormat='dd/MM/yyyy', Mode=TwoWay}">
-                    <!--SelectedDateFormat="Short">-->
+                            SelectedDate="{Binding SelectedDateReport,StringFormat='dd/MM/yyyy', Mode=TwoWay}"
+                            SelectedDateFormat="Short">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">
                             <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"
@@ -65,8 +64,8 @@
             <Grid Grid.Column="2">
                 <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                         HorizontalAlignment="Center"
-                        Margin="10,0,5,0" Content="Xuất phiếu"
-                        Width="150" Height="35" Command="{Binding CreateReportCommand}"/>
+                        Margin="50,0,5,0" Content="Xuất phiếu"
+                        Width="150" Height="35" Command="{Binding ExportCommand}"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
@@ -76,26 +75,29 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="0,0,-300,0">
-                <ListView ItemsSource="{Binding ListBaoCaoDS}"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="39*"/>
+                    <ColumnDefinition Width="136*"/>
+                </Grid.ColumnDefinitions>
+                <ListView ItemsSource="{Binding ListBaoCaoDisplay}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,0,0,-0.2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="100" Header="STT" DisplayMemberBinding="{Binding SoThuTu}"/>
                             <GridViewColumn Width="200" Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
-                            <GridViewColumn Width="200" Header="Tổng thu" DisplayMemberBinding="{Binding c}"/>
-                            <GridViewColumn Width="200" Header="Tổng chi" DisplayMemberBinding="{Binding d}"/>
-                            <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding e}"/>
+                            <GridViewColumn Width="200" Header="Tổng thu" DisplayMemberBinding="{Binding TongThu}"/>
+                            <GridViewColumn Width="200" Header="Tổng chi" DisplayMemberBinding="{Binding TongChi}"/>
+                            <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
-            <Grid Grid.Column="1" Margin="300,0,0,0">
-                <ListView ItemsSource="{Binding ListBaoCaoDoanhSo}"
+            <Grid Grid.Column="1" Margin="320,0,0,0">
+                <ListView ItemsSource="{Binding ListNgayBaoCao}"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="100" Header="Mã báo cáo" DisplayMemberBinding="{Binding c}"/>
-                            <GridViewColumn Width="200" Header="Ngày báo cáo" DisplayMemberBinding="{Binding c}"/>
+                            <GridViewColumn Width="200" Header="Ngày báo cáo"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

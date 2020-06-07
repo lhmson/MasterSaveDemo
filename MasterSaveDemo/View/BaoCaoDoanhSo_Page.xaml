@@ -93,13 +93,20 @@
                 </ListView>
             </Grid>
             <Grid Grid.Column="1" Margin="320,0,0,0">
-                <ListView ItemsSource="{Binding ListNgayBaoCao}"
+                <ListView x:Name="listDateDisplayed" 
+                          ItemsSource="{Binding ListNgayBaoCao}" SelectedItem="{Binding SelectedDateReportDisplay}"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="200" Header="Ngày báo cáo"/>
                         </GridView>
                     </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                                   CommandParameter="{Binding ElementName=listDateDisplayed}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </ListView>
             </Grid>
         </Grid>

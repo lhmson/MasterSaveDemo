@@ -58,12 +58,20 @@ namespace MasterSaveDemo.ViewModel
             set { _VisibilityOfAdd = value; OnPropertyChanged(); }
         }
 
-        // Visibility of edit elements
-        private Visibility _VisibilityOfEdit;
-        public Visibility VisibilityOfEdit
+        // Visibility of edit elements of LTK
+        private Visibility _VisibilityOfEditLTK;
+        public Visibility VisibilityOfEditLTK
         {
-            get => _VisibilityOfEdit;
-            set { _VisibilityOfEdit = value; OnPropertyChanged(); }
+            get => _VisibilityOfEditLTK;
+            set { _VisibilityOfEditLTK = value; OnPropertyChanged(); }
+        }
+
+        // Visibility of edit elements of ThamSo
+        private Visibility _VisibilityOfEditThamSo;
+        public Visibility VisibilityOfEditThamSo
+        {
+            get => _VisibilityOfEditThamSo;
+            set { _VisibilityOfEditThamSo = value; OnPropertyChanged(); }
         }
 
         // Visibility of listview Loaitietkiem
@@ -80,6 +88,14 @@ namespace MasterSaveDemo.ViewModel
         {
             get => _VisibilityOfListThamSo;
             set { _VisibilityOfListThamSo = value; OnPropertyChanged(); }
+        }
+
+        // check if deleting or not
+        private bool _IsDeleting;
+        public bool IsDeleting
+        {
+            get => _IsDeleting;
+            set { _IsDeleting = value; OnPropertyChanged(); }
         }
 
         //MaLoaiTietKiem
@@ -122,12 +138,20 @@ namespace MasterSaveDemo.ViewModel
             set { _ThoiGianGuiToiThieu = value; OnPropertyChanged(); }
         }
 
-        //SoTienDuocRut
-        private string _SoTienDuocRut;
-        public string SoTienDuocRut
+        //QuyDinhSoTienRut
+        private string _QuyDinhSoTienRut;
+        public string QuyDinhSoTienRut
         {
-            get => _SoTienDuocRut;
-            set { _SoTienDuocRut = value; OnPropertyChanged(); }
+            get => _QuyDinhSoTienRut;
+            set { _QuyDinhSoTienRut = value; OnPropertyChanged(); }
+        }
+
+        //DangSuDung
+        private int _DangSuDung;
+        public int DangSuDung
+        {
+            get => _DangSuDung;
+            set { _DangSuDung = value; OnPropertyChanged(); }
         }
 
         //Ten tham so
@@ -145,20 +169,32 @@ namespace MasterSaveDemo.ViewModel
             get => _GiaTriThamSo;
             set { _GiaTriThamSo = value; OnPropertyChanged(); }
         }
+
+        //
+        private string _NameOfList;
+        public string NameOfList
+        {
+            get => _NameOfList;
+            set { _NameOfList = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
         private void LoadData()
         {
-            ListLTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung != 0);
+
+            ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
             VisibilityOfAdd = Visibility.Hidden;
-            VisibilityOfEdit = Visibility.Hidden;
+            VisibilityOfEditLTK = Visibility.Hidden;
+            VisibilityOfEditThamSo = Visibility.Hidden;
             VisibilityOfListThamSo = Visibility.Hidden;
 
             // choosing list LTK
             SelectedIndexCbb = 0;
+            NameOfList = "Danh sách loại tiết kiệm";
         }
         private bool CheckValidData()
         {
@@ -185,16 +221,19 @@ namespace MasterSaveDemo.ViewModel
                 {
                     return false;
                 }
-                if (string.IsNullOrEmpty(SoTienDuocRut))
+                if (string.IsNullOrEmpty(QuyDinhSoTienRut) || !int.TryParse(QuyDinhSoTienRut, out _))
                 {
                     return false;
                 }
 
-                var maLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == MaLoaiTietKiem);
-                if (maLoai == null || maLoai.Count() != 0)
-                    return false;
+                if( !IsDeleting)
+                {
+                    var maLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == MaLoaiTietKiem);
+                    if (maLoai == null || maLoai.Count() != 0)
+                        return false;
+                }
                 return true;
-            } else if (VisibilityOfEdit == Visibility.Visible)
+            } else if (VisibilityOfEditLTK == Visibility.Visible)
             {
                 if (string.IsNullOrEmpty(LaiSuat) || !float.TryParse(LaiSuat, out _))
                 {
@@ -220,7 +259,16 @@ namespace MasterSaveDemo.ViewModel
             KyHan = "";
             LaiSuat = "";
             ThoiGianGuiToiThieu = "";
-            SoTienDuocRut = "";
+            QuyDinhSoTienRut = "";
+        }
+        private void SetTextboxValue()
+        {
+            MaLoaiTietKiem = SelectedItemLTK.MaLoaiTietKiem;
+            TenLoaiTietKiem = SelectedItemLTK.TenLoaiTietKiem;
+            KyHan = SelectedItemLTK.KyHan.ToString();
+            LaiSuat = SelectedItemLTK.LaiSuat.ToString();
+            ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
+            QuyDinhSoTienRut = SelectedItemLTK.QuyDinhSoTienRut.ToString();
         }
         #endregion
 
@@ -235,13 +283,15 @@ namespace MasterSaveDemo.ViewModel
 
         public ThayDoiQuyDinh_ViewModel()
         {
+            IsDeleting = false;
             LoadData();                 
 
             // show elements used for adding
-            AddLTKCommand = new RelayCommand<object>((p) => { return true; }, 
-                (p) => { 
+            AddLTKCommand = new RelayCommand<object>((p) => { return SelectedIndexCbb==0 ? true : false; }, 
+                (p) => {
+                    IsDeleting = false;
                     VisibilityOfAdd = Visibility.Visible;
-                    VisibilityOfEdit = Visibility.Hidden;
+                    VisibilityOfEditLTK = Visibility.Hidden;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
@@ -251,15 +301,28 @@ namespace MasterSaveDemo.ViewModel
             // show elements used for editing
             EditLTKCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => {
-                    if(SelectedItemLTK != null)
+                    if( SelectedIndexCbb == 0)
                     {
-                        ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
-                        LaiSuat = SelectedItemLTK.LaiSuat.ToString();
+                        if (SelectedItemLTK != null)
+                        {
+                            ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
+                            LaiSuat = SelectedItemLTK.LaiSuat.ToString();
 
-
-                        VisibilityOfEdit = Visibility.Visible;
-                        VisibilityOfAdd = Visibility.Hidden;
+                            IsDeleting = false;
+                            VisibilityOfEditLTK = Visibility.Visible;
+                            VisibilityOfAdd = Visibility.Hidden;
+                        }
                     }
+                }
+            );
+
+            // show elements used for deleting
+            DeleteLTKCommand = new RelayCommand<object>((p) => { return SelectedIndexCbb == 0 ? true : false; },
+                (p) => {
+                    IsDeleting = true;
+                    SetTextboxValue();
+                    VisibilityOfAdd = Visibility.Visible;
+                    VisibilityOfEditLTK = Visibility.Hidden;
                 }
             );
 
@@ -273,26 +336,36 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (VisibilityOfAdd == Visibility.Visible)
                     {
-                        var loaiTietKiem = new LOAITIETKIEM()
+                        if(!IsDeleting)
                         {
-                            MaLoaiTietKiem = MaLoaiTietKiem,
-                            TenLoaiTietKiem = TenLoaiTietKiem,
-                            KyHan = Int32.Parse(KyHan),
-                            LaiSuat = float.Parse(LaiSuat),
-                            ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                            QuyDinhSoTienRut = Int32.Parse(SoTienDuocRut)
-                        };
-                        DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
-                        DataProvider.Ins.DB.SaveChanges();
+                            var loaiTietKiem = new LOAITIETKIEM()
+                            {
+                                MaLoaiTietKiem = MaLoaiTietKiem,
+                                TenLoaiTietKiem = TenLoaiTietKiem,
+                                KyHan = Int32.Parse(KyHan),
+                                LaiSuat = float.Parse(LaiSuat),
+                                ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
+                                QuyDinhSoTienRut = Int32.Parse(QuyDinhSoTienRut)
+                            };
+                            DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
+                            DataProvider.Ins.DB.SaveChanges();
 
-                        ListLTK.Add(loaiTietKiem);
-                    } else if(VisibilityOfEdit == Visibility.Visible)
+                            ListLTK.Add(loaiTietKiem);
+                        }
+                        else
+                        {
+                            SelectedItemLTK.DangSuDung = 0;
+                            DataProvider.Ins.DB.SaveChanges();
+
+                            ListLTK.Remove(SelectedItemLTK);
+                            ResetTextbox();
+                        }
+                    } else if(VisibilityOfEditLTK == Visibility.Visible)
                     {
-                        var temp = SelectedItemLTK;
-                        var loaiTietKiem = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem).SingleOrDefault();
-                        loaiTietKiem.LaiSuat = float.Parse(LaiSuat);
-                        loaiTietKiem.ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu);
+                        SelectedItemLTK.LaiSuat = float.Parse(LaiSuat);
+                        SelectedItemLTK.ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu);
                         DataProvider.Ins.DB.SaveChanges();
+                        var temp = SelectedItemLTK;
 
                         //find index of selected item in list, then remove and add the changed item
                         int length = ListLTK.Count();
@@ -301,7 +374,7 @@ namespace MasterSaveDemo.ViewModel
                             if( ListLTK[i].MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem)
                             {
                                 ListLTK.RemoveAt(i);
-                                ListLTK.Insert(i, loaiTietKiem);
+                                ListLTK.Insert(i, temp);
                                 break;
                             }
                         }
@@ -323,7 +396,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     ResetTextbox();
                 }
-                else if (VisibilityOfEdit == Visibility.Visible)
+                else if (VisibilityOfEditLTK == Visibility.Visible)
                 {
                     ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
                     LaiSuat = SelectedItemLTK.LaiSuat.ToString();
@@ -339,15 +412,17 @@ namespace MasterSaveDemo.ViewModel
                 // selected index = 1: choosing list of Thamso
                 if (SelectedIndexCbb == 0)
                 {
+                    NameOfList = "Danh sách loại tiết kiệm";
                     VisibilityOfListLTK = Visibility.Visible;
                     VisibilityOfListThamSo = Visibility.Hidden;
                 } else
                 {
+                    NameOfList = "Danh sách tham số";
                     VisibilityOfListThamSo = Visibility.Visible;
                     VisibilityOfListLTK = Visibility.Hidden;
 
                     // co muon an may cai nay ko?
-                    VisibilityOfAdd = VisibilityOfEdit = Visibility.Hidden;
+                    VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
                 }
 
             });

@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace MasterSaveDemo.ViewModel
 {
+    /*
+     Format của list BCDS để hiển thị lúc lấy từ database lên khác với format lúc tạo (0 khác 0.0000)
+         */
     public class BaoCaoDoanhSo_ViewModel : BaseViewModel
     {
         #region Variables
@@ -19,6 +22,13 @@ namespace MasterSaveDemo.ViewModel
         {
             get => _SelectedDateReport;
             set { _SelectedDateReport = value; OnPropertyChanged(); }
+        }
+        // date chosen for displaying
+        private DateTime _SelectedDateReportDisplay;
+        public DateTime SelectedDateReportDisplay
+        {
+            get => _SelectedDateReportDisplay;
+            set { _SelectedDateReportDisplay = value; OnPropertyChanged(); }
         }
         // list of BAOCAODOANHSOes in the date chosen
         private ObservableCollection<BAOCAODOANHSO> _ListBaoCaoDoanhSo;
@@ -177,7 +187,7 @@ namespace MasterSaveDemo.ViewModel
                           select phieuRut.SoTienRut;
             TongChi += listChi.Sum();
 
-            ChenhLech = TongThu - TongChi;
+            ChenhLech = (TongThu - TongChi);
 
             BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
             ListBaoCaoDisplay.Add(baoCaoDisplay);
@@ -188,7 +198,7 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region ICommand
-        public ICommand SelectedDateChangedCommand { get; set; }
+        public ICommand SelectionChangedCommand { get; set; }
         public ICommand CreateReportCommand { get; set; }
 
         #endregion
@@ -197,15 +207,25 @@ namespace MasterSaveDemo.ViewModel
         {
             LoadData();
 
-            SelectedDateChangedCommand = new RelayCommand<object>((p) => { return true; },
+            SelectionChangedCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => {
-                    
+                    ListBaoCaoDisplay.Clear();
+                    SelectedDateReport = SelectedDateReportDisplay;
+                    var listBaoCao = (from bc in ListBaoCaoDoanhSo
+                                     where bc.NgayDoanhSo == SelectedDateReport
+                                     select bc).ToList();
+                    for(int i=0; i<listBaoCao.Count(); i++)
+                    {
+                        TongThu = TongChi = 0;
+                        GetBaoCaoToDisplay(i, listBaoCao[i].LOAITIETKIEM, listBaoCao[i]);
+                    }
                 }
             );
 
             // button for finding report and create if ... not available
             CreateReportCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => {
+                    bool isNew = false;
                     // clear all elements of ListBaoCaoDisplay to clear screen
                     ListBaoCaoDisplay.Clear();
                     
@@ -216,10 +236,12 @@ namespace MasterSaveDemo.ViewModel
 
                         if(baoCao != null)
                         {
+                            isNew = false;
                             GetBaoCaoToDisplay(i, ListLTK[i], baoCao);
                         }
                         else
                         {
+                            isNew = true;
                             baoCao = CreateBaoCao(i, ListLTK[i]);
                             DataProvider.Ins.DB.BAOCAODOANHSOes.Add(baoCao);
                             DataProvider.Ins.DB.SaveChanges();
@@ -227,7 +249,7 @@ namespace MasterSaveDemo.ViewModel
                             ListBaoCaoDoanhSo.Add(baoCao);
                         }
                     }
-
+                    if(isNew) ListNgayBaoCao.Add(SelectedDateReport);
                 }
 
             );

@@ -61,8 +61,8 @@
                             <VirtualizingStackPanel />
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
-                    <ComboBoxItem>Danh sách loại tiết kiệm</ComboBoxItem>
-                    <ComboBoxItem>Danh sách tham số</ComboBoxItem>
+                    <ComboBoxItem>Danh sách người dùng</ComboBoxItem>
+                    <ComboBoxItem>Danh sách nhóm quyền</ComboBoxItem>
                 </ComboBox>
             </Grid>
             <Grid Grid.Row="2">
@@ -107,17 +107,30 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
+                          Visibility="{Binding VisibilityOfEdit}"
+                          ItemsSource="{Binding ListNhomNguoiDung}"
+                          Text ="{Binding CbxTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
+                          Grid.ColumnSpan="2" Margin="0,12,0,11" >
+                </ComboBox>
             </Grid>
             <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="27*"/>
+                    <ColumnDefinition Width="293*"/>
+                </Grid.ColumnDefinitions>
                 <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
-                                  ItemsSource="{Binding TenNhom}" Text ="{Binding CbxTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
+                          Visibility="{Binding VisibilityOfAdd}"
+                          ItemsSource="{Binding ListNhomNguoiDung}"
+                          Text ="{Binding CbxTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
+                          Grid.ColumnSpan="2" Margin="0,12,0,11" >
                 </ComboBox>
             </Grid>
             <Grid Grid.Row="6">
-                
+
             </Grid>
             <Grid Grid.Row="7">
-                
+
             </Grid>
             <Grid Grid.Row="8">
                 <Grid.ColumnDefinitions>
@@ -156,24 +169,14 @@
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemNguoiDung, Mode=OneWayToSource}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="STT" DisplayMemberBinding="{Binding }" />
                             <GridViewColumn Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDangNhap}" />
                             <GridViewColumn Header="Mật khẩu" DisplayMemberBinding="{Binding MatKhau}"/>
                             <GridViewColumn Header="Họ tên" DisplayMemberBinding="{Binding HoTen}"/>
-                            <GridViewColumn Header="Vị trí" DisplayMemberBinding="{Binding TenNhom}"/>
+                            <GridViewColumn Header="Vị trí (nhóm quyền)" DisplayMemberBinding="{Binding TenNhom}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <!--<ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}" Visibility="{Binding VisibilityOfListThamSo}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=OneWayToSource}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}" />
-                            <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTriThamSo}"/>
 
-                        </GridView>
-                    </ListView.View>
-                </ListView>-->
             </Grid>
             <Grid Grid.Row="2" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
@@ -186,19 +189,19 @@
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Thêm" HorizontalAlignment="Center"
                             Width="150" Height="35"
-                            Command="{Binding AddLTKCommand}"/>
+                            Command="{Binding AddNguoiDungCommand}"/>
                 </Grid>
                 <Grid Grid.Column="1" HorizontalAlignment="Right">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Sửa" HorizontalAlignment="Center"
                             Width="150" Height="35"
-                            Command="{Binding EditLTKCommand}"/>
+                            Command="{Binding EditNguoiDungCommand}"/>
                 </Grid>
                 <Grid Grid.Column="2" HorizontalAlignment="Right">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Xóa" HorizontalAlignment="Center"
                             Width="150" Height="35"
-                            Command="{Binding DeleteLTKCommand}"/>
+                            Command="{Binding DeleteNguoiDungKCommand}"/>
                 </Grid>
             </Grid>
 

@@ -105,12 +105,25 @@
     <Compile Include="Model\BAOCAOMODONG.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\CHUCNANG.cs">
+      <DependentUpon>QLSTKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\CTBCMODONG.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataProvider.cs" />
+    <Compile Include="Model\ListBaoCaoDongMo.cs" />
     <Compile Include="Model\ListTraCuuSTK.cs" />
     <Compile Include="Model\LOAITIETKIEM.cs">
+      <DependentUpon>QLSTKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NGUOIDUNG.cs">
+      <DependentUpon>QLSTKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NHOMNGUOIDUNG.cs">
+      <DependentUpon>QLSTKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PHANQUYEN.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PHIEUGUI.cs">

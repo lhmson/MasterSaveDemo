@@ -112,6 +112,7 @@
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataProvider.cs" />
+    <Compile Include="Model\NhanVien.cs" />
     <Compile Include="Model\STKDuocTraCuu.cs" />
     <Compile Include="Model\LOAITIETKIEM.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>

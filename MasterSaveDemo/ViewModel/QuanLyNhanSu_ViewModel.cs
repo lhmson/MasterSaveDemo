@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MasterSaveDemo.ViewModel
@@ -13,11 +14,11 @@ namespace MasterSaveDemo.ViewModel
     public class QuanLyNhanSu_ViewModel : BaseViewModel
     {
         #region Variables
-        private ObservableCollection<NGUOIDUNG> _ListNguoiDung;
-        public ObservableCollection<NGUOIDUNG> ListNguoiDung
+        private ObservableCollection<NhanVien> _ListNhanVien;
+        public ObservableCollection<NhanVien> ListNhanVien
         {
-            get => _ListNguoiDung;
-            set { _ListNguoiDung = value; OnPropertyChanged(); }
+            get => _ListNhanVien;
+            set { _ListNhanVien = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<NHOMNGUOIDUNG> _ListNhomNguoiDung;
@@ -27,8 +28,8 @@ namespace MasterSaveDemo.ViewModel
             set { _ListNhomNguoiDung = value; OnPropertyChanged(); }
         }
 
-        private NGUOIDUNG _SelectedItemNguoiDung;
-        public NGUOIDUNG SelectedItemNguoiDung
+        private NhanVien _SelectedItemNguoiDung;
+        public NhanVien SelectedItemNguoiDung
         {
             get => _SelectedItemNguoiDung;
             set { _SelectedItemNguoiDung = value; OnPropertyChanged(); }
@@ -105,18 +106,24 @@ namespace MasterSaveDemo.ViewModel
         }
 
         
-        private string _CbxTenNhom;
-        public string CbxTenNhom
+        private List<string> _CbxTenNhom;
+        public List<string> CbxTenNhom
         {
             get { return _CbxTenNhom; }
-            set { _CbxTenNhom = value; }
+            set { _CbxTenNhom = value; OnPropertyChanged(); }
         }
 
+        private string _TextTenNhom;
+        public string TextTenNhom
+        {
+            get { return _TextTenNhom; }
+            set { _TextTenNhom = value; OnPropertyChanged(); }
+        }
         private string _SelectedTenNhom;
         public string SelectedTenNhom
         {
             get { return _SelectedTenNhom; }
-            set { _SelectedTenNhom = value; }
+            set { _SelectedTenNhom = value; OnPropertyChanged(); }
         }
 
 
@@ -126,21 +133,35 @@ namespace MasterSaveDemo.ViewModel
         #region Function
         private void LoadData()
         {
-            ListNguoiDung = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
+            ObservableCollection<NGUOIDUNG> ListNguoiDung = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
             ListNhomNguoiDung = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
-            TenNhom = new List<string>();
-            foreach (var item in ListNhomNguoiDung)
-            {
-                // sao cho nay no khong hien ra danh sach dung ta, need to edit (Son) aaaaaa why
-                TenNhom.Add(item.TenNhom);
-                MessageBox.Show(item.TenNhom);
-            }
+
+            var nhanvien = from ng_Dung in ListNguoiDung
+                           join nhom in ListNhomNguoiDung on ng_Dung.MaNhom equals nhom.MaNhom
+                           select new NhanVien(ng_Dung.TenDangNhap, ng_Dung.MatKhau, ng_Dung.HoTen, nhom.TenNhom);
+            ListNhanVien = new ObservableCollection<NhanVien>(nhanvien);
 
             VisibilityOfAdd = Visibility.Hidden;
             VisibilityOfEdit = Visibility.Hidden;
 
             // choosing list NguoiDung
             SelectedIndexCbb = 0;
+
+            CbxTenNhom = new List<string>();
+            foreach (var Nhom in ListNhomNguoiDung)
+                CbxTenNhom.Add(Nhom.TenNhom);
+        }
+
+        private int search_MaNhom(string TenNhom)
+        {
+            int ma = 0;
+
+            ObservableCollection<NHOMNGUOIDUNG> ListNhomNguoiDung = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
+
+            foreach (var nhom in ListNhomNguoiDung)
+                if (nhom.TenNhom == TenNhom)
+                    return nhom.MaNhom;
+            return ma;
         }
 
         private bool CheckValidData()
@@ -159,13 +180,10 @@ namespace MasterSaveDemo.ViewModel
                 {
                     return false;
                 }
-                if (string.IsNullOrEmpty(CbxTenNhom))
+                if (string.IsNullOrEmpty(SelectedTenNhom))
                 {
                     return false;
                 }
-
-
-
                 var tenDangNhap = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == TenDangNhap);
                 if (tenDangNhap == null || tenDangNhap.Count() != 0)
                     return false;
@@ -173,17 +191,28 @@ namespace MasterSaveDemo.ViewModel
             }
             else if (VisibilityOfEdit == Visibility.Visible)
             {
-                
+                if (string.IsNullOrEmpty(MatKhau))
+                {
+                    return false;
+                }
+                if (string.IsNullOrEmpty(HoTen))
+                {
+                    return false;
+                }
+                if (string.IsNullOrEmpty(SelectedTenNhom))
+                {
+                    return false;
+                }
             }
-            return false;
+            return true;
         }
         private void ResetTextbox()
         {
             TenDangNhap = "";
             MatKhau = "";
             HoTen = "";
-            CbxTenNhom = "";
-
+            TextTenNhom = "";
+            SelectedTenNhom = null;
         }
         #endregion
 
@@ -214,10 +243,38 @@ namespace MasterSaveDemo.ViewModel
             // show elements used for editing
             EditNguoiDungCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => {
+                   
                     if (SelectedItemNguoiDung != null)
                     {
                         VisibilityOfEdit = Visibility.Visible;
                         VisibilityOfAdd = Visibility.Hidden;
+                        MatKhau = SelectedItemNguoiDung.MatKhau;
+                        HoTen = SelectedItemNguoiDung.HoTen;
+                        SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
+                    }
+                }
+            );
+
+            DeleteNguoiDungKCommand = new RelayCommand<object>((p) => { return (SelectedItemNguoiDung != null); },
+                (p) => {
+                        VisibilityOfEdit = Visibility.Hidden;
+                        VisibilityOfAdd = Visibility.Hidden;
+                    DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn chắc xóa người dùng này không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    var nguoiDung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItemNguoiDung.TenDangNhap).SingleOrDefault();
+                    DataProvider.Ins.DB.NGUOIDUNGs.Remove(nguoiDung);
+                    DataProvider.Ins.DB.SaveChanges();
+                    if (kq == DialogResult.Yes)
+                    {
+                        int length = ListNhanVien.Count();
+                        for (int i = 0; i < length; i++)
+                        {
+                            if (ListNhanVien[i].TenDangNhap == SelectedItemNguoiDung.TenDangNhap)
+                            {
+                                ListNhanVien.RemoveAt(i);
+                                break;
+                            }
+                        }
+                        System.Windows.Forms.MessageBox.Show("Xóa người dùng thành công");
                     }
                 }
             );
@@ -232,39 +289,40 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (VisibilityOfAdd == Visibility.Visible)
                     {
+                        int Ma_Nhom = search_MaNhom(SelectedTenNhom);
                         var nguoiDung = new NGUOIDUNG()
                         {
                             TenDangNhap = TenDangNhap,
                             MatKhau = MatKhau,
                             HoTen = HoTen,
-                            //need to edit (Son) de them vao database va hien thi len cai listview
-                            // MaNhom = ... (them vao cai gi ne ??)
+                            MaNhom = Ma_Nhom
                         };
                         DataProvider.Ins.DB.NGUOIDUNGs.Add(nguoiDung);
                         DataProvider.Ins.DB.SaveChanges();
 
-                        ListNguoiDung.Add(nguoiDung);
+
+                        NhanVien nv = new NhanVien(TenDangNhap, MatKhau, HoTen, SelectedTenNhom);
+                        ListNhanVien.Add(nv);
                     }
                     else if (VisibilityOfEdit == Visibility.Visible)
                     {
-                        //cai phan nay la copy ben Tien nen comment lai, dung duoc gi thi dung khong thi xoa nha
-                        //var temp = SelectedItemLTK;
-                        //var nguoiDung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem).SingleOrDefault();
-                        //nguoiDung.LaiSuat = float.Parse(LaiSuat);
-                        //nguoiDung.ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu);
-                        //DataProvider.Ins.DB.SaveChanges();
+                        var temp = SelectedItemNguoiDung;
+                        var nguoiDung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItemNguoiDung.TenDangNhap).SingleOrDefault();
+                        nguoiDung.MatKhau = MatKhau;
+                        nguoiDung.MaNhom = search_MaNhom(SelectedTenNhom);
+                        DataProvider.Ins.DB.SaveChanges();
 
-                        ////find index of selected item in list, then remove and add the changed item
-                        //int length = ListNguoiDung.Count();
-                        //for (int i = 0; i < length; i++)
-                        //{
-                        //    if (ListNguoiDung[i].MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem)
-                        //    {
-                        //        ListNguoiDung.RemoveAt(i);
-                        //        ListNguoiDung.Insert(i, nguoiDung);
-                        //        break;
-                        //    }
-                        //}
+                        NhanVien nv = new NhanVien(nguoiDung.TenDangNhap, nguoiDung.MatKhau, nguoiDung.HoTen, SelectedTenNhom);
+                        int length = ListNhanVien.Count();
+                        for (int i = 0; i < length; i++)
+                        {
+                            if (ListNhanVien[i].TenDangNhap == SelectedItemNguoiDung.TenDangNhap)
+                            {
+                                ListNhanVien.RemoveAt(i);
+                                ListNhanVien.Insert(i, nv);
+                                break;
+                            }
+                        }
 
                         ////After confirming, selected item will die huhu, this line is used for making selected item reborn. 
                         ////You can continue change value without choosing item again if unnecessary
@@ -285,7 +343,12 @@ namespace MasterSaveDemo.ViewModel
                 }
                 else if (VisibilityOfEdit == Visibility.Visible)
                 {
-                    
+                    if (SelectedItemNguoiDung != null)
+                    {
+                        MatKhau = SelectedItemNguoiDung.MatKhau;
+                        HoTen = SelectedItemNguoiDung.HoTen;
+                        SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
+                    }
                 }
             });
 

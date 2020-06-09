@@ -98,7 +98,7 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </Grid>
             <Grid Grid.Row="4">
                 <TextBox materialDesign:HintAssist.Hint="Họ tên"
@@ -109,7 +109,7 @@
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfEdit}"
-                          ItemsSource="{Binding ListNhomNguoiDung}"
+                          ItemsSource="{Binding CbxTenNhom}"
                           Text ="{Binding CbxTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
                 </ComboBox>
@@ -121,8 +121,8 @@
                 </Grid.ColumnDefinitions>
                 <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfAdd}"
-                          ItemsSource="{Binding ListNhomNguoiDung}"
-                          Text ="{Binding CbxTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
+                          ItemsSource="{Binding CbxTenNhom}"
+                          Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
                 </ComboBox>
             </Grid>
@@ -165,7 +165,7 @@
                     VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Row="1">
-                <ListView x:Name="listViewNguoiDung" ItemsSource="{Binding ListNguoiDung}" Visibility="{Binding VisibilityOfListNguoiDung}"
+                <ListView x:Name="listViewNguoiDung" ItemsSource="{Binding ListNhanVien}" Visibility="{Binding VisibilityOfListNguoiDung}"
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemNguoiDung, Mode=OneWayToSource}">
                     <ListView.View>
                         <GridView>

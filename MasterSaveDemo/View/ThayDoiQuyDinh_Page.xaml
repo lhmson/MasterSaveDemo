@@ -79,12 +79,12 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <TextBox materialDesign:HintAssist.Hint="Số tiền gửi tối thiểu"
+                <TextBox materialDesign:HintAssist.Hint="Tên tham số"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding SoTienGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </Grid>
             <Grid Grid.Row="3">
                 <TextBox materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
@@ -99,11 +99,13 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <TextBlock Text="Tự động đóng sổ" HorizontalAlignment="Left" VerticalAlignment="Center"
-                           Visibility="Hidden"/>
-                <ToggleButton Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
-                              ToolTip="MaterialDesignSwitchAccentToggleButton"
-                              IsChecked="True" Visibility="Hidden" />
+                <TextBox materialDesign:HintAssist.Hint="Giá trị"
+                         Visibility="{Binding VisibilityOfEditThamSo}"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{StaticResource SecondaryAccentBrush}" 
+                         VerticalAlignment="Center"
+                         Text="{Binding GiaTri, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
             </Grid>
             <Grid Grid.Row="4">
                 <TextBox materialDesign:HintAssist.Hint="Kỳ hạn"
@@ -172,7 +174,7 @@
             </Grid>
             <Grid Grid.Row="1">
                 <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" Visibility="{Binding VisibilityOfListLTK}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=OneWayToSource}">
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã loại tiết kiệm" DisplayMemberBinding="{Binding MaLoaiTietKiem}" />
@@ -185,11 +187,11 @@
                     </ListView.View>
                 </ListView>
                 <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}" Visibility="{Binding VisibilityOfListThamSo}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=OneWayToSource}">
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
-                            <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTriThamSo}"/>
+                            <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
                             
                         </GridView>
                     </ListView.View>

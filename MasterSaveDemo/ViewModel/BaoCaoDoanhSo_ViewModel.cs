@@ -126,14 +126,17 @@ namespace MasterSaveDemo.ViewModel
         #region Function
         private void LoadData()
         {
+            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung != 0);
+            ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
+
             ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
-            ListLTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             ListPhieuGui = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
             ListPhieuRut = new ObservableCollection<PHIEURUT>(DataProvider.Ins.DB.PHIEURUTs);
             ListBaoCaoDoanhSo = new ObservableCollection<BAOCAODOANHSO>(DataProvider.Ins.DB.BAOCAODOANHSOes);
             ListBaoCaoDisplay = new ObservableCollection<BaoCaoDS>();
 
             var listNgay = (from bc in ListBaoCaoDoanhSo
+                            orderby bc.NgayDoanhSo descending
                             select bc.NgayDoanhSo).Distinct();
             ListNgayBaoCao = new ObservableCollection<DateTime>(listNgay);
 
@@ -249,7 +252,11 @@ namespace MasterSaveDemo.ViewModel
                             ListBaoCaoDoanhSo.Add(baoCao);
                         }
                     }
-                    if(isNew) ListNgayBaoCao.Add(SelectedDateReport);
+                    if (isNew)
+                    {
+                        ListNgayBaoCao.Add(SelectedDateReport);
+                        ListNgayBaoCao.OrderBy(x => x.Date).ToList();
+                    }
                 }
 
             );

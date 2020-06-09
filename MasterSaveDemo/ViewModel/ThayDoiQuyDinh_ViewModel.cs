@@ -163,11 +163,11 @@ namespace MasterSaveDemo.ViewModel
         }
 
         //Gia tri cua tham so
-        private string _GiaTriThamSo;
-        public string GiaTriThamSo
+        private string _GiaTri;
+        public string GiaTri
         {
-            get => _GiaTriThamSo;
-            set { _GiaTriThamSo = value; OnPropertyChanged(); }
+            get => _GiaTri;
+            set { _GiaTri = value; OnPropertyChanged(); }
         }
 
         //
@@ -233,7 +233,8 @@ namespace MasterSaveDemo.ViewModel
                         return false;
                 }
                 return true;
-            } else if (VisibilityOfEditLTK == Visibility.Visible)
+            } 
+            else if (VisibilityOfEditLTK == Visibility.Visible)
             {
                 if (string.IsNullOrEmpty(LaiSuat) || !float.TryParse(LaiSuat, out _))
                 {
@@ -244,9 +245,27 @@ namespace MasterSaveDemo.ViewModel
                     return false;
                 }
 
+                // check if more than 1 value are the same
                 var laiSuat = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.LaiSuat == float.Parse(LaiSuat));
                 var thoiGianGuiToiThieu = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.ThoiGianGuiToiThieu == Int32.Parse(ThoiGianGuiToiThieu));
                 if (laiSuat.Count() != 0 && thoiGianGuiToiThieu.Count() != 0)
+                    return false;
+                return true;
+            }
+            else if (VisibilityOfEditThamSo == Visibility.Visible)
+            {
+                if (string.IsNullOrEmpty(TenThamSo))
+                {
+                    return false;
+                }
+                if (string.IsNullOrEmpty(GiaTri) || !decimal.TryParse(GiaTri, out _))
+                {
+                    return false;
+                }
+
+                var tenThamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.TenThamSo == TenThamSo);
+                var giaTri = DataProvider.Ins.DB.THAMSOes.Where(x => x.GiaTri == decimal.Parse(GiaTri));
+                if (tenThamSo.Count() != 0 && giaTri.Count() != 0)
                     return false;
                 return true;
             }
@@ -269,6 +288,76 @@ namespace MasterSaveDemo.ViewModel
             LaiSuat = SelectedItemLTK.LaiSuat.ToString();
             ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
             QuyDinhSoTienRut = SelectedItemLTK.QuyDinhSoTienRut.ToString();
+        }
+        private void AddLTK()
+        {
+            var loaiTietKiem = new LOAITIETKIEM()
+            {
+                MaLoaiTietKiem = MaLoaiTietKiem,
+                TenLoaiTietKiem = TenLoaiTietKiem,
+                KyHan = Int32.Parse(KyHan),
+                LaiSuat = float.Parse(LaiSuat),
+                ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
+                QuyDinhSoTienRut = Int32.Parse(QuyDinhSoTienRut)
+            };
+            DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
+            DataProvider.Ins.DB.SaveChanges();
+
+            ListLTK.Add(loaiTietKiem);
+        }
+        private void EditLTK()
+        {
+            SelectedItemLTK.LaiSuat = float.Parse(LaiSuat);
+            SelectedItemLTK.ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu);
+            DataProvider.Ins.DB.SaveChanges();
+            var temp = SelectedItemLTK;
+
+            //find index of selected item in list, then remove and add the changed item
+            int length = ListLTK.Count();
+            for (int i = 0; i < length; i++)
+            {
+                if (ListLTK[i].MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem)
+                {
+                    ListLTK.RemoveAt(i);
+                    ListLTK.Insert(i, temp);
+                    break;
+                }
+            }
+
+            //After confirming, selected item will die huhu, this line is used for making selected item reborn. 
+            //You can continue change value without choosing item again if unnecessary
+            SelectedItemLTK = temp;
+        }
+        private void EditThamSo()
+        {
+            SelectedItemThamSo.TenThamSo = TenThamSo;
+            SelectedItemThamSo.GiaTri = Decimal.Parse(GiaTri);
+            DataProvider.Ins.DB.SaveChanges();
+            var temp = SelectedItemThamSo;
+
+            //find index of selected item in list, then remove and add the changed item
+            int length = ListThamSo.Count();
+            for (int i = 0; i < length; i++)
+            {
+                if (ListThamSo[i].TenThamSo == SelectedItemThamSo.TenThamSo)
+                {
+                    ListThamSo.RemoveAt(i);
+                    ListThamSo.Insert(i, temp);
+                    break;
+                }
+            }
+
+            //After confirming, selected item will die huhu, this line is used for making selected item reborn. 
+            //You can continue change value without choosing item again if unnecessary
+            SelectedItemThamSo = temp;
+        }
+        private void DeleteLTK()
+        {
+            SelectedItemLTK.DangSuDung = 0;
+            DataProvider.Ins.DB.SaveChanges();
+
+            ListLTK.Remove(SelectedItemLTK);
+            ResetTextbox();
         }
         #endregion
 
@@ -313,6 +402,16 @@ namespace MasterSaveDemo.ViewModel
                             VisibilityOfAdd = Visibility.Hidden;
                         }
                     }
+                    else
+                    {
+                        if( SelectedItemThamSo != null)
+                        {
+                            TenThamSo = SelectedItemThamSo.TenThamSo;
+                            GiaTri = SelectedItemThamSo.GiaTri.ToString();
+
+                            VisibilityOfEditThamSo = Visibility.Visible;
+                        }
+                    }
                 }
             );
 
@@ -338,50 +437,21 @@ namespace MasterSaveDemo.ViewModel
                     {
                         if(!IsDeleting)
                         {
-                            var loaiTietKiem = new LOAITIETKIEM()
-                            {
-                                MaLoaiTietKiem = MaLoaiTietKiem,
-                                TenLoaiTietKiem = TenLoaiTietKiem,
-                                KyHan = Int32.Parse(KyHan),
-                                LaiSuat = float.Parse(LaiSuat),
-                                ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                                QuyDinhSoTienRut = Int32.Parse(QuyDinhSoTienRut)
-                            };
-                            DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
-                            DataProvider.Ins.DB.SaveChanges();
-
-                            ListLTK.Add(loaiTietKiem);
+                            AddLTK();
                         }
                         else
                         {
-                            SelectedItemLTK.DangSuDung = 0;
-                            DataProvider.Ins.DB.SaveChanges();
-
-                            ListLTK.Remove(SelectedItemLTK);
-                            ResetTextbox();
+                            DeleteLTK();
                         }
-                    } else if(VisibilityOfEditLTK == Visibility.Visible)
+                    } 
+                    else if(VisibilityOfEditLTK == Visibility.Visible)
                     {
-                        SelectedItemLTK.LaiSuat = float.Parse(LaiSuat);
-                        SelectedItemLTK.ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu);
-                        DataProvider.Ins.DB.SaveChanges();
-                        var temp = SelectedItemLTK;
+                        EditLTK();
+                    }
+                    else if (VisibilityOfEditThamSo == Visibility.Visible)
+                    {
 
-                        //find index of selected item in list, then remove and add the changed item
-                        int length = ListLTK.Count();
-                        for( int i=0; i<length; i++)
-                        {
-                            if( ListLTK[i].MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem)
-                            {
-                                ListLTK.RemoveAt(i);
-                                ListLTK.Insert(i, temp);
-                                break;
-                            }
-                        }
-
-                        //After confirming, selected item will die huhu, this line is used for making selected item reborn. 
-                        //You can continue change value without choosing item again if unnecessary
-                        SelectedItemLTK = temp;
+                        EditThamSo();
                     }
                 }
                 catch (Exception e) { };
@@ -401,6 +471,11 @@ namespace MasterSaveDemo.ViewModel
                     ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
                     LaiSuat = SelectedItemLTK.LaiSuat.ToString();
                 }
+                else if (VisibilityOfEditThamSo == Visibility.Visible)
+                {
+                    TenThamSo = SelectedItemThamSo.TenThamSo;
+                    GiaTri = SelectedItemThamSo.GiaTri.ToString();
+                }
             });
 
             CbbSelectionChangedCommand = new RelayCommand<object>((p) =>
@@ -415,13 +490,14 @@ namespace MasterSaveDemo.ViewModel
                     NameOfList = "Danh sách loại tiết kiệm";
                     VisibilityOfListLTK = Visibility.Visible;
                     VisibilityOfListThamSo = Visibility.Hidden;
+
+                    VisibilityOfEditThamSo = Visibility.Hidden;
                 } else
                 {
                     NameOfList = "Danh sách tham số";
                     VisibilityOfListThamSo = Visibility.Visible;
                     VisibilityOfListLTK = Visibility.Hidden;
 
-                    // co muon an may cai nay ko?
                     VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
                 }
 

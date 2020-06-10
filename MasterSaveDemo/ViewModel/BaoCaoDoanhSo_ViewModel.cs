@@ -254,8 +254,16 @@ namespace MasterSaveDemo.ViewModel
                     }
                     if (isNew)
                     {
-                        ListNgayBaoCao.Add(SelectedDateReport);
-                        ListNgayBaoCao.OrderBy(x => x.Date).ToList();
+                        if (ListNgayBaoCao.Count() == 0 || SelectedDateReport < ListNgayBaoCao[ListNgayBaoCao.Count() - 1])
+                            ListNgayBaoCao.Add(SelectedDateReport);
+                        for (int i = 0; i < ListNgayBaoCao.Count(); i++)
+                        {
+                            if (SelectedDateReport > ListNgayBaoCao[i])
+                            {
+                                ListNgayBaoCao.Insert(i, SelectedDateReport);
+                                break;
+                            }
+                        }
                     }
                 }
 

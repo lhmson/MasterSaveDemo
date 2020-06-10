@@ -333,6 +333,7 @@ namespace MasterSaveDemo.ViewModel
             SelectedItemThamSo.TenThamSo = TenThamSo;
             SelectedItemThamSo.GiaTri = Decimal.Parse(GiaTri);
             DataProvider.Ins.DB.SaveChanges();
+
             var temp = SelectedItemThamSo;
 
             //find index of selected item in list, then remove and add the changed item
@@ -353,11 +354,23 @@ namespace MasterSaveDemo.ViewModel
         }
         private void DeleteLTK()
         {
-            SelectedItemLTK.DangSuDung = 0;
-            DataProvider.Ins.DB.SaveChanges();
+            List<SOTIETKIEM> list = DataProvider.Ins.DB.SOTIETKIEMs.ToList();
+            var listSTK = from stk in list
+                          where stk.MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem
+                          select stk;
 
-            ListLTK.Remove(SelectedItemLTK);
-            ResetTextbox();
+            if( listSTK.Count() == 0)
+            {
+                SelectedItemLTK.DangSuDung = 0;
+                DataProvider.Ins.DB.SaveChanges();
+
+                ListLTK.Remove(SelectedItemLTK);
+                ResetTextbox();
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Can't");
+            }
         }
         #endregion
 

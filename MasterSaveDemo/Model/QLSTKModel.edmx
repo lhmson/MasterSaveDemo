@@ -36,6 +36,7 @@
         <EntityType Name="CTBCMODONG">
           <Key>
             <PropertyRef Name="MaBaoCaoMoDong" />
+            <PropertyRef Name="NgayXet" />
           </Key>
           <Property Name="MaBaoCaoMoDong" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="NgayXet" Type="smalldatetime" Nullable="false" />
@@ -147,7 +148,7 @@
         </Association>
         <Association Name="FK__CTBCMODON__MaBao__534D60F1">
           <End Role="BAOCAOMODONG" Type="Self.BAOCAOMODONG" Multiplicity="1" />
-          <End Role="CTBCMODONG" Type="Self.CTBCMODONG" Multiplicity="0..1" />
+          <End Role="CTBCMODONG" Type="Self.CTBCMODONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BAOCAOMODONG">
               <PropertyRef Name="MaBaoCaoMoDong" />
@@ -354,7 +355,7 @@
           <Property Name="ThangBaoCao" Type="Int32" Nullable="false" />
           <Property Name="NamBaoCao" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__BAOCAOMOD__MaLoa__4E88ABD4" FromRole="BAOCAOMODONG" ToRole="LOAITIETKIEM" />
-          <NavigationProperty Name="CTBCMODONG" Relationship="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1" FromRole="BAOCAOMODONG" ToRole="CTBCMODONG" />
+          <NavigationProperty Name="CTBCMODONGs" Relationship="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1" FromRole="BAOCAOMODONG" ToRole="CTBCMODONG" />
         </EntityType>
         <EntityType Name="CHUCNANG">
           <Key>
@@ -368,6 +369,7 @@
         <EntityType Name="CTBCMODONG">
           <Key>
             <PropertyRef Name="MaBaoCaoMoDong" />
+            <PropertyRef Name="NgayXet" />
           </Key>
           <Property Name="MaBaoCaoMoDong" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="NgayXet" Type="DateTime" Nullable="false" Precision="0" />
@@ -493,7 +495,7 @@
         </Association>
         <Association Name="FK__CTBCMODON__MaBao__534D60F1">
           <End Type="QLSTKModel.BAOCAOMODONG" Role="BAOCAOMODONG" Multiplicity="1" />
-          <End Type="QLSTKModel.CTBCMODONG" Role="CTBCMODONG" Multiplicity="0..1" />
+          <End Type="QLSTKModel.CTBCMODONG" Role="CTBCMODONG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BAOCAOMODONG">
               <PropertyRef Name="MaBaoCaoMoDong" />

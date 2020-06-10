@@ -7,6 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -98,12 +99,19 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Grid.Column="1" ItemsSource="{Binding ListDaBaoCao}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView Grid.Column="1" ItemsSource="{Binding ListDaBaoCao}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Thang" DisplayMemberBinding="{Binding ThangBaoCao}"/>
+                            <GridViewColumn Header="Tháng đã báo cáo" DisplayMemberBinding="{Binding ThangNamDaBaoCao }" />
+                            <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding LTKDaBaoCao}"/>
                         </GridView>
                     </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedMonthYear_Command}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </ListView>
             </Grid>
         </Grid>

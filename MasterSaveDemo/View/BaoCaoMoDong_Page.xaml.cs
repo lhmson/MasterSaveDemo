@@ -24,5 +24,7 @@ namespace MasterSaveDemo.View
         {
             InitializeComponent();
         }
+
+       
     }
 }

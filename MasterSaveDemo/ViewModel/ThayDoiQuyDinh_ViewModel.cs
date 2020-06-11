@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,6 +89,22 @@ namespace MasterSaveDemo.ViewModel
         {
             get => _VisibilityOfListThamSo;
             set { _VisibilityOfListThamSo = value; OnPropertyChanged(); }
+        }
+
+        // Visibility of confirm button
+        private Visibility _VisibilityOfConfirm;
+        public Visibility VisibilityOfConfirm
+        {
+            get => _VisibilityOfConfirm;
+            set { _VisibilityOfConfirm = value; OnPropertyChanged(); }
+        }
+
+        // Visibility of cancel button
+        private Visibility _VisibilityOfCancel;
+        public Visibility VisibilityOfCancel
+        {
+            get => _VisibilityOfCancel;
+            set { _VisibilityOfCancel = value; OnPropertyChanged(); }
         }
 
         // check if deleting or not
@@ -191,6 +208,7 @@ namespace MasterSaveDemo.ViewModel
             VisibilityOfEditLTK = Visibility.Hidden;
             VisibilityOfEditThamSo = Visibility.Hidden;
             VisibilityOfListThamSo = Visibility.Hidden;
+            VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
 
             // choosing list LTK
             SelectedIndexCbb = 0;
@@ -213,7 +231,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     return false;
                 }
-                if (string.IsNullOrEmpty(LaiSuat) || !float.TryParse(LaiSuat, out _))
+                if (string.IsNullOrEmpty(LaiSuat) || !double.TryParse(LaiSuat, out _))
                 {
                     return false;
                 }
@@ -236,7 +254,7 @@ namespace MasterSaveDemo.ViewModel
             } 
             else if (VisibilityOfEditLTK == Visibility.Visible)
             {
-                if (string.IsNullOrEmpty(LaiSuat) || !float.TryParse(LaiSuat, out _))
+                if (string.IsNullOrEmpty(LaiSuat) || !double.TryParse(LaiSuat, out _))
                 {
                     return false;
                 }
@@ -246,7 +264,7 @@ namespace MasterSaveDemo.ViewModel
                 }
 
                 // check if more than 1 value are the same
-                var laiSuat = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.LaiSuat == float.Parse(LaiSuat));
+                var laiSuat = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.LaiSuat == double.Parse(LaiSuat));
                 var thoiGianGuiToiThieu = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.ThoiGianGuiToiThieu == Int32.Parse(ThoiGianGuiToiThieu));
                 if (laiSuat.Count() != 0 && thoiGianGuiToiThieu.Count() != 0)
                     return false;
@@ -296,9 +314,10 @@ namespace MasterSaveDemo.ViewModel
                 MaLoaiTietKiem = MaLoaiTietKiem,
                 TenLoaiTietKiem = TenLoaiTietKiem,
                 KyHan = Int32.Parse(KyHan),
-                LaiSuat = float.Parse(LaiSuat),
+                LaiSuat = double.Parse(LaiSuat),
                 ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                QuyDinhSoTienRut = Int32.Parse(QuyDinhSoTienRut)
+                QuyDinhSoTienRut = Int32.Parse(QuyDinhSoTienRut),
+                DangSuDung = 1
             };
             DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
             DataProvider.Ins.DB.SaveChanges();
@@ -372,6 +391,14 @@ namespace MasterSaveDemo.ViewModel
                 System.Windows.MessageBox.Show("Can't");
             }
         }
+        private string Create_MaLTK(int stt)
+        {
+            string res = "LTK";
+            for (int i = 4; i <= 6 - stt.ToString().Length; i++)
+                res += '0';
+            res += stt.ToString();
+            return res;
+        }
         #endregion
 
         #region ICommand
@@ -394,9 +421,14 @@ namespace MasterSaveDemo.ViewModel
                     IsDeleting = false;
                     VisibilityOfAdd = Visibility.Visible;
                     VisibilityOfEditLTK = Visibility.Hidden;
+                    VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
+
+                    // auto create MaLoaiTietKiem
+                    int index = ListLTK.Count() + 1;
+                    MaLoaiTietKiem = Create_MaLTK(index);
                 }
             );
 
@@ -442,6 +474,7 @@ namespace MasterSaveDemo.ViewModel
             ConfirmCommand = new RelayCommand<object>((p) => 
             {
                 return CheckValidData();
+
             }, (p) => 
             {
                 try

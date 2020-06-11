@@ -148,12 +148,14 @@
                 <Grid Grid.Column="0">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Xác nhận"
-                            Width="150" Height="35" Command="{Binding ConfirmCommand}"/>
+                            Width="150" Height="35" Command="{Binding ConfirmCommand}"
+                            Visibility="{Binding VisibilityOfConfirm}"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Hủy"
-                            Width="150" Height="35" Command="{Binding CancelCommand}"/>
+                            Width="150" Height="35" Command="{Binding CancelCommand}"
+                            Visibility="{Binding VisibilityOfCancel}"/>
                 </Grid>
             </Grid>
         </Grid>

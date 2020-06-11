@@ -2,11 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Xps;
+using System.Windows.Xps.Packaging;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -121,6 +125,14 @@ namespace MasterSaveDemo.ViewModel
             get => _FormattedDate;
             set { _FormattedDate = value; OnPropertyChanged(); }
         }
+
+        //
+        private FlowDocument _FlowDoc;
+        public FlowDocument FlowDoc
+        {
+            get => _FlowDoc;
+            set { _FlowDoc = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -203,6 +215,8 @@ namespace MasterSaveDemo.ViewModel
         #region ICommand
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand CreateReportCommand { get; set; }
+        public ICommand PrintCommand { get; set; }
+
 
         #endregion
 
@@ -254,7 +268,7 @@ namespace MasterSaveDemo.ViewModel
                     }
                     if (isNew)
                     {
-                        if (ListNgayBaoCao.Count() == 0 || SelectedDateReport < ListNgayBaoCao[ListNgayBaoCao.Count() - 1])
+                        if (ListNgayBaoCao.Count() == 0 || (SelectedDateReport < ListNgayBaoCao[ListNgayBaoCao.Count() - 1]) )
                             ListNgayBaoCao.Add(SelectedDateReport);
                         for (int i = 0; i < ListNgayBaoCao.Count(); i++)
                         {
@@ -267,6 +281,26 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
 
+            );
+
+            PrintCommand = new RelayCommand<object>((p) => { return true; },
+                (p) => {
+                    if( ListBaoCaoDisplay.Count() != 0)
+                    {
+                        if (File.Exists("printPreview.xps"))
+                        {
+                            File.Delete("printPreview.xps");
+                        }
+                        var xpsDocument = new XpsDocument("printPreview.xps", FileAccess.ReadWrite);
+                        XpsDocumentWriter writer = XpsDocument.CreateXpsDocumentWriter(xpsDocument);
+                        writer.Write(((IDocumentPaginatorSource)FlowDoc).DocumentPaginator);
+                        FixedDocumentSequence doc = xpsDocument.GetFixedDocumentSequence();
+                        xpsDocument.Close();
+                        //var windows = new PrintPreviewWindow(doc);
+                        //windows.ShowDialog();
+                    }
+                
+                }
             );
         }
     }

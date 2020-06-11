@@ -1,8 +1,11 @@
-﻿using MasterSaveDemo.Model;
+﻿using MasterSaveDemo.Helper;
+using MasterSaveDemo.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,6 +31,13 @@ namespace MasterSaveDemo.ViewModel
             set { _ListNhomNguoiDung = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<BangPhanQuyen> _ListPhanQuyen;
+        public ObservableCollection<BangPhanQuyen> ListPhanQuyen
+        {
+            get => _ListPhanQuyen;
+            set { _ListPhanQuyen = value; OnPropertyChanged(); }
+        }
+
         private NhanVien _SelectedItemNguoiDung;
         public NhanVien SelectedItemNguoiDung
         {
@@ -40,6 +50,13 @@ namespace MasterSaveDemo.ViewModel
         {
             get => _SelectedItemNhomNguoiDung;
             set { _SelectedItemNhomNguoiDung = value; OnPropertyChanged(); }
+        }
+
+        private BangPhanQuyen _SelectedPhanQuyen;
+        public BangPhanQuyen SelectedPhanQuyen
+        {
+            get => _SelectedPhanQuyen;
+            set { _SelectedPhanQuyen = value; OnPropertyChanged(); }
         }
 
         private int _SelectedIndexCbb;
@@ -73,6 +90,19 @@ namespace MasterSaveDemo.ViewModel
             set { _VisibilityOfListNguoiDung = value; OnPropertyChanged(); }
         }
 
+        private Visibility _VisibilityOfListPhanQuyen;
+        public Visibility VisibilityOfListPhanQuyen
+        {
+            get => _VisibilityOfListPhanQuyen;
+            set { _VisibilityOfListPhanQuyen = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _VisibilityOfTenNhomQuyen;
+        public Visibility VisibilityOfTenNhomQuyen
+        {
+            get => _VisibilityOfTenNhomQuyen;
+            set { _VisibilityOfTenNhomQuyen = value; OnPropertyChanged(); }
+        }
         //TenDangNhap
         private string _TenDangNhap;
         public string TenDangNhap
@@ -81,6 +111,12 @@ namespace MasterSaveDemo.ViewModel
             set { _TenDangNhap = value; OnPropertyChanged(); }
         }
 
+        private string _txtTenNhomQuyen;
+        public string txtTenNhomQuyen
+        {
+            get => _txtTenNhomQuyen;
+            set { _txtTenNhomQuyen = value; OnPropertyChanged(); }
+        }
         //MatKhau
         private string _MatKhau;
         public string MatKhau
@@ -131,6 +167,16 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Function
+        private int CreateCodeNhomNguoiDung()
+        {
+            ObservableCollection<NHOMNGUOIDUNG> listNhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
+            int max = 0;
+            foreach (var item in listNhom)
+                if (max < item.MaNhom)
+                    max = item.MaNhom;
+            return max + 1;
+        }
+         
         private void LoadData()
         {
             ObservableCollection<NGUOIDUNG> ListNguoiDung = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
@@ -162,6 +208,47 @@ namespace MasterSaveDemo.ViewModel
                 if (nhom.TenNhom == TenNhom)
                     return nhom.MaNhom;
             return ma;
+        }
+
+        private void LoadDataPhanQuyen()
+        {
+            ListPhanQuyen = new ObservableCollection<BangPhanQuyen>();
+            ObservableCollection<NHOMNGUOIDUNG> nhomNguoiDung = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
+
+            foreach (var item in nhomNguoiDung)
+                ListPhanQuyen.Add(new BangPhanQuyen(item.TenNhom,false));
+        }
+
+        private string check_DeleteNhomNguoiDung(int maNhom)
+        {
+            ObservableCollection<NGUOIDUNG> ngDung = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
+
+            string res = "";
+            foreach (var item in ngDung)
+                if (item.MaNhom == maNhom)
+                    res += item.HoTen + "\n";
+            return res;
+
+        }
+
+        private void Delete_CbxNhomNguoiDung(string tenNhom)
+        {
+                for (int i=0; i<CbxTenNhom.Count; i++)
+                    if (CbxTenNhom[i] == tenNhom)
+                {
+                    System.Windows.Forms.MessageBox.Show("CCC");
+                    CbxTenNhom.RemoveAt(i);
+                    break;
+                    
+                }    
+        }
+
+        private void ResetCbxTenNhom()
+        {
+            CbxTenNhom = new List<string>();
+            ObservableCollection<NHOMNGUOIDUNG> List_Nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
+            foreach (var Nhom in List_Nhom)
+                CbxTenNhom.Add(Nhom.TenNhom);
         }
 
         private bool CheckValidData()
@@ -214,6 +301,32 @@ namespace MasterSaveDemo.ViewModel
             TextTenNhom = "";
             SelectedTenNhom = null;
         }
+
+        private void Add_PhanQuyen(int maNhom, int maChucNang)
+        {
+            PHANQUYEN PQ = new PHANQUYEN();
+            PQ.MaNhom = maNhom;
+            PQ.MaChucNang = maChucNang;
+            DataProvider.Ins.DB.PHANQUYENs.Add(PQ);
+            DataProvider.Ins.DB.SaveChanges();
+        }
+
+        private void Delete_PhanQuyen(int maNhom)
+        {
+            ObservableCollection<PHANQUYEN> listPhanQuyen = new ObservableCollection<PHANQUYEN>(DataProvider.Ins.DB.PHANQUYENs);
+            foreach (var pq in listPhanQuyen)
+                if (pq.MaNhom == maNhom)
+                    DataProvider.Ins.DB.PHANQUYENs.Remove(pq);
+        }
+
+        private void Delete_NhomNguoiDung(string tenNhom)
+        {
+            ObservableCollection<NHOMNGUOIDUNG> nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
+            foreach (var item in nhom)
+                if (item.TenNhom == tenNhom)
+                    DataProvider.Ins.DB.NHOMNGUOIDUNGs.Remove(item);
+            DataProvider.Ins.DB.SaveChanges();
+        }
         #endregion
 
         #region ICommand
@@ -228,23 +341,55 @@ namespace MasterSaveDemo.ViewModel
         public QuanLyNhanSu_ViewModel()
         {
             LoadData();
-
+            LoadDataPhanQuyen();
+            VisibilityOfListPhanQuyen = Visibility.Hidden;
+            VisibilityOfTenNhomQuyen = Visibility.Hidden;
             // show elements used for adding
-            AddNguoiDungCommand = new RelayCommand<object>((p) => { return true; },
-                (p) => {
-                    VisibilityOfAdd = Visibility.Visible;
-                    VisibilityOfEdit = Visibility.Hidden;
+            AddNguoiDungCommand = new RelayCommand<object>((p) => {
+                if (VisibilityOfListPhanQuyen == Visibility.Visible)
+                    if (SelectedPhanQuyen != null)
+                        if (SelectedPhanQuyen.EnabledCheckBox == true)
+                            return false;
 
-                    // reset value for textbox because these textbox still keep value if you are editing and then change to add
-                    ResetTextbox();
+                return true; },
+                (p) => {
+                    if (VisibilityOfListPhanQuyen == Visibility.Hidden)
+                    {
+                        VisibilityOfAdd = Visibility.Visible;
+                        VisibilityOfEdit = Visibility.Hidden;
+                        VisibilityOfTenNhomQuyen = Visibility.Hidden;
+                        // reset value for textbox because these textbox still keep value if you are editing and then change to add
+                        ResetTextbox();
+                    }
+                    else
+                    {
+                        VisibilityOfAdd = Visibility.Hidden;
+                        VisibilityOfEdit = Visibility.Hidden;
+                        VisibilityOfTenNhomQuyen = Visibility.Visible;
+
+                        if (SelectedPhanQuyen != null)
+                        {
+                            BangPhanQuyen PQ = SelectedPhanQuyen;
+                            PQ.EnabledCheckBox = false;
+                            foreach (var pq in ListPhanQuyen)
+                                if (pq.TenNhomQuyen == PQ.TenNhomQuyen)
+                                {
+                                    ListPhanQuyen.Remove(pq);
+                                    ListPhanQuyen.Add(PQ);
+                                    SelectedPhanQuyen = PQ;
+                                    break;
+                                }
+                        }
+                    }
                 }
             );
 
             // show elements used for editing
-            EditNguoiDungCommand = new RelayCommand<object>((p) => { return true; },
+            EditNguoiDungCommand = new RelayCommand<object>((p) => 
+            { return (SelectedPhanQuyen != null || SelectedItemNguoiDung != null); },
                 (p) => {
                    
-                    if (SelectedItemNguoiDung != null)
+                    if (VisibilityOfListNguoiDung==Visibility.Visible && SelectedItemNguoiDung != null) // Edit Nhóm người dùng
                     {
                         VisibilityOfEdit = Visibility.Visible;
                         VisibilityOfAdd = Visibility.Hidden;
@@ -252,29 +397,69 @@ namespace MasterSaveDemo.ViewModel
                         HoTen = SelectedItemNguoiDung.HoTen;
                         SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
                     }
+
+                    if (VisibilityOfListPhanQuyen == Visibility.Visible && SelectedPhanQuyen != null) // Edit Bảng phân quyền
+                    {
+                        VisibilityOfTenNhomQuyen = Visibility.Hidden;
+                        BangPhanQuyen PQ = SelectedPhanQuyen;
+                        PQ.EnabledCheckBox = true;
+                        foreach(var pq in ListPhanQuyen)
+                           if (pq.TenNhomQuyen == PQ.TenNhomQuyen)
+                            {
+                                ListPhanQuyen.Remove(pq);
+                                ListPhanQuyen.Add(PQ);
+                                SelectedPhanQuyen = PQ;
+                                break;
+                            }
+                        
+                    }
                 }
             );
 
-            DeleteNguoiDungKCommand = new RelayCommand<object>((p) => { return (SelectedItemNguoiDung != null); },
+            DeleteNguoiDungKCommand = new RelayCommand<object>((p) => { return (SelectedItemNguoiDung != null || SelectedPhanQuyen!= null); },
                 (p) => {
+                    if (VisibilityOfListNguoiDung == Visibility.Visible)
+                    { 
                         VisibilityOfEdit = Visibility.Hidden;
                         VisibilityOfAdd = Visibility.Hidden;
                     DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn chắc xóa người dùng này không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     var nguoiDung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItemNguoiDung.TenDangNhap).SingleOrDefault();
                     DataProvider.Ins.DB.NGUOIDUNGs.Remove(nguoiDung);
                     DataProvider.Ins.DB.SaveChanges();
-                    if (kq == DialogResult.Yes)
-                    {
-                        int length = ListNhanVien.Count();
-                        for (int i = 0; i < length; i++)
+                        if (kq == DialogResult.Yes)
                         {
-                            if (ListNhanVien[i].TenDangNhap == SelectedItemNguoiDung.TenDangNhap)
+                            int length = ListNhanVien.Count();
+                            for (int i = 0; i < length; i++)
                             {
-                                ListNhanVien.RemoveAt(i);
-                                break;
+                                if (ListNhanVien[i].TenDangNhap == SelectedItemNguoiDung.TenDangNhap)
+                                {
+                                    ListNhanVien.RemoveAt(i);
+                                    break;
+                                }
                             }
+                            System.Windows.Forms.MessageBox.Show("Xóa người dùng thành công");
                         }
-                        System.Windows.Forms.MessageBox.Show("Xóa người dùng thành công");
+                    }
+                    else
+                    {
+                        VisibilityOfTenNhomQuyen = Visibility.Hidden;
+                        DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn chắc xóa nhóm người dùng này không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (kq == DialogResult.Yes)
+                        {
+                            string error = check_DeleteNhomNguoiDung(search_MaNhom(SelectedPhanQuyen.TenNhomQuyen));
+                            if (error == "")
+                            {
+                                System.Windows.Forms.MessageBox.Show("Đã xó nhóm " + SelectedPhanQuyen.TenNhomQuyen + " thành công!");
+                                int maNhom = search_MaNhom(SelectedPhanQuyen.TenNhomQuyen);
+                                Delete_PhanQuyen(maNhom);
+                                Delete_NhomNguoiDung(SelectedPhanQuyen.TenNhomQuyen);
+                                ResetCbxTenNhom();
+                                ListPhanQuyen.Remove(SelectedPhanQuyen);
+
+                            }
+                            else
+                                System.Windows.Forms.MessageBox.Show("Không thể xóa. Hãy xóa danh sách người dùng này để thực hiện: " + error);
+                        }
                     }
                 }
             );
@@ -282,7 +467,20 @@ namespace MasterSaveDemo.ViewModel
             // Button: Confirm for adding NguoiDung
             ConfirmCommand = new RelayCommand<object>((p) =>
             {
-                return CheckValidData();
+            if (VisibilityOfAdd == Visibility.Visible)
+                if (CheckValidData()) return true;
+                else return false;
+                if (VisibilityOfTenNhomQuyen == Visibility.Visible)
+                    if (txtTenNhomQuyen != null && txtTenNhomQuyen != "") return true;
+                    else return false;
+                if (VisibilityOfEdit == Visibility.Visible)
+                    if (CheckValidData()) return true;
+                    else return false;
+                if (SelectedPhanQuyen != null)
+                    if (SelectedPhanQuyen.EnabledCheckBox == true)
+                        return true;
+                    else return false;
+                return false;
             }, (p) =>
             {
                 try
@@ -303,6 +501,9 @@ namespace MasterSaveDemo.ViewModel
 
                         NhanVien nv = new NhanVien(TenDangNhap, MatKhau, HoTen, SelectedTenNhom);
                         ListNhanVien.Add(nv);
+                        VisibilityOfAdd = Visibility.Hidden;
+                        ResetTextbox();
+                        VisibilityOfAdd = Visibility.Hidden;
                     }
                     else if (VisibilityOfEdit == Visibility.Visible)
                     {
@@ -310,6 +511,7 @@ namespace MasterSaveDemo.ViewModel
                         var nguoiDung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItemNguoiDung.TenDangNhap).SingleOrDefault();
                         nguoiDung.MatKhau = MatKhau;
                         nguoiDung.MaNhom = search_MaNhom(SelectedTenNhom);
+                        nguoiDung.HoTen = HoTen;
                         DataProvider.Ins.DB.SaveChanges();
 
                         NhanVien nv = new NhanVien(nguoiDung.TenDangNhap, nguoiDung.MatKhau, nguoiDung.HoTen, SelectedTenNhom);
@@ -324,22 +526,75 @@ namespace MasterSaveDemo.ViewModel
                             }
                         }
 
+                        VisibilityOfEdit = Visibility.Hidden;
                         ////After confirming, selected item will die huhu, this line is used for making selected item reborn. 
                         ////You can continue change value without choosing item again if unnecessary
                         //SelectedItemLTK = temp;
                     }
+                    else if (VisibilityOfTenNhomQuyen == Visibility.Visible)
+                    {
+                        if (txtTenNhomQuyen == null || txtTenNhomQuyen == "")
+                        {
+                            System.Windows.Forms.MessageBox.Show("Mời nhập lại tên nhóm quyền!");
+                        }
+                        else
+                        {
+                            BangPhanQuyen bpq = new BangPhanQuyen(txtTenNhomQuyen, false);
+                            ListPhanQuyen.Add(bpq);
+                            //Add Database nhóm người dùng mới
+                            NHOMNGUOIDUNG nhom = new NHOMNGUOIDUNG();
+                            nhom.MaNhom = CreateCodeNhomNguoiDung();
+                            nhom.TenNhom = txtTenNhomQuyen;
+                            DataProvider.Ins.DB.NHOMNGUOIDUNGs.Add(nhom);
+                            DataProvider.Ins.DB.SaveChanges();
+                            ResetCbxTenNhom();
+                            txtTenNhomQuyen = "";
+                            VisibilityOfTenNhomQuyen = Visibility.Hidden;
+                           
+                        }
+                    }
+                    else if (SelectedPhanQuyen.EnabledCheckBox == true)
+                    {
+                        int maNhom = search_MaNhom(SelectedPhanQuyen.TenNhomQuyen);
+
+                        Delete_PhanQuyen(maNhom);
+                        if (SelectedPhanQuyen.chkQLNS) Add_PhanQuyen(maNhom, 1);
+                        if (SelectedPhanQuyen.chkMSTK) Add_PhanQuyen(maNhom, 2);
+                        if (SelectedPhanQuyen.chkLPG) Add_PhanQuyen(maNhom, 3);
+                        if (SelectedPhanQuyen.chkLPR) Add_PhanQuyen(maNhom, 4);
+                        if (SelectedPhanQuyen.chkTCS) Add_PhanQuyen(maNhom, 5);
+                        if (SelectedPhanQuyen.chkBCDS) Add_PhanQuyen(maNhom, 6);
+                        if (SelectedPhanQuyen.chkBCMD) Add_PhanQuyen(maNhom, 7);
+                        if (SelectedPhanQuyen.chkTDQD) Add_PhanQuyen(maNhom, 8);
+                        if (SelectedPhanQuyen.chkNLVV) Add_PhanQuyen(maNhom, 9);
+                        System.Windows.Forms.MessageBox.Show("Chỉnh sửa quyền thành công cho nhóm " + SelectedPhanQuyen.TenNhomQuyen);
+
+                        BangPhanQuyen PQ = SelectedPhanQuyen;
+                        PQ.EnabledCheckBox = false;
+                        foreach (var pq in ListPhanQuyen)
+                            if (pq.TenNhomQuyen == PQ.TenNhomQuyen)
+                            {
+                                ListPhanQuyen.Remove(pq);
+                                ListPhanQuyen.Add(PQ);
+                                SelectedPhanQuyen = PQ;
+                                break;
+                            }
+
+                    }
+                   
                 }
                 catch (Exception e) { };
             });
 
             CancelCommand = new RelayCommand<object>((p) =>
             {
-                return true;
+                return (VisibilityOfTenNhomQuyen == Visibility.Visible || VisibilityOfAdd == Visibility.Visible || VisibilityOfEdit == Visibility.Visible);
             }, (p) =>
             {
                 if (VisibilityOfAdd == Visibility.Visible)
                 {
                     ResetTextbox();
+                    VisibilityOfAdd = Visibility.Hidden;
                 }
                 else if (VisibilityOfEdit == Visibility.Visible)
                 {
@@ -349,6 +604,12 @@ namespace MasterSaveDemo.ViewModel
                         HoTen = SelectedItemNguoiDung.HoTen;
                         SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
                     }
+                    VisibilityOfEdit = Visibility.Hidden;
+                }
+                else if (VisibilityOfTenNhomQuyen == Visibility.Visible)
+                {
+                    VisibilityOfTenNhomQuyen = Visibility.Hidden;
+                    txtTenNhomQuyen = "";
                 }
             });
 
@@ -362,11 +623,12 @@ namespace MasterSaveDemo.ViewModel
                 if (SelectedIndexCbb == 0)
                 {
                     VisibilityOfListNguoiDung = Visibility.Visible;
+                    VisibilityOfListPhanQuyen = Visibility.Hidden;
                 }
                 else
                 {
                     VisibilityOfListNguoiDung = Visibility.Hidden;
-
+                    VisibilityOfListPhanQuyen = Visibility.Visible;
                     // co muon an may cai nay ko?
                     VisibilityOfAdd = VisibilityOfEdit = Visibility.Hidden;
                 }

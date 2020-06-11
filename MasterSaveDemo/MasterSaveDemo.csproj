@@ -99,6 +99,7 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\BangPhanQuyen.cs" />
     <Compile Include="Model\BAOCAODOANHSO.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>

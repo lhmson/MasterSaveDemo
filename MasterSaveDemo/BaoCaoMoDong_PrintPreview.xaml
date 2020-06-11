@@ -9,6 +9,7 @@
         
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="18"
@@ -57,8 +58,10 @@
                             <materialDesign:PackIcon Kind="Printer"/>
                         </Button>
                         <Button  HorizontalAlignment="Center" Margin="10"  VerticalAlignment="Top"
-                            Command="{Binding CloseWindowCommand}">
+                            Command="{Binding CloseWindowCommand}" IsEnabled="True"
+                             CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"     >
                             <materialDesign:PackIcon Kind="Close"/>
+                            
                         </Button>
                     </StackPanel>
                 </Grid>

@@ -95,7 +95,8 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <ListView Grid.Column="0" x:Name="listViewReport" ItemsSource="{Binding ListBaoCaoDM}"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                          HorizontalAlignment="Stretch" FontSize="20" VerticalAlignment="Stretch" Margin="0,0,0,0"
+                          HorizontalContentAlignment="Stretch">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"/>
@@ -107,6 +108,7 @@
                     </ListView.View>
                 </ListView>
                 <ListView Grid.Column="1" ItemsSource="{Binding ListDaBaoCao}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          HorizontalContentAlignment="Stretch" FontSize="20"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>

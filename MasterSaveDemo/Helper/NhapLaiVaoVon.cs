@@ -92,7 +92,7 @@ namespace MasterSaveDemo.Helper
                     {
                         if (confirm == true) //confirm true neu dang rut tien, nguoi nhan se duoc tinh lai ngay
                         {
-                            if (!TinhLai(stk, ltk, DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.KyHan == 1).First().LaiSuat, ltk.KyHan - (int)(stk.NgayDaoHanKeTiep - DateTime.Today).TotalDays))
+                            if (!TinhLai(stk, ltk, DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.KyHan == 0).First().LaiSuat, ltk.KyHan - (int)(stk.NgayDaoHanKeTiep - DateTime.Today).TotalDays))
                                 return false;
                         }
                         else //confirm false trong truong hop dang nhap lai hang loat (chi cong lai cho tai khoan dao han), khong nhap gì

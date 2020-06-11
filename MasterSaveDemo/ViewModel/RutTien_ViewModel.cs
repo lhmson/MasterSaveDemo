@@ -243,7 +243,7 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if (info_loaitietkiem.SoTienDuocRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
+					if (info_loaitietkiem.QuyDinhSoTienRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
 					{
 						ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
 						Result_KiemTraHopLe = false;

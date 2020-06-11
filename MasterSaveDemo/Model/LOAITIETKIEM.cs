@@ -27,7 +27,8 @@ namespace MasterSaveDemo.Model
         public int KyHan { get; set; }
         public double LaiSuat { get; set; }
         public int ThoiGianGuiToiThieu { get; set; }
-        public decimal SoTienDuocRut { get; set; }
+        public int QuyDinhSoTienRut { get; set; }
+        public int DangSuDung { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BAOCAODOANHSO> BAOCAODOANHSOes { get; set; }

@@ -40,6 +40,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <ComboBox x:Name="LTK_combobox" materialDesign:HintAssist.Hint="Loại tiết kiệm"
@@ -79,6 +80,12 @@
                         HorizontalAlignment="Center"
                         Content="Lập báo cáo"
                         Command="{Binding CreateReportCommand}"/>
+            </Grid>
+            <Grid Grid.Column="4">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        HorizontalAlignment="Center"
+                        Content="Xuất báo cáo"
+                        Command="{Binding ExportReportCommand}"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">

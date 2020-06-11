@@ -13,6 +13,8 @@ namespace MasterSaveDemo.ViewModel
     public class BaoCaoMoDong_ViewModel : BaseViewModel
     {
         #region Variables
+        //copy tu mainwindow_VM
+        public bool isLoaded = false;
         //--------------
         private List<string> _List_LTK;
 
@@ -236,6 +238,7 @@ namespace MasterSaveDemo.ViewModel
         #endregion
         public ICommand CreateReportCommand { get; set; }
         public ICommand SelectedMonthYear_Command { get; set; }
+        public ICommand ExportReportCommand { get; set; }
         public BaoCaoMoDong_ViewModel()
         {
 
@@ -422,8 +425,17 @@ namespace MasterSaveDemo.ViewModel
                 }
                 BindingListDaBaoCao();
             });
+            ExportReportCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            },
+           (p) =>
+           {
+                   BaoCaoMoDong_PrintPreview BaoCao = new BaoCaoMoDong_PrintPreview();
+                   BaoCao.ShowDialog();
+                   isLoaded = true;                              
+           });
 
-
-        }
+           }
     }
 }

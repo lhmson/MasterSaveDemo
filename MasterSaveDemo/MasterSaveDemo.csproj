@@ -211,9 +211,6 @@
     <Compile Include="View\TraCuu_Page.xaml.cs">
       <DependentUpon>TraCuu_Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PrintPreviewWindow.xaml.cs">
-      <DependentUpon>PrintPreviewWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -275,10 +272,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TraCuu_Page.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PrintPreviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

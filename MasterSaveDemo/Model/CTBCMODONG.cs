@@ -18,7 +18,7 @@ namespace MasterSaveDemo.Model
         public System.DateTime NgayXet { get; set; }
         public int SoLuongSoMo { get; set; }
         public int SoLuongSoDong { get; set; }
-        public int ChechLech { get; set; }
+        public int ChenhLech { get; set; }
     
         public virtual BAOCAOMODONG BAOCAOMODONG { get; set; }
     }

@@ -14,7 +14,7 @@
           <Property Name="MaLoaiTietKiem" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="TongThu" Type="money" Nullable="false" />
           <Property Name="TongChi" Type="money" Nullable="false" />
-          <Property Name="ChechLech" Type="money" Nullable="false" />
+          <Property Name="ChenhLech" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="BAOCAOMODONG">
           <Key>
@@ -41,7 +41,7 @@
           <Property Name="NgayXet" Type="smalldatetime" Nullable="false" />
           <Property Name="SoLuongSoMo" Type="int" Nullable="false" />
           <Property Name="SoLuongSoDong" Type="int" Nullable="false" />
-          <Property Name="ChechLech" Type="int" Nullable="false" />
+          <Property Name="ChenhLech" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="LOAITIETKIEM">
           <Key>
@@ -121,7 +121,7 @@
           <Property Name="TenThamSo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="GiaTri" Type="money" Nullable="false" />
         </EntityType>
-        <Association Name="FK__BAOCAODOA__MaLoa__36B12243">
+        <Association Name="FK__BAOCAODOA__MaLoa__49C3F6B7">
           <End Role="LOAITIETKIEM" Type="Self.LOAITIETKIEM" Multiplicity="1" />
           <End Role="BAOCAODOANHSO" Type="Self.BAOCAODOANHSO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -133,7 +133,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BAOCAOMOD__MaLoa__3B75D760">
+        <Association Name="FK__BAOCAOMOD__MaLoa__4E88ABD4">
           <End Role="LOAITIETKIEM" Type="Self.LOAITIETKIEM" Multiplicity="1" />
           <End Role="BAOCAOMODONG" Type="Self.BAOCAOMODONG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -145,7 +145,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CTBCMODON__MaBao__403A8C7D">
+        <Association Name="FK__CTBCMODON__MaBao__534D60F1">
           <End Role="BAOCAOMODONG" Type="Self.BAOCAOMODONG" Multiplicity="1" />
           <End Role="CTBCMODONG" Type="Self.CTBCMODONG" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -157,7 +157,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NGUOIDUNG__MaNho__4E88ABD4">
+        <Association Name="FK__NGUOIDUNG__MaNho__619B8048">
           <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="1" />
           <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -169,7 +169,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PHANQUYEN__MaChu__4BAC3F29">
+        <Association Name="FK__PHANQUYEN__MaChu__5EBF139D">
           <End Role="CHUCNANG" Type="Self.CHUCNANG" Multiplicity="1" />
           <End Role="PHANQUYEN" Type="Self.PHANQUYEN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -181,7 +181,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PHANQUYEN__MaNho__4AB81AF0">
+        <Association Name="FK__PHANQUYEN__MaNho__5DCAEF64">
           <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="1" />
           <End Role="PHANQUYEN" Type="Self.PHANQUYEN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -193,7 +193,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PHIEUGUI__MaSoTi__2F10007B">
+        <Association Name="FK__PHIEUGUI__MaSoTi__4222D4EF">
           <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="1" />
           <End Role="PHIEUGUI" Type="Self.PHIEUGUI" Multiplicity="*" />
           <ReferentialConstraint>
@@ -205,7 +205,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PHIEURUT__MaSoTi__32E0915F">
+        <Association Name="FK__PHIEURUT__MaSoTi__45F365D3">
           <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="1" />
           <End Role="PHIEURUT" Type="Self.PHIEURUT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -217,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SOTIETKIE__MaLoa__286302EC">
+        <Association Name="FK__SOTIETKIE__MaLoa__3B75D760">
           <End Role="LOAITIETKIEM" Type="Self.LOAITIETKIEM" Multiplicity="1" />
           <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="*" />
           <ReferentialConstraint>
@@ -242,39 +242,39 @@
           <EntitySet Name="PHIEURUT" EntityType="Self.PHIEURUT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOTIETKIEM" EntityType="Self.SOTIETKIEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THAMSO" EntityType="Self.THAMSO" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__BAOCAODOA__MaLoa__36B12243" Association="Self.FK__BAOCAODOA__MaLoa__36B12243">
+          <AssociationSet Name="FK__BAOCAODOA__MaLoa__49C3F6B7" Association="Self.FK__BAOCAODOA__MaLoa__49C3F6B7">
             <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEM" />
             <End Role="BAOCAODOANHSO" EntitySet="BAOCAODOANHSO" />
           </AssociationSet>
-          <AssociationSet Name="FK__BAOCAOMOD__MaLoa__3B75D760" Association="Self.FK__BAOCAOMOD__MaLoa__3B75D760">
+          <AssociationSet Name="FK__BAOCAOMOD__MaLoa__4E88ABD4" Association="Self.FK__BAOCAOMOD__MaLoa__4E88ABD4">
             <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEM" />
             <End Role="BAOCAOMODONG" EntitySet="BAOCAOMODONG" />
           </AssociationSet>
-          <AssociationSet Name="FK__CTBCMODON__MaBao__403A8C7D" Association="Self.FK__CTBCMODON__MaBao__403A8C7D">
+          <AssociationSet Name="FK__CTBCMODON__MaBao__534D60F1" Association="Self.FK__CTBCMODON__MaBao__534D60F1">
             <End Role="BAOCAOMODONG" EntitySet="BAOCAOMODONG" />
             <End Role="CTBCMODONG" EntitySet="CTBCMODONG" />
           </AssociationSet>
-          <AssociationSet Name="FK__NGUOIDUNG__MaNho__4E88ABD4" Association="Self.FK__NGUOIDUNG__MaNho__4E88ABD4">
+          <AssociationSet Name="FK__NGUOIDUNG__MaNho__619B8048" Association="Self.FK__NGUOIDUNG__MaNho__619B8048">
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
             <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
           </AssociationSet>
-          <AssociationSet Name="FK__PHANQUYEN__MaChu__4BAC3F29" Association="Self.FK__PHANQUYEN__MaChu__4BAC3F29">
+          <AssociationSet Name="FK__PHANQUYEN__MaChu__5EBF139D" Association="Self.FK__PHANQUYEN__MaChu__5EBF139D">
             <End Role="CHUCNANG" EntitySet="CHUCNANG" />
             <End Role="PHANQUYEN" EntitySet="PHANQUYEN" />
           </AssociationSet>
-          <AssociationSet Name="FK__PHANQUYEN__MaNho__4AB81AF0" Association="Self.FK__PHANQUYEN__MaNho__4AB81AF0">
+          <AssociationSet Name="FK__PHANQUYEN__MaNho__5DCAEF64" Association="Self.FK__PHANQUYEN__MaNho__5DCAEF64">
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
             <End Role="PHANQUYEN" EntitySet="PHANQUYEN" />
           </AssociationSet>
-          <AssociationSet Name="FK__PHIEUGUI__MaSoTi__2F10007B" Association="Self.FK__PHIEUGUI__MaSoTi__2F10007B">
+          <AssociationSet Name="FK__PHIEUGUI__MaSoTi__4222D4EF" Association="Self.FK__PHIEUGUI__MaSoTi__4222D4EF">
             <End Role="SOTIETKIEM" EntitySet="SOTIETKIEM" />
             <End Role="PHIEUGUI" EntitySet="PHIEUGUI" />
           </AssociationSet>
-          <AssociationSet Name="FK__PHIEURUT__MaSoTi__32E0915F" Association="Self.FK__PHIEURUT__MaSoTi__32E0915F">
+          <AssociationSet Name="FK__PHIEURUT__MaSoTi__45F365D3" Association="Self.FK__PHIEURUT__MaSoTi__45F365D3">
             <End Role="SOTIETKIEM" EntitySet="SOTIETKIEM" />
             <End Role="PHIEURUT" EntitySet="PHIEURUT" />
           </AssociationSet>
-          <AssociationSet Name="FK__SOTIETKIE__MaLoa__286302EC" Association="Self.FK__SOTIETKIE__MaLoa__286302EC">
+          <AssociationSet Name="FK__SOTIETKIE__MaLoa__3B75D760" Association="Self.FK__SOTIETKIE__MaLoa__3B75D760">
             <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEM" />
             <End Role="SOTIETKIEM" EntitySet="SOTIETKIEM" />
           </AssociationSet>
@@ -286,51 +286,51 @@
         <EntityContainer Name="QLSTKEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BAOCAODOANHSOes" EntityType="QLSTKModel.BAOCAODOANHSO" />
           <EntitySet Name="BAOCAOMODONGs" EntityType="QLSTKModel.BAOCAOMODONG" />
+          <EntitySet Name="CHUCNANGs" EntityType="QLSTKModel.CHUCNANG" />
           <EntitySet Name="CTBCMODONGs" EntityType="QLSTKModel.CTBCMODONG" />
           <EntitySet Name="LOAITIETKIEMs" EntityType="QLSTKModel.LOAITIETKIEM" />
+          <EntitySet Name="NGUOIDUNGs" EntityType="QLSTKModel.NGUOIDUNG" />
+          <EntitySet Name="NHOMNGUOIDUNGs" EntityType="QLSTKModel.NHOMNGUOIDUNG" />
+          <EntitySet Name="PHANQUYENs" EntityType="QLSTKModel.PHANQUYEN" />
           <EntitySet Name="PHIEUGUIs" EntityType="QLSTKModel.PHIEUGUI" />
           <EntitySet Name="PHIEURUTs" EntityType="QLSTKModel.PHIEURUT" />
           <EntitySet Name="SOTIETKIEMs" EntityType="QLSTKModel.SOTIETKIEM" />
           <EntitySet Name="THAMSOes" EntityType="QLSTKModel.THAMSO" />
-          <AssociationSet Name="FK__BAOCAODOA__MaLoa__36B12243" Association="QLSTKModel.FK__BAOCAODOA__MaLoa__36B12243">
+          <AssociationSet Name="FK__BAOCAODOA__MaLoa__49C3F6B7" Association="QLSTKModel.FK__BAOCAODOA__MaLoa__49C3F6B7">
             <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
             <End Role="BAOCAODOANHSO" EntitySet="BAOCAODOANHSOes" />
           </AssociationSet>
-          <AssociationSet Name="FK__BAOCAOMOD__MaLoa__3B75D760" Association="QLSTKModel.FK__BAOCAOMOD__MaLoa__3B75D760">
+          <AssociationSet Name="FK__BAOCAOMOD__MaLoa__4E88ABD4" Association="QLSTKModel.FK__BAOCAOMOD__MaLoa__4E88ABD4">
             <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
             <End Role="BAOCAOMODONG" EntitySet="BAOCAOMODONGs" />
           </AssociationSet>
-          <AssociationSet Name="FK__CTBCMODON__MaBao__403A8C7D" Association="QLSTKModel.FK__CTBCMODON__MaBao__403A8C7D">
+          <AssociationSet Name="FK__CTBCMODON__MaBao__534D60F1" Association="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1">
             <End Role="BAOCAOMODONG" EntitySet="BAOCAOMODONGs" />
             <End Role="CTBCMODONG" EntitySet="CTBCMODONGs" />
           </AssociationSet>
-          <AssociationSet Name="FK__SOTIETKIE__MaLoa__286302EC" Association="QLSTKModel.FK__SOTIETKIE__MaLoa__286302EC">
-            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
-            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PHIEUGUI__MaSoTi__2F10007B" Association="QLSTKModel.FK__PHIEUGUI__MaSoTi__2F10007B">
-            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
-            <End Role="PHIEUGUI" EntitySet="PHIEUGUIs" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PHIEURUT__MaSoTi__32E0915F" Association="QLSTKModel.FK__PHIEURUT__MaSoTi__32E0915F">
-            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
-            <End Role="PHIEURUT" EntitySet="PHIEURUTs" />
-          </AssociationSet>
-          <EntitySet Name="CHUCNANGs" EntityType="QLSTKModel.CHUCNANG" />
-          <EntitySet Name="NGUOIDUNGs" EntityType="QLSTKModel.NGUOIDUNG" />
-          <EntitySet Name="NHOMNGUOIDUNGs" EntityType="QLSTKModel.NHOMNGUOIDUNG" />
-          <EntitySet Name="PHANQUYENs" EntityType="QLSTKModel.PHANQUYEN" />
-          <AssociationSet Name="FK__PHANQUYEN__MaChu__4BAC3F29" Association="QLSTKModel.FK__PHANQUYEN__MaChu__4BAC3F29">
+          <AssociationSet Name="FK__PHANQUYEN__MaChu__5EBF139D" Association="QLSTKModel.FK__PHANQUYEN__MaChu__5EBF139D">
             <End Role="CHUCNANG" EntitySet="CHUCNANGs" />
             <End Role="PHANQUYEN" EntitySet="PHANQUYENs" />
           </AssociationSet>
-          <AssociationSet Name="FK__NGUOIDUNG__MaNho__4E88ABD4" Association="QLSTKModel.FK__NGUOIDUNG__MaNho__4E88ABD4">
+          <AssociationSet Name="FK__SOTIETKIE__MaLoa__3B75D760" Association="QLSTKModel.FK__SOTIETKIE__MaLoa__3B75D760">
+            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
+            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NGUOIDUNG__MaNho__619B8048" Association="QLSTKModel.FK__NGUOIDUNG__MaNho__619B8048">
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
             <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PHANQUYEN__MaNho__4AB81AF0" Association="QLSTKModel.FK__PHANQUYEN__MaNho__4AB81AF0">
+          <AssociationSet Name="FK__PHANQUYEN__MaNho__5DCAEF64" Association="QLSTKModel.FK__PHANQUYEN__MaNho__5DCAEF64">
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
             <End Role="PHANQUYEN" EntitySet="PHANQUYENs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHIEUGUI__MaSoTi__4222D4EF" Association="QLSTKModel.FK__PHIEUGUI__MaSoTi__4222D4EF">
+            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
+            <End Role="PHIEUGUI" EntitySet="PHIEUGUIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHIEURUT__MaSoTi__45F365D3" Association="QLSTKModel.FK__PHIEURUT__MaSoTi__45F365D3">
+            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
+            <End Role="PHIEURUT" EntitySet="PHIEURUTs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BAOCAODOANHSO">
@@ -342,8 +342,8 @@
           <Property Name="MaLoaiTietKiem" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="TongThu" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="TongChi" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ChechLech" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__BAOCAODOA__MaLoa__36B12243" FromRole="BAOCAODOANHSO" ToRole="LOAITIETKIEM" />
+          <Property Name="ChenhLech" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__BAOCAODOA__MaLoa__49C3F6B7" FromRole="BAOCAODOANHSO" ToRole="LOAITIETKIEM" />
         </EntityType>
         <EntityType Name="BAOCAOMODONG">
           <Key>
@@ -353,8 +353,17 @@
           <Property Name="MaLoaiTietKiem" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ThangBaoCao" Type="Int32" Nullable="false" />
           <Property Name="NamBaoCao" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__BAOCAOMOD__MaLoa__3B75D760" FromRole="BAOCAOMODONG" ToRole="LOAITIETKIEM" />
-          <NavigationProperty Name="CTBCMODONG" Relationship="QLSTKModel.FK__CTBCMODON__MaBao__403A8C7D" FromRole="BAOCAOMODONG" ToRole="CTBCMODONG" />
+          <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__BAOCAOMOD__MaLoa__4E88ABD4" FromRole="BAOCAOMODONG" ToRole="LOAITIETKIEM" />
+          <NavigationProperty Name="CTBCMODONG" Relationship="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1" FromRole="BAOCAOMODONG" ToRole="CTBCMODONG" />
+        </EntityType>
+        <EntityType Name="CHUCNANG">
+          <Key>
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaChucNang" Type="Int32" Nullable="false" />
+          <Property Name="TenChucNang" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenThanhPhanSuDung" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PHANQUYENs" Relationship="QLSTKModel.FK__PHANQUYEN__MaChu__5EBF139D" FromRole="CHUCNANG" ToRole="PHANQUYEN" />
         </EntityType>
         <EntityType Name="CTBCMODONG">
           <Key>
@@ -364,8 +373,8 @@
           <Property Name="NgayXet" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SoLuongSoMo" Type="Int32" Nullable="false" />
           <Property Name="SoLuongSoDong" Type="Int32" Nullable="false" />
-          <Property Name="ChechLech" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BAOCAOMODONG" Relationship="QLSTKModel.FK__CTBCMODON__MaBao__403A8C7D" FromRole="CTBCMODONG" ToRole="BAOCAOMODONG" />
+          <Property Name="ChenhLech" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BAOCAOMODONG" Relationship="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1" FromRole="CTBCMODONG" ToRole="BAOCAOMODONG" />
         </EntityType>
         <EntityType Name="LOAITIETKIEM">
           <Key>
@@ -376,11 +385,41 @@
           <Property Name="KyHan" Type="Int32" Nullable="false" />
           <Property Name="LaiSuat" Type="Double" Nullable="false" />
           <Property Name="ThoiGianGuiToiThieu" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BAOCAODOANHSOes" Relationship="QLSTKModel.FK__BAOCAODOA__MaLoa__36B12243" FromRole="LOAITIETKIEM" ToRole="BAOCAODOANHSO" />
-          <NavigationProperty Name="BAOCAOMODONGs" Relationship="QLSTKModel.FK__BAOCAOMOD__MaLoa__3B75D760" FromRole="LOAITIETKIEM" ToRole="BAOCAOMODONG" />
-          <NavigationProperty Name="SOTIETKIEMs" Relationship="QLSTKModel.FK__SOTIETKIE__MaLoa__286302EC" FromRole="LOAITIETKIEM" ToRole="SOTIETKIEM" />
           <Property Name="QuyDinhSoTienRut" Type="Int32" Nullable="false" />
           <Property Name="DangSuDung" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BAOCAODOANHSOes" Relationship="QLSTKModel.FK__BAOCAODOA__MaLoa__49C3F6B7" FromRole="LOAITIETKIEM" ToRole="BAOCAODOANHSO" />
+          <NavigationProperty Name="BAOCAOMODONGs" Relationship="QLSTKModel.FK__BAOCAOMOD__MaLoa__4E88ABD4" FromRole="LOAITIETKIEM" ToRole="BAOCAOMODONG" />
+          <NavigationProperty Name="SOTIETKIEMs" Relationship="QLSTKModel.FK__SOTIETKIE__MaLoa__3B75D760" FromRole="LOAITIETKIEM" ToRole="SOTIETKIEM" />
+        </EntityType>
+        <EntityType Name="NGUOIDUNG">
+          <Key>
+            <PropertyRef Name="TenDangNhap" />
+          </Key>
+          <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QLSTKModel.FK__NGUOIDUNG__MaNho__619B8048" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
+        </EntityType>
+        <EntityType Name="NHOMNGUOIDUNG">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+          </Key>
+          <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <Property Name="TenNhom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NGUOIDUNGs" Relationship="QLSTKModel.FK__NGUOIDUNG__MaNho__619B8048" FromRole="NHOMNGUOIDUNG" ToRole="NGUOIDUNG" />
+          <NavigationProperty Name="PHANQUYENs" Relationship="QLSTKModel.FK__PHANQUYEN__MaNho__5DCAEF64" FromRole="NHOMNGUOIDUNG" ToRole="PHANQUYEN" />
+        </EntityType>
+        <EntityType Name="PHANQUYEN">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <Property Name="MaChucNang" Type="Int32" Nullable="false" />
+          <Property Name="LiDo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CHUCNANG" Relationship="QLSTKModel.FK__PHANQUYEN__MaChu__5EBF139D" FromRole="PHANQUYEN" ToRole="CHUCNANG" />
+          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QLSTKModel.FK__PHANQUYEN__MaNho__5DCAEF64" FromRole="PHANQUYEN" ToRole="NHOMNGUOIDUNG" />
         </EntityType>
         <EntityType Name="PHIEUGUI">
           <Key>
@@ -390,7 +429,7 @@
           <Property Name="MaSoTietKiem" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="NgayGui" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SoTienGui" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="SOTIETKIEM" Relationship="QLSTKModel.FK__PHIEUGUI__MaSoTi__2F10007B" FromRole="PHIEUGUI" ToRole="SOTIETKIEM" />
+          <NavigationProperty Name="SOTIETKIEM" Relationship="QLSTKModel.FK__PHIEUGUI__MaSoTi__4222D4EF" FromRole="PHIEUGUI" ToRole="SOTIETKIEM" />
         </EntityType>
         <EntityType Name="PHIEURUT">
           <Key>
@@ -400,7 +439,7 @@
           <Property Name="MaSoTietKiem" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="NgayRut" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SoTienRut" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="SOTIETKIEM" Relationship="QLSTKModel.FK__PHIEURUT__MaSoTi__32E0915F" FromRole="PHIEURUT" ToRole="SOTIETKIEM" />
+          <NavigationProperty Name="SOTIETKIEM" Relationship="QLSTKModel.FK__PHIEURUT__MaSoTi__45F365D3" FromRole="PHIEURUT" ToRole="SOTIETKIEM" />
         </EntityType>
         <EntityType Name="SOTIETKIEM">
           <Key>
@@ -417,9 +456,9 @@
           <Property Name="NgayDaoHanKeTiep" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SoDu" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="NgayDongSo" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__SOTIETKIE__MaLoa__286302EC" FromRole="SOTIETKIEM" ToRole="LOAITIETKIEM" />
-          <NavigationProperty Name="PHIEUGUIs" Relationship="QLSTKModel.FK__PHIEUGUI__MaSoTi__2F10007B" FromRole="SOTIETKIEM" ToRole="PHIEUGUI" />
-          <NavigationProperty Name="PHIEURUTs" Relationship="QLSTKModel.FK__PHIEURUT__MaSoTi__32E0915F" FromRole="SOTIETKIEM" ToRole="PHIEURUT" />
+          <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__SOTIETKIE__MaLoa__3B75D760" FromRole="SOTIETKIEM" ToRole="LOAITIETKIEM" />
+          <NavigationProperty Name="PHIEUGUIs" Relationship="QLSTKModel.FK__PHIEUGUI__MaSoTi__4222D4EF" FromRole="SOTIETKIEM" ToRole="PHIEUGUI" />
+          <NavigationProperty Name="PHIEURUTs" Relationship="QLSTKModel.FK__PHIEURUT__MaSoTi__45F365D3" FromRole="SOTIETKIEM" ToRole="PHIEURUT" />
         </EntityType>
         <EntityType Name="THAMSO">
           <Key>
@@ -428,7 +467,7 @@
           <Property Name="TenThamSo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="GiaTri" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
-        <Association Name="FK__BAOCAODOA__MaLoa__36B12243">
+        <Association Name="FK__BAOCAODOA__MaLoa__49C3F6B7">
           <End Type="QLSTKModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="1" />
           <End Type="QLSTKModel.BAOCAODOANHSO" Role="BAOCAODOANHSO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -440,7 +479,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BAOCAOMOD__MaLoa__3B75D760">
+        <Association Name="FK__BAOCAOMOD__MaLoa__4E88ABD4">
           <End Type="QLSTKModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="1" />
           <End Type="QLSTKModel.BAOCAOMODONG" Role="BAOCAOMODONG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -452,7 +491,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CTBCMODON__MaBao__403A8C7D">
+        <Association Name="FK__CTBCMODON__MaBao__534D60F1">
           <End Type="QLSTKModel.BAOCAOMODONG" Role="BAOCAOMODONG" Multiplicity="1" />
           <End Type="QLSTKModel.CTBCMODONG" Role="CTBCMODONG" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -464,82 +503,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SOTIETKIE__MaLoa__286302EC">
-          <End Type="QLSTKModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="1" />
-          <End Type="QLSTKModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOAITIETKIEM">
-              <PropertyRef Name="MaLoaiTietKiem" />
-            </Principal>
-            <Dependent Role="SOTIETKIEM">
-              <PropertyRef Name="MaLoaiTietKiem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PHIEUGUI__MaSoTi__2F10007B">
-          <End Type="QLSTKModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="1" />
-          <End Type="QLSTKModel.PHIEUGUI" Role="PHIEUGUI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SOTIETKIEM">
-              <PropertyRef Name="MaSoTietKiem" />
-            </Principal>
-            <Dependent Role="PHIEUGUI">
-              <PropertyRef Name="MaSoTietKiem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PHIEURUT__MaSoTi__32E0915F">
-          <End Type="QLSTKModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="1" />
-          <End Type="QLSTKModel.PHIEURUT" Role="PHIEURUT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SOTIETKIEM">
-              <PropertyRef Name="MaSoTietKiem" />
-            </Principal>
-            <Dependent Role="PHIEURUT">
-              <PropertyRef Name="MaSoTietKiem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CHUCNANG">
-          <Key>
-            <PropertyRef Name="MaChucNang" />
-          </Key>
-          <Property Name="MaChucNang" Type="Int32" Nullable="false" />
-          <Property Name="TenChucNang" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TenThanhPhanSuDung" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PHANQUYENs" Relationship="QLSTKModel.FK__PHANQUYEN__MaChu__4BAC3F29" FromRole="CHUCNANG" ToRole="PHANQUYEN" />
-        </EntityType>
-        <EntityType Name="NGUOIDUNG">
-          <Key>
-            <PropertyRef Name="TenDangNhap" />
-          </Key>
-          <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MaNhom" Type="Int32" Nullable="false" />
-          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QLSTKModel.FK__NGUOIDUNG__MaNho__4E88ABD4" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
-        </EntityType>
-        <EntityType Name="NHOMNGUOIDUNG">
-          <Key>
-            <PropertyRef Name="MaNhom" />
-          </Key>
-          <Property Name="MaNhom" Type="Int32" Nullable="false" />
-          <Property Name="TenNhom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NGUOIDUNGs" Relationship="QLSTKModel.FK__NGUOIDUNG__MaNho__4E88ABD4" FromRole="NHOMNGUOIDUNG" ToRole="NGUOIDUNG" />
-          <NavigationProperty Name="PHANQUYENs" Relationship="QLSTKModel.FK__PHANQUYEN__MaNho__4AB81AF0" FromRole="NHOMNGUOIDUNG" ToRole="PHANQUYEN" />
-        </EntityType>
-        <EntityType Name="PHANQUYEN">
-          <Key>
-            <PropertyRef Name="MaNhom" />
-            <PropertyRef Name="MaChucNang" />
-          </Key>
-          <Property Name="MaNhom" Type="Int32" Nullable="false" />
-          <Property Name="MaChucNang" Type="Int32" Nullable="false" />
-          <Property Name="LiDo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CHUCNANG" Relationship="QLSTKModel.FK__PHANQUYEN__MaChu__4BAC3F29" FromRole="PHANQUYEN" ToRole="CHUCNANG" />
-          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QLSTKModel.FK__PHANQUYEN__MaNho__4AB81AF0" FromRole="PHANQUYEN" ToRole="NHOMNGUOIDUNG" />
-        </EntityType>
-        <Association Name="FK__PHANQUYEN__MaChu__4BAC3F29">
+        <Association Name="FK__PHANQUYEN__MaChu__5EBF139D">
           <End Type="QLSTKModel.CHUCNANG" Role="CHUCNANG" Multiplicity="1" />
           <End Type="QLSTKModel.PHANQUYEN" Role="PHANQUYEN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -551,7 +515,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NGUOIDUNG__MaNho__4E88ABD4">
+        <Association Name="FK__SOTIETKIE__MaLoa__3B75D760">
+          <End Type="QLSTKModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="1" />
+          <End Type="QLSTKModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAITIETKIEM">
+              <PropertyRef Name="MaLoaiTietKiem" />
+            </Principal>
+            <Dependent Role="SOTIETKIEM">
+              <PropertyRef Name="MaLoaiTietKiem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NGUOIDUNG__MaNho__619B8048">
           <End Type="QLSTKModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="1" />
           <End Type="QLSTKModel.NGUOIDUNG" Role="NGUOIDUNG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -563,7 +539,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PHANQUYEN__MaNho__4AB81AF0">
+        <Association Name="FK__PHANQUYEN__MaNho__5DCAEF64">
           <End Type="QLSTKModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="1" />
           <End Type="QLSTKModel.PHANQUYEN" Role="PHANQUYEN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -575,7 +551,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK__PHIEUGUI__MaSoTi__4222D4EF">
+          <End Type="QLSTKModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="1" />
+          <End Type="QLSTKModel.PHIEUGUI" Role="PHIEUGUI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOTIETKIEM">
+              <PropertyRef Name="MaSoTietKiem" />
+            </Principal>
+            <Dependent Role="PHIEUGUI">
+              <PropertyRef Name="MaSoTietKiem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHIEURUT__MaSoTi__45F365D3">
+          <End Type="QLSTKModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="1" />
+          <End Type="QLSTKModel.PHIEURUT" Role="PHIEURUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOTIETKIEM">
+              <PropertyRef Name="MaSoTietKiem" />
+            </Principal>
+            <Dependent Role="PHIEURUT">
+              <PropertyRef Name="MaSoTietKiem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -584,7 +584,7 @@
           <EntitySetMapping Name="BAOCAODOANHSOes">
             <EntityTypeMapping TypeName="QLSTKModel.BAOCAODOANHSO">
               <MappingFragment StoreEntitySet="BAOCAODOANHSO">
-                <ScalarProperty Name="ChechLech" ColumnName="ChechLech" />
+                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
                 <ScalarProperty Name="TongChi" ColumnName="TongChi" />
                 <ScalarProperty Name="TongThu" ColumnName="TongThu" />
                 <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />
@@ -603,10 +603,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CHUCNANGs">
+            <EntityTypeMapping TypeName="QLSTKModel.CHUCNANG">
+              <MappingFragment StoreEntitySet="CHUCNANG">
+                <ScalarProperty Name="TenThanhPhanSuDung" ColumnName="TenThanhPhanSuDung" />
+                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
+                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CTBCMODONGs">
             <EntityTypeMapping TypeName="QLSTKModel.CTBCMODONG">
               <MappingFragment StoreEntitySet="CTBCMODONG">
-                <ScalarProperty Name="ChechLech" ColumnName="ChechLech" />
+                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
                 <ScalarProperty Name="SoLuongSoDong" ColumnName="SoLuongSoDong" />
                 <ScalarProperty Name="SoLuongSoMo" ColumnName="SoLuongSoMo" />
                 <ScalarProperty Name="NgayXet" ColumnName="NgayXet" />
@@ -624,6 +633,33 @@
                 <ScalarProperty Name="KyHan" ColumnName="KyHan" />
                 <ScalarProperty Name="TenLoaiTietKiem" ColumnName="TenLoaiTietKiem" />
                 <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NGUOIDUNGs">
+            <EntityTypeMapping TypeName="QLSTKModel.NGUOIDUNG">
+              <MappingFragment StoreEntitySet="NGUOIDUNG">
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NHOMNGUOIDUNGs">
+            <EntityTypeMapping TypeName="QLSTKModel.NHOMNGUOIDUNG">
+              <MappingFragment StoreEntitySet="NHOMNGUOIDUNG">
+                <ScalarProperty Name="TenNhom" ColumnName="TenNhom" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHANQUYENs">
+            <EntityTypeMapping TypeName="QLSTKModel.PHANQUYEN">
+              <MappingFragment StoreEntitySet="PHANQUYEN">
+                <ScalarProperty Name="LiDo" ColumnName="LiDo" />
+                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -669,42 +705,6 @@
               <MappingFragment StoreEntitySet="THAMSO">
                 <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
                 <ScalarProperty Name="TenThamSo" ColumnName="TenThamSo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CHUCNANGs">
-            <EntityTypeMapping TypeName="QLSTKModel.CHUCNANG">
-              <MappingFragment StoreEntitySet="CHUCNANG">
-                <ScalarProperty Name="TenThanhPhanSuDung" ColumnName="TenThanhPhanSuDung" />
-                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
-                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NGUOIDUNGs">
-            <EntityTypeMapping TypeName="QLSTKModel.NGUOIDUNG">
-              <MappingFragment StoreEntitySet="NGUOIDUNG">
-                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
-                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
-                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
-                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NHOMNGUOIDUNGs">
-            <EntityTypeMapping TypeName="QLSTKModel.NHOMNGUOIDUNG">
-              <MappingFragment StoreEntitySet="NHOMNGUOIDUNG">
-                <ScalarProperty Name="TenNhom" ColumnName="TenNhom" />
-                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PHANQUYENs">
-            <EntityTypeMapping TypeName="QLSTKModel.PHANQUYEN">
-              <MappingFragment StoreEntitySet="PHANQUYEN">
-                <ScalarProperty Name="LiDo" ColumnName="LiDo" />
-                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
-                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

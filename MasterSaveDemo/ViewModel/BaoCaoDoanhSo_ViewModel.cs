@@ -176,7 +176,7 @@ namespace MasterSaveDemo.ViewModel
             TenLoaiTietKiem = ltk.TenLoaiTietKiem;
             TongThu += baoCao.TongThu;
             TongChi += baoCao.TongChi;
-            ChenhLech = baoCao.ChechLech;
+            ChenhLech = baoCao.ChenhLech;
 
             BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
             ListBaoCaoDisplay.Add(baoCaoDisplay);
@@ -283,25 +283,7 @@ namespace MasterSaveDemo.ViewModel
 
             );
 
-            PrintCommand = new RelayCommand<object>((p) => { return true; },
-                (p) => {
-                    if( ListBaoCaoDisplay.Count() != 0)
-                    {
-                        if (File.Exists("printPreview.xps"))
-                        {
-                            File.Delete("printPreview.xps");
-                        }
-                        var xpsDocument = new XpsDocument("printPreview.xps", FileAccess.ReadWrite);
-                        XpsDocumentWriter writer = XpsDocument.CreateXpsDocumentWriter(xpsDocument);
-                        writer.Write(((IDocumentPaginatorSource)FlowDoc).DocumentPaginator);
-                        FixedDocumentSequence doc = xpsDocument.GetFixedDocumentSequence();
-                        xpsDocument.Close();
-                        //var windows = new PrintPreviewWindow(doc);
-                        //windows.ShowDialog();
-                    }
-                
-                }
-            );
+
         }
     }
 }

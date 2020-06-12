@@ -54,7 +54,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <ComboBox x:Name="Thang_ComboBox" materialDesign:HintAssist.Hint="Tháng" 
-                            Text="{Binding ThangBaoCao, Mode=TwoWay}"
+                            Text="{Binding ThangBaoCao}"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             HorizontalAlignment="Center"
                             SelectedItem="{Binding Selected_Thang, Mode=TwoWay}"
@@ -68,7 +68,7 @@
 
 
                 <ComboBox x:Name="Nam_ComboBox" materialDesign:HintAssist.Hint="Năm"
-                            Text="{Binding NamBaoCao, Mode=TwoWay}"
+                            Text="{Binding NamBaoCao}"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                             HorizontalAlignment="Center"
                             SelectedItem="{Binding Selected_Nam, Mode=TwoWay}"
@@ -79,13 +79,15 @@
                 <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                         HorizontalAlignment="Center"
                         Content="Lập báo cáo"
-                        Command="{Binding CreateReportCommand}"/>
+                        Command="{Binding CreateReportCommand}" 
+                        />
             </Grid>
             <Grid Grid.Column="4">
                 <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                         HorizontalAlignment="Center"
                         Content="Xuất báo cáo"
-                        Command="{Binding ExportReportCommand}"/>
+                        Command="{Binding ExportReportCommand}"
+                        IsEnabled="{Binding EnableCreate}"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">

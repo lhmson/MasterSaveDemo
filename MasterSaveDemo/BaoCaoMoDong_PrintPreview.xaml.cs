@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterSaveDemo.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,10 @@ namespace MasterSaveDemo
     /// </summary>
     public partial class BaoCaoMoDong_PrintPreview : Window
     {
-        public BaoCaoMoDong_PrintPreview()
+        public BaoCaoMoDong_PrintPreview(BaseViewModel x )
         {
             InitializeComponent();
+            this.DataContext = x;
         }
     }
 }

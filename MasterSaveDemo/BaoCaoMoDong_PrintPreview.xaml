@@ -20,7 +20,7 @@
       Title="BaoCaoMoDong_PrintPreview"
      
       FontFamily="{DynamicResource MaterialDesignFont}" WindowStyle="None" WindowStartupLocation="CenterScreen"
-       DataContext="{StaticResource BaoCaoMoDongPPVM}"
+      
       >
 
     <ScrollViewer>
@@ -29,7 +29,7 @@
             <Grid x:Name="print">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="120"/>
-                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="1300"/>
                     <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
                 <Grid>
@@ -45,11 +45,11 @@
 
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Ngày lập báo cáo:" FontSize="12" Margin="5"/>
-                            <TextBlock Text="{Binding }" FontSize="12" Margin="5" FontWeight="DemiBold"/>
+                            <TextBlock Text="{Binding NgayLapBaoCao}" FontSize="12" Margin="5" FontWeight="DemiBold"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Mã báo cáo:" FontSize="12" Margin="5"/>
-                            <TextBlock Text="{Binding }" FontSize="12" Margin="5" FontWeight="DemiBold"/>
+                            <TextBlock Text="{Binding MaBaoCao}" FontSize="12" Margin="5" FontWeight="DemiBold"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -69,7 +69,7 @@
                     <TextBlock Text="Báo Cáo Mở/Đóng Sổ Tháng" VerticalAlignment="Center" FontSize="35" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="Năm:" FontSize="35" FontWeight="Bold"></TextBlock>
-                        <TextBlock Text="{Binding }"  FontSize="35" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding NamBaoCao}"  FontSize="35" FontWeight="Bold"/>
                     </StackPanel>
                     <Rectangle Fill="Black" Height="1" Margin="10 2" Opacity="0.5"/>
                     <Grid>
@@ -79,15 +79,15 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
                             <TextBlock Text="Loại tiết kiệm:"></TextBlock>
-                            <TextBlock Text="{Binding }"></TextBlock>
+                            <TextBlock Text="{Binding LoaiTietKiem}"></TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
                             <TextBlock Text="Tháng:"></TextBlock>
-                            <TextBlock Text="{Binding }"></TextBlock>
+                            <TextBlock Text="{Binding ThangBaoCao}"></TextBlock>
                         </StackPanel>
                     </Grid>
                     <Rectangle Fill="Black" Height="1" Margin="10 2" Opacity="0.5"/>
-                    <ListView x:Name="listViewReport" ItemsSource="{Binding ListBaoCaoDM}"
+                    <ListView x:Name="listViewReportPP" ItemsSource="{Binding ListBaoCaoDMPP}"
                           HorizontalContentAlignment="Stretch"  
                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ListView.View>

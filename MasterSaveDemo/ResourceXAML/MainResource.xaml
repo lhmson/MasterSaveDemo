@@ -10,7 +10,6 @@
     <viewmodel:TraCuu_ViewModel x:Key="TraCuuVM"></viewmodel:TraCuu_ViewModel>
     <viewmodel:BaoCaoDoanhSo_ViewModel x:Key="BaoCaoDoanhSoVM"></viewmodel:BaoCaoDoanhSo_ViewModel>
     <viewmodel:BaoCaoMoDong_ViewModel x:Key="BaoCaoMoDongVM"></viewmodel:BaoCaoMoDong_ViewModel>
-    <viewmodel:BaoCaoMoDong_PrintPreview_ViewModel x:Key="BaoCaoMoDongPPVM"></viewmodel:BaoCaoMoDong_PrintPreview_ViewModel>
     <viewmodel:ThayDoiQuyDinh_ViewModel x:Key="ThayDoiQuyDinhVM"></viewmodel:ThayDoiQuyDinh_ViewModel>
     <viewmodel:QuanLyNhanSu_ViewModel x:Key="QuanLyNhanSuVM"></viewmodel:QuanLyNhanSu_ViewModel>
     <viewmodel:Home_PageViewModel x:Key="HomeVM"></viewmodel:Home_PageViewModel>

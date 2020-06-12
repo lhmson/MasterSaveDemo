@@ -15,6 +15,18 @@ namespace MasterSaveDemo.ViewModel
         #region Variables
         //copy tu mainwindow_VM
         public bool isLoaded = false;
+        public string MaBaoCao = "";
+        public string ThangBaoCao_BD = "";
+        public string NamBaoCao_BD = "";
+        public string LoaiTietKiem_BD = "";
+        //--------------
+        private bool _EnableCreate;
+
+        public bool EnableCreate
+        {
+            get { return _EnableCreate; }
+            set { _EnableCreate = value; OnPropertyChanged(); }
+        }
         //--------------
         private List<string> _List_LTK;
 
@@ -188,11 +200,12 @@ namespace MasterSaveDemo.ViewModel
 
         private string FormatBaoCao(string mbc)
         {
+            string tmp = mbc;
             for (int i = 1; i <= 7 - mbc.Length; i++)
             {
-                mbc = "0" + mbc;
+                tmp = "0" + tmp;
             }
-            return mbc;
+            return tmp;
         }
         #endregion
         private string CreateThangNam(string thang, string nam)
@@ -206,21 +219,7 @@ namespace MasterSaveDemo.ViewModel
             ListDaBaoCao = new List<ListBaoCaoDongMo_DaBaoCao>();
             ObservableCollection<LOAITIETKIEM> LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             ObservableCollection<BAOCAOMODONG> BCMD = new ObservableCollection<BAOCAOMODONG>(DataProvider.Ins.DB.BAOCAOMODONGs);
-            /*foreach (BAOCAOMODONG bcmd_temp in BCMD)
-            { 
-                string ThangNam = bcmd_temp.ThangBaoCao + "/" + bcmd_temp.NamBaoCao;
-                if (bcmd_temp.ThangBaoCao < 10)
-                    ThangNam = "0" + ThangNam;
-                string LoaiTK = "";
-                foreach (var _ltk in LTK)
-                    if (_ltk.MaLoaiTietKiem == bcmd_temp.MaLoaiTietKiem)
-                    {
-                        LoaiTK = _ltk.TenLoaiTietKiem;
-                        break;
-                    }
-                ListDaBaoCao.Add(new ListBaoCaoDongMo_DaBaoCao(ThangNam, LoaiTK));
-            }*/
-            ///
+            
             var baocao = from bcmd in BCMD
                          join ltk in LTK on bcmd.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                          orderby bcmd.NamBaoCao descending, bcmd.ThangBaoCao descending, ltk.TenLoaiTietKiem ascending
@@ -276,64 +275,89 @@ namespace MasterSaveDemo.ViewModel
                 string temp = formatThang + ' ' + month;
                 List_Thang.Add(temp);
             }
-            
+            //set auto Selected CBB
+            string tempT = DateTime.Now.Month.ToString();
+            if (int.Parse(tempT) < 10) tempT = "0" + tempT;
+            Selected_Thang = "Tháng " + tempT;
+            Selected_Nam = DateTime.Now.Year.ToString();
+            Selected_LTK = List_LTK[0];
+            EnableCreate = false;
             //Binding Selected Item
             SelectedMonthYear_Command = new RelayCommand<object>((p) =>
-            {
+           {
                 return true;
-            },
+           },
            (p) =>
            {
+               
                if (SelectedMonth != null)
-               {
-                   ObservableCollection<SOTIETKIEM> stk = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
-                   ObservableCollection<LOAITIETKIEM> ltk = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-
-                   string ThangChon = SelectedMonth.ThangNamDaBaoCao.Substring(0, 2);
-                   string NamChon = SelectedMonth.ThangNamDaBaoCao.Substring(3, 4);
-                   int NgayToiDaThang = Daysinmonth(int.Parse(ThangChon), int.Parse(NamChon));
-
-                   ListBaoCaoDM = new List<ListBaoCaoDongMo>();
-                   string maltk = "";
-                   foreach (var _ltk in ltk)
-                       if (_ltk.TenLoaiTietKiem == SelectedMonth.LTKDaBaoCao)
-                           maltk = _ltk.MaLoaiTietKiem;
-
-                   for (int date = 1; date <= NgayToiDaThang; date++)
                    {
-                       string tempNgay = date.ToString();
-                       string SoTT = date.ToString();
-                       if ((date >= 1) && date <= 9) tempNgay = '0' + tempNgay;
-                       string ngaykt = tempNgay + '-' + ThangChon + "-" + NamChon;
-                       int SLSoMo = 0, SLSoDong = 0;
-                       foreach (var _stk in stk)
+                   EnableCreate = true;
+                   ObservableCollection<SOTIETKIEM> stk = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+                       ObservableCollection<LOAITIETKIEM> ltk = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+                       ObservableCollection<BAOCAOMODONG> BCMD = new ObservableCollection<BAOCAOMODONG>(DataProvider.Ins.DB.BAOCAOMODONGs);
+
+                       string ThangChon = SelectedMonth.ThangNamDaBaoCao.Substring(0, 2);
+                       string NamChon = SelectedMonth.ThangNamDaBaoCao.Substring(3, 4);
+                       int NgayToiDaThang = Daysinmonth(int.Parse(ThangChon), int.Parse(NamChon));
+
+                       ListBaoCaoDM = new List<ListBaoCaoDongMo>();
+                       string maltk = "";
+                       foreach (var _ltk in ltk)
+                           if (_ltk.TenLoaiTietKiem == SelectedMonth.LTKDaBaoCao)
+                               maltk = _ltk.MaLoaiTietKiem;
+                       //Binding CBB
+                       Selected_LTK = SelectedMonth.LTKDaBaoCao;
+                       Selected_Thang = "Tháng " + SelectedMonth.ThangNamDaBaoCao.Substring(0, 2);
+                       Selected_Nam = SelectedMonth.ThangNamDaBaoCao.Substring(3, 4);
+                  
+                       //
+                       // BInding to PrintPreview
+                       ThangBaoCao_BD = ThangChon;
+                       NamBaoCao_BD = NamChon;
+                       LoaiTietKiem_BD = SelectedMonth.LTKDaBaoCao;
+                       foreach (var bc in BCMD)
+                           if (bc.NamBaoCao.ToString() == NamChon && maltk == bc.MaLoaiTietKiem && bc.ThangBaoCao.ToString() == ThangChon.Substring(1,1))
+                               MaBaoCao = bc.MaBaoCaoMoDong;
+                       //
+                       for (int date = 1; date <= NgayToiDaThang; date++)
                        {
-                           string ngaymo = _stk.NgayMoSo.ToString("dd/MM/yyyy");
-                           string ngaydong = _stk.NgayDongSo?.ToString("dd/MM/yyyy");
-                           if (_stk.MaLoaiTietKiem == maltk && ngaymo == ngaykt)
-                               SLSoMo++;
-                           if (_stk.MaLoaiTietKiem == maltk && ngaydong == ngaykt)
-                               SLSoDong++;
+                           string tempNgay = date.ToString();
+                           string SoTT = date.ToString();
+                           if ((date >= 1) && date <= 9) tempNgay = '0' + tempNgay;
+                           string ngaykt = tempNgay + '-' + ThangChon + "-" + NamChon;
+                           int SLSoMo = 0, SLSoDong = 0;
+                           foreach (var _stk in stk)
+                           {
+                               string ngaymo = _stk.NgayMoSo.ToString("dd/MM/yyyy");
+                               string ngaydong = _stk.NgayDongSo?.ToString("dd/MM/yyyy");
+                               if (_stk.MaLoaiTietKiem == maltk && ngaymo == ngaykt)
+                                   SLSoMo++;
+                               if (_stk.MaLoaiTietKiem == maltk && ngaydong == ngaykt)
+                                   SLSoDong++;
+                           }
+                           //add ListBaoCao
+                           ListBaoCaoDM.Add(new ListBaoCaoDongMo
+                           (
+                               STT = SoTT,
+                               Ngay = ngaykt,
+                               SoMo = SLSoMo.ToString(),
+                               SoDong = SLSoDong.ToString(),
+                               ChenhLech = Math.Abs(SLSoMo - SLSoDong).ToString()
+                           ));
                        }
-                       //add ListBaoCao
-                       ListBaoCaoDM.Add(new ListBaoCaoDongMo
-                       (
-                           STT = SoTT,
-                           Ngay = ngaykt,
-                           SoMo = SLSoMo.ToString(),
-                           SoDong = SLSoDong.ToString(),
-                           ChenhLech = Math.Abs(SLSoMo - SLSoDong).ToString()
-                       ));
                    }
-               }
+                  
+             
            });
-            //Binding ListBaoCao
-            CreateReportCommand = new RelayCommand<object>((p) =>
-            {
+           //Binding ListBaoCao
+           CreateReportCommand = new RelayCommand<object>((p) =>
+           {
                 return true;
-            },
-            (p) =>
-            {
+           },
+           (p) =>
+           {
+                EnableCreate = true;
                 ObservableCollection<SOTIETKIEM> stk = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
                 ObservableCollection<LOAITIETKIEM> ltk = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
                 ObservableCollection<BAOCAOMODONG> bcmd = new ObservableCollection<BAOCAOMODONG>(DataProvider.Ins.DB.BAOCAOMODONGs);
@@ -351,10 +375,14 @@ namespace MasterSaveDemo.ViewModel
                 foreach (var _ltk in ltk)
                     if (_ltk.TenLoaiTietKiem == Selected_LTK)
                         maltk = _ltk.MaLoaiTietKiem;
+               //Binding to PrintPreview
+               ThangBaoCao_BD = thangdangchon.ToString();
+               NamBaoCao_BD = namdangchon.ToString();
+               LoaiTietKiem_BD = Selected_LTK;
+               MaBaoCao = mabaocao;
 
-             
-                //Check already create
-                bool CanAdd = true;
+               //Check already create
+               bool CanAdd = true;
                 foreach (var _bcmd in bcmd)
                     if (_bcmd.MaLoaiTietKiem == maltk && 
                         _bcmd.ThangBaoCao == thangdangchon && 
@@ -424,16 +452,18 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
                 BindingListDaBaoCao();
-            });
+           });
+            // Create PrintPreview
             ExportReportCommand = new RelayCommand<object>((p) =>
             {
                 return true;
             },
            (p) =>
            {
-                   BaoCaoMoDong_PrintPreview BaoCao = new BaoCaoMoDong_PrintPreview();
-                   BaoCao.ShowDialog();
-                   isLoaded = true;                              
+               BaoCaoMoDong_PrintPreview_ViewModel BaoCaoMoDongPPVM = new BaoCaoMoDong_PrintPreview_ViewModel(MaBaoCao, ThangBaoCao_BD, NamBaoCao_BD, LoaiTietKiem_BD, ListBaoCaoDM);
+               BaoCaoMoDong_PrintPreview BaoCao = new BaoCaoMoDong_PrintPreview(BaoCaoMoDongPPVM);
+               BaoCao.ShowDialog();
+               isLoaded = true;                              
            });
 
            }

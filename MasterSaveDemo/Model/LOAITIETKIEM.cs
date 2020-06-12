@@ -17,9 +17,9 @@ namespace MasterSaveDemo.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LOAITIETKIEM()
         {
+            this.SOTIETKIEMs = new HashSet<SOTIETKIEM>();
             this.BAOCAODOANHSOes = new HashSet<BAOCAODOANHSO>();
             this.BAOCAOMODONGs = new HashSet<BAOCAOMODONG>();
-            this.SOTIETKIEMs = new HashSet<SOTIETKIEM>();
         }
     
         public string MaLoaiTietKiem { get; set; }
@@ -31,10 +31,10 @@ namespace MasterSaveDemo.Model
         public int DangSuDung { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SOTIETKIEM> SOTIETKIEMs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BAOCAODOANHSO> BAOCAODOANHSOes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BAOCAOMODONG> BAOCAOMODONGs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SOTIETKIEM> SOTIETKIEMs { get; set; }
     }
 }

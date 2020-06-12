@@ -12,14 +12,12 @@ namespace MasterSaveDemo.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class CTBCMODONG
+    public partial class sysdiagram
     {
-        public string MaBaoCaoMoDong { get; set; }
-        public System.DateTime NgayXet { get; set; }
-        public int SoLuongSoMo { get; set; }
-        public int SoLuongSoDong { get; set; }
-        public int ChenhLech { get; set; }
-    
-        public virtual BAOCAOMODONG BAOCAOMODONG { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

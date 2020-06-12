@@ -108,6 +108,20 @@ namespace MasterSaveDemo.ViewModel
         private string CheckValid()
         {
             string error = "";
+            ObservableCollection<THAMSO> listThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
+            foreach (var item in listThamSo)
+            {
+                if(item.TenThamSo == "SoTienGuiToiThieu")
+                {
+                    if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                    {
+                        System.Windows.Forms.MessageBox.Show("xsx");
+                        error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                    }
+                }
+            }
+
+            
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
                 error += "Sổ chưa được tạo mã sổ";
             if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null)

@@ -231,24 +231,20 @@ namespace MasterSaveDemo.ViewModel
 
         }
 
-        private void Delete_CbxNhomNguoiDung(string tenNhom)
-        {
-                for (int i=0; i<CbxTenNhom.Count; i++)
-                    if (CbxTenNhom[i] == tenNhom)
-                {
-                    System.Windows.Forms.MessageBox.Show("CCC");
-                    CbxTenNhom.RemoveAt(i);
-                    break;
-                    
-                }    
-        }
-
         private void ResetCbxTenNhom()
         {
-            CbxTenNhom = new List<string>();
+            CbxTenNhom.Clear();
+            
             ObservableCollection<NHOMNGUOIDUNG> List_Nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
             foreach (var Nhom in List_Nhom)
+            {
                 CbxTenNhom.Add(Nhom.TenNhom);
+                System.Windows.Forms.MessageBox.Show(CbxTenNhom.Last());
+            }
+            string res = "";
+            foreach (var item in CbxTenNhom)
+                res += item;
+            System.Windows.Forms.MessageBox.Show(res);
         }
 
         private bool CheckValidData()
@@ -317,6 +313,7 @@ namespace MasterSaveDemo.ViewModel
             foreach (var pq in listPhanQuyen)
                 if (pq.MaNhom == maNhom)
                     DataProvider.Ins.DB.PHANQUYENs.Remove(pq);
+            DataProvider.Ins.DB.SaveChanges();
         }
 
         private void Delete_NhomNguoiDung(string tenNhom)
@@ -449,7 +446,7 @@ namespace MasterSaveDemo.ViewModel
                             string error = check_DeleteNhomNguoiDung(search_MaNhom(SelectedPhanQuyen.TenNhomQuyen));
                             if (error == "")
                             {
-                                System.Windows.Forms.MessageBox.Show("Đã xó nhóm " + SelectedPhanQuyen.TenNhomQuyen + " thành công!");
+                                System.Windows.Forms.MessageBox.Show("Đã xóa nhóm " + SelectedPhanQuyen.TenNhomQuyen + " thành công!");
                                 int maNhom = search_MaNhom(SelectedPhanQuyen.TenNhomQuyen);
                                 Delete_PhanQuyen(maNhom);
                                 Delete_NhomNguoiDung(SelectedPhanQuyen.TenNhomQuyen);

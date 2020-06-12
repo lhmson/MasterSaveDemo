@@ -110,7 +110,7 @@
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfEdit}"
-                          ItemsSource="{Binding CbxTenNhom}"
+                          ItemsSource="{Binding CbxTenNhom, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
                 </ComboBox>
@@ -122,7 +122,7 @@
                 </Grid.ColumnDefinitions>
                 <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfAdd}"
-                          ItemsSource="{Binding CbxTenNhom}"
+                          ItemsSource="{Binding CbxTenNhom, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
                 </ComboBox>

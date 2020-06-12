@@ -62,12 +62,14 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -102,6 +104,7 @@
     <Compile Include="Model\BAOCAODOANHSO.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\BaoCaoDS.cs" />
     <Compile Include="Model\BAOCAOMODONG.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
@@ -156,6 +159,11 @@
     </Compile>
     <Compile Include="Model\THAMSO.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceXAML\ThayDoiQuyDinh_Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ThayDoiQuyDinh_Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\BaoCaoDoanhSo_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoMoDong_ViewModel.cs" />
@@ -282,10 +290,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceXAML\ThayDoiQuyDinh_Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ThayDoiQuyDinh_Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EntityDeploy Include="Model\QLSTKModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

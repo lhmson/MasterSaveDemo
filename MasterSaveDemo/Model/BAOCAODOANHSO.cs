@@ -33,6 +33,5 @@ namespace MasterSaveDemo.Model
             this.TongChi = chi;
             this.ChenhLech = chenhLech;
         }
-
     }
 }

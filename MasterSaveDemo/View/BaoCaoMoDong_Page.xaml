@@ -7,6 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -22,6 +23,108 @@
       Title="BaoCaoMoDong_Page">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" ></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
+                    Content="Báo cáo mở/đóng sổ tháng" FontSize="18"
+                    VerticalAlignment="Top"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <ComboBox x:Name="LTK_combobox" materialDesign:HintAssist.Hint="Loại tiết kiệm"
+                          HorizontalAlignment="Center" 
+                          Text="{Binding LoaiTietKiem}"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                          SelectedItem="{Binding Selected_LTK, Mode=TwoWay}"
+                          ItemsSource="{Binding List_LTK}">
+
+                </ComboBox>
+            </Grid>
+            <Grid Grid.Column="1">
+                <ComboBox x:Name="Thang_ComboBox" materialDesign:HintAssist.Hint="Tháng" 
+                            Text="{Binding ThangBaoCao}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            HorizontalAlignment="Center"
+                            SelectedItem="{Binding Selected_Thang, Mode=TwoWay}"
+                            ItemsSource="{Binding List_Thang}"
+                            >
+
+                </ComboBox>
+            </Grid>
+
+            <Grid Grid.Column="2">
+
+
+                <ComboBox x:Name="Nam_ComboBox" materialDesign:HintAssist.Hint="Năm"
+                            Text="{Binding NamBaoCao}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                            HorizontalAlignment="Center"
+                            SelectedItem="{Binding Selected_Nam, Mode=TwoWay}"
+                            ItemsSource="{Binding List_Nam}"
+                            />
+            </Grid>
+            <Grid Grid.Column="3">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        HorizontalAlignment="Center"
+                        Content="Lập báo cáo"
+                        Command="{Binding CreateReportCommand}" 
+                        />
+            </Grid>
+            <Grid Grid.Column="4">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        HorizontalAlignment="Center"
+                        Content="Xuất báo cáo"
+                        Command="{Binding ExportReportCommand}"
+                        IsEnabled="{Binding EnableCreate}"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ListView Grid.Column="0" x:Name="listViewReport" ItemsSource="{Binding ListBaoCaoDM}"
+                          HorizontalAlignment="Stretch" FontSize="20" VerticalAlignment="Stretch" Margin="0,0,0,0"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"/>
+                            <GridViewColumn Header="Ngày" DisplayMemberBinding="{Binding Ngay}"/>
+                            <GridViewColumn Header="Sổ mở" DisplayMemberBinding="{Binding SoMo}"/>
+                            <GridViewColumn Header="Sổ đóng" DisplayMemberBinding="{Binding SoDong}"/>
+                            <GridViewColumn Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView Grid.Column="1" ItemsSource="{Binding ListDaBaoCao}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          HorizontalContentAlignment="Stretch" FontSize="20"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Tháng đã báo cáo" DisplayMemberBinding="{Binding ThangNamDaBaoCao }" />
+                            <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding LTKDaBaoCao}"/>
+                        </GridView>
+                    </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedMonthYear_Command}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

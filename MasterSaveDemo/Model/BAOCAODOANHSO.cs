@@ -22,5 +22,16 @@ namespace MasterSaveDemo.Model
         public decimal ChenhLech { get; set; }
     
         public virtual LOAITIETKIEM LOAITIETKIEM { get; set; }
+
+        public BAOCAODOANHSO() { }
+        public BAOCAODOANHSO(string maBaoCao, DateTime ngay, string maLTK, decimal thu, decimal chi, decimal chenhLech)
+        {
+            this.MaBaoCaoDoanhSo = maBaoCao;
+            this.NgayDoanhSo = ngay;
+            this.MaLoaiTietKiem = maLTK;
+            this.TongThu = thu;
+            this.TongChi = chi;
+            this.ChenhLech = chenhLech;
+        }
     }
 }

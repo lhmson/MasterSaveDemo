@@ -41,8 +41,6 @@ namespace MasterSaveDemo.ViewModel
             {
                 Password = p.Password;
             });
-
-            
         }
     }
 }

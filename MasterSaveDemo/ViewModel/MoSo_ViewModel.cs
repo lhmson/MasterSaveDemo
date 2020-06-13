@@ -108,6 +108,20 @@ namespace MasterSaveDemo.ViewModel
         private string CheckValid()
         {
             string error = "";
+            ObservableCollection<THAMSO> listThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
+            foreach (var item in listThamSo)
+            {
+                if(item.TenThamSo == "SoTienGuiToiThieu")
+                {
+                    if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                    {
+                        System.Windows.Forms.MessageBox.Show("xsx");
+                        error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                    }
+                }
+            }
+
+            
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
                 error += "Sổ chưa được tạo mã sổ";
             if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null)
@@ -175,9 +189,6 @@ namespace MasterSaveDemo.ViewModel
 
         private string _SoTienGuiBanDau;
         public string SoTienGuiBanDau { get => _SoTienGuiBanDau; set { _SoTienGuiBanDau = value; OnPropertyChanged(); } }
-
-        private string _DonVi;
-        public string DonVi { get => _DonVi; set { _DonVi = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -248,7 +259,7 @@ namespace MasterSaveDemo.ViewModel
                     SoTietKiem.SoTienGuiBanDau = Decimal.Parse(SoTienGuiBanDau);
                     SoTietKiem.NgayMoSo = DateTime.Parse(NgayMoSo);
                     SoTietKiem.SoDu = Decimal.Parse(SoTienGuiBanDau);
-                    SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
+                    //SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
                     SoTietKiem.NgayDaoHanKeTiep = DateTime.Parse(NgayDaoHanKeTiep);
                     SoTietKiem.MaLoaiTietKiem = search_MaLTK(SelectedTenLoaiTietKiem);
                     SoTietKiem.LaiSuatApDung = search_LaiSuat(search_MaLTK(SelectedTenLoaiTietKiem));

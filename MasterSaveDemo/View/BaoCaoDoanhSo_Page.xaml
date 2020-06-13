@@ -39,14 +39,14 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày lẹ"
                             HorizontalAlignment="Right" Margin="10,0,10,0"
-                            Text="{Binding FormattedDate}"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                            SelectedDate="{Binding DateReport,StringFormat='dd/MM/yyyy', Mode=TwoWay}">
-                    <!--SelectedDateFormat="Short">-->
+                            SelectedDate="{Binding SelectedDateReport,StringFormat='dd/MM/yyyy', Mode=TwoWay}"
+                            SelectedDateFormat="Short">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">
                             <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"
@@ -61,41 +61,52 @@
                         Margin="10,0,5,0" Content="Lập báo cáo"
                         Width="150" Height="35" Command="{Binding CreateReportCommand}"/>
             </Grid>
+            <Grid Grid.Column="2">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        HorizontalAlignment="Center"
+                        Margin="50,0,5,0" Content="Xuất phiếu"
+                        Width="150" Height="35" Command="{Binding PrintCommand}"/>
+            </Grid>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"></ColumnDefinition>
-                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <ListView ItemsSource="{Binding ListSTT}">
+
+            <Grid Grid.Column="0" Margin="0,0,-300,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="39*"/>
+                    <ColumnDefinition Width="136*"/>
+                </Grid.ColumnDefinitions>
+                <ListView ItemsSource="{Binding ListBaoCaoDisplay}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,0,0,-0.2">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="STT" DisplayMemberBinding="{Binding SoThuTu}" />
+                            <GridViewColumn Width="100" Header="STT" DisplayMemberBinding="{Binding SoThuTu}"/>
+                            <GridViewColumn Width="200" Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
+                            <GridViewColumn Width="200" Header="Tổng thu" DisplayMemberBinding="{Binding TongThu}"/>
+                            <GridViewColumn Width="200" Header="Tổng chi" DisplayMemberBinding="{Binding TongChi}"/>
+                            <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
-            <Grid Grid.Column="1">
-                <ListView ItemsSource="{Binding ListLTK}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTieKiem}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
-            <Grid Grid.Column="2">
-                <ListView x:Name="listViewReport" ItemsSource="{Binding ListBaoCaoDoanhSo}"
+            <Grid Grid.Column="1" Margin="320,0,0,0">
+                <ListView x:Name="listDateDisplayed" 
+                          ItemsSource="{Binding ListNgayBaoCao}" SelectedItem="{Binding SelectedDateReportDisplay}"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="200" Header="Tổng thu" DisplayMemberBinding="{Binding c}"/>
-                            <GridViewColumn Width="200" Header="Tổng chi" DisplayMemberBinding="{Binding d}"/>
-                            <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding e}"/>
+                            <GridViewColumn Width="200" Header="Ngày báo cáo"/>
                         </GridView>
                     </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                                   CommandParameter="{Binding ElementName=listDateDisplayed}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </ListView>
             </Grid>
         </Grid>

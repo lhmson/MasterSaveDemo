@@ -20,7 +20,7 @@ namespace MasterSaveDemo
     /// </summary>
     public partial class BaoCaoMoDong_PrintPreview : Window
     {
-        public BaoCaoMoDong_PrintPreview(BaseViewModel x )
+        public BaoCaoMoDong_PrintPreview(BaseViewModel x)
         {
             InitializeComponent();
             this.DataContext = x;

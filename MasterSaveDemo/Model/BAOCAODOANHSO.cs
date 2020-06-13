@@ -19,7 +19,7 @@ namespace MasterSaveDemo.Model
         public string MaLoaiTietKiem { get; set; }
         public decimal TongThu { get; set; }
         public decimal TongChi { get; set; }
-        public decimal ChechLech { get; set; }
+        public decimal ChenhLech { get; set; }
     
         public virtual LOAITIETKIEM LOAITIETKIEM { get; set; }
     }

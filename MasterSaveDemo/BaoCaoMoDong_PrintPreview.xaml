@@ -61,7 +61,7 @@
                             Command="{Binding CloseWindowCommand}" IsEnabled="True"
                              CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"     >
                             <materialDesign:PackIcon Kind="Close"/>
-                            
+
                         </Button>
                     </StackPanel>
                 </Grid>

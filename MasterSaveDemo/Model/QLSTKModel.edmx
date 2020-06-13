@@ -14,7 +14,7 @@
           <Property Name="MaLoaiTietKiem" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="TongThu" Type="money" Nullable="false" />
           <Property Name="TongChi" Type="money" Nullable="false" />
-          <Property Name="ChechLech" Type="money" Nullable="false" />
+          <Property Name="ChenhLech" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="BAOCAOMODONG">
           <Key>
@@ -343,7 +343,7 @@
           <Property Name="MaLoaiTietKiem" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="TongThu" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="TongChi" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="ChechLech" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ChenhLech" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="LOAITIETKIEM" Relationship="QLSTKModel.FK__BAOCAODOA__MaLoa__49C3F6B7" FromRole="BAOCAODOANHSO" ToRole="LOAITIETKIEM" />
         </EntityType>
         <EntityType Name="BAOCAOMODONG">
@@ -586,7 +586,7 @@
           <EntitySetMapping Name="BAOCAODOANHSOes">
             <EntityTypeMapping TypeName="QLSTKModel.BAOCAODOANHSO">
               <MappingFragment StoreEntitySet="BAOCAODOANHSO">
-                <ScalarProperty Name="ChechLech" ColumnName="ChechLech" />
+                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
                 <ScalarProperty Name="TongChi" ColumnName="TongChi" />
                 <ScalarProperty Name="TongThu" ColumnName="TongThu" />
                 <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />

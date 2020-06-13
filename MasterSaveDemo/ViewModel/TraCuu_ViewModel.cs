@@ -32,8 +32,8 @@ namespace MasterSaveDemo.ViewModel
         private List<string> _LoaiTietKiem;
         public List<string> LoaiTietKiem { get => _LoaiTietKiem; set { _LoaiTietKiem = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<ListTraCuuSTK> _ListSoTietKiem;
-        public ObservableCollection<ListTraCuuSTK> ListSoTietKiem { get => _ListSoTietKiem; set { _ListSoTietKiem = value; OnPropertyChanged(); } }
+        private ObservableCollection<STKDuocTraCuu> _ListSoTietKiem;
+        public ObservableCollection<STKDuocTraCuu> ListSoTietKiem { get => _ListSoTietKiem; set { _ListSoTietKiem = value; OnPropertyChanged(); } }
 
         private string _MaSTK;
         public string MaSTK { get => _MaSTK; set { _MaSTK = value; OnPropertyChanged(); } }
@@ -68,6 +68,7 @@ namespace MasterSaveDemo.ViewModel
             LoaiTietKiem = new List<string>();
             foreach (LOAITIETKIEM LTK in _List)
                 LoaiTietKiem.Add(LTK.TenLoaiTietKiem);
+            LoaiTietKiem.Add("Tất cả");
 
             // Combobox MucSoDu
             MucSoDu = new List<string>();
@@ -89,9 +90,9 @@ namespace MasterSaveDemo.ViewModel
 
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
-                              select new ListTraCuuSTK(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, 
+                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, 
                               Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
-                ListSoTietKiem = new ObservableCollection<ListTraCuuSTK>(results);
+                ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
                 int count = 1;
                 for (int i = 0; i < ListSoTietKiem.Count(); i++)
@@ -135,7 +136,7 @@ namespace MasterSaveDemo.ViewModel
                     max = -1;
                 }
 
-                if (SelectedMucSoDu == "Tất cả")
+                if (SelectedMucSoDu == "Tất cả" || SelectedMucSoDu == null)
                 {
                     min = 0;
                     max = -1;
@@ -145,11 +146,11 @@ namespace MasterSaveDemo.ViewModel
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               where (stk.MaSoTietKiem == MaSTK || MaSTK == "") && (stk.TenKhachHang.Contains(TenKH))
                                     && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
-                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK)
+                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK=="Tất cả")
                                     && (stk.SoDu >= min && (stk.SoDu <= max || max ==-1))                            
-                              select new ListTraCuuSTK(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
 
-                ListSoTietKiem = new ObservableCollection<ListTraCuuSTK>(results);
+                ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
                 int count = 1;
                 for (int i=0; i<ListSoTietKiem.Count(); i++)

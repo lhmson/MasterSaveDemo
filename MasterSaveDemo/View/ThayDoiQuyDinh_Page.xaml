@@ -6,10 +6,12 @@
       xmlns:local="clr-namespace:MasterSaveDemo.View"
       xmlns:resources="clr-namespace:MasterSaveDemo.ResourceXAML"
       mc:Ignorable="d" 
+      
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      
       d:DesignHeight="450" d:DesignWidth="800"
       
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="18"
@@ -43,8 +45,10 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <Button Content="Quy định" VerticalAlignment="Top"
-                        Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
+                    Content="Quy định" FontSize="18"
+                    VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Row="1">
                 <ComboBox x:Name="cbbChooseList" SelectedIndex="{Binding SelectedIndexCbb}">
@@ -72,17 +76,17 @@
                          Text="{Binding MaLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Error"/>
                 <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
-                         Visibility="{Binding VisibilityOfEdit}"
+                         Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <TextBox materialDesign:HintAssist.Hint="Số tiền gửi tối thiểu"
-                         Visibility="Hidden"
+                <TextBox materialDesign:HintAssist.Hint="Tên tham số"
+                         Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding SoTienGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </Grid>
             <Grid Grid.Row="3">
                 <TextBox materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
@@ -92,16 +96,18 @@
                          VerticalAlignment="Center"
                          Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <TextBox materialDesign:HintAssist.Hint="Lãi suất"
-                         Visibility="{Binding VisibilityOfEdit}"
+                         Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <TextBlock Text="Tự động đóng sổ" HorizontalAlignment="Left" VerticalAlignment="Center"
-                           Visibility="Hidden"/>
-                <ToggleButton Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
-                              ToolTip="MaterialDesignSwitchAccentToggleButton"
-                              IsChecked="True" Visibility="Hidden" />
+                <TextBox materialDesign:HintAssist.Hint="Giá trị"
+                         Visibility="{Binding VisibilityOfEditThamSo}"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{StaticResource SecondaryAccentBrush}" 
+                         VerticalAlignment="Center"
+                         Text="{Binding GiaTri, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
             </Grid>
             <Grid Grid.Row="4">
                 <TextBox materialDesign:HintAssist.Hint="Kỳ hạn"
@@ -134,7 +140,7 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding SoTienDuocRut, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                         Text="{Binding QuyDinhSoTienRut, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </Grid>
             <Grid Grid.Row="8">
                 <Grid.ColumnDefinitions>
@@ -144,12 +150,14 @@
                 <Grid Grid.Column="0">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Xác nhận"
-                            Width="150" Height="35" Command="{Binding ConfirmCommand}"/>
+                            Width="150" Height="35" Command="{Binding ConfirmCommand}"
+                            Visibility="{Binding VisibilityOfConfirm}"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Hủy"
-                            Width="150" Height="35" Command="{Binding CancelCommand}"/>
+                            Width="150" Height="35" Command="{Binding CancelCommand}"
+                            Visibility="{Binding VisibilityOfCancel}"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -165,12 +173,12 @@
             <Grid Grid.Row="0">
                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  
                     materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                    Content="Danh sách loại tiết kiệm" FontSize="18"
+                    Content="{Binding NameOfList}" FontSize="18"
                     VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Row="1">
                 <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" Visibility="{Binding VisibilityOfListLTK}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=OneWayToSource}">
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã loại tiết kiệm" DisplayMemberBinding="{Binding MaLoaiTietKiem}" />
@@ -178,16 +186,16 @@
                             <GridViewColumn Header="Kỳ hạn" DisplayMemberBinding="{Binding KyHan}"/>
                             <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"/>
                             <GridViewColumn Header="Thời gian gửi tối thiểu" DisplayMemberBinding="{Binding ThoiGianGuiToiThieu}"/>
-                            <GridViewColumn Header="Số tiền được rút" DisplayMemberBinding="{Binding SoTienDuocRut}"/>
+                            <GridViewColumn Header="Quy định số tiền được rút" DisplayMemberBinding="{Binding QuyDinhSoTienRut}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
                 <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}" Visibility="{Binding VisibilityOfListThamSo}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=OneWayToSource}">
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}" />
-                            <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTriThamSo}"/>
+                            <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
+                            <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
                             
                         </GridView>
                     </ListView.View>

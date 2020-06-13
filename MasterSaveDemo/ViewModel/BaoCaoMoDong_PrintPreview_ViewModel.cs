@@ -12,10 +12,10 @@ using System.Windows.Controls;
 
 namespace MasterSaveDemo.ViewModel
 {
-    public class BaoCaoMoDong_PrintPreview_ViewModel: BaseViewModel
+    public class BaoCaoMoDong_PrintPreview_ViewModel : BaseViewModel
     {
         //---------------
-        
+
 
 
         //---------------
@@ -40,12 +40,12 @@ namespace MasterSaveDemo.ViewModel
         public string NgayLapBaoCao
         {
             get { return _NgayLapBaoCao; }
-            set { _NgayLapBaoCao = value;OnPropertyChanged(); }
+            set { _NgayLapBaoCao = value; OnPropertyChanged(); }
         }
         //---------------
         private string _MaBaoCao;
 
-        public  string MaBaoCao
+        public string MaBaoCao
         {
             get { return _MaBaoCao; }
             set { _MaBaoCao = value; OnPropertyChanged(); }
@@ -53,7 +53,7 @@ namespace MasterSaveDemo.ViewModel
         //---------------
         private string _LoaiTietKiem;
 
-        public string LoaiTietKiem 
+        public string LoaiTietKiem
         {
             get { return _LoaiTietKiem; }
             set { _LoaiTietKiem = value; OnPropertyChanged(); }
@@ -68,10 +68,10 @@ namespace MasterSaveDemo.ViewModel
             set { _ListBaoCaoDMPP = value; OnPropertyChanged(); }
         }
         //--------------
-       
+
         public ICommand CloseWindowCommand { get; set; }
-       
-        public BaoCaoMoDong_PrintPreview_ViewModel(string MaBC,string Thang, string Nam, string LTK, List<ListBaoCaoDongMo> list)
+
+        public BaoCaoMoDong_PrintPreview_ViewModel(string MaBC, string Thang, string Nam, string LTK, List<ListBaoCaoDongMo> list)
         {
             ListBaoCaoDMPP = list;
             NamBaoCao = Nam;
@@ -87,6 +87,7 @@ namespace MasterSaveDemo.ViewModel
 
 
         }
-       
+
     }
+
 }

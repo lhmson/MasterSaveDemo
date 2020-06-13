@@ -20,7 +20,7 @@ namespace MasterSaveDemo.Model
             Ngay = NgayXem;
             SoMo = SoDaMo;
             SoDong = SoDaDong;
-            ChenhLech = SoChenhLech;                
+            ChenhLech = SoChenhLech;
         }
     }
 }

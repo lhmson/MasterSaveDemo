@@ -17,7 +17,7 @@ namespace MasterSaveDemo.ViewModel
         #region function 
         public string formatDate(string st)
         {
-            string s = "";
+            string s ="";
             int i = 0;
             while (st[i] != ' ')
             {
@@ -71,18 +71,18 @@ namespace MasterSaveDemo.ViewModel
 
             foreach (THAMSO TS in List_TS)
             {
+
                 if (TS.TenThamSo == MaThamSo)
                     return TS.GiaTri.ToString();
-
-                //debug += "\n" + LTK.TenLoaiTietKiem + "a";
+  
             }
             return "";
         }
-
+  
         private string CheckValid()
         {
-            try
-            {
+           try
+           {
                 SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
                 if (MaSoTietKiem == "" || MaSoTietKiem == null)
                     Notify += "Sổ chưa được tạo mã sổ";
@@ -99,14 +99,7 @@ namespace MasterSaveDemo.ViewModel
             }
 
         }
-        private string FormatPG(string mbc)
-        {
-            for (int i = 1; i <= 6 - mbc.Length; i++)
-            {
-                mbc = "0" + mbc;
-            }
-            return mbc;
-        }
+
         private string Cal_NgayDaoHan(int days)
         {
             double d = Double.Parse(days.ToString());
@@ -118,9 +111,9 @@ namespace MasterSaveDemo.ViewModel
         {
             ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
             int tmp = List_PG.Count();
-            return "PG" + FormatPG((tmp + 1).ToString());
+            return "PG" + (tmp + 1).ToString();
         }
-
+        
         #endregion
         #region variables
         private string _Notify;
@@ -143,15 +136,15 @@ namespace MasterSaveDemo.ViewModel
         private string _NgayGui;
         public string NgayGui
         {
-            get => _NgayGui;
+            get => _NgayGui; 
             set { _NgayGui = value; OnPropertyChanged(); }
         }
 
         private string _MaSoTietKiem;
         public string MaSoTietKiem
         {
-            get => _MaSoTietKiem;
-            set { _MaSoTietKiem = value; OnPropertyChanged(); }
+            get => _MaSoTietKiem; 
+            set { _MaSoTietKiem = value;OnPropertyChanged(); }
         }
 
         private string _SoTienGui;
@@ -174,7 +167,7 @@ namespace MasterSaveDemo.ViewModel
             get { return _TenLoaiTietKiem; }
             set { _TenLoaiTietKiem = value; OnPropertyChanged(); }
         }
-
+        
         private string _SoCMND;
         public string SoCMND
         {
@@ -205,12 +198,8 @@ namespace MasterSaveDemo.ViewModel
                 if (stk != null)
                 {
                     TenKhachHang = stk.TenKhachHang;
-                    if (stk.NgayMoSo == stk.NgayDaoHanKeTiep)
-                        NgayDaoHanKeTiep = NgayGui;
-                    else
-                        NgayDaoHanKeTiep = formatDate(stk.NgayDaoHanKeTiep.ToString());
+                    NgayDaoHanKeTiep = formatDate(stk.NgayDaoHanKeTiep.ToString());
                     TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
-                    
                     SoCMND = stk.SoCMND;
                     SoDu = stk.SoDu.ToString();
                 }
@@ -222,9 +211,9 @@ namespace MasterSaveDemo.ViewModel
             {
                 Notify = "";
                 Notify = CheckValid();
-                if (Notify == "") Notify += "\nThông tin này hợp lệ! Đã có thể tạo phiếu";
+                if (Notify == "") Notify+="\nThông tin này hợp lệ! Đã có thể tạo phiếu";
                 else
-                    Notify += "\nThông tin không hợp lệ";
+                    Notify+="\nThông tin không hợp lệ";
             });
 
             //Button Mo So 
@@ -235,10 +224,10 @@ namespace MasterSaveDemo.ViewModel
             {
                 Notify = "";
                 Notify = CheckValid();
-                if (Notify != "") Notify += "\nThông tin không hợp lệ";
+                if (Notify != "") Notify+= "\nThông tin không hợp lệ";
                 else
                 {
-                    Notify += "\nĐã tao phiếu gửi";
+                    Notify+="\nĐã tao phiếu gửi";
                     PHIEUGUI Phieugui = new PHIEUGUI()
                     {
                         MaPhieuGui = GetCodeMPG(),
@@ -251,25 +240,21 @@ namespace MasterSaveDemo.ViewModel
                     DataProvider.Ins.DB.SaveChanges();
                     //edit SoTietKiem
                     var SotietKiem = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == MaSoTietKiem).SingleOrDefault();
-                    SotietKiem.SoDu += decimal.Parse(SoTienGui);
+                    SotietKiem.SoDu += decimal.Parse(SoTienGui);             
                     DataProvider.Ins.DB.SaveChanges();
                 }
             });
             EnterKeyDown_Command = new RelayCommand<object>((p) =>
             {
                 return true;
-            }, (p) =>
+            }, (p)=>
             {
                 SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
                 if (stk != null)
                 {
                     TenKhachHang = stk.TenKhachHang;
-                    if (stk.NgayMoSo == stk.NgayDaoHanKeTiep)
-                        NgayDaoHanKeTiep = NgayGui;
-                    else
-                        NgayDaoHanKeTiep = formatDate(stk.NgayDaoHanKeTiep.ToString());
+                    NgayDaoHanKeTiep = formatDate(stk.NgayDaoHanKeTiep.ToString());
                     TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
-
                     SoCMND = stk.SoCMND;
                     SoDu = stk.SoDu.ToString();
                 }

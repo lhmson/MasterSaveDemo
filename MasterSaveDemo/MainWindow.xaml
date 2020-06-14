@@ -58,17 +58,21 @@
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/favorite.png" Text="Giao dịch rút tiền" Selected="RutTien_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/search.png" Text="Tra cứu sổ" Selected="TraCuu_Page_Selected" IsEnabled="{Binding Is_GDV_KTV_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/list.png" Text="Lập báo cáo doanh số" Selected="BaoCaoDoanhSo_Page_Selected" IsEnabled="{Binding Is_KTV_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/list.png" Text="Lập báo cáo mở đóng" Selected="BaoCaoDoanhSo_Page_Selected" IsEnabled="{Binding Is_KTV_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/list.png" Text="Lập báo cáo mở đóng" Selected="BaoCaoMoDong_Page_Selected" IsEnabled="{Binding Is_KTV_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/spam.png" Text="Thay đổi quy định" Selected="ThayDoiQuyDinh_Page_Selected" IsEnabled="{Binding Is_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/person.png" Text="Quản lí nhân sự" Selected="QuanLyNhanSu_Page_Selected" IsEnabled="{Binding Is_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/setting.png" Text="Cài đặt khác" Selected="CaiDatKhac_Page_Selected" />
                 </HamburgerMenu:HamburgerMenu>
             </Grid>
             <Grid Grid.Column="1">
-                <Frame x:Name="main" Margin="10" NavigationUIVisibility="Hidden">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="333*"/>
+                    <RowDefinition Height="215*"/>
+                </Grid.RowDefinitions>
+                <Frame x:Name="main" Margin="10,10,10.4,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                 </Frame>
             </Grid>
         </Grid>
-        
+
     </Grid>
 </Window>

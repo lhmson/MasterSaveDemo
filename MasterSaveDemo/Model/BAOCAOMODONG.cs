@@ -14,12 +14,19 @@ namespace MasterSaveDemo.Model
     
     public partial class BAOCAOMODONG
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BAOCAOMODONG()
+        {
+            this.CTBCMODONGs = new HashSet<CTBCMODONG>();
+        }
+    
         public string MaBaoCaoMoDong { get; set; }
         public string MaLoaiTietKiem { get; set; }
         public int ThangBaoCao { get; set; }
         public int NamBaoCao { get; set; }
     
         public virtual LOAITIETKIEM LOAITIETKIEM { get; set; }
-        public virtual CTBCMODONG CTBCMODONG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CTBCMODONG> CTBCMODONGs { get; set; }
     }
 }

@@ -71,10 +71,10 @@ namespace MasterSaveDemo.ViewModel
 
             foreach (THAMSO TS in List_TS)
             {
+
                 if (TS.TenThamSo == MaThamSo)
                     return TS.GiaTri.ToString();
-
-                //debug += "\n" + LTK.TenLoaiTietKiem + "a";
+  
             }
             return "";
         }

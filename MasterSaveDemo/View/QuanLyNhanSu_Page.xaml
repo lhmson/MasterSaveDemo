@@ -79,12 +79,13 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MatKhau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <TextBox materialDesign:HintAssist.Hint="Tên quyền"
-                         Visibility="Hidden"
+                <TextBox materialDesign:HintAssist.Hint="Tên nhóm quyền"
+                         Visibility="{Binding VisibilityOfTenNhomQuyen}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding SoTienGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding txtTenNhomQuyen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
             </Grid>
             <Grid Grid.Row="3">
                 <TextBox materialDesign:HintAssist.Hint="Mật khẩu"
@@ -98,7 +99,7 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </Grid>
             <Grid Grid.Row="4">
                 <TextBox materialDesign:HintAssist.Hint="Họ tên"
@@ -109,8 +110,8 @@
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfEdit}"
-                          ItemsSource="{Binding ListNhomNguoiDung}"
-                          Text ="{Binding CbxTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
+                          ItemsSource="{Binding CbxTenNhom, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
                 </ComboBox>
             </Grid>
@@ -121,8 +122,8 @@
                 </Grid.ColumnDefinitions>
                 <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfAdd}"
-                          ItemsSource="{Binding ListNhomNguoiDung}"
-                          Text ="{Binding CbxTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
+                          ItemsSource="{Binding CbxTenNhom, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
+                          Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
                 </ComboBox>
             </Grid>
@@ -165,14 +166,124 @@
                     VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Row="1">
-                <ListView x:Name="listViewNguoiDung" ItemsSource="{Binding ListNguoiDung}" Visibility="{Binding VisibilityOfListNguoiDung}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemNguoiDung, Mode=OneWayToSource}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="19*"/>
+                    <ColumnDefinition Width="12*"/>
+                </Grid.ColumnDefinitions>
+                <ListView x:Name="listViewNguoiDung" ItemsSource="{Binding ListNhanVien}" Visibility="{Binding VisibilityOfListNguoiDung}"
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemNguoiDung, Mode=TwoWay}" Grid.ColumnSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDangNhap}" />
                             <GridViewColumn Header="Mật khẩu" DisplayMemberBinding="{Binding MatKhau}"/>
                             <GridViewColumn Header="Họ tên" DisplayMemberBinding="{Binding HoTen}"/>
                             <GridViewColumn Header="Vị trí (nhóm quyền)" DisplayMemberBinding="{Binding TenNhom}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView x:Name="listViewPhanQuyen" ItemsSource="{Binding ListPhanQuyen}" Visibility="{Binding VisibilityOfListPhanQuyen}"
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPhanQuyen, Mode=TwoWay}" FontSize="18" Grid.ColumnSpan="2">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="FontSize" Value="18" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Nhóm quyền" DisplayMemberBinding="{Binding TenNhomQuyen}" Width="200" />
+
+                            <GridViewColumn Header="Quản lý nhân sự" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox HorizontalAlignment="Center" IsChecked ="{Binding chkQLNS}" IsEnabled="{Binding EnabledCheckBox}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Mở sổ tiết kiệm"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkMSTK}" IsEnabled="{Binding EnabledCheckBox}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                            <GridViewColumn Header="Lập phiếu gửi" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkLPG}" IsEnabled="{Binding EnabledCheckBox}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Lập phiếu rút" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkLPR}"  IsEnabled="{Binding EnabledCheckBox}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Tra cứu sổ" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkTCS}" IsEnabled="{Binding EnabledCheckBox}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Lập báo cáo doanh số" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkBCDS}" IsEnabled="{Binding EnabledCheckBox}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Lập báo cáo mở/đóng sổ" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkBCMD}" IsEnabled="{Binding EnabledCheckBox}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Thay đổi quy định" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkTDQD}" IsEnabled="{Binding EnabledCheckBox}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Nhập lãi vào vốn" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <CheckBox IsChecked ="{Binding chkNLVV}" IsEnabled="{Binding EnabledCheckBox}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
                         </GridView>
                     </ListView.View>
                 </ListView>

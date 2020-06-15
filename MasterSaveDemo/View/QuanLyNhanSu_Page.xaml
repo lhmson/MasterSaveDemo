@@ -26,7 +26,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="AUto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="15"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -45,7 +45,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <Button Content="Quản lý" VerticalAlignment="Top"
+                <Button Content="Quản lý nhân sự" VerticalAlignment="Top"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
             </Grid>
             <Grid Grid.Row="1">

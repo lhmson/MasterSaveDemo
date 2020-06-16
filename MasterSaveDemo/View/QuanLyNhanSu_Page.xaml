@@ -181,7 +181,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView x:Name="listViewPhanQuyen" ItemsSource="{Binding ListPhanQuyen}" Visibility="{Binding VisibilityOfListPhanQuyen}"
+                <ListView x:Name="listViewPhanQuyen" ItemsSource="{Binding ListPhanQuyen, Mode= TwoWay}" Visibility="{Binding VisibilityOfListPhanQuyen}"
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPhanQuyen, Mode=TwoWay}" FontSize="18" Grid.ColumnSpan="2">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">

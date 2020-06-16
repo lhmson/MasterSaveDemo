@@ -233,6 +233,10 @@ namespace MasterSaveDemo.ViewModel
 
         private void ResetCbxTenNhom()
         {
+            Visibility vsAdd = VisibilityOfAdd;
+            Visibility vsEdit = VisibilityOfEdit;
+            VisibilityOfAdd = Visibility.Visible;
+            VisibilityOfEdit = Visibility.Visible;
             CbxTenNhom.Clear();
             
             ObservableCollection<NHOMNGUOIDUNG> List_Nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
@@ -240,7 +244,8 @@ namespace MasterSaveDemo.ViewModel
             {
                 CbxTenNhom.Add(Nhom.TenNhom);
             }
-            System.Windows.Forms.MessageBox.Show("Binding");
+            VisibilityOfAdd = vsAdd;
+            VisibilityOfEdit = vsEdit;
         }
 
         private bool CheckValidData()

@@ -9,6 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.IO;
 using System.Windows.Threading;
+using MasterSaveDemo.Model;
+using System.Collections.ObjectModel;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -31,6 +33,12 @@ namespace MasterSaveDemo.ViewModel
                 _NgayGioHienTai = value; ; OnPropertyChanged(); }
         }
 
+        private string _TenTaiKhoan;
+        public string TenTaiKhoan { get => _TenTaiKhoan; set { _TenTaiKhoan = value; OnPropertyChanged(); } }
+
+        private string _ChucVu;
+        public string ChucVu { get => _ChucVu; set { _ChucVu = value; OnPropertyChanged(); } }
+
         public DispatcherTimer _timer;
         #endregion
 
@@ -43,16 +51,32 @@ namespace MasterSaveDemo.ViewModel
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += (sender, args) =>
             {
+                //Khởi tạo tài khoản cho toàn bộ chương trình
+                InitTaiKhoan();
                 NgayGioHienTai = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy");
             };
             _timer.Start();
+        }
+
+        private void InitTaiKhoan()
+        {
+            NGUOIDUNG user = LoginViewModel.TaiKhoanSuDung;
+            if (user == null) return;
+            if (TenTaiKhoan != null) return; // check to update Ten one time only for utilize
+            TenTaiKhoan = user.HoTen;
+            ObservableCollection<NHOMNGUOIDUNG> listNhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
+            foreach (var item in listNhom)
+                if (user.MaNhom == item.MaNhom)
+                {
+                    ChucVu = item.TenNhom;
+                    break;
+                }
         }
         #endregion
 
         public ControlBarViewModel()
         {
-            
-            GetTimeNow();
+            GetTimeNow(); // lay ngay gio hien tai bind voi user control
             CloseWindowCommand = new RelayCommand<UserControl>((p) => { return p == null ? false : true; }, (p) => {
                 Window window = GetWindowParent(p);
                 if (window != null)

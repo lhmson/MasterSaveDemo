@@ -17,6 +17,8 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              
+             DataContext="{StaticResource SelfControlVM}"
+             
              Name="UC_ControlBar" >
     <Grid>
         <Grid.ColumnDefinitions>

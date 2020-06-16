@@ -13,6 +13,8 @@ namespace MasterSaveDemo.ViewModel
 {
     public class LoginViewModel : BaseViewModel
     {
+        static public NGUOIDUNG TaiKhoanSuDung; // tao bien static nguoi dung
+
         public ICommand CloseWindowCommand { get; set; }
         public ICommand LoginCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
@@ -38,12 +40,14 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (item.TenDangNhap == UserName && item.MatKhau == Password)
                     {
+                        //Gan static TaiKhoanSuDung
+                        TaiKhoanSuDung = item;
                         p.Close();
                         return;
                     }
 
                 }
-                MessageBox.Show("Tài khoản không hơp lệ!");
+                MessageBox.Show("Tài khoản không hợp lệ!");
               
                 //CheckLogin(p);
             });

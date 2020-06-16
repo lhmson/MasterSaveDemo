@@ -95,7 +95,7 @@
             <Grid Grid.Column="1" Margin="320,0,0,0">
                 <ListView x:Name="listDateDisplayed" 
                           ItemsSource="{Binding ListNgayBaoCao}" SelectedItem="{Binding SelectedDateReportDisplay}"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="200" Header="Ngày báo cáo"/>

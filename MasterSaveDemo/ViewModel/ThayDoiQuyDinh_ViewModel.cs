@@ -30,6 +30,13 @@ namespace MasterSaveDemo.ViewModel
             set { _ListThamSo = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<string> _ListQuyDinh;
+        public ObservableCollection<string> ListQuyDinh
+        {
+            get => _ListQuyDinh;
+            set { _ListQuyDinh = value; OnPropertyChanged(); }
+        }
+
         private LOAITIETKIEM _SelectedItemLTK;
         public LOAITIETKIEM SelectedItemLTK
         {
@@ -49,6 +56,13 @@ namespace MasterSaveDemo.ViewModel
         {
             get => _SelectedIndexCbb;
             set { _SelectedIndexCbb = value; OnPropertyChanged(); }
+        }
+
+        private string _SelectedQuyDinh;
+        public string SelectedQuyDinh
+        {
+            get => _SelectedQuyDinh;
+            set { _SelectedQuyDinh = value; OnPropertyChanged(); }
         }
 
         // Visibility of add elements
@@ -203,6 +217,10 @@ namespace MasterSaveDemo.ViewModel
 
             ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
+
+            ListQuyDinh = new ObservableCollection<string>();
+            ListQuyDinh.Add("Rút bé hơn hoặc bằng");
+            ListQuyDinh.Add("Rút hết");
 
             VisibilityOfAdd = Visibility.Hidden;
             VisibilityOfEditLTK = Visibility.Hidden;
@@ -399,6 +417,17 @@ namespace MasterSaveDemo.ViewModel
             res += stt.ToString();
             return res;
         }
+        private int DisableButton(Visibility add, Visibility edit, bool delete)
+        {
+            if (edit == Visibility.Visible)
+                return 13;
+            else if (add == Visibility.Visible && delete == false)
+                return 23;
+            else if (add == Visibility.Visible && delete == true)
+                return 12;
+            return 0;
+        }
+        
         #endregion
 
         #region ICommand
@@ -408,6 +437,8 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand CbbSelectionChangedCommand { get; set; }
+        public ICommand GetThoiGianGuiToiThieuCommand { get; set; }
+
         #endregion
 
         public ThayDoiQuyDinh_ViewModel()
@@ -416,7 +447,18 @@ namespace MasterSaveDemo.ViewModel
             LoadData();                 
 
             // show elements used for adding
-            AddLTKCommand = new RelayCommand<object>((p) => { return SelectedIndexCbb==0 ? true : false; }, 
+            AddLTKCommand = new RelayCommand<object>((p) => 
+                {
+                    if (SelectedIndexCbb == 0)
+                    {
+                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                        if (disable == 23 || disable == 0)
+                            return true;
+                        return false;
+                    }
+                    return false;
+                    //return true;
+                }, 
                 (p) => {
                     IsDeleting = false;
                     VisibilityOfAdd = Visibility.Visible;
@@ -433,12 +475,20 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // show elements used for editing
-            EditLTKCommand = new RelayCommand<object>((p) => { return true; },
+            EditLTKCommand = new RelayCommand<object>((p) => 
+                {
+                    int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                    if (disable == 13 || disable == 0)
+                        return true;
+                    return false;
+                    //return true;
+                },
                 (p) => {
-                    if( SelectedIndexCbb == 0)
+                    if ( SelectedIndexCbb == 0)
                     {
                         if (SelectedItemLTK != null)
                         {
+                            VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                             ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
                             LaiSuat = SelectedItemLTK.LaiSuat.ToString();
 
@@ -451,6 +501,7 @@ namespace MasterSaveDemo.ViewModel
                     {
                         if( SelectedItemThamSo != null)
                         {
+                            VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                             TenThamSo = SelectedItemThamSo.TenThamSo;
                             GiaTri = SelectedItemThamSo.GiaTri.ToString();
 
@@ -461,12 +512,28 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // show elements used for deleting
-            DeleteLTKCommand = new RelayCommand<object>((p) => { return SelectedIndexCbb == 0 ? true : false; },
+            DeleteLTKCommand = new RelayCommand<object>((p) => 
+                {
+                    if (SelectedIndexCbb == 0)
+                    {
+                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                        if (disable == 12 || disable == 0)
+                            return true;
+                        return false;
+                    }
+                    return false;
+                    //return true;
+                },
                 (p) => {
-                    IsDeleting = true;
-                    SetTextboxValue();
-                    VisibilityOfAdd = Visibility.Visible;
-                    VisibilityOfEditLTK = Visibility.Hidden;
+                    if(SelectedItemLTK != null)
+                    {
+                        VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
+
+                        IsDeleting = true;
+                        SetTextboxValue();
+                        VisibilityOfAdd = Visibility.Visible;
+                        VisibilityOfEditLTK = Visibility.Hidden;
+                    }
                 }
             );
 
@@ -508,20 +575,24 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                if (VisibilityOfAdd == Visibility.Visible)
-                {
-                    ResetTextbox();
-                }
-                else if (VisibilityOfEditLTK == Visibility.Visible)
-                {
-                    ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
-                    LaiSuat = SelectedItemLTK.LaiSuat.ToString();
-                }
-                else if (VisibilityOfEditThamSo == Visibility.Visible)
-                {
-                    TenThamSo = SelectedItemThamSo.TenThamSo;
-                    GiaTri = SelectedItemThamSo.GiaTri.ToString();
-                }
+                VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
+                VisibilityOfEditThamSo = Visibility.Hidden;
+                VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
+                IsDeleting = false;
+                //if (VisibilityOfAdd == Visibility.Visible)
+                //{
+                //    ResetTextbox();
+                //}
+                //else if (VisibilityOfEditLTK == Visibility.Visible)
+                //{
+                //    ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
+                //    LaiSuat = SelectedItemLTK.LaiSuat.ToString();
+                //}
+                //else if (VisibilityOfEditThamSo == Visibility.Visible)
+                //{
+                //    TenThamSo = SelectedItemThamSo.TenThamSo;
+                //    GiaTri = SelectedItemThamSo.GiaTri.ToString();
+                //}
             });
 
             CbbSelectionChangedCommand = new RelayCommand<object>((p) =>
@@ -547,6 +618,14 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
                 }
 
+            });
+
+            GetThoiGianGuiToiThieuCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ThoiGianGuiToiThieu = KyHan;
             });
         }
     }

@@ -10,17 +10,13 @@
 namespace MasterSaveDemo.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class BAOCAODOANHSO
+    public partial class sp_helpdiagrams_Result
     {
-        public string MaBaoCaoDoanhSo { get; set; }
-        public System.DateTime NgayDoanhSo { get; set; }
-        public string MaLoaiTietKiem { get; set; }
-        public decimal TongThu { get; set; }
-        public decimal TongChi { get; set; }
-        public decimal ChenhLech { get; set; }
-    
-        public virtual LOAITIETKIEM LOAITIETKIEM { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

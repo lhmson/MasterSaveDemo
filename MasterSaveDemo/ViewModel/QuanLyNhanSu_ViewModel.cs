@@ -239,12 +239,8 @@ namespace MasterSaveDemo.ViewModel
             foreach (var Nhom in List_Nhom)
             {
                 CbxTenNhom.Add(Nhom.TenNhom);
-                System.Windows.Forms.MessageBox.Show(CbxTenNhom.Last());
             }
-            string res = "";
-            foreach (var item in CbxTenNhom)
-                res += item;
-            System.Windows.Forms.MessageBox.Show(res);
+            System.Windows.Forms.MessageBox.Show("Binding");
         }
 
         private bool CheckValidData()
@@ -350,20 +346,21 @@ namespace MasterSaveDemo.ViewModel
 
                 return true; },
                 (p) => {
-                    if (VisibilityOfListPhanQuyen == Visibility.Hidden)
+                    if (VisibilityOfListPhanQuyen == Visibility.Hidden) 
                     {
                         VisibilityOfAdd = Visibility.Visible;
+                        ResetCbxTenNhom();
                         VisibilityOfEdit = Visibility.Hidden;
                         VisibilityOfTenNhomQuyen = Visibility.Hidden;
                         // reset value for textbox because these textbox still keep value if you are editing and then change to add
-                        ResetTextbox();
+                        ResetTextbox();                    
                     }
                     else
                     {
                         VisibilityOfAdd = Visibility.Hidden;
                         VisibilityOfEdit = Visibility.Hidden;
                         VisibilityOfTenNhomQuyen = Visibility.Visible;
-
+                        // Enable cho selectedPhanQuyen
                         if (SelectedPhanQuyen != null)
                         {
                             BangPhanQuyen PQ = SelectedPhanQuyen;
@@ -393,6 +390,7 @@ namespace MasterSaveDemo.ViewModel
                         MatKhau = SelectedItemNguoiDung.MatKhau;
                         HoTen = SelectedItemNguoiDung.HoTen;
                         SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
+                        ResetCbxTenNhom();
                     }
 
                     if (VisibilityOfListPhanQuyen == Visibility.Visible && SelectedPhanQuyen != null) // Edit Bảng phân quyền
@@ -450,7 +448,6 @@ namespace MasterSaveDemo.ViewModel
                                 int maNhom = search_MaNhom(SelectedPhanQuyen.TenNhomQuyen);
                                 Delete_PhanQuyen(maNhom);
                                 Delete_NhomNguoiDung(SelectedPhanQuyen.TenNhomQuyen);
-                                ResetCbxTenNhom();
                                 ListPhanQuyen.Remove(SelectedPhanQuyen);
 
                             }
@@ -482,7 +479,7 @@ namespace MasterSaveDemo.ViewModel
             {
                 try
                 {
-                    if (VisibilityOfAdd == Visibility.Visible)
+                    if (VisibilityOfAdd == Visibility.Visible) // Thêm nhân viên
                     {
                         int Ma_Nhom = search_MaNhom(SelectedTenNhom);
                         var nguoiDung = new NGUOIDUNG()
@@ -502,7 +499,7 @@ namespace MasterSaveDemo.ViewModel
                         ResetTextbox();
                         VisibilityOfAdd = Visibility.Hidden;
                     }
-                    else if (VisibilityOfEdit == Visibility.Visible)
+                    else if (VisibilityOfEdit == Visibility.Visible)  // Sửa nhân viên
                     {
                         var temp = SelectedItemNguoiDung;
                         var nguoiDung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItemNguoiDung.TenDangNhap).SingleOrDefault();
@@ -527,8 +524,8 @@ namespace MasterSaveDemo.ViewModel
                         ////After confirming, selected item will die huhu, this line is used for making selected item reborn. 
                         ////You can continue change value without choosing item again if unnecessary
                         //SelectedItemLTK = temp;
-                    }
-                    else if (VisibilityOfTenNhomQuyen == Visibility.Visible)
+                    } 
+                    else if (VisibilityOfTenNhomQuyen == Visibility.Visible) // Thêm nhóm quyền
                     {
                         if (txtTenNhomQuyen == null || txtTenNhomQuyen == "")
                         {
@@ -544,13 +541,11 @@ namespace MasterSaveDemo.ViewModel
                             nhom.TenNhom = txtTenNhomQuyen;
                             DataProvider.Ins.DB.NHOMNGUOIDUNGs.Add(nhom);
                             DataProvider.Ins.DB.SaveChanges();
-                            ResetCbxTenNhom();
-                            txtTenNhomQuyen = "";
                             VisibilityOfTenNhomQuyen = Visibility.Hidden;
                            
                         }
                     }
-                    else if (SelectedPhanQuyen.EnabledCheckBox == true)
+                    else if (SelectedPhanQuyen.EnabledCheckBox == true) // Sửa nhóm quyền
                     {
                         int maNhom = search_MaNhom(SelectedPhanQuyen.TenNhomQuyen);
 

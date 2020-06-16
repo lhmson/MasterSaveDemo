@@ -74,21 +74,21 @@
                     <Grid Grid.Column="0" Grid.ColumnSpan="2">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Tài khoản" Margin="10" >
-                            <TextBlock Text="Binding Tai khoan o day" />
+                            <TextBlock Text="{Binding TenTaiKhoan}" />
                         </Button>
                     </Grid>
 
                     <Grid Grid.Column="2">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Chức vụ" Margin="10" >
-                            <TextBlock Text="Binding Chuc vu o day" />
+                            <TextBlock Text="{Binding ChucVu}" />
                         </Button>
                     </Grid>
 
                     <Grid Grid.Column="3" Grid.ColumnSpan="2">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Thời gian hiện tại" Margin="10" >
-                            <TextBlock Text="Display ngay gio o day" />
+                            <TextBlock Text="{Binding NgayGioHienTai}" />
                         </Button>
                     </Grid>
                 </Grid>

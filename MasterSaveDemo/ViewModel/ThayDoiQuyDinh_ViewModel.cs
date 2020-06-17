@@ -208,6 +208,13 @@ namespace MasterSaveDemo.ViewModel
             get => _NameOfList;
             set { _NameOfList = value; OnPropertyChanged(); }
         }
+
+        private bool _TextBoxReadOnly;
+        public bool TextBoxReadOnly
+        {
+            get => _TextBoxReadOnly;
+            set { _TextBoxReadOnly = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -427,6 +434,15 @@ namespace MasterSaveDemo.ViewModel
                 return 12;
             return 0;
         }
+        private void ResetAll()
+        {
+            VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
+            VisibilityOfEditThamSo = Visibility.Hidden;
+            VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
+            IsDeleting = false;
+            SelectedItemLTK = null;
+            TextBoxReadOnly = false;
+        }
         
         #endregion
 
@@ -464,6 +480,7 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfAdd = Visibility.Visible;
                     VisibilityOfEditLTK = Visibility.Hidden;
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
+                    SelectedItemLTK = null;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
@@ -477,11 +494,14 @@ namespace MasterSaveDemo.ViewModel
             // show elements used for editing
             EditLTKCommand = new RelayCommand<object>((p) => 
                 {
-                    int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                    if (disable == 13 || disable == 0)
-                        return true;
+                    if(SelectedItemLTK != null)
+                    {
+                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                        if (disable == 13 || disable == 0)
+                            return true;
+                        return false;
+                    }
                     return false;
-                    //return true;
                 },
                 (p) => {
                     if ( SelectedIndexCbb == 0)
@@ -516,9 +536,13 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (SelectedIndexCbb == 0)
                     {
-                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                        if (disable == 12 || disable == 0)
-                            return true;
+                        if( SelectedItemLTK != null)
+                        {
+                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                            if (disable == 12 || disable == 0)
+                                return true;
+                            return false;
+                        }
                         return false;
                     }
                     return false;
@@ -531,6 +555,7 @@ namespace MasterSaveDemo.ViewModel
 
                         IsDeleting = true;
                         SetTextboxValue();
+                        TextBoxReadOnly = true;
                         VisibilityOfAdd = Visibility.Visible;
                         VisibilityOfEditLTK = Visibility.Hidden;
                     }
@@ -563,9 +588,9 @@ namespace MasterSaveDemo.ViewModel
                     }
                     else if (VisibilityOfEditThamSo == Visibility.Visible)
                     {
-
                         EditThamSo();
                     }
+                    ResetAll();
                 }
                 catch (Exception e) { };
             });
@@ -575,10 +600,7 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
-                VisibilityOfEditThamSo = Visibility.Hidden;
-                VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
-                IsDeleting = false;
+                ResetAll();
                 //if (VisibilityOfAdd == Visibility.Visible)
                 //{
                 //    ResetTextbox();
@@ -622,7 +644,7 @@ namespace MasterSaveDemo.ViewModel
 
             GetThoiGianGuiToiThieuCommand = new RelayCommand<object>((p) =>
             {
-                return true;
+                return !IsDeleting; // disable button when deleting
             }, (p) =>
             {
                 ThoiGianGuiToiThieu = KyHan;

@@ -74,7 +74,7 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MaLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                         ToolTip="Error"/>
+                         ToolTip="Error" IsReadOnly="{Binding TextBoxReadOnly}"/>
                 <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
@@ -94,7 +94,8 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                         Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
                 <TextBox materialDesign:HintAssist.Hint="Lãi suất"
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
@@ -115,7 +116,8 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding KyHan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding KyHan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
             </Grid>
             <Grid Grid.Row="5">
                 <TextBox materialDesign:HintAssist.Hint="Lãi suất"
@@ -123,7 +125,8 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
                 
             </Grid>
             <Grid Grid.Row="6">
@@ -137,7 +140,8 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
                 </Grid>
                 <Grid Grid.Column="1" Margin="90,0,0,0">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" 
@@ -149,11 +153,10 @@
             </Grid>
             <Grid Grid.Row="7">
                 <ComboBox x:Name="cbbQuyDinh" materialDesign:HintAssist.Hint="Quy định số tiền được rút"
-                          Visibility="{Binding VisibilityOfAdd}"
-                          ItemsSource="{Binding ListQuyDinh}"
-                          SelectedItem="{Binding SelectedQuyDinh}">
-                    
-                </ComboBox>
+                          Visibility="{Binding VisibilityOfAdd}" IsReadOnly="{Binding TextBoxReadOnly}"
+                          ItemsSource="{Binding ListQuyDinh}" SelectedItem="{Binding SelectedQuyDinh}"/>
+
+
             </Grid>
             <Grid Grid.Row="8">
                 <Grid.ColumnDefinitions>

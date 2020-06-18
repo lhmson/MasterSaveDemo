@@ -26,7 +26,7 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand Click_CapNhatCommand { get; set; }
 		public ICommand STKEnterKeyDown_Command { get; set; }
 		public ICommand SoTienRutEnterKeyDown_Command { get; set; }
-
+		public ICommand Click_CopySoDuSTRCommand { get; set; }
 
 		#region Binding tu view
 		//Ngay Rut, kieu string
@@ -167,7 +167,7 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if(Result_KiemTraHopLe == true)
+					if (Result_KiemTraHopLe == true)
 						ThongBao = "Thông tin phiếu rút hợp lệ";
 				}
 			});
@@ -185,7 +185,7 @@ namespace MasterSaveDemo.ViewModel
 						ThongBao = "Thông tin phiếu rút hợp lệ";
 				}
 			});
-				//Lenh thuc hien giao dich
+			//Lenh thuc hien giao dich
 			Click_GiaoDichCommand = new RelayCommand<Button>((p) => { return Result_KiemTraHopLe; }, (p) =>
 			{
 				if (!ThucHienGiaoDich())
@@ -238,6 +238,16 @@ namespace MasterSaveDemo.ViewModel
 					{
 						Result_KiemTraHopLe = false;
 					}
+				}
+			});
+			Click_CopySoDuSTRCommand = new RelayCommand<Button>((p) => { return true; }, (p) =>
+			{
+				if(!Copy_SD_STR())
+				{
+					ThongBao = "Sao chép không thành công!";
+				}
+				else
+				{
 
 				}
 			});
@@ -436,6 +446,18 @@ namespace MasterSaveDemo.ViewModel
 				return true;
 			}
 			catch (Exception e)
+			{
+				return false;
+			}
+		}
+		private bool Copy_SD_STR()
+		{
+			try
+			{
+				SoTienRut = SoDu.Replace(",", "");
+				return true;
+			}
+			catch(Exception e)
 			{
 				return false;
 			}

@@ -104,10 +104,14 @@
                         </TextBox>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư tài khoản"
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Số dư tài khoản"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                        Text="{Binding SoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" 
+                        Text="{Binding SoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         IsReadOnly="True"/>
+                            <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Sao chép số tiền"
+                            Command="{Binding Click_CopySoDuSTRCommand}" IsCancel="True"/>
+                        </StackPanel>
                     </Grid>
                     <Grid Grid.Row="4">
                         <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"

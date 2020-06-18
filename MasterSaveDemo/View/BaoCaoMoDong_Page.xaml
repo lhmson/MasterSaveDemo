@@ -24,8 +24,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" ></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="auto" ></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"/>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -91,12 +92,34 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <ListView Grid.Column="0" x:Name="listViewReport" ItemsSource="{Binding ListBaoCaoDM}"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card Grid.Column="0" Background="{DynamicResource PrimaryHueDarkBrush}"
+                      Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                      Width="auto"
+                      Padding="8">
+                <TextBlock FontSize="16" HorizontalAlignment="Center">
+                        Báo cáo các ngày trong tháng
+                </TextBlock>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="1" Background="{DynamicResource PrimaryHueDarkBrush}"
+                      Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                      Width="auto"
+                      Padding="8">
+                <TextBlock FontSize="16" HorizontalAlignment="Center">
+                            Danh sách các báo cáo đã lập
+                </TextBlock>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <ListView  x:Name="listViewReport" ItemsSource="{Binding ListBaoCaoDM}"
                           HorizontalAlignment="Stretch" FontSize="20" VerticalAlignment="Stretch" Margin="0,0,0,0"
                           HorizontalContentAlignment="Stretch">
                     <ListView.View>
@@ -109,7 +132,9 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Grid.Column="1" ItemsSource="{Binding ListDaBaoCao}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+            </Grid>
+            <Grid Grid.Column="1" >
+                <ListView  ItemsSource="{Binding ListDaBaoCao}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
                           HorizontalContentAlignment="Stretch" FontSize="20"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>

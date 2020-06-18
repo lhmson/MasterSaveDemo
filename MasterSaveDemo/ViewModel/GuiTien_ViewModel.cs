@@ -14,114 +14,99 @@ namespace MasterSaveDemo.ViewModel
 {
     public class GuiTien_ViewModel : BaseViewModel
     {
-        #region function 
-        public string formatDate(string st)
-        {
-            string s ="";
-            int i = 0;
-            while (st[i] != ' ')
-            {
-                s += st[i];
-                i++;
-            }
-            return s;
-        }
-        private SOTIETKIEM search_MaSo(string MaSo)
-        {
-            ObservableCollection<SOTIETKIEM> List_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
-
-            foreach (SOTIETKIEM STK in List_STK)
-            {
-                if (STK.MaSoTietKiem == MaSo)
-                    return STK;
-
-                //debug += "\n" + LTK.TenLoaiTietKiem + "a";
-            }
-            return null;
-        }
-        private string search_TenLTK(string MaLTK)
-        {
-            ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-
-            foreach (LOAITIETKIEM LTK in List_LTK)
-            {
-                if (LTK.MaLoaiTietKiem == MaLTK)
-                    return LTK.TenLoaiTietKiem;
-
-                //debug += "\n" + LTK.TenLoaiTietKiem + "a";
-            }
-            return "0";
-        }
-        private int search_KyHan(string MaLTK)
-        {
-            ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-
-            foreach (LOAITIETKIEM LTK in List_LTK)
-            {
-                if (LTK.MaLoaiTietKiem == MaLTK)
-                    return LTK.KyHan;
-
-                //debug += "\n" + LTK.TenLoaiTietKiem + "a";
-            }
-            return 0;
-        }
-        private string search_ThamSo(string MaThamSo)
-        {
-            ObservableCollection<THAMSO> List_TS = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
-
-            foreach (THAMSO TS in List_TS)
-            {
-
-                if (TS.TenThamSo == MaThamSo)
-                    return TS.GiaTri.ToString();
-  
-            }
-            return "";
-        }
-  
-        private string CheckValid()
-        {
-           try
-           {
-                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
-                if (MaSoTietKiem == "" || MaSoTietKiem == null)
-                    Notify += "Sổ chưa được tạo mã sổ";
-                decimal STG_TT = decimal.Parse(search_ThamSo("TienGuiThemToiThieu"));
-                if (decimal.Parse(SoTienGui) <= STG_TT)
-                    Notify += "\n Số tiền gửi tối thiểu không đủ";
-                if (NgayGui != NgayDaoHanKeTiep)
-                    Notify += "\n Không thể gửi hôm nay";
-                return Notify;
-            }
-            catch (Exception ex)
-            {
-                return ".....";
-            }
-
-        }
-
-        private string Cal_NgayDaoHan(int days)
-        {
-            double d = Double.Parse(days.ToString());
-            string date_NgayDaoHan = DateTime.Today.AddDays(d).ToString();
-            date_NgayDaoHan = formatDate(date_NgayDaoHan);
-            return date_NgayDaoHan;
-        }
-        private string GetCodeMPG()
-        {
-            ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
-            int tmp = List_PG.Count();
-            return "PG" + (tmp + 1).ToString();
-        }
-        
-        #endregion
         #region variables
-        private string _Notify;
+        private List<ListLichSuPhieuGui> _ListLichSuGD;
 
-        public string Notify
+        public List<ListLichSuPhieuGui> ListLichSuGD
         {
-            get { return _Notify; }
-            set { _Notify = value; OnPropertyChanged(); }
+            get { return _ListLichSuGD; }
+            set { _ListLichSuGD = value; OnPropertyChanged(); }
+        }
+
+        private string _MaPG;
+
+        public string MaPG
+        {
+            get { return _MaPG; }
+            set { _MaPG = value; OnPropertyChanged(); }
+        }
+
+        private string _NgayGuiTien;
+
+        public string NgayGuiTien
+        {
+            get { return _NgayGuiTien; }
+            set { _NgayGuiTien = value; OnPropertyChanged(); }
+        }
+
+
+        private string _TienGui;
+        public string TienGui
+        {
+            get { return _TienGui; }
+            set { _TienGui = value; OnPropertyChanged(); }
+        }
+
+        private string _Notify_Ma;
+
+        public string Notify_Ma
+        {
+            get { return _Notify_Ma; }
+            set { _Notify_Ma = value; OnPropertyChanged(); }
+        }
+        private string _Notify_date;
+
+        public string Notify_date
+        {
+            get { return _Notify_date; }
+            set { _Notify_date = value; OnPropertyChanged(); }
+        }
+        private string _Notify_money;
+
+        public string Notify_money
+        {
+            get { return _Notify_money; }
+            set { _Notify_money = value; OnPropertyChanged(); }
+        }
+
+        private string _Notify_Done;
+
+        public string Notify_Done
+        {
+            get { return _Notify_Done; }
+            set { _Notify_Done = value; OnPropertyChanged(); }
+        }
+        private string _Done;
+
+        public string Done
+        {
+            get { return _Done; }
+            set { _Done = value; OnPropertyChanged(); }
+        }
+        private string _MaSoTietKiem_check;
+        public string MaSoTietKiem_check
+        {
+            get => _MaSoTietKiem_check;
+            set { _MaSoTietKiem_check = value; OnPropertyChanged(); }
+        }
+
+        private string _SoTienGui_check;
+        public string SoTienGui_check
+        {
+            get { return _SoTienGui_check; }
+            set { _SoTienGui_check = value; OnPropertyChanged(); }
+        }
+        private string _NgayDaoHanKeTiep_check;
+        public string NgayDaoHanKeTiep_check
+        {
+            get { return _NgayDaoHanKeTiep_check; }
+            set { _NgayDaoHanKeTiep_check = value; OnPropertyChanged(); }
+        }
+        private bool _CanCreate;
+        public bool CanCreate
+        {
+            get => _CanCreate;
+            set { _CanCreate = value; OnPropertyChanged(); }
         }
 
         private string _SoDu;
@@ -136,15 +121,15 @@ namespace MasterSaveDemo.ViewModel
         private string _NgayGui;
         public string NgayGui
         {
-            get => _NgayGui; 
+            get => _NgayGui;
             set { _NgayGui = value; OnPropertyChanged(); }
         }
 
         private string _MaSoTietKiem;
         public string MaSoTietKiem
         {
-            get => _MaSoTietKiem; 
-            set { _MaSoTietKiem = value;OnPropertyChanged(); }
+            get => _MaSoTietKiem;
+            set { _MaSoTietKiem = value; OnPropertyChanged(); }
         }
 
         private string _SoTienGui;
@@ -167,7 +152,7 @@ namespace MasterSaveDemo.ViewModel
             get { return _TenLoaiTietKiem; }
             set { _TenLoaiTietKiem = value; OnPropertyChanged(); }
         }
-        
+
         private string _SoCMND;
         public string SoCMND
         {
@@ -182,6 +167,131 @@ namespace MasterSaveDemo.ViewModel
             set { _NgayDaoHanKeTiep = value; OnPropertyChanged(); }
         }
         #endregion
+        #region function 
+        public void BindingLichSu(string mastk)
+        {
+            ListLichSuGD = new List<ListLichSuPhieuGui>();
+
+            ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
+            var lichsu = from list in List_PG
+                         where list.MaSoTietKiem == mastk
+                         orderby list.NgayGui descending
+                         select new ListLichSuPhieuGui(list.MaPhieuGui, list.NgayGui.ToString("dd/MM/yyyy"), list.SoTienGui.ToString());
+            foreach (var ls in lichsu)
+                ListLichSuGD.Add(ls);
+        }
+        
+        private SOTIETKIEM search_MaSo(string MaSo)
+        {
+            ObservableCollection<SOTIETKIEM> List_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+
+            foreach (SOTIETKIEM STK in List_STK)
+            {
+                if (STK.MaSoTietKiem == MaSo)
+                    return STK;
+
+              
+            }
+            return null;
+        }
+        private string search_TenLTK(string MaLTK)
+        {
+            ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+
+            foreach (LOAITIETKIEM LTK in List_LTK)
+            {
+                if (LTK.MaLoaiTietKiem == MaLTK)
+                    return LTK.TenLoaiTietKiem;              
+            }
+            return "0";
+        }
+        
+        private string search_ThamSo(string MaThamSo)
+        {
+            ObservableCollection<THAMSO> List_TS = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
+
+            foreach (THAMSO TS in List_TS)
+            {
+
+                if (TS.TenThamSo == MaThamSo)
+                    return TS.GiaTri.ToString();
+
+            }
+            return "";
+        }
+
+        private void CheckValid()
+        {
+            try
+            {
+                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
+                if (MaSoTietKiem == "" || MaSoTietKiem == null)
+                {
+                    Notify_Ma="Sổ chưa được tạo mã sổ";
+                    MaSoTietKiem_check = "Error";
+                }
+                else
+                {
+                    MaSoTietKiem_check = "Check";
+                    Notify_Ma = "";
+                }
+                decimal STG_TT = decimal.Parse(search_ThamSo("TienGuiThemToiThieu"));
+                if (decimal.Parse(SoTienGui) < STG_TT)
+                {
+                    Notify_money = "Số tiền gửi tối thiểu không đủ";
+                    SoTienGui_check = "Error";
+                }
+                else
+                {
+                    SoTienGui_check = "Check";
+                    Notify_money = "";
+                }
+                
+                if (NgayGui != NgayDaoHanKeTiep && TenLoaiTietKiem != "Không kì hạn")
+                {
+                    Notify_date = "Không thể gửi hôm nay";
+                    NgayDaoHanKeTiep_check = "Error";
+                }
+                else 
+                {
+                    NgayDaoHanKeTiep_check = "Check";
+                    Notify_date = "";
+                }
+                if (MaSoTietKiem_check == "Error" || SoTienGui_check == "Error" || NgayDaoHanKeTiep_check == "Error")
+                {
+                    CanCreate = false;
+                    Done = "Error";
+                    Notify_Done = "Chưa thể tạo phiếu gửi";
+                }
+                else
+                {
+                    CanCreate = true;
+                    Done = "Check";
+                }
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+
+        }
+
+        public string formatPG(string a)
+        {
+            string tmp = a;
+            for (int i = 1; i <= 7 - a.Length;i++)
+                tmp = "0" + tmp;
+            return tmp;
+        }
+        private string GetCodeMPG()
+        {
+            ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
+            int tmp = List_PG.Count();
+            return "PG" + formatPG((tmp + 1).ToString());
+        }
+
+        #endregion
+        
         public ICommand CheckoutCommand { get; set; }
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
@@ -189,6 +299,10 @@ namespace MasterSaveDemo.ViewModel
         public GuiTien_ViewModel()
         {
             NgayGui = DateTime.Now.ToString("dd/MM/yyyy");
+            Done = "None";
+            SoTienGui_check = "None";
+            NgayDaoHanKeTiep_check = "None";
+            MaSoTietKiem_check = "None";
             ShowINFO = new RelayCommand<object>((p) =>
             {
                 return true;
@@ -197,11 +311,16 @@ namespace MasterSaveDemo.ViewModel
                 SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
                 if (stk != null)
                 {
+                    Done = "None";
+                    SoTienGui_check = "None";
+                    NgayDaoHanKeTiep_check = "None";
+                    MaSoTietKiem_check = "None";
                     TenKhachHang = stk.TenKhachHang;
-                    NgayDaoHanKeTiep = formatDate(stk.NgayDaoHanKeTiep.ToString());
+                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
                     TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
                     SoCMND = stk.SoCMND;
                     SoDu = stk.SoDu.ToString();
+                    BindingLichSu(stk.MaSoTietKiem);
                 }
             });
             CheckCommand = new RelayCommand<object>((p) =>
@@ -209,11 +328,8 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                Notify = "";
-                Notify = CheckValid();
-                if (Notify == "") Notify+="\nThông tin này hợp lệ! Đã có thể tạo phiếu";
-                else
-                    Notify+="\nThông tin không hợp lệ";
+                CheckValid();
+               
             });
 
             //Button Mo So 
@@ -222,12 +338,11 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                Notify = "";
-                Notify = CheckValid();
-                if (Notify != "") Notify+= "\nThông tin không hợp lệ";
-                else
+                CheckValid();
+
+                if (CanCreate == true) ;
                 {
-                    Notify+="\nĐã tao phiếu gửi";
+                    
                     PHIEUGUI Phieugui = new PHIEUGUI()
                     {
                         MaPhieuGui = GetCodeMPG(),
@@ -242,6 +357,9 @@ namespace MasterSaveDemo.ViewModel
                     var SotietKiem = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == MaSoTietKiem).SingleOrDefault();
                     SotietKiem.SoDu += decimal.Parse(SoTienGui);             
                     DataProvider.Ins.DB.SaveChanges();
+                    BindingLichSu(MaSoTietKiem);
+                    Done = "Check";
+                    Notify_Done = "Đã tạo phiếu gửi thành công";
                 }
             });
             EnterKeyDown_Command = new RelayCommand<object>((p) =>
@@ -252,11 +370,16 @@ namespace MasterSaveDemo.ViewModel
                 SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
                 if (stk != null)
                 {
+                    Done = "None";
+                    SoTienGui_check = "None";
+                    NgayDaoHanKeTiep_check = "None";
+                    MaSoTietKiem_check = "None";
                     TenKhachHang = stk.TenKhachHang;
-                    NgayDaoHanKeTiep = formatDate(stk.NgayDaoHanKeTiep.ToString());
+                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
                     TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
                     SoCMND = stk.SoCMND;
                     SoDu = stk.SoDu.ToString();
+                    BindingLichSu(stk.MaSoTietKiem);
                 }
             });
         }

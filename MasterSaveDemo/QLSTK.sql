@@ -10,8 +10,8 @@ CREATE TABLE LOAITIETKIEM
 	KyHan INT NOT NULL,
 	LaiSuat FLOAT NOT NULL CHECK(LaiSuat>0),
 	ThoiGianGuiToiThieu INT NOT NULL CHECK(ThoiGianGuiToiThieu>0),
-	--Doi ten tu SoTienDuocRut
-	QuyDinhSoTienRut INT NOT NULL,
+	--Doi ten tu SoTienDuocRut va sua thanh Nvarchar de hien thi bang loai tiet kiem
+	QuyDinhSoTienRut NVARCHAR(50) NOT NULL,
 	---Them DangSuDung de xoa 1 loai tiet kiem, thuc ra la chuyen no ve khong su dung nua de khong bi loi du lieu ay
 	DangSuDung INT NOT NULL,
 )
@@ -80,7 +80,8 @@ CREATE TABLE CTBCMODONG
 	SoLuongSoMo INT NOT NULL CHECK (SoLuongSoMo>0),
 	SoLuongSoDong INT NOT NULL CHECK (SoLuongSoDong>0),
 	ChenhLech INT NOT NULL,
-	PRIMARY KEY (MaBaoCaoMoDong)
+	---sua lai khoa chinh la hai thuoc tinh nay
+	PRIMARY KEY (MaBaoCaoMoDong,NgayXet)
 )
 GO
 

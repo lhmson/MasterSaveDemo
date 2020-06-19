@@ -54,15 +54,16 @@
                 <HamburgerMenu:HamburgerMenu MaxWidth="230" Background="#49c7ab" MenuIconColor="#236084" SelectionIndicatorColor="#80fbdd" MenuItemForeground="#80fbdd" HorizontalAlignment="Left">
                     <HamburgerMenu:HamburgerMenuItem x:Name="Home_Page_Button" Icon="/Images/home.png" Text="Trang chủ" SelectionCommand="" Selected="Home_Page_Selected" />
                     <HamburgerMenu:HamburgerMenuItem x:Name="MoSo_Page_Button" Icon="/Images/new.png" Text="Giao dịch mở sổ" Selected="MoSo_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/favorite.png" Text="Giao dịch gửi tiền" Selected="GuiTien_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/favorite.png" Text="Giao dịch rút tiền" Selected="RutTien_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/search.png" Text="Tra cứu sổ" Selected="TraCuu_Page_Selected" IsEnabled="{Binding Is_GDV_KTV_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/list.png" Text="Lập báo cáo doanh số" Selected="BaoCaoDoanhSo_Page_Selected" IsEnabled="{Binding Is_KTV_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/list.png" Text="Lập báo cáo mở đóng" Selected="BaoCaoMoDong_Page_Selected" IsEnabled="{Binding Is_KTV_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/spam.png" Text="Thay đổi quy định" Selected="ThayDoiQuyDinh_Page_Selected" IsEnabled="{Binding Is_Admin}" />
-                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/person.png" Text="Quản lí nhân sự" Selected="QuanLyNhanSu_Page_Selected" IsEnabled="{Binding Is_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="GuiTien_Page_Button" Icon="/Images/favorite.png" Text="Giao dịch gửi tiền" Selected="GuiTien_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="RutTien_Page_Button" Icon="/Images/favorite.png" Text="Giao dịch rút tiền" Selected="RutTien_Page_Selected" IsEnabled="{Binding Is_GDV_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="TraCuu_Page_Button" Icon="/Images/search.png" Text="Tra cứu sổ" Selected="TraCuu_Page_Selected" IsEnabled="{Binding Is_GDV_KTV_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="BaoCaoDoanhSo_Page_Button" Icon="/Images/list.png" Text="Lập báo cáo doanh số" Selected="BaoCaoDoanhSo_Page_Selected" IsEnabled="{Binding Is_KTV_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="BaoCaoMoDong_Page_Button" Icon="/Images/list.png" Text="Lập báo cáo mở đóng" Selected="BaoCaoMoDong_Page_Selected" IsEnabled="{Binding Is_KTV_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="ThayDoiQuyDinh_Page_Button" Icon="/Images/spam.png" Text="Thay đổi quy định" Selected="ThayDoiQuyDinh_Page_Selected" IsEnabled="{Binding Is_Admin}" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="QuanLyNhanSu_Page_Button" Icon="/Images/person.png" Text="Quản lí nhân sự" Selected="QuanLyNhanSu_Page_Selected" IsEnabled="{Binding Is_Admin}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/setting.png" Text="Cài đặt khác" Selected="CaiDatKhac_Page_Selected" />
                 </HamburgerMenu:HamburgerMenu>
+                <!--<UC:HamburgerNavigation></UC:HamburgerNavigation>-->
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>

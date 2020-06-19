@@ -6,8 +6,13 @@
     <edmx:Diagrams>
 
         
-      <Diagram DiagramId="e2a1eba25ea34b9b822dce2cb17e726e" Name="Diagram1" ZoomLevel="74">
+<<<<<<< HEAD
+      <Diagram DiagramId="e2a1eba25ea34b9b822dce2cb17e726e" Name="Diagram1" ZoomLevel="127">
         <EntityTypeShape EntityType="QLSTKModel.BAOCAODOANHSO" Width="1.5" PointX="3" PointY="2.625" />
+=======
+      <Diagram DiagramId="e2a1eba25ea34b9b822dce2cb17e726e" Name="Diagram1" ZoomLevel="108">
+        <EntityTypeShape EntityType="QLSTKModel.BAOCAODOANHSO" Width="1.5" PointX="3" PointY="8" />
+>>>>>>> 4563fc2d1d327a34a38474475446ddd010b3695a
         <EntityTypeShape EntityType="QLSTKModel.BAOCAOMODONG" Width="1.5" PointX="3" PointY="11.125" />
         <EntityTypeShape EntityType="QLSTKModel.CHUCNANG" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="QLSTKModel.CTBCMODONG" Width="1.5" PointX="5.25" PointY="11.125" />
@@ -15,10 +20,10 @@
         <EntityTypeShape EntityType="QLSTKModel.NGUOIDUNG" Width="1.5" PointX="10" PointY="6.375" />
         <EntityTypeShape EntityType="QLSTKModel.NHOMNGUOIDUNG" Width="1.5" PointX="7.75" PointY="3.75" />
         <EntityTypeShape EntityType="QLSTKModel.PHANQUYEN" Width="1.5" PointX="10" PointY="3.625" />
-        <EntityTypeShape EntityType="QLSTKModel.PHIEUGUI" Width="1.5" PointX="5.25" PointY="5.75" />
-        <EntityTypeShape EntityType="QLSTKModel.PHIEURUT" Width="1.5" PointX="5.25" PointY="8.375" />
-        <EntityTypeShape EntityType="QLSTKModel.SOTIETKIEM" Width="1.5" PointX="3" PointY="6.25" />
-        <EntityTypeShape EntityType="QLSTKModel.THAMSO" Width="1.5" PointX="7.75" PointY="10" />
+        <EntityTypeShape EntityType="QLSTKModel.PHIEUGUI" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="QLSTKModel.PHIEURUT" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="QLSTKModel.SOTIETKIEM" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="QLSTKModel.THAMSO" Width="1.5" PointX="5.75" PointY="9" />
         <AssociationConnector Association="QLSTKModel.FK__BAOCAODOA__MaLoa__49C3F6B7" />
         <AssociationConnector Association="QLSTKModel.FK__BAOCAOMOD__MaLoa__4E88ABD4" />
         <AssociationConnector Association="QLSTKModel.FK__CTBCMODON__MaBao__534D60F1" />
@@ -28,6 +33,7 @@
         <AssociationConnector Association="QLSTKModel.FK__PHANQUYEN__MaNho__5DCAEF64" />
         <AssociationConnector Association="QLSTKModel.FK__PHIEUGUI__MaSoTi__4222D4EF" />
         <AssociationConnector Association="QLSTKModel.FK__PHIEURUT__MaSoTi__45F365D3" />
+        <EntityTypeShape EntityType="QLSTKModel.sysdiagram" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

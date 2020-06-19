@@ -109,14 +109,20 @@ namespace MasterSaveDemo.ViewModel
         {
             string error = "";
             ObservableCollection<THAMSO> listThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
-            foreach (var item in listThamSo)
+
+            if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
+                error += "\nSố tiền gửi của khách hàng chưa được nhập";
+            else
             {
-                if(item.TenThamSo == "SoTienGuiToiThieu")
+                foreach (var item in listThamSo)
                 {
-                    if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                    if (item.TenThamSo == "SoTienGuiToiThieu")
                     {
-                        System.Windows.Forms.MessageBox.Show("xsx");
-                        error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                        if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                        {
+                            System.Windows.Forms.MessageBox.Show("xsx");
+                            error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                        }
                     }
                 }
             }
@@ -132,8 +138,7 @@ namespace MasterSaveDemo.ViewModel
                 error += "\nCMND chưa được nhập";
             if (DiaChi == "" || DiaChi == null)
                 error += "\nĐịa chỉ chưa được nhập";
-            if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
-                error += "\nSố tiền gửi của khách hàng chưa được nhập";
+
             return error;
 
         }

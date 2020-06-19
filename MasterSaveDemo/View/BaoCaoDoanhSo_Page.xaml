@@ -45,7 +45,7 @@
                 <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày lẹ"
                             HorizontalAlignment="Right" Margin="10,0,10,0"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                            SelectedDate="{Binding SelectedDateReport,StringFormat='dd/MM/yyyy', Mode=TwoWay}"
+                            SelectedDate="{Binding SelectedDateReport,StringFormat={}{0:dd/MM/yyyy}, Mode=TwoWay}"
                             SelectedDateFormat="Short">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">

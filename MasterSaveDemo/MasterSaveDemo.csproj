@@ -99,6 +99,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BaoCaoDoanhSo_PrintPreview.xaml.cs">
+      <DependentUpon>BaoCaoDoanhSo_PrintPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaoCaoMoDong_PrintPreview.xaml.cs">
       <DependentUpon>BaoCaoMoDong_PrintPreview.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ThayDoiQuyDinh_Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\BaoCaoDoanhSo_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoDoanhSo_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoMoDong_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoMoDong_ViewModel.cs" />
@@ -231,6 +235,10 @@
     <Compile Include="View\TraCuu_Page.xaml.cs">
       <DependentUpon>TraCuu_Page.xaml</DependentUpon>
     </Compile>
+    <Page Include="BaoCaoDoanhSo_PrintPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BaoCaoMoDong_PrintPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

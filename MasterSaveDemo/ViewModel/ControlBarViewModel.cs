@@ -27,10 +27,12 @@ namespace MasterSaveDemo.ViewModel
         public string NgayGioHienTai
         {
             get => _NgayGioHienTai;
-            set {
+            set
+            {
                 if (_NgayGioHienTai == value)
                     return;
-                _NgayGioHienTai = value; ; OnPropertyChanged(); }
+                _NgayGioHienTai = value; ; OnPropertyChanged();
+            }
         }
 
         private string _TenTaiKhoan;
@@ -84,7 +86,7 @@ namespace MasterSaveDemo.ViewModel
                     window.Close();
                 }
             });
-            
+
             MinimizeWindowCommand = new RelayCommand<UserControl>((p) => { return p == null ? false : true; }, (p) => {
                 Window window = GetWindowParent(p);
                 if (window != null)

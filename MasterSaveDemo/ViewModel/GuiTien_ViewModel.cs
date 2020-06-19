@@ -175,7 +175,7 @@ namespace MasterSaveDemo.ViewModel
             ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
             var lichsu = from list in List_PG
                          where list.MaSoTietKiem == mastk
-                         orderby list.NgayGui descending
+                         orderby list.MaPhieuGui descending
                          select new ListLichSuPhieuGui(list.MaPhieuGui, list.NgayGui.ToString("dd/MM/yyyy"), list.SoTienGui.ToString());
             foreach (var ls in lichsu)
                 ListLichSuGD.Add(ls);
@@ -224,7 +224,6 @@ namespace MasterSaveDemo.ViewModel
         {
             try
             {
-                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
                 if (MaSoTietKiem == "" || MaSoTietKiem == null)
                 {
                     Notify_Ma="Sổ chưa được tạo mã sổ";
@@ -236,26 +235,30 @@ namespace MasterSaveDemo.ViewModel
                     Notify_Ma = "";
                 }
                 decimal STG_TT = decimal.Parse(search_ThamSo("TienGuiThemToiThieu"));
+                if (SoTienGui == null || SoTienGui == "")
+                {
+                    Notify_money = "Chưa nhập số tiền gửi";
+                    SoTienGui_check = "Error";
+                } else
                 if (decimal.Parse(SoTienGui) < STG_TT)
                 {
                     Notify_money = "Số tiền gửi tối thiểu không đủ";
                     SoTienGui_check = "Error";
-                }
-                else
+                } else
+                if (decimal.Parse(SoTienGui) >= STG_TT)
                 {
                     SoTienGui_check = "Check";
                     Notify_money = "";
                 }
-                
                 if (NgayGui != NgayDaoHanKeTiep && TenLoaiTietKiem != "Không kì hạn")
                 {
                     Notify_date = "Không thể gửi hôm nay";
                     NgayDaoHanKeTiep_check = "Error";
                 }
-                else 
+                if (TenLoaiTietKiem== "Không kì hạn")
                 {
                     NgayDaoHanKeTiep_check = "Check";
-                    Notify_date = "";
+                    Notify_date = ""; 
                 }
                 if (MaSoTietKiem_check == "Error" || SoTienGui_check == "Error" || NgayDaoHanKeTiep_check == "Error")
                 {
@@ -316,10 +319,13 @@ namespace MasterSaveDemo.ViewModel
                     NgayDaoHanKeTiep_check = "None";
                     MaSoTietKiem_check = "None";
                     TenKhachHang = stk.TenKhachHang;
-                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
                     TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
+                    if (TenLoaiTietKiem != "Không kì hạn")
+                        NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+                    else NgayDaoHanKeTiep = "Không xác định";
                     SoCMND = stk.SoCMND;
                     SoDu = stk.SoDu.ToString();
+                    SoTienGui = "";
                     BindingLichSu(stk.MaSoTietKiem);
                 }
             });
@@ -375,10 +381,13 @@ namespace MasterSaveDemo.ViewModel
                     NgayDaoHanKeTiep_check = "None";
                     MaSoTietKiem_check = "None";
                     TenKhachHang = stk.TenKhachHang;
-                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
                     TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
+                    if (TenLoaiTietKiem != "Không kì hạn")
+                        NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+                    else NgayDaoHanKeTiep = "Không xác định";
                     SoCMND = stk.SoCMND;
                     SoDu = stk.SoDu.ToString();
+                    SoTienGui = "";
                     BindingLichSu(stk.MaSoTietKiem);
                 }
             });

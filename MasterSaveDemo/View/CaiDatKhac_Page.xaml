@@ -6,9 +6,24 @@
       xmlns:local="clr-namespace:MasterSaveDemo.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="CaiDatKhac_Page">
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="18"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        DataContext="{StaticResource CaiDatKhacVM}"
+      
+      Name="this_"
+      Title="Cai Dat Khac">
 
     <Grid>
-        
+        <Button Command="{Binding LogOutCommand}" CommandParameter="{Binding ElementName=this_}">
+            Thoát
+        </Button>
     </Grid>
 </Page>

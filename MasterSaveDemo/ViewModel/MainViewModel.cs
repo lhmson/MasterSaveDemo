@@ -17,7 +17,7 @@ namespace MasterSaveDemo.ViewModel
     public class MainViewModel : BaseViewModel
     {
         #region Variable
-        public DispatcherTimer _timer;
+        static public DispatcherTimer _timer;
 
         private bool _Enable_Home;
         public bool Enable_Home
@@ -139,6 +139,15 @@ namespace MasterSaveDemo.ViewModel
             }
         }
 
+        static public void Start_Timer()
+        {
+            _timer.Start();
+        }
+        static public void LogOut()
+        {
+            
+        }
+
         #endregion
         public MainViewModel() // all main page handling goes there
         {
@@ -161,6 +170,7 @@ namespace MasterSaveDemo.ViewModel
                 //{
 
                 //}
+
                 _timer = new DispatcherTimer(DispatcherPriority.Render);
                 _timer.Interval = TimeSpan.FromSeconds(1);
                 _timer.Tick += (sender, args) =>
@@ -173,8 +183,6 @@ namespace MasterSaveDemo.ViewModel
                 };
                 _timer.Start();
             });
-
-            
         }
 
     }

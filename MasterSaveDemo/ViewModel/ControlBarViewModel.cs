@@ -42,6 +42,8 @@ namespace MasterSaveDemo.ViewModel
         public string ChucVu { get => _ChucVu; set { _ChucVu = value; OnPropertyChanged(); } }
 
         public DispatcherTimer _timer;
+
+        private NGUOIDUNG user;
         #endregion
 
         #region function
@@ -62,9 +64,11 @@ namespace MasterSaveDemo.ViewModel
 
         private void InitTaiKhoan()
         {
-            NGUOIDUNG user = LoginViewModel.TaiKhoanSuDung;
-            if (user == null) return;
-            if (TenTaiKhoan != null) return; // check to update Ten one time only for utilize
+            if (user == LoginViewModel.TaiKhoanSuDung) return; // check to update Ten one time only for utilize
+
+            user = LoginViewModel.TaiKhoanSuDung;
+            if (user == null) return; 
+
             TenTaiKhoan = user.HoTen;
             ObservableCollection<NHOMNGUOIDUNG> listNhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
             foreach (var item in listNhom)

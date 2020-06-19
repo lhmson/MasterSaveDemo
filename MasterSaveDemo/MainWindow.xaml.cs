@@ -1,4 +1,5 @@
 ﻿using MasterSaveDemo.View;
+using MasterSaveDemo.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -86,5 +88,18 @@ namespace MasterSaveDemo
             main.Content = page;
         }
 
+        private void Logout_Button_Selected(object sender, RoutedEventArgs e)
+        {
+            DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn có chắc đăng xuất tài khoản này không?", "Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (kq == System.Windows.Forms.DialogResult.No)
+                return;
+
+            this_.Hide();
+            LoginWindow loginWindow = new LoginWindow();
+            LoginViewModel.TaiKhoanSuDung = null;
+            loginWindow.ShowDialog();
+            MainViewModel.Start_Timer();
+            this_.Show();
+        }
     }
 }

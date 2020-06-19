@@ -62,6 +62,7 @@
                     <HamburgerMenu:HamburgerMenuItem x:Name="ThayDoiQuyDinh_Page_Button" Icon="/Images/spam.png" Text="Thay đổi quy định" Selected="ThayDoiQuyDinh_Page_Selected" IsEnabled="{Binding Enable_TDQD}" />
                     <HamburgerMenu:HamburgerMenuItem x:Name="QuanLyNhanSu_Page_Button" Icon="/Images/person.png" Text="Quản lí nhân sự" Selected="QuanLyNhanSu_Page_Selected" IsEnabled="{Binding Enable_QLNS}" />
                     <HamburgerMenu:HamburgerMenuItem Icon="/Images/setting.png" Text="Cài đặt khác" Selected="CaiDatKhac_Page_Selected" />
+                    <HamburgerMenu:HamburgerMenuItem x:Name="Logout_Button" Icon="/Images/home.png" Text="Đăng xuất" SelectionCommand="" Selected="Logout_Button_Selected"/>
                 </HamburgerMenu:HamburgerMenu>
                 <!--<UC:HamburgerNavigation></UC:HamburgerNavigation>-->
             </Grid>

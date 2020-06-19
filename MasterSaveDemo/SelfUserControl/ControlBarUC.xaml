@@ -23,9 +23,6 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="Transparent">
-            <Image Source="/Images/logoms.png" Width="210" Margin="10"/>
-        </Grid>
         <Grid Grid.Column="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -38,9 +35,12 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Button Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                                Content="Master Save Banking System" Margin="2,0" FontSize="18"/>
+                        <materialDesign:Card
+                  Background="{DynamicResource PrimaryHueMidBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="8">
+                            <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="14" Text="Master Save Banking System - Hệ thống quản lý sổ tiết kiệm chuyên nghiệp"></TextBlock>
+                        </materialDesign:Card>
                     </Grid>
                     <Grid Grid.Column="1">
                         <StackPanel DockPanel.Dock="Right" Background="Transparent" Orientation="Horizontal">
@@ -49,12 +49,12 @@
                                     <Setter Property="Width" Value="40"></Setter>
                                 </Style>
                             </StackPanel.Resources>
-                            <Button Command="{Binding MinimizeWindowCommand}"
+                            <Button Style="{StaticResource MaterialDesignRaisedButton}" Command="{Binding MinimizeWindowCommand}"
                             CommandParameter="{Binding ElementName=UC_ControlBar}"
-                            ToolBar.OverflowMode="AsNeeded" Background="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            ToolTip="Thu nhỏ" ToolBar.OverflowMode="AsNeeded" Background="{StaticResource SecondaryAccentBrush}">
                                 <materialDesign:PackIcon Kind="WindowMinimize" />
                             </Button>
-                            <Button Command="{Binding CloseWindowCommand}"
+                            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{Binding CloseWindowCommand}"
                             CommandParameter="{Binding ElementName=UC_ControlBar}"
                             ToolTip="Đóng" ToolBar.OverflowMode="AsNeeded" Background="Red">
                                 <materialDesign:PackIcon Kind="WindowClose" />
@@ -65,32 +65,37 @@
 
                 <Grid Grid.Row="1" Background="#49c7ab">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="27*"></ColumnDefinition>
+                        <ColumnDefinition Width="75*"/>
+                        <ColumnDefinition Width="97*"></ColumnDefinition>
+                        <ColumnDefinition Width="49*"></ColumnDefinition>
+                        <ColumnDefinition Width="49*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Tài khoản" Margin="10" >
-                            <TextBlock Text="Binding Tai khoan o day" />
-                        </Button>
-                    </Grid>
-
-                    <Grid Grid.Column="1">
-                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
-                                materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Chức vụ" Margin="10" >
-                            <TextBlock Text="Binding Chuc vu o day" />
+                            <TextBlock Text="{Binding TenTaiKhoan}" />
                         </Button>
                     </Grid>
 
                     <Grid Grid.Column="2">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
+                                materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Chức vụ" Margin="10" >
+                            <TextBlock Text="{Binding ChucVu}" />
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Column="3" Grid.ColumnSpan="2">
+                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Thời gian hiện tại" Margin="10" >
-                            <TextBlock Text="Display ngay gio o day" />
+                            <TextBlock Text="{Binding NgayGioHienTai}" />
                         </Button>
                     </Grid>
                 </Grid>
             </Grid>
+        </Grid>
+        <Grid Grid.Column="0" Background="Transparent">
+            <Image Source="/Images/logoms.png" Width="210" Margin="10"/>
         </Grid>
     </Grid>
 </UserControl>

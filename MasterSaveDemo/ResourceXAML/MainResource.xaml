@@ -13,5 +13,6 @@
     <viewmodel:ThayDoiQuyDinh_ViewModel x:Key="ThayDoiQuyDinhVM"></viewmodel:ThayDoiQuyDinh_ViewModel>
     <viewmodel:QuanLyNhanSu_ViewModel x:Key="QuanLyNhanSuVM"></viewmodel:QuanLyNhanSu_ViewModel>
     <viewmodel:Home_PageViewModel x:Key="HomeVM"></viewmodel:Home_PageViewModel>
+    <viewmodel:ControlBarViewModel x:Key="SelfControlVM"></viewmodel:ControlBarViewModel>
 
 </ResourceDictionary>

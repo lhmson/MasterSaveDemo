@@ -207,7 +207,15 @@ namespace MasterSaveDemo.ViewModel
             BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
             ListBaoCaoDisplay.Add(baoCaoDisplay);
 
-            BAOCAODOANHSO baoCao = new BAOCAODOANHSO(maBaoCao, SelectedDateReport, maLoai, TongThu, TongChi, ChenhLech);
+            BAOCAODOANHSO baoCao = new BAOCAODOANHSO()
+            {
+                MaBaoCaoDoanhSo = maBaoCao,
+                NgayDoanhSo = SelectedDateReport,
+                MaLoaiTietKiem = maLoai,
+                TongThu = TongThu,
+                TongChi = TongChi,
+                ChenhLech = ChenhLech
+            };
             return baoCao;
         }
         #endregion

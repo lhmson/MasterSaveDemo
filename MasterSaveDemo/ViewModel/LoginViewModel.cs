@@ -1,6 +1,7 @@
 ﻿using MasterSaveDemo.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace MasterSaveDemo.ViewModel
 {
     public class LoginViewModel : BaseViewModel
     {
+        static public NGUOIDUNG TaiKhoanSuDung; // tao bien static nguoi dung
+
         public ICommand CloseWindowCommand { get; set; }
         public ICommand LoginCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
@@ -28,7 +31,24 @@ namespace MasterSaveDemo.ViewModel
 
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                p.Close();
+                if (UserName == null || Password == null)
+                    MessageBox.Show("Mời nhập tài khoản!");
+
+                ObservableCollection<NGUOIDUNG> Account = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
+
+                foreach (var item in Account)
+                {
+                    if (item.TenDangNhap == UserName && item.MatKhau == Password)
+                    {
+                        //Gan static TaiKhoanSuDung
+                        TaiKhoanSuDung = item;
+                        p.Close();
+                        return;
+                    }
+
+                }
+                MessageBox.Show("Tài khoản không hợp lệ!");
+              
                 //CheckLogin(p);
             });
 

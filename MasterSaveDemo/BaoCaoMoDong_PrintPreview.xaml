@@ -54,7 +54,8 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button  HorizontalAlignment="Right" Margin="10"  VerticalAlignment="Top"
-                            Command="{Binding Print_Command}">
+                            Command="{Binding Print_Command}" IsEnabled="True"
+                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"      >
                             <materialDesign:PackIcon Kind="Printer"/>
                         </Button>
                         <Button  HorizontalAlignment="Center" Margin="10"  VerticalAlignment="Top"

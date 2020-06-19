@@ -70,6 +70,7 @@ namespace MasterSaveDemo.ViewModel
         //--------------
 
         public ICommand CloseWindowCommand { get; set; }
+        public ICommand Print_Command { get; set; }
 
         public BaoCaoMoDong_PrintPreview_ViewModel(string MaBC, string Thang, string Nam, string LTK, List<ListBaoCaoDongMo> list)
         {
@@ -82,6 +83,25 @@ namespace MasterSaveDemo.ViewModel
             CloseWindowCommand = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) => {
                 var ex = p as Window;
                 ex.Close();
+
+            });
+
+            Print_Command = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                var ex = p as Window;
+                try
+                {
+                    System.Windows.Controls.PrintDialog printDialog = new System.Windows.Controls.PrintDialog();
+                    if (printDialog.ShowDialog() == true)
+                    {
+                        printDialog.PrintVisual(ex, "Print report");
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show("Cannot print");
+                }
 
             });
 

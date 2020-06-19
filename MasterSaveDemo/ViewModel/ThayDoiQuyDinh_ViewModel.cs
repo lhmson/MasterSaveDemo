@@ -215,6 +215,13 @@ namespace MasterSaveDemo.ViewModel
             get => _TextBoxReadOnly;
             set { _TextBoxReadOnly = value; OnPropertyChanged(); }
         }
+
+        private bool _HitTestVisibleCbb;
+        public bool HitTestVisibleCbb
+        {
+            get => _HitTestVisibleCbb;
+            set { _HitTestVisibleCbb = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -443,6 +450,7 @@ namespace MasterSaveDemo.ViewModel
             SelectedItemLTK = null;
             SelectedItemThamSo = null;
             TextBoxReadOnly = false;
+            HitTestVisibleCbb = true;
         }
         
         #endregion
@@ -478,6 +486,7 @@ namespace MasterSaveDemo.ViewModel
                 }, 
                 (p) => {
                     IsDeleting = false;
+                    HitTestVisibleCbb = true;
                     VisibilityOfAdd = Visibility.Visible;
                     VisibilityOfEditLTK = Visibility.Hidden;
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
@@ -563,6 +572,7 @@ namespace MasterSaveDemo.ViewModel
                         IsDeleting = true;
                         SetTextboxValue();
                         TextBoxReadOnly = true;
+                        HitTestVisibleCbb = false;
                         VisibilityOfAdd = Visibility.Visible;
                         VisibilityOfEditLTK = Visibility.Hidden;
                     }
@@ -608,20 +618,6 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 ResetAll();
-                //if (VisibilityOfAdd == Visibility.Visible)
-                //{
-                //    ResetTextbox();
-                //}
-                //else if (VisibilityOfEditLTK == Visibility.Visible)
-                //{
-                //    ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
-                //    LaiSuat = SelectedItemLTK.LaiSuat.ToString();
-                //}
-                //else if (VisibilityOfEditThamSo == Visibility.Visible)
-                //{
-                //    TenThamSo = SelectedItemThamSo.TenThamSo;
-                //    GiaTri = SelectedItemThamSo.GiaTri.ToString();
-                //}
             });
 
             CbbSelectionChangedCommand = new RelayCommand<object>((p) =>

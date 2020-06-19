@@ -23,6 +23,14 @@ namespace MasterSaveDemo.ViewModel
             set { _ListLichSuGD = value; OnPropertyChanged(); }
         }
 
+        private string _SoTienGuiToiThieu;
+
+        public string SoTienGuiToiThieu
+        {
+            get { return _SoTienGuiToiThieu; }
+            set { _SoTienGuiToiThieu = value; OnPropertyChanged(); }
+        }
+
         private string _MaPG;
 
         public string MaPG
@@ -166,6 +174,15 @@ namespace MasterSaveDemo.ViewModel
             get { return _NgayDaoHanKeTiep; }
             set { _NgayDaoHanKeTiep = value; OnPropertyChanged(); }
         }
+
+        private bool _CreateReport;
+
+        public bool CreateReport
+        {
+            get { return _CreateReport; }
+            set { _CreateReport = value; OnPropertyChanged(); }
+        }
+
         #endregion
         #region function 
         public void BindingLichSu(string mastk)
@@ -234,18 +251,18 @@ namespace MasterSaveDemo.ViewModel
                     MaSoTietKiem_check = "Check";
                     Notify_Ma = "";
                 }
-                decimal STG_TT = decimal.Parse(search_ThamSo("TienGuiThemToiThieu"));
+                
                 if (SoTienGui == null || SoTienGui == "")
                 {
                     Notify_money = "Chưa nhập số tiền gửi";
                     SoTienGui_check = "Error";
                 } else
-                if (decimal.Parse(SoTienGui) < STG_TT)
+                if (decimal.Parse(SoTienGui) < decimal.Parse(SoTienGuiToiThieu))
                 {
                     Notify_money = "Số tiền gửi tối thiểu không đủ";
                     SoTienGui_check = "Error";
                 } else
-                if (decimal.Parse(SoTienGui) >= STG_TT)
+                if (decimal.Parse(SoTienGui) >= decimal.Parse(SoTienGuiToiThieu))
                 {
                     SoTienGui_check = "Check";
                     Notify_money = "";
@@ -306,6 +323,8 @@ namespace MasterSaveDemo.ViewModel
             SoTienGui_check = "None";
             NgayDaoHanKeTiep_check = "None";
             MaSoTietKiem_check = "None";
+            SoTienGuiToiThieu = (search_ThamSo("TienGuiThemToiThieu"));
+            CreateReport = true;
             ShowINFO = new RelayCommand<object>((p) =>
             {
                 return true;
@@ -348,10 +367,10 @@ namespace MasterSaveDemo.ViewModel
 
                 if (CanCreate == true) ;
                 {
-                    
+                    string mapg = GetCodeMPG();
                     PHIEUGUI Phieugui = new PHIEUGUI()
                     {
-                        MaPhieuGui = GetCodeMPG(),
+                        MaPhieuGui = mapg,
                         MaSoTietKiem = MaSoTietKiem,
                         NgayGui = DateTime.Parse(NgayGui),
                         SoTienGui = int.Parse(SoTienGui),
@@ -366,6 +385,13 @@ namespace MasterSaveDemo.ViewModel
                     BindingLichSu(MaSoTietKiem);
                     Done = "Check";
                     Notify_Done = "Đã tạo phiếu gửi thành công";
+                    if (CreateReport==true)
+                    {
+                        PhieuGui_PrintPreview_ViewModel PhieuGuiVM = new PhieuGui_PrintPreview_ViewModel(mapg,TenKhachHang,NgayGui,SoTienGui);
+                        PhieuGui_PrintPreview PhieuGui = new PhieuGui_PrintPreview(PhieuGuiVM);
+                        PhieuGui.ShowDialog();
+                        
+                    }
                 }
             });
             EnterKeyDown_Command = new RelayCommand<object>((p) =>

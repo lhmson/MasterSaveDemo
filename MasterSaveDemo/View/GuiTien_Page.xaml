@@ -170,7 +170,7 @@
                     </Grid>
 
                     <Grid Grid.Row="4">
-                        <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" />
+                        <CheckBox IsChecked="{Binding CreateReport, Mode=TwoWay}" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" />
                     </Grid>
                     <Grid Grid.Row="5">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -196,7 +196,7 @@
                     <RowDefinition />
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <materialDesign:Card Background="{DynamicResource PrimaryHueDarkBrush}"
+                <materialDesign:Card Grid.Row="0" Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                   Width="auto"
                   Padding="8">
@@ -205,9 +205,9 @@
                     Lịch sử giao dịch
                     </TextBlock>
                 </materialDesign:Card>
-                <ListView x:Name="listViewReport" ItemsSource="{Binding ListLichSuGD}"
-                          HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Bottom" Margin="0,0,0,0.4"
-                          HorizontalContentAlignment="Stretch" Height="187" Grid.RowSpan="2">
+                <ListView x:Name="listViewReport" ItemsSource="{Binding ListLichSuGD}" Grid.Row="1"
+                          HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Top" Margin="0,0,0,0.4"
+                          HorizontalContentAlignment="Stretch" >
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã phiếu gửi" DisplayMemberBinding="{Binding MaPG}"/>
@@ -216,10 +216,64 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-
-                <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid Grid.Row="2">
                     
-                </materialDesign:Card>
+                <materialDesign:Flipper >
+                    <materialDesign:Flipper.FrontContent>
+                            <Button VerticalAlignment="Top"  Background="{DynamicResource PrimaryHueDarkBrush}"
+                              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                              Command="{x:Static materialDesign:Flipper.FlipCommand}">
+                                <TextBlock VerticalAlignment="Center"
+                                FontSize="18" >
+                                Quy định gửi tiền
+                                </TextBlock>
+                            </Button>
+                    </materialDesign:Flipper.FrontContent>
+                    <materialDesign:Flipper.BackContent>
+                        <Grid Grid.ColumnSpan="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <materialDesign:ColorZone Grid.Row="0" FontSize="16" Background="{DynamicResource PrimaryHueDarkBrush}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0"
+                                            Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                            Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                            HorizontalAlignment="Left">
+                                            <materialDesign:PackIcon
+                                              Kind="ArrowLeft"
+                                              HorizontalAlignment="Right" FontSize="20"/>                   
+                                        </Button>
+                                        <TextBlock Grid.Column="1"
+                                            Margin="8 0 0 0"
+                                            VerticalAlignment="Center">
+                                          Các quy định
+                                        </TextBlock>
+                                    </Grid>
+                                </materialDesign:ColorZone>
+                                <Grid  Grid.Row="1" Grid.ColumnSpan="2">
+                                    <StackPanel Orientation="Vertical">
+                                        
+                                        <TextBlock>
+                                          Chỉ nhận gởi thêm tiền khi đến kỳ hạn tính lãi suất của các loại tiết kiệm tương ứng.
+                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock> 
+                                             Số tiền gởi thêm tối thiểu là:
+                                          </TextBlock>
+                                           <TextBlock Text="{Binding SoTienGuiToiThieu}"/>
+                                        </StackPanel>
+                                     </StackPanel>
+                                </Grid>
+                            </Grid>
+                    </materialDesign:Flipper.BackContent>
+                </materialDesign:Flipper>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

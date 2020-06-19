@@ -441,6 +441,7 @@ namespace MasterSaveDemo.ViewModel
             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
             IsDeleting = false;
             SelectedItemLTK = null;
+            SelectedItemThamSo = null;
             TextBoxReadOnly = false;
         }
         
@@ -494,13 +495,19 @@ namespace MasterSaveDemo.ViewModel
             // show elements used for editing
             EditLTKCommand = new RelayCommand<object>((p) => 
                 {
-                    if(SelectedItemLTK != null)
+                    if(SelectedIndexCbb == 0)
                     {
-                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                        if (disable == 13 || disable == 0)
-                            return true;
+                        if (SelectedItemLTK != null)
+                        {
+                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                            if (disable == 13 || disable == 0)
+                                return true;
+                            return false;
+                        }
                         return false;
                     }
+                    if (SelectedItemThamSo != null)
+                        return true;
                     return false;
                 },
                 (p) => {

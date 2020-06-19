@@ -42,9 +42,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -180,30 +179,41 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="2">
-                <materialDesign:Card Background="{StaticResource PrimaryHueDarkBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                 Padding="0" Margin="10" VerticalAlignment="Top" Width="Auto">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Margin="16 16 16 4" Style="{StaticResource MaterialDesignHeadline5TextBlock}"><Run Text="Thông báo"/></TextBlock>
-                        <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                        <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left"
-                               Style="{StaticResource MaterialDesignBody2TextBlock}"
-                               Text="{Binding ThongBao, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
-                    </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition />
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <materialDesign:Card Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                  Width="auto"
+                  Padding="8">
+                    <TextBlock
+                    FontSize="16" HorizontalAlignment="Center">
+                    Lịch sử giao dịch
+                    </TextBlock>
                 </materialDesign:Card>
+                <ListView Grid.Row="1" x:Name="listViewReport" ItemsSource="{Binding ListLichSuGD, Mode=TwoWay}"
+                          HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Stretch" Margin="0,0,0,0"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mã phiếu rút" DisplayMemberBinding="{Binding MaPR}"/>
+                            <GridViewColumn Header="Ngày rút" DisplayMemberBinding="{Binding NgayRutTien}"/>
+                            <GridViewColumn Header="Số tiền rút" DisplayMemberBinding="{Binding TienRut}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
-                <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Bottom">
+
+                <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2">
                     <Button Style="{StaticResource MaterialDesignRaisedButton}" Height="50" HorizontalAlignment="Left"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Binding cái tham số ở đây" Margin="10" >
-                        <TextBlock Text="Quy định rút tiền" />
+                        <TextBlock Text="Quy định gửi tiền" />
                     </Button>
                 </materialDesign:Card>
+                
             </Grid>
         </Grid>
     </Grid>

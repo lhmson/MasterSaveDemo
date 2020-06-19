@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows;
 using MasterSaveDemo.Model;
 using MasterSaveDemo.Helper;
+using System.Collections.ObjectModel;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -92,13 +93,45 @@ namespace MasterSaveDemo.ViewModel
 			get { return _NgayDaoHan; }
 			set { _NgayDaoHan = value; OnPropertyChanged(); }
 		}
-		//Thong Bao
+		//Thong Bao //da bi xoa, nho bo di
 		private string _ThongBao;
 
 		public string ThongBao
 		{
 			get { return _ThongBao; }
 			set { _ThongBao = value; OnPropertyChanged(); }
+		}
+		//listView
+		private List<ListLichSuPhieuRut> _ListLichSuGD;
+
+		public List<ListLichSuPhieuRut> ListLichSuGD
+		{
+			get { return _ListLichSuGD; }
+			set { _ListLichSuGD = value; OnPropertyChanged(); }
+		}
+
+		private string _MaPR;
+
+		public string MaPR
+		{
+			get { return _MaPR; }
+			set { _MaPR = value; OnPropertyChanged(); }
+		}
+
+		private string _NgayRutTien;
+
+		public string NgayRutTien
+		{
+			get { return _NgayRutTien; }
+			set { _NgayRutTien = value; OnPropertyChanged(); }
+		}
+
+
+		private string _TienRut;
+		public string TienRut
+		{
+			get { return _TienRut; }
+			set { _TienRut = value; OnPropertyChanged(); }
 		}
 
 		#endregion
@@ -252,6 +285,28 @@ namespace MasterSaveDemo.ViewModel
 				}
 			});
 		}
+		public bool BindingLichSu(string mastk)
+		{
+			try
+			{
+				ListLichSuGD = new List<ListLichSuPhieuRut>();
+
+				ObservableCollection<PHIEURUT> List_PR = new ObservableCollection<PHIEURUT>(DataProvider.Ins.DB.PHIEURUTs);
+				var lichsu = from list in List_PR
+							 where list.MaSoTietKiem == mastk
+							 orderby list.MaPhieuRut descending
+							 select new ListLichSuPhieuRut(list.MaPhieuRut, list.NgayRut.ToString("dd/MM/yyyy"), list.SoTienRut.ToString("0,000"));
+				foreach (var ls in lichsu)
+				{
+					ListLichSuGD.Add(ls);
+				}
+				return true;
+			}
+			catch(Exception e)
+			{
+				return false;
+			}
+		}
 		private bool CapNhatThongTin()
 		{
 			try
@@ -259,13 +314,31 @@ namespace MasterSaveDemo.ViewModel
 				SOTIETKIEM temp = Tim_MSTK(MaSoTietKiem);
 				if (temp != null)
 				{
-					TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
-					TenKhachHang = temp.TenKhachHang;
-					SoDu = temp.SoDu.ToString("0,000");
-					CMND = temp.SoCMND;
-					NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
-					KiemTraNhapLai();
-					ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
+					if (temp.NgayDongSo == null)
+					{
+						TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
+						TenKhachHang = temp.TenKhachHang;
+						if (temp.SoDu == 0)
+						{
+							SoDu = "0";
+						}
+						else
+						{
+							SoDu = temp.SoDu.ToString("0,000");
+						}
+						CMND = temp.SoCMND;
+						NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+						BindingLichSu(temp.MaSoTietKiem);
+						KiemTraNhapLai();
+						ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
+					}
+					else
+					{
+						BindingLichSu(temp.MaSoTietKiem);
+						KiemTraNhapLai();
+						//Thong bao da dong so o day
+						ThongBao = "Sổ tiết kiệm này đã đóng!";
+					}
 				}
 				else
 				{
@@ -289,6 +362,21 @@ namespace MasterSaveDemo.ViewModel
 		{
 			ThongBao = "";
 			Result_KiemTraHopLe = true;
+			try
+			{
+				if (int.Parse(SoTienRut) == 0)
+				{
+					SoTienRut = "0";
+				}
+				else
+				{
+					SoTienRut = int.Parse(SoTienRut).ToString("0,000");
+				}
+			}
+			catch (Exception e)
+			{
+
+			}
 			try
 			{
 				SOTIETKIEM info_stk = Tim_MSTK(MaSoTietKiem);
@@ -383,14 +471,14 @@ namespace MasterSaveDemo.ViewModel
 				PHIEURUT info_PhieuRut = new PHIEURUT();
 				if (DataProvider.Ins.DB.PHIEURUTs.Count() == 0)
 				{
-					info_PhieuRut.MaPhieuRut = "0000000001";
+					info_PhieuRut.MaPhieuRut = "PR0000001";
 				}
 				else
 				{
-					info_PhieuRut.MaPhieuRut = "0000000000";
+					info_PhieuRut.MaPhieuRut = "PR0000000";
 					decimal temp_dem = DataProvider.Ins.DB.PHIEURUTs.Count();
 					string temp = (temp_dem+1).ToString();
-					info_PhieuRut.MaPhieuRut.Remove(0, temp.Count());
+					info_PhieuRut.MaPhieuRut.Remove(0,temp.Length);
 					info_PhieuRut.MaPhieuRut += temp;
 				}
 				info_PhieuRut.MaSoTietKiem = this.MaSoTietKiem;

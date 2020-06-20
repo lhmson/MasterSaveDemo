@@ -126,6 +126,7 @@
     <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\ListBaoCaoDongMo.cs" />
     <Compile Include="Model\ListBaoCaoDongMo_DaBaoCao.cs" />
+    <Compile Include="Model\ListLichSuPhieuRut.cs" />
     <Compile Include="Model\ListLichSuPhieuGui.cs" />
     <Compile Include="Model\NhanVien.cs" />
     <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">

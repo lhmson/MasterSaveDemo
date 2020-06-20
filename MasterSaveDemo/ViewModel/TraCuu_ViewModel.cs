@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using MasterSaveDemo.Model;
+using MasterSaveDemo.Helper;
 using System.Data;
 
 namespace MasterSaveDemo.ViewModel
@@ -59,6 +60,7 @@ namespace MasterSaveDemo.ViewModel
 
         public ICommand SeeAllCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand NhapLaiVaoVon_All { get; set; }
 
         public TraCuu_ViewModel()
         {
@@ -90,7 +92,7 @@ namespace MasterSaveDemo.ViewModel
 
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
-                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, 
+                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
                               Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
@@ -146,19 +148,35 @@ namespace MasterSaveDemo.ViewModel
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               where (stk.MaSoTietKiem == MaSTK || MaSTK == "") && (stk.TenKhachHang.Contains(TenKH))
                                     && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
-                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK=="Tất cả")
-                                    && (stk.SoDu >= min && (stk.SoDu <= max || max ==-1))                            
+                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK == "Tất cả")
+                                    && (stk.SoDu >= min && (stk.SoDu <= max || max == -1))
                               select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
 
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
                 int count = 1;
-                for (int i=0; i<ListSoTietKiem.Count(); i++)
+                for (int i = 0; i < ListSoTietKiem.Count(); i++)
                 {
                     ListSoTietKiem[i].STT = count.ToString();
                     count++;
                 }
                 #endregion
+            });
+
+            //Phan nay do Thang them vao
+            NhapLaiVaoVon_All = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (DateTime.Now.TimeOfDay.TotalMinutes >= 13 * 60 + 30)
+                {
+                    NhapLaiVaoVon.Ins.AllToday();
+                }
+                else
+                {
+                    MessageBox.Show("Chưa tới thời điểm nhập lãi vào vốn!");
+                }
             });
         }
     }

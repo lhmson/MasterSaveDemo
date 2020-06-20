@@ -167,7 +167,6 @@
                           Visibility="{Binding VisibilityOfAdd}"
                           ItemsSource="{Binding ListQuyDinh}"
                           SelectedItem="{Binding SelectedQuyDinh}">
-
                     </ComboBox>
                 </Grid>
                 <Grid Grid.Row="8">

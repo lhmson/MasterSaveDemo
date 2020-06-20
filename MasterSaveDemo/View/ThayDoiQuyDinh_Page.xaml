@@ -101,7 +101,8 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         IsReadOnly="True"/>
                 </Grid>
                 <Grid Grid.Row="3">
                     <TextBox materialDesign:HintAssist.Hint="Tên loại tiết kiệm"

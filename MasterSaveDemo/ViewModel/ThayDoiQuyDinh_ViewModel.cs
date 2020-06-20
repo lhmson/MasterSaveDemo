@@ -468,7 +468,6 @@ namespace MasterSaveDemo.ViewModel
 
         public ThayDoiQuyDinh_ViewModel()
         {
-            IsDeleting = false;
             LoadData();                 
 
             // show elements used for adding

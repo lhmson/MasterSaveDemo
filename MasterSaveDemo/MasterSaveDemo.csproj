@@ -67,6 +67,7 @@
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
@@ -99,6 +100,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\DatabaseCheck.cs" />
     <Compile Include="PhieuRut_PrintPreview.xaml.cs">
       <DependentUpon>PhieuRut_PrintPreview.xaml</DependentUpon>
     </Compile>

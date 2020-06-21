@@ -79,7 +79,10 @@ namespace MasterSaveDemo.Helper
             finally
             {
                 if (conn.State == System.Data.ConnectionState.Open)
+                {
                     conn.Close();
+                }
+                conn = new SqlConnection(@"Server =.\sqlexpress; initial catalog = QLSTK; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework");
             }
         }
         

@@ -233,8 +233,8 @@ namespace MasterSaveDemo.ViewModel
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
             ListQuyDinh = new ObservableCollection<string>();
-            ListQuyDinh.Add("Rút bé hơn hoặc bằng");
-            ListQuyDinh.Add("Rút hết");
+            ListQuyDinh.Add("0");
+            ListQuyDinh.Add("1");
 
             VisibilityOfAdd = Visibility.Hidden;
             VisibilityOfEditLTK = Visibility.Hidden;
@@ -271,10 +271,10 @@ namespace MasterSaveDemo.ViewModel
                 {
                     return false;
                 }
-                if (string.IsNullOrEmpty(QuyDinhSoTienRut) || !int.TryParse(QuyDinhSoTienRut, out _))
-                {
-                    return false;
-                }
+                //if (string.IsNullOrEmpty(QuyDinhSoTienRut) || !int.TryParse(QuyDinhSoTienRut, out _))
+                //{
+                //    return false;
+                //}
 
                 if( !IsDeleting)
                 {
@@ -328,7 +328,7 @@ namespace MasterSaveDemo.ViewModel
             KyHan = "";
             LaiSuat = "";
             ThoiGianGuiToiThieu = "";
-            QuyDinhSoTienRut = "";
+            SelectedQuyDinh = null;
         }
         private void SetTextboxValue()
         {
@@ -337,7 +337,7 @@ namespace MasterSaveDemo.ViewModel
             KyHan = SelectedItemLTK.KyHan.ToString();
             LaiSuat = SelectedItemLTK.LaiSuat.ToString();
             ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
-            QuyDinhSoTienRut = SelectedItemLTK.QuyDinhSoTienRut.ToString();
+            SelectedQuyDinh = SelectedItemLTK.QuyDinhSoTienRut.ToString();
         }
         private void AddLTK()
         {
@@ -348,7 +348,7 @@ namespace MasterSaveDemo.ViewModel
                 KyHan = Int32.Parse(KyHan),
                 LaiSuat = double.Parse(LaiSuat),
                 ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                QuyDinhSoTienRut = Int32.Parse(QuyDinhSoTienRut),
+                QuyDinhSoTienRut = Int32.Parse(SelectedQuyDinh),
                 DangSuDung = 1
             };
             DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);

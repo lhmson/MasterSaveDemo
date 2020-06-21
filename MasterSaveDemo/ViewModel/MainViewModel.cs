@@ -147,7 +147,7 @@ namespace MasterSaveDemo.ViewModel
         {
             
         }
-
+        public ICommand Home_Select { get; set; }
         #endregion
         public MainViewModel() // all main page handling goes there
         {

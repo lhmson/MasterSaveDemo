@@ -67,11 +67,7 @@
                 <!--<UC:HamburgerNavigation></UC:HamburgerNavigation>-->
             </Grid>
             <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="333*"/>
-                    <RowDefinition Height="215*"/>
-                </Grid.RowDefinitions>
-                <Frame x:Name="main" Margin="10,10,10.4,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
+                <Frame x:Name="main" Margin="10,10,10.4,10" Content="{Binding PageSelected}" NavigationUIVisibility="Hidden">
                 </Frame>
             </Grid>
         </Grid>

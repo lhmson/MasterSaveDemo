@@ -23,6 +23,20 @@ namespace MasterSaveDemo
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Management Page Selections
+
+        private Home_Page HomePage = new Home_Page();
+        private MoSo_Page MoSoPage = new MoSo_Page();
+        private GuiTien_Page GuiTienPage = new GuiTien_Page();
+        private RutTien_Page RutTienPage = new RutTien_Page();
+        private BaoCaoDoanhSo_Page BaoCaoDoanhSoPage = new BaoCaoDoanhSo_Page();
+        private BaoCaoMoDong_Page BaoCaoMoDongPage = new BaoCaoMoDong_Page();
+        private ThayDoiQuyDinh_Page ThayDoiQuyDinhPage = new ThayDoiQuyDinh_Page();
+        private QuanLyNhanSu_Page QuanLyNhanSuPage = new QuanLyNhanSu_Page();
+        private CaiDatKhac_Page CaiDatKhacPage = new CaiDatKhac_Page();
+        private TraCuu_Page TraCuuPage = new TraCuu_Page();
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,62 +44,60 @@ namespace MasterSaveDemo
 
         private void Home_Page_Selected(object sender, RoutedEventArgs e)
         {
-            Home_Page page = new Home_Page();
-            main.Content = page;
+            main.Content = HomePage;
         }
 
         private void MoSo_Page_Selected(object sender, RoutedEventArgs e)
         {
-            MoSo_Page page = new MoSo_Page();
-            main.Content = page;
+            main.Content = MoSoPage;
         }
 
         private void GuiTien_Page_Selected(object sender, RoutedEventArgs e)
         {
+
+            if (main.Content is MoSo_Page)
+            {
+                var context = (MoSo_ViewModel)MoSoPage.DataContext;
+                context.reset_changepage();
+            }
+
             GuiTien_Page page = new GuiTien_Page();
             main.Content = page;
         }
 
         private void RutTien_Page_Selected(object sender, RoutedEventArgs e)
         {
-            RutTien_Page page = new RutTien_Page();
-            main.Content = page;
+            main.Content = RutTienPage;
         }
 
         private void TraCuu_Page_Selected(object sender, RoutedEventArgs e)
         {
-            TraCuu_Page page = new TraCuu_Page();
-            main.Content = page;
+            main.Content = TraCuuPage;
         }
 
         private void BaoCaoDoanhSo_Page_Selected(object sender, RoutedEventArgs e)
         {
-            BaoCaoDoanhSo_Page page = new BaoCaoDoanhSo_Page();
-            main.Content = page;
+            main.Content = BaoCaoDoanhSoPage;
         }
 
         private void BaoCaoMoDong_Page_Selected(object sender, RoutedEventArgs e)
         {
-            BaoCaoMoDong_Page page = new BaoCaoMoDong_Page();
-            main.Content = page;
+            main.Content = BaoCaoMoDongPage;
         }
 
         private void ThayDoiQuyDinh_Page_Selected(object sender, RoutedEventArgs e)
         {
-            ThayDoiQuyDinh_Page page = new ThayDoiQuyDinh_Page();
-            main.Content = page;
+            main.Content = ThayDoiQuyDinhPage;
         }
 
         private void QuanLyNhanSu_Page_Selected(object sender, RoutedEventArgs e)
         {
-            QuanLyNhanSu_Page page = new QuanLyNhanSu_Page();
-            main.Content = page;
+            main.Content = QuanLyNhanSuPage;
         }
 
         private void CaiDatKhac_Page_Selected(object sender, RoutedEventArgs e)
         {
-            CaiDatKhac_Page page = new CaiDatKhac_Page();
-            main.Content = page;
+            main.Content = CaiDatKhacPage;
         }
 
         private void Logout_Button_Selected(object sender, RoutedEventArgs e)

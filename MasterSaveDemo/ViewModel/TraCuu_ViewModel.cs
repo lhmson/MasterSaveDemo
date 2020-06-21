@@ -15,6 +15,24 @@ namespace MasterSaveDemo.ViewModel
     public class TraCuu_ViewModel : BaseViewModel
     {
         #region The sub funtions by Sanh
+
+        private void XetQuyenNhapLai()
+        {
+            Enable_NhapLaiVaoVon = false;
+
+            if (LoginViewModel.TaiKhoanSuDung == null)
+                return;
+
+            // Tìm mã nhóm quyền của user
+            int ma = LoginViewModel.TaiKhoanSuDung.MaNhom;
+
+            ObservableCollection<PHANQUYEN> nhom = new ObservableCollection<PHANQUYEN>(DataProvider.Ins.DB.PHANQUYENs);
+
+            foreach (var item in nhom)
+                if (item.MaNhom == ma && item.MaChucNang == 9)
+                    Enable_NhapLaiVaoVon = true;
+        }
+
         private string Delete_ThapPhan(string number)
         {
             string res = "";
@@ -28,6 +46,9 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Variables
+
+        private bool _Enable_NhapLaiVaoVon;
+        public bool Enable_NhapLaiVaoVon { get => _Enable_NhapLaiVaoVon; set { _Enable_NhapLaiVaoVon = value; OnPropertyChanged(); } }
 
         private List<string> _LoaiTietKiem;
         public List<string> LoaiTietKiem { get => _LoaiTietKiem; set { _LoaiTietKiem = value; OnPropertyChanged(); } }
@@ -62,6 +83,7 @@ namespace MasterSaveDemo.ViewModel
 
         public TraCuu_ViewModel()
         {
+            XetQuyenNhapLai();
             NgayDaoHan = DateTime.Now;
             // Init Combobox LoaiTietKiem
             ObservableCollection<LOAITIETKIEM> _List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);

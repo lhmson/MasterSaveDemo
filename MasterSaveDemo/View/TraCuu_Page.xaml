@@ -140,7 +140,7 @@
                     <Button Grid.Column="1" Command="{Binding SeeAllCommand}" Content="Xem toàn bộ"
                         Style="{StaticResource MaterialDesignRaisedButton}" Margin="5,0,5,0" Width="180" Height="35"></Button>
                     <Button x:Name="NhapLaiVaoVon_KTV_Button" Grid.Column="2" Command="{Binding }"
-                        Style="{StaticResource MaterialDesignRaisedButton}" Content="Nhập lãi vào vốn (KTV)" IsEnabled="{Binding Is_KTV_Admin}"
+                        Style="{StaticResource MaterialDesignRaisedButton}" Content="Nhập lãi vào vốn (KTV)" IsEnabled="{Binding Enable_NhapLaiVaoVon}"
                         Margin="5,0,5,0" Width="180" Height="35" ToolTip="Thực hiện tính toán và nhập lãi vào vốn cho sổ quá hạn sau hôm nay mà chưa rút"></Button>
                 </Grid>
             </Grid>

@@ -183,6 +183,7 @@ namespace MasterSaveDemo.ViewModel
 					ThongBao = "";
 					Result_KiemTraHopLe = false;
 					Result_KiemTraNhapLai = true;
+					ListLichSuGD = new List<ListLichSuPhieuRut>();
 				}
 				catch (Exception e)
 				{
@@ -318,16 +319,23 @@ namespace MasterSaveDemo.ViewModel
 					{
 						TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
 						TenKhachHang = temp.TenKhachHang;
-						if (temp.SoDu == 0)
+						if (temp.SoDu < 1000)
 						{
-							SoDu = "0";
+							SoDu = temp.SoDu.ToString();
 						}
 						else
 						{
 							SoDu = temp.SoDu.ToString("0,000");
 						}
 						CMND = temp.SoCMND;
-						NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+						if (Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).KyHan == 0)
+						{
+							NgayDaoHan = "Không xác định";
+						}
+						else
+						{
+							NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+						}
 						BindingLichSu(temp.MaSoTietKiem);
 						KiemTraNhapLai();
 						ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
@@ -364,19 +372,21 @@ namespace MasterSaveDemo.ViewModel
 			Result_KiemTraHopLe = true;
 			try
 			{
-				if (int.Parse(SoTienRut) == 0)
+				if (int.Parse(SoTienRut) < 1000)
 				{
-					SoTienRut = "0";
+
 				}
 				else
 				{
 					SoTienRut = int.Parse(SoTienRut).ToString("0,000");
+					Result_KiemTraHopLe = true;
 				}
 			}
 			catch (Exception e)
 			{
 
 			}
+
 			try
 			{
 				SOTIETKIEM info_stk = Tim_MSTK(MaSoTietKiem);
@@ -391,12 +401,14 @@ namespace MasterSaveDemo.ViewModel
 					if(!KiemTraNhapLai())
 					{
 						ThongBao += "Lỗi, không xác định được thông tin đáo hạn.\n";
+						Result_KiemTraHopLe = false;
 					}
 					else
 					{
 						if(Result_KiemTraNhapLai == false)
 						{
 							ThongBao += "Cần nhập lãi trước khi rút.\n";
+							Result_KiemTraHopLe = false;
 						}
 					}
 				}

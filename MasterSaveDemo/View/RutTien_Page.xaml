@@ -144,8 +144,17 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0"/>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="0">
+                        <materialDesign:Card Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                  Width="auto"
+                  Padding="8">
+                            <TextBlock
+                    FontSize="16" HorizontalAlignment="Center" Text="{Binding ThongBao}">
+                            </TextBlock>
+                        </materialDesign:Card>
+                    </Grid>
+                        <Grid Grid.Row="1">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBox Width="230" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsReadOnly="True"

@@ -179,7 +179,7 @@
 
                     </Grid>
                     <Grid Grid.Row="4">
-                        <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="0,0,0,0" />
+                        <CheckBox IsChecked="{Binding CreatePR}" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="0,0,0,0" />
                     </Grid>
                     <Grid Grid.Row="5">
                         <Button Command="{Binding Click_GiaoDichCommand}" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" Content="Thực hiện giao dịch" Margin="10,10,20,14" />

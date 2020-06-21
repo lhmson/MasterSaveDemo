@@ -99,6 +99,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PhieuRut_PrintPreview.xaml.cs">
+      <DependentUpon>PhieuRut_PrintPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PhieuGui_PrintPreview.xaml.cs">
       <DependentUpon>PhieuGui_PrintPreview.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,7 @@
     <Compile Include="ViewModel\BaoCaoMoDong_ViewModel.cs" />
     <Compile Include="ViewModel\GuiTien_ViewModel.cs" />
     <Compile Include="ViewModel\Home_PageViewModel.cs" />
+    <Compile Include="ViewModel\PhieuRut_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\PhieuGui_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\QuanLyNhanSu_ViewModel.cs" />
     <Compile Include="ViewModel\RutTien_ViewModel.cs" />
@@ -236,6 +240,10 @@
     <Compile Include="View\TraCuu_Page.xaml.cs">
       <DependentUpon>TraCuu_Page.xaml</DependentUpon>
     </Compile>
+    <Page Include="PhieuRut_PrintPreview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PhieuGui_PrintPreview.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

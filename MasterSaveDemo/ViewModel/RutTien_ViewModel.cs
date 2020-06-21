@@ -134,11 +134,19 @@ namespace MasterSaveDemo.ViewModel
 			set { _TienRut = value; OnPropertyChanged(); }
 		}
 
+		//in phieu
+		private bool _CreatePR;
+		public bool CreatePR
+		{
+			get { return _CreatePR; }
+			set { _CreatePR = value; OnPropertyChanged(); }
+		}
 		#endregion
 		#region Khoi tao
 		//Khoi tao viewmodel
 		public RutTien_ViewModel()
 		{
+			CreatePR = true;
 			Result_KiemTraNhapLai = true;
 			//Dat ngay rut theo ngay hom nay
 			NgayRut = DateTime.Today.ToString("dd/MM/yyyy");
@@ -507,6 +515,13 @@ namespace MasterSaveDemo.ViewModel
 				}
 				DataProvider.Ins.DB.SaveChanges();
 
+				if (CreatePR == true)
+				{
+					PhieuRut_PrintPreview_ViewModel PhieuRutVM = new PhieuRut_PrintPreview_ViewModel(info_PhieuRut.MaPhieuRut, TenKhachHang, info_PhieuRut.NgayRut.ToString("dd/MM/yyyy"), info_PhieuRut.SoTienRut.ToString());
+					PhieuRut_PrintPreview PhieuRut = new PhieuRut_PrintPreview(PhieuRutVM);
+					PhieuRut.ShowDialog();
+				}
+
 				if (stk.SoDu == 0)
 				{
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
@@ -521,6 +536,7 @@ namespace MasterSaveDemo.ViewModel
 					Result_KiemTraHopLe = false;	
 				}
 				SoTienRut = "";
+
 				return true;
 			}
 			catch(Exception e)

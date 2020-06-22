@@ -208,6 +208,20 @@ namespace MasterSaveDemo.ViewModel
             get => _NameOfList;
             set { _NameOfList = value; OnPropertyChanged(); }
         }
+
+        private bool _TextBoxReadOnly;
+        public bool TextBoxReadOnly
+        {
+            get => _TextBoxReadOnly;
+            set { _TextBoxReadOnly = value; OnPropertyChanged(); }
+        }
+
+        private bool _HitTestVisibleCbb;
+        public bool HitTestVisibleCbb
+        {
+            get => _HitTestVisibleCbb;
+            set { _HitTestVisibleCbb = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -219,8 +233,8 @@ namespace MasterSaveDemo.ViewModel
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
             ListQuyDinh = new ObservableCollection<string>();
-            ListQuyDinh.Add("Rút bé hơn hoặc bằng");
-            ListQuyDinh.Add("Rút hết");
+            ListQuyDinh.Add("0");
+            ListQuyDinh.Add("1");
 
             VisibilityOfAdd = Visibility.Hidden;
             VisibilityOfEditLTK = Visibility.Hidden;
@@ -257,10 +271,10 @@ namespace MasterSaveDemo.ViewModel
                 {
                     return false;
                 }
-                if (string.IsNullOrEmpty(QuyDinhSoTienRut) || !int.TryParse(QuyDinhSoTienRut, out _))
-                {
-                    return false;
-                }
+                //if (string.IsNullOrEmpty(QuyDinhSoTienRut) || !int.TryParse(QuyDinhSoTienRut, out _))
+                //{
+                //    return false;
+                //}
 
                 if( !IsDeleting)
                 {
@@ -314,7 +328,7 @@ namespace MasterSaveDemo.ViewModel
             KyHan = "";
             LaiSuat = "";
             ThoiGianGuiToiThieu = "";
-            QuyDinhSoTienRut = "";
+            SelectedQuyDinh = null;
         }
         private void SetTextboxValue()
         {
@@ -323,7 +337,7 @@ namespace MasterSaveDemo.ViewModel
             KyHan = SelectedItemLTK.KyHan.ToString();
             LaiSuat = SelectedItemLTK.LaiSuat.ToString();
             ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
-            QuyDinhSoTienRut = SelectedItemLTK.QuyDinhSoTienRut.ToString();
+            SelectedQuyDinh = SelectedItemLTK.QuyDinhSoTienRut.ToString();
         }
         private void AddLTK()
         {
@@ -334,7 +348,7 @@ namespace MasterSaveDemo.ViewModel
                 KyHan = Int32.Parse(KyHan),
                 LaiSuat = double.Parse(LaiSuat),
                 ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                QuyDinhSoTienRut = Int32.Parse(QuyDinhSoTienRut),
+                QuyDinhSoTienRut = Int32.Parse(SelectedQuyDinh),
                 DangSuDung = 1
             };
             DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
@@ -427,6 +441,17 @@ namespace MasterSaveDemo.ViewModel
                 return 12;
             return 0;
         }
+        private void ResetAll()
+        {
+            VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
+            VisibilityOfEditThamSo = Visibility.Hidden;
+            VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
+            IsDeleting = false;
+            SelectedItemLTK = null;
+            SelectedItemThamSo = null;
+            TextBoxReadOnly = false;
+            HitTestVisibleCbb = true;
+        }
         
         #endregion
 
@@ -443,7 +468,6 @@ namespace MasterSaveDemo.ViewModel
 
         public ThayDoiQuyDinh_ViewModel()
         {
-            IsDeleting = false;
             LoadData();                 
 
             // show elements used for adding
@@ -461,9 +485,11 @@ namespace MasterSaveDemo.ViewModel
                 }, 
                 (p) => {
                     IsDeleting = false;
+                    HitTestVisibleCbb = true;
                     VisibilityOfAdd = Visibility.Visible;
                     VisibilityOfEditLTK = Visibility.Hidden;
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
+                    SelectedItemLTK = null;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
@@ -477,11 +503,20 @@ namespace MasterSaveDemo.ViewModel
             // show elements used for editing
             EditLTKCommand = new RelayCommand<object>((p) => 
                 {
-                    int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                    if (disable == 13 || disable == 0)
+                    if(SelectedIndexCbb == 0)
+                    {
+                        if (SelectedItemLTK != null)
+                        {
+                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                            if (disable == 13 || disable == 0)
+                                return true;
+                            return false;
+                        }
+                        return false;
+                    }
+                    if (SelectedItemThamSo != null)
                         return true;
                     return false;
-                    //return true;
                 },
                 (p) => {
                     if ( SelectedIndexCbb == 0)
@@ -516,9 +551,13 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (SelectedIndexCbb == 0)
                     {
-                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                        if (disable == 12 || disable == 0)
-                            return true;
+                        if( SelectedItemLTK != null)
+                        {
+                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                            if (disable == 12 || disable == 0)
+                                return true;
+                            return false;
+                        }
                         return false;
                     }
                     return false;
@@ -531,6 +570,8 @@ namespace MasterSaveDemo.ViewModel
 
                         IsDeleting = true;
                         SetTextboxValue();
+                        TextBoxReadOnly = true;
+                        HitTestVisibleCbb = false;
                         VisibilityOfAdd = Visibility.Visible;
                         VisibilityOfEditLTK = Visibility.Hidden;
                     }
@@ -563,9 +604,9 @@ namespace MasterSaveDemo.ViewModel
                     }
                     else if (VisibilityOfEditThamSo == Visibility.Visible)
                     {
-
                         EditThamSo();
                     }
+                    ResetAll();
                 }
                 catch (Exception e) { };
             });
@@ -575,24 +616,7 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
-                VisibilityOfEditThamSo = Visibility.Hidden;
-                VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
-                IsDeleting = false;
-                //if (VisibilityOfAdd == Visibility.Visible)
-                //{
-                //    ResetTextbox();
-                //}
-                //else if (VisibilityOfEditLTK == Visibility.Visible)
-                //{
-                //    ThoiGianGuiToiThieu = SelectedItemLTK.ThoiGianGuiToiThieu.ToString();
-                //    LaiSuat = SelectedItemLTK.LaiSuat.ToString();
-                //}
-                //else if (VisibilityOfEditThamSo == Visibility.Visible)
-                //{
-                //    TenThamSo = SelectedItemThamSo.TenThamSo;
-                //    GiaTri = SelectedItemThamSo.GiaTri.ToString();
-                //}
+                ResetAll();
             });
 
             CbbSelectionChangedCommand = new RelayCommand<object>((p) =>
@@ -622,7 +646,7 @@ namespace MasterSaveDemo.ViewModel
 
             GetThoiGianGuiToiThieuCommand = new RelayCommand<object>((p) =>
             {
-                return true;
+                return !IsDeleting; // disable button when deleting
             }, (p) =>
             {
                 ThoiGianGuiToiThieu = KyHan;

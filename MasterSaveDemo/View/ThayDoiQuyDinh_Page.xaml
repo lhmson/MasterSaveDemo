@@ -25,230 +25,259 @@
       Title="ThayDoiQuyDinh_Page">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="410"></ColumnDefinition>
-            <ColumnDefinition Width="15"></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <materialDesign:Card Margin="5"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="8">
+                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">THAY ĐỔI QUY ĐỊNH</TextBlock>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="15"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="35"></RowDefinition>
-            </Grid.RowDefinitions>
+            <Grid Grid.Column="0" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                    Content="Quy định" FontSize="18"
-                    VerticalAlignment="Top"/>
-            </Grid>
-            <Grid Grid.Row="1">
-                <ComboBox x:Name="cbbChooseList" SelectedIndex="{Binding SelectedIndexCbb}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding CbbSelectionChangedCommand}"
+                <Grid Grid.Row="0">
+                    <materialDesign:Card Height="35"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="5">
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Quy định"></TextBlock>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <ComboBox x:Name="cbbChooseList" SelectedIndex="{Binding SelectedIndexCbb}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CbbSelectionChangedCommand}"
                                                    CommandParameter="{Binding ElementName=cbbChooseList}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate >
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                    <ComboBoxItem>Danh sách loại tiết kiệm</ComboBoxItem>
-                    <ComboBoxItem>Danh sách tham số</ComboBoxItem>
-                </ComboBox>
-            </Grid>
-            <Grid Grid.Row="2">
-                <TextBox x:Name="txtMaLoai"   materialDesign:HintAssist.Hint="Mã loại tiết kiệm"
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate >
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBoxItem>Danh sách loại tiết kiệm</ComboBoxItem>
+                        <ComboBoxItem>Danh sách tham số</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <TextBox x:Name="txtMaLoai"   materialDesign:HintAssist.Hint="Mã loại tiết kiệm"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MaLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                         ToolTip="Error"/>
-                <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
+                         ToolTip="Error" IsReadOnly="{Binding TextBoxReadOnly}"/>
+                    <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <TextBox materialDesign:HintAssist.Hint="Tên tham số"
+                    <TextBox materialDesign:HintAssist.Hint="Tên tham số"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            </Grid>
-            <Grid Grid.Row="3">
-                <TextBox materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
+                         Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         IsReadOnly="True"/>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <TextBox materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <TextBox materialDesign:HintAssist.Hint="Lãi suất"
+                         Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                    <TextBox materialDesign:HintAssist.Hint="Lãi suất"
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <TextBox materialDesign:HintAssist.Hint="Giá trị"
+                    <TextBox materialDesign:HintAssist.Hint="Giá trị"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding GiaTri, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-            </Grid>
-            <Grid Grid.Row="4">
-                <TextBox materialDesign:HintAssist.Hint="Kỳ hạn"
-                         Visibility="{Binding VisibilityOfAdd}"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                         Foreground="{StaticResource SecondaryAccentBrush}" 
-                         VerticalAlignment="Center"
-                         Text="{Binding KyHan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            </Grid>
-            <Grid Grid.Row="5">
-                <TextBox materialDesign:HintAssist.Hint="Lãi suất"
-                         Visibility="{Binding VisibilityOfAdd}"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                         Foreground="{StaticResource SecondaryAccentBrush}" 
-                         VerticalAlignment="Center"
-                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                
-            </Grid>
-            <Grid Grid.Row="6">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="0,0,-100,0">
-                    <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu"
-                         Visibility="{Binding VisibilityOfAdd}"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                         Foreground="{StaticResource SecondaryAccentBrush}" 
-                         VerticalAlignment="Center"
-                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Grid>
-                <Grid Grid.Column="1" Margin="90,0,0,0">
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                <Grid Grid.Row="4">
+                    <TextBox materialDesign:HintAssist.Hint="Kỳ hạn"
+                         Visibility="{Binding VisibilityOfAdd}"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{StaticResource SecondaryAccentBrush}" 
+                         VerticalAlignment="Center"
+                         Text="{Binding KyHan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                </Grid>
+                <Grid Grid.Row="5">
+                    <TextBox materialDesign:HintAssist.Hint="Lãi suất"
+                         Visibility="{Binding VisibilityOfAdd}"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{StaticResource SecondaryAccentBrush}" 
+                         VerticalAlignment="Center"
+                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+
+                </Grid>
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Margin="0,0,-100,0">
+                        <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu"
+                         Visibility="{Binding VisibilityOfAdd}"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{StaticResource SecondaryAccentBrush}" 
+                         VerticalAlignment="Center"
+                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="90,0,0,0">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="ZZZ"
                             Command="{Binding GetThoiGianGuiToiThieuCommand}"
                             Visibility="{Binding VisibilityOfAdd}"/>
+                    </Grid>
+
                 </Grid>
-                
-            </Grid>
-            <Grid Grid.Row="7">
-                <ComboBox x:Name="cbbQuyDinh" materialDesign:HintAssist.Hint="Quy định số tiền được rút"
+                <Grid Grid.Row="7">
+                    <ComboBox x:Name="cbbQuyDinh" materialDesign:HintAssist.Hint="Quy định số tiền được rút"
                           Visibility="{Binding VisibilityOfAdd}"
                           ItemsSource="{Binding ListQuyDinh}"
-                          SelectedItem="{Binding SelectedQuyDinh}">
-                    
-                </ComboBox>
-            </Grid>
-            <Grid Grid.Row="8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                          SelectedItem="{Binding SelectedQuyDinh}"
+                          IsHitTestVisible="{Binding HitTestVisibleCbb}">
+
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Xác nhận"
                             Width="150" Height="35" Command="{Binding ConfirmCommand}"
                             Visibility="{Binding VisibilityOfConfirm}"/>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Hủy"
                             Width="150" Height="35" Command="{Binding CancelCommand}"
                             Visibility="{Binding VisibilityOfCancel}"/>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
 
-        
 
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35" ></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="35"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                    Content="{Binding NameOfList}" FontSize="18"
-                    VerticalAlignment="Top"/>
-            </Grid>
-            <Grid Grid.Row="1">
-                <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" Visibility="{Binding VisibilityOfListLTK}"
+
+            <Grid Grid.Column="2" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35" ></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <materialDesign:Card Height="35"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="5">
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding NameOfList}"></TextBlock>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListLTK}" >
+                        <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" 
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
-                          SelectionMode="Single">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Mã loại tiết kiệm" DisplayMemberBinding="{Binding MaLoaiTietKiem}" />
-                            <GridViewColumn Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
-                            <GridViewColumn Header="Kỳ hạn" DisplayMemberBinding="{Binding KyHan}"/>
-                            <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"/>
-                            <GridViewColumn Header="Thời gian gửi tối thiểu" DisplayMemberBinding="{Binding ThoiGianGuiToiThieu}"/>
-                            <GridViewColumn Header="Quy định số tiền được rút" DisplayMemberBinding="{Binding QuyDinhSoTienRut}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}" Visibility="{Binding VisibilityOfListThamSo}"
+                          SelectionMode="Single" Grid.ColumnSpan="2">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Mã loại tiết kiệm" DisplayMemberBinding="{Binding MaLoaiTietKiem}" />
+                                    <GridViewColumn Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
+                                    <GridViewColumn Header="Kỳ hạn" DisplayMemberBinding="{Binding KyHan}"/>
+                                    <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"/>
+                                    <GridViewColumn Header="Thời gian gửi tối thiểu" DisplayMemberBinding="{Binding ThoiGianGuiToiThieu}"/>
+                                    <GridViewColumn Header="Quy định số tiền được rút" DisplayMemberBinding="{Binding QuyDinhSoTienRut}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListThamSo}">
+                        <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}"
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=TwoWay}"
-                          SelectionMode="Single">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
-                            <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
-                            
-                        </GridView>
-                    </ListView.View>
-                    
-                </ListView>
-            </Grid>
-            <Grid Grid.Row="2" HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+                          SelectionMode="Single" Grid.ColumnSpan="2">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
+                                    <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
 
-                <Grid Grid.Column="0" HorizontalAlignment="Right">
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                                </GridView>
+                            </ListView.View>
+
+                        </ListView>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Row="2" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Thêm" HorizontalAlignment="Center"
                             Width="150" Height="35"
                             Command="{Binding AddLTKCommand}"/>
-                </Grid>
-                <Grid Grid.Column="1" HorizontalAlignment="Right">
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                    </Grid>
+                    <Grid Grid.Column="1" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Sửa" HorizontalAlignment="Center"
                             Width="150" Height="35"
                             Command="{Binding EditLTKCommand}"/>
-                </Grid>
-                <Grid Grid.Column="2" HorizontalAlignment="Right">
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                    </Grid>
+                    <Grid Grid.Column="2" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="Xóa" HorizontalAlignment="Center"
                             Width="150" Height="35"
                             Command="{Binding DeleteLTKCommand}"/>
+                    </Grid>
                 </Grid>
-            </Grid>
-            
-            <!--<TextBlock VerticalAlignment="Top"
+
+                <!--<TextBlock VerticalAlignment="Top"
                        Text="abc"
                        TextAlignment="Center"
                        FontSize="30"
                        TextWrapping="WrapWithOverflow"/>-->
+            </Grid>
         </Grid>
+
     </Grid>
 </Page>

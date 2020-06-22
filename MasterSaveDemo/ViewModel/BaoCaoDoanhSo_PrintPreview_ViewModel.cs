@@ -12,35 +12,14 @@ using System.Windows.Controls;
 
 namespace MasterSaveDemo.ViewModel
 {
-    public class BaoCaoMoDong_PrintPreview_ViewModel : BaseViewModel
+    public class BaoCaoDoanhSo_PrintPreview_ViewModel : BaseViewModel
     {
         //---------------
-
-
-
-        //---------------
-        private string _ThangBaoCao;
-
-        public string ThangBaoCao
+        private DateTime _NgayBaoCao;
+        public DateTime NgayBaoCao
         {
-            get { return _ThangBaoCao; }
-            set { _ThangBaoCao = value; OnPropertyChanged(); }
-        }
-        //---------------
-        private string _NamBaoCao;
-
-        public string NamBaoCao
-        {
-            get { return _NamBaoCao; }
-            set { _NamBaoCao = value; OnPropertyChanged(); }
-        }
-        //---------------
-        private string _NgayLapBaoCao;
-
-        public string NgayLapBaoCao
-        {
-            get { return _NgayLapBaoCao; }
-            set { _NgayLapBaoCao = value; OnPropertyChanged(); }
+            get { return _NgayBaoCao; }
+            set { _NgayBaoCao = value; OnPropertyChanged(); }
         }
         //---------------
         private string _MaBaoCao;
@@ -51,35 +30,26 @@ namespace MasterSaveDemo.ViewModel
             set { _MaBaoCao = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _LoaiTietKiem;
+        private ObservableCollection<BaoCaoDS> _ListBaoCaoDoanhSo;
 
-        public string LoaiTietKiem
+        public ObservableCollection<BaoCaoDS> ListBaoCaoDoanhSo
         {
-            get { return _LoaiTietKiem; }
-            set { _LoaiTietKiem = value; OnPropertyChanged(); }
-        }
-
-        //---------------
-        private List<ListBaoCaoDongMo> _ListBaoCaoDMPP;
-
-        public List<ListBaoCaoDongMo> ListBaoCaoDMPP
-        {
-            get { return _ListBaoCaoDMPP; }
-            set { _ListBaoCaoDMPP = value; OnPropertyChanged(); }
+            get { return _ListBaoCaoDoanhSo; }
+            set { _ListBaoCaoDoanhSo = value; OnPropertyChanged(); }
         }
         //--------------
 
         public ICommand CloseWindowCommand { get; set; }
         public ICommand Print_Command { get; set; }
 
-        public BaoCaoMoDong_PrintPreview_ViewModel(string MaBC, string Thang, string Nam, string LTK, List<ListBaoCaoDongMo> list)
+        public BaoCaoDoanhSo_PrintPreview_ViewModel(ObservableCollection<BaoCaoDS> listBaoCao, DateTime ngayBaoCao)
         {
-            ListBaoCaoDMPP = list;
-            NamBaoCao = Nam;
-            MaBaoCao = MaBC;
-            ThangBaoCao = Thang;
-            LoaiTietKiem = LTK;
-            NgayLapBaoCao = DateTime.Now.ToString("dd/MM/yyyy");
+            ListBaoCaoDoanhSo = listBaoCao;
+            //for (int i = 0; i < listBaoCao.Count(); i++)
+            //    ListBaoCaoDoanhSo[i].SoThuTu = i + 1;
+                
+            NgayBaoCao = ngayBaoCao;
+
             CloseWindowCommand = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) => {
                 var ex = p as Window;
                 ex.Close();

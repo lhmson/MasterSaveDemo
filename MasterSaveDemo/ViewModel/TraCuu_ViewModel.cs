@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using MasterSaveDemo.Model;
 using System.Data;
 
 namespace MasterSaveDemo.ViewModel
@@ -16,10 +15,32 @@ namespace MasterSaveDemo.ViewModel
     {
         #region The sub funtions by Sanh
 
+        private void reset_Control()
+        {
+            TenKH = "";
+            MaSTK = "";
+            SelectedLTK = null;
+            SelectedMucSoDu = null;
+        }
+
+        private void Search_Mode()
+        {
+            Content = "Tìm Kiếm";
+            Visibility_Search = Visibility.Visible;
+            Visibility_Edit = Visibility.Hidden;
+        }
+
+        private void Edit_Mode()
+        {
+            Content = "Xác nhận";
+            Visibility_Search = Visibility.Hidden;
+            Visibility_Edit = Visibility.Visible;
+        }
+
         private void XetQuyenNhapLai()
         {
             Enable_NhapLaiVaoVon = false;
-
+          
             if (LoginViewModel.TaiKhoanSuDung == null)
                 return;
 
@@ -46,6 +67,16 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Variables
+
+        private bool QuyenNhapLai;
+        private string _Content;
+        public string Content { get => _Content; set { _Content = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_Edit;
+        public Visibility Visibility_Edit { get => _Visibility_Edit; set { _Visibility_Edit = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_Search;
+        public Visibility Visibility_Search { get => _Visibility_Search; set { _Visibility_Search = value; OnPropertyChanged(); } }
 
         private bool _Enable_NhapLaiVaoVon;
         public bool Enable_NhapLaiVaoVon { get => _Enable_NhapLaiVaoVon; set { _Enable_NhapLaiVaoVon = value; OnPropertyChanged(); } }
@@ -76,13 +107,19 @@ namespace MasterSaveDemo.ViewModel
 
         private List<string> _MucSoDu;
         public List<string> MucSoDu { get => _MucSoDu; set { _MucSoDu = value; OnPropertyChanged(); } }
+
+        private STKDuocTraCuu _SelectedSTK;
+        public STKDuocTraCuu SelectedSTK { get => _SelectedSTK; set { _SelectedSTK = value; OnPropertyChanged(); } }
         #endregion
 
         public ICommand SeeAllCommand { get; set; }
         public ICommand SearchCommand { get; set; }
-
+        public ICommand EditCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
+ 
         public TraCuu_ViewModel()
         {
+            Search_Mode();
             XetQuyenNhapLai();
             NgayDaoHan = DateTime.Now;
             // Init Combobox LoaiTietKiem
@@ -125,6 +162,26 @@ namespace MasterSaveDemo.ViewModel
                 #endregion
             });
 
+            EditCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedSTK != null) return true;
+                return false;
+            }, (p) =>
+            {
+                Edit_Mode();
+                
+            });
+
+            CancelCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                reset_Control();
+                if (Visibility_Edit == Visibility.Visible)
+                    Search_Mode();
+
+            });
             //Button Search SO TIET KIEM
             SearchCommand = new RelayCommand<object>((p) =>
             {

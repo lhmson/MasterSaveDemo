@@ -42,63 +42,6 @@ namespace MasterSaveDemo
             InitializeComponent();
         }
 
-        private void Home_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = HomePage;
-        }
-
-        private void MoSo_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = MoSoPage;
-        }
-
-        private void GuiTien_Page_Selected(object sender, RoutedEventArgs e)
-        {
-
-            if (main.Content is MoSo_Page)
-            {
-                var context = (MoSo_ViewModel)MoSoPage.DataContext;
-                context.reset_changepage();
-            }
-
-            GuiTien_Page page = new GuiTien_Page();
-            main.Content = page;
-        }
-
-        private void RutTien_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = RutTienPage;
-        }
-
-        private void TraCuu_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = TraCuuPage;
-        }
-
-        private void BaoCaoDoanhSo_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = BaoCaoDoanhSoPage;
-        }
-
-        private void BaoCaoMoDong_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = BaoCaoMoDongPage;
-        }
-
-        private void ThayDoiQuyDinh_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = ThayDoiQuyDinhPage;
-        }
-
-        private void QuanLyNhanSu_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = QuanLyNhanSuPage;
-        }
-
-        private void CaiDatKhac_Page_Selected(object sender, RoutedEventArgs e)
-        {
-            main.Content = CaiDatKhacPage;
-        }
 
         private void Logout_Button_Selected(object sender, RoutedEventArgs e)
         {

@@ -198,6 +198,7 @@
     <Compile Include="ViewModel\GuiTien_ViewModel.cs" />
     <Compile Include="ViewModel\Home_PageViewModel.cs" />
     <Compile Include="ViewModel\PhieuGui_PrintPreview_ViewModel.cs" />
+    <Compile Include="ViewModel\CaiDatKhac_ViewModel.cs" />
     <Compile Include="ViewModel\QuanLyNhanSu_ViewModel.cs" />
     <Compile Include="ViewModel\RutTien_ViewModel.cs" />
     <Compile Include="ViewModel\ThayDoiQuyDinh_ViewModel.cs" />

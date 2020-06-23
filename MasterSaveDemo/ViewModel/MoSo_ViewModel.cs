@@ -9,11 +9,39 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MasterSaveDemo.ViewModel
 {
     public class MoSo_ViewModel : BaseViewModel
     {
+
+        #region Singleton
+        private static MoSo_ViewModel _ins;
+        public static MoSo_ViewModel Ins
+        {
+            get
+            {
+                if (_ins == null) _ins = new MoSo_ViewModel();
+                return _ins;
+            }
+            set
+            {
+                _ins = value;
+            }
+        }
+
+        public void reset_changepage()
+        {
+            MaSoTietKiem = "";
+            resetCombobox_LoaiTietKiem();
+            TenKhachHang = "";
+            CMND = "";
+            DiaChi = "";
+            NgayDaoHanKeTiep = "";
+            SoTienGuiBanDau = "";
+        }
+        #endregion
         #region The sub functions by Sanh
         private string FormatDateTime(string date)
         {
@@ -152,6 +180,7 @@ namespace MasterSaveDemo.ViewModel
         }
 
         #endregion
+
         private ObservableCollection<LOAITIETKIEM> _List;
         public ObservableCollection<LOAITIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
@@ -201,6 +230,9 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ResetLTKCommand { get; set; }
         public ICommand GetCodeSTKcommand { get; set; }
         public ICommand MoSoCommand { get; set; }
+
+        // Test change page
+        public ICommand LostFocusPageCommand { get; set; }
 
         public MoSo_ViewModel()
         {
@@ -273,6 +305,8 @@ namespace MasterSaveDemo.ViewModel
                 }
             });
 
+            LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
+            });
         }
     }
 }

@@ -70,6 +70,12 @@
                             Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding MSTK_TextChangedCommand}"
+                                                           CommandParameter="{Binding MaSoTietKiemTB}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <TextBox.InputBindings>
                                     <KeyBinding 
                                     Key="Enter" 

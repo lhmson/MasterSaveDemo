@@ -311,7 +311,7 @@ namespace MasterSaveDemo.ViewModel
         }
 
         #endregion
-        
+        public ICommand MSTK_TextChangedCommand { get; set; }
         public ICommand CheckoutCommand { get; set; }
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
@@ -325,6 +325,22 @@ namespace MasterSaveDemo.ViewModel
             MaSoTietKiem_check = "None";
             SoTienGuiToiThieu = (search_ThamSo("TienGuiThemToiThieu"));
             CreateReport = true;
+            MSTK_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
+            {
+                try
+                {
+                    TenKhachHang = "";
+                    SoDu = "";
+                    SoCMND = "";
+                    TenLoaiTietKiem = "";
+                    NgayDaoHanKeTiep = "";
+                    SoTienGui = "";
+                }
+                catch (Exception e)
+                {
+
+                }
+            });
             ShowINFO = new RelayCommand<object>((p) =>
             {
                 return true;
@@ -347,6 +363,11 @@ namespace MasterSaveDemo.ViewModel
                     SoTienGui = "";
                     BindingLichSu(stk.MaSoTietKiem);
                 }
+                else
+                {
+                    MaSoTietKiem_check = "Error";
+                    Notify_Ma = "Mã STK không đúng hoặc không tồn tại, kiểm tra xem đã đúng format hay chưa";
+                }
             });
             CheckCommand = new RelayCommand<object>((p) =>
             {
@@ -365,14 +386,14 @@ namespace MasterSaveDemo.ViewModel
             {
                 CheckValid();
 
-                if (CanCreate == true) ;
+                if (CanCreate == true)
                 {
                     string mapg = GetCodeMPG();
                     PHIEUGUI Phieugui = new PHIEUGUI()
                     {
                         MaPhieuGui = mapg,
                         MaSoTietKiem = MaSoTietKiem,
-                        NgayGui = DateTime.Parse(NgayGui),
+                        NgayGui = DateTime.Now,
                         SoTienGui = int.Parse(SoTienGui),
                     };
                     //edit PhieuGui
@@ -415,6 +436,11 @@ namespace MasterSaveDemo.ViewModel
                     SoDu = stk.SoDu.ToString();
                     SoTienGui = "";
                     BindingLichSu(stk.MaSoTietKiem);
+                }
+                else
+                {
+                    MaSoTietKiem_check = "Error";
+                    Notify_Ma = "Mã STK không đúng hoặc không tồn tại, kiểm tra xem đã đúng format hay chưa";
                 }
             });
         }

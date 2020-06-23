@@ -124,6 +124,7 @@ namespace MasterSaveDemo.ViewModel
             Enable_NhapLaiVaoVon = false;
             Visibility_Search = Visibility.Hidden;
             Visibility_Edit = Visibility.Visible;
+            TenKHSua = SelectedSTK.TenKH;
         }
 
         private void XetQuyenNhapLai()

@@ -60,9 +60,9 @@ namespace MasterSaveDemo.ViewModel
         }
 
         //---------------
-        private List<ListBaoCaoDongMo> _ListBaoCaoDMPP;
+        private ObservableCollection<ListBaoCaoDongMo> _ListBaoCaoDMPP;
 
-        public List<ListBaoCaoDongMo> ListBaoCaoDMPP
+        public ObservableCollection<ListBaoCaoDongMo> ListBaoCaoDMPP
         {
             get { return _ListBaoCaoDMPP; }
             set { _ListBaoCaoDMPP = value; OnPropertyChanged(); }
@@ -72,7 +72,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CloseWindowCommand { get; set; }
         public ICommand Print_Command { get; set; }
 
-        public BaoCaoMoDong_PrintPreview_ViewModel(string MaBC, string Thang, string Nam, string LTK, List<ListBaoCaoDongMo> list)
+        public BaoCaoMoDong_PrintPreview_ViewModel(string MaBC, string Thang, string Nam, string LTK, ObservableCollection<ListBaoCaoDongMo> list)
         {
             ListBaoCaoDMPP = list;
             NamBaoCao = Nam;

@@ -380,6 +380,7 @@
     <Resource Include="Images\new.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logout.png" />
     <Content Include="Model\QLSTKModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QLSTKModel.Context.cs</LastGenOutput>

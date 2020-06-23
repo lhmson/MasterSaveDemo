@@ -185,6 +185,14 @@ namespace MasterSaveDemo.ViewModel
         public ObservableCollection<LOAITIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
         #region Variables
+
+        private bool isMoSo = false;
+        private bool _Enable_KiemTraHopLe;
+        public bool Enable_KiemTraHopLe { get => _Enable_KiemTraHopLe; set { _Enable_KiemTraHopLe = value; OnPropertyChanged(); } }
+
+        private bool _Enable_ThucHienGiaoDich;
+        public bool Enable_ThucHienGiaoDich { get => _Enable_ThucHienGiaoDich; set { _Enable_ThucHienGiaoDich = value; OnPropertyChanged(); } }
+
         private string _NgayMoSo;
         public  string NgayMoSo { get => _NgayMoSo; set { _NgayMoSo = value; OnPropertyChanged(); } }
 
@@ -230,12 +238,18 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ResetLTKCommand { get; set; }
         public ICommand GetCodeSTKcommand { get; set; }
         public ICommand MoSoCommand { get; set; }
+        public ICommand TenKH_TextChangedCommand { get; set; }
+        public ICommand DiaChi_TextChangedCommand { get; set; }
+        public ICommand SoTienGui_TextChangedCommand { get; set; }
+        public ICommand LTK_SelectionChangedCommand { get; set; }
+        public ICommand CMND_TextChangedCommand { get; set; }
 
         // Test change page
         public ICommand LostFocusPageCommand { get; set; }
 
         public MoSo_ViewModel()
         {
+
             NgayDaoHanKeTiep = "";
             // Display List LOAITIETKIEM
             List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -272,7 +286,11 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 string error = CheckValid();
-                if (error == "") System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                if (error == "")
+                {
+                    System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                    isMoSo = true;
+                }
                 else
                     System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK); 
             });
@@ -280,7 +298,7 @@ namespace MasterSaveDemo.ViewModel
             //Button Mo So 
             MoSoCommand = new RelayCommand<object>((p) =>
             {
-                return true;
+                return isMoSo;
             }, (p) =>
             {
                 string error = CheckValid();
@@ -307,6 +325,48 @@ namespace MasterSaveDemo.ViewModel
 
             LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
             });
+
+            #region TextChanged Events
+            TenKH_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+
+            DiaChi_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+
+            SoTienGui_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+
+            LTK_SelectionChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+
+            CMND_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+            #endregion
         }
     }
 }

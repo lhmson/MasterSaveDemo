@@ -17,6 +17,8 @@ namespace MasterSaveDemo.ViewModel
     public class QuanLyNhanSu_ViewModel : BaseViewModel
     {
         #region Variables
+        private bool isEdit;
+
         private ObservableCollection<NhanVien> _ListNhanVien;
         public ObservableCollection<NhanVien> ListNhanVien
         {
@@ -142,8 +144,8 @@ namespace MasterSaveDemo.ViewModel
         }
 
         
-        private List<string> _CbxTenNhom;
-        public List<string> CbxTenNhom
+        private ObservableCollection<string> _CbxTenNhom;
+        public ObservableCollection<string> CbxTenNhom
         {
             get { return _CbxTenNhom; }
             set { _CbxTenNhom = value; OnPropertyChanged(); }
@@ -167,6 +169,18 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Function
+
+        private bool Check_TenNhomQuyen(string name)
+        {
+            ObservableCollection<NHOMNGUOIDUNG> nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
+
+            foreach (var item in nhom)
+                if (item.TenNhom == name)
+                    return true;
+
+            return false;
+        }
+
         private int CreateCodeNhomNguoiDung()
         {
             ObservableCollection<NHOMNGUOIDUNG> listNhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
@@ -193,7 +207,7 @@ namespace MasterSaveDemo.ViewModel
             // choosing list NguoiDung
             SelectedIndexCbb = 0;
 
-            CbxTenNhom = new List<string>();
+            CbxTenNhom = new ObservableCollection<string>();
             foreach (var Nhom in ListNhomNguoiDung)
                 CbxTenNhom.Add(Nhom.TenNhom);
         }
@@ -338,6 +352,7 @@ namespace MasterSaveDemo.ViewModel
 
         public QuanLyNhanSu_ViewModel()
         {
+            isEdit = true;
             LoadData();
             LoadDataPhanQuyen();
             VisibilityOfListPhanQuyen = Visibility.Hidden;
@@ -385,7 +400,7 @@ namespace MasterSaveDemo.ViewModel
 
             // show elements used for editing
             EditNguoiDungCommand = new RelayCommand<object>((p) => 
-            { return (SelectedPhanQuyen != null || SelectedItemNguoiDung != null); },
+            { return ((SelectedPhanQuyen != null || SelectedItemNguoiDung != null) && isEdit); },
                 (p) => {
                    
                     if (VisibilityOfListNguoiDung==Visibility.Visible && SelectedItemNguoiDung != null) // Edit Nhóm người dùng
@@ -411,12 +426,12 @@ namespace MasterSaveDemo.ViewModel
                                 SelectedPhanQuyen = PQ;
                                 break;
                             }
-                        
+                        isEdit = false;
                     }
                 }
             );
 
-            DeleteNguoiDungKCommand = new RelayCommand<object>((p) => { return (SelectedItemNguoiDung != null || SelectedPhanQuyen!= null); },
+            DeleteNguoiDungKCommand = new RelayCommand<object>((p) => { return ((SelectedItemNguoiDung != null || SelectedPhanQuyen!= null) && isEdit); },
                 (p) => {
                     if (VisibilityOfListNguoiDung == Visibility.Visible)
                     { 
@@ -536,6 +551,10 @@ namespace MasterSaveDemo.ViewModel
                         {
                             System.Windows.Forms.MessageBox.Show("Mời nhập lại tên nhóm quyền!");
                         }
+                        if (Check_TenNhomQuyen(txtTenNhomQuyen))
+                        {
+                            System.Windows.Forms.MessageBox.Show("Nhóm "+txtTenNhomQuyen+ " đã tồn tại! Vui lòng nhập lại tên nhóm khác!");
+                        }
                         else
                         {
                             BangPhanQuyen bpq = new BangPhanQuyen(txtTenNhomQuyen, false);
@@ -576,7 +595,7 @@ namespace MasterSaveDemo.ViewModel
                                 SelectedPhanQuyen = PQ;
                                 break;
                             }
-
+                        isEdit = true;
                     }
                    
                 }

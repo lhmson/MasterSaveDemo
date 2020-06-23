@@ -18,8 +18,22 @@ namespace MasterSaveDemo.ViewModel
     public class MainViewModel : BaseViewModel
     {
         #region Variable
+
         static public DispatcherTimer _timer;
 
+        private bool _Selected_HOME;
+        public bool Selected_HOME
+        {
+            get => _Selected_HOME;
+            set { _Selected_HOME = value; OnPropertyChanged(); }
+        }
+
+        private bool _Selected_DangXuat;
+        public bool Selected_DangXuat
+        {
+            get => _Selected_DangXuat;
+            set { _Selected_DangXuat = value; OnPropertyChanged(); }
+        }
         private bool _Enable_Home;
         public bool Enable_Home
         {
@@ -88,7 +102,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand BaoCaoMoDong_Page_SelectedCommand { get; set; }
         public ICommand ThayDoiQuyDinh_Page_SelectedCommand { get; set; }
         public ICommand QuanLyNhanSu_Page_SelectedCommand { get; set; }
-        public ICommand CaiDatKhac_Page_SelectedCommand { get; set; }
+        public ICommand DangXuat_SelectedCommand { get; set; }
         #endregion
 
         private bool _Enable_TDQD;
@@ -172,6 +186,8 @@ namespace MasterSaveDemo.ViewModel
         #endregion
         public MainViewModel() // all main page handling goes there
         {
+            Selected_HOME = true;
+            Selected_DangXuat = false;
             LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
 
                 //if (p == null) return;
@@ -199,6 +215,7 @@ namespace MasterSaveDemo.ViewModel
                     if (LoginViewModel.TaiKhoanSuDung != null)
                     {
                         Init_Button_User(LoginViewModel.TaiKhoanSuDung);
+                        
                         _timer.Stop();
                     }
                 };
@@ -211,45 +228,74 @@ namespace MasterSaveDemo.ViewModel
             Home_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
                 FrameContent = new Home_Page();
                 FrameContent.DataContext = new Home_PageViewModel();
+                Selected_DangXuat = false;
             });
 
             MoSo_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new MoSo_Page();
                 FrameContent.DataContext = new MoSo_ViewModel();
             });
 
             GuiTien_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new GuiTien_Page();
                 FrameContent.DataContext = new GuiTien_ViewModel();
             });
 
             RutTien_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new RutTien_Page();
                 FrameContent.DataContext = new RutTien_ViewModel();
             });
             TraCuu_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new TraCuu_Page();
                 FrameContent.DataContext = new TraCuu_ViewModel();
             });
             BaoCaoDoanhSo_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new BaoCaoDoanhSo_Page();
                 FrameContent.DataContext = new BaoCaoDoanhSo_ViewModel();
             });
             BaoCaoMoDong_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new BaoCaoMoDong_Page();
                 FrameContent.DataContext = new BaoCaoMoDong_ViewModel();
             });
             ThayDoiQuyDinh_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new ThayDoiQuyDinh_Page();
                 FrameContent.DataContext = new ThayDoiQuyDinh_ViewModel();
             });
             QuanLyNhanSu_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+                Selected_HOME = false;
+                Selected_DangXuat = false;
                 FrameContent = new QuanLyNhanSu_Page();
                 FrameContent.DataContext = new QuanLyNhanSu_ViewModel();
             });
-            CaiDatKhac_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                FrameContent = new CaiDatKhac_Page();
-                //FrameContent.DataContext = new ThayDoiQuyDinh_ViewModel();
+            DangXuat_SelectedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+                System.Windows.Forms.DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn có chắc đăng xuất tài khoản này không?", "Đăng xuất", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+                if (kq == System.Windows.Forms.DialogResult.Yes)
+                {
+                    Selected_HOME = true;
+                    FrameContent = new Home_Page();
+                    FrameContent.DataContext = new Home_PageViewModel();
+
+                    p.Hide();
+                    LoginWindow loginWindow = new LoginWindow();
+                    LoginViewModel.TaiKhoanSuDung = null;
+                    loginWindow.ShowDialog();
+                    MainViewModel.Start_Timer();
+                    p.Show();
+                }
             });
         }
 

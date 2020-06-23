@@ -58,13 +58,25 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày rút"
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_NgayRut,Mode=TwoWay}" >
+                                <materialDesign:PopupBox.ToggleContent>
+                                    <materialDesign:PackIcon Kind="{Binding NgayRut_Check,Mode=TwoWay}" />
+                                </materialDesign:PopupBox.ToggleContent>
+                            </materialDesign:PopupBox>
+                            <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày rút"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding NgayRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="True"/>
+                        </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_MaSo,Mode=TwoWay}" >
+                                <materialDesign:PopupBox.ToggleContent>
+                                    <materialDesign:PackIcon Kind="{Binding SoTietKiem_Check,Mode=TwoWay}" />
+                                </materialDesign:PopupBox.ToggleContent>
+                            </materialDesign:PopupBox>
                             <TextBox x:Name="MaSoTietKiemTB"
                              Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
@@ -113,22 +125,29 @@
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="4">
-                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_TienRut,Mode=TwoWay}" >
+                                <materialDesign:PopupBox.ToggleContent>
+                                    <materialDesign:PackIcon Kind="{Binding SoTienRut_Check,Mode=TwoWay}" />
+                                </materialDesign:PopupBox.ToggleContent>
+                            </materialDesign:PopupBox>
+                            <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5">
-                            <TextBox.InputBindings>
-                                <KeyBinding 
+                                <TextBox.InputBindings>
+                                    <KeyBinding 
                                     Key="Enter" 
                                     Command="{Binding SoTienRutEnterKeyDown_Command}" 
                                     CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
-                            </TextBox.InputBindings>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction Command="{Binding STR_TextChangedCommand}"
+                                </TextBox.InputBindings>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding STR_TextChangedCommand}"
                                                            CommandParameter="{Binding MaSoTietKiemTB}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </StackPanel>
                     </Grid>
                     <Grid Grid.Row="5">
                         <Button Command="{Binding KiemTraCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" Content="Kiểm tra họp lệ" Margin="14,9,16,15" />
@@ -169,6 +188,11 @@
                     </Grid>
                     <Grid Grid.Row="3">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_DaoHan,Mode=TwoWay}" >
+                                <materialDesign:PopupBox.ToggleContent>
+                                    <materialDesign:PackIcon Kind="{Binding DaoHan_Check,Mode=TwoWay}" />
+                                </materialDesign:PopupBox.ToggleContent>
+                            </materialDesign:PopupBox>
                             <TextBox FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                         Text="{Binding NgayDaoHan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

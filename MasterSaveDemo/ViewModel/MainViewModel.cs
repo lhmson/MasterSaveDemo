@@ -285,10 +285,11 @@ namespace MasterSaveDemo.ViewModel
                 System.Windows.Forms.DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn có chắc đăng xuất tài khoản này không?", "Đăng xuất", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
                 if (kq == System.Windows.Forms.DialogResult.Yes)
                 {
+                    // xay ra bug khi nhan nut Home lan dau tien sau khi nhan No thi bi loi 2 nut selected do
                     Selected_HOME = true;
                     FrameContent = new Home_Page();
                     FrameContent.DataContext = new Home_PageViewModel();
-
+                    
                     p.Hide();
                     LoginWindow loginWindow = new LoginWindow();
                     LoginViewModel.TaiKhoanSuDung = null;

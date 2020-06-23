@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Data;
+using System.Windows.Documents;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -15,6 +16,92 @@ namespace MasterSaveDemo.ViewModel
     {
         #region The sub funtions by Sanh
 
+        private void Confirm_STK()
+        {
+            if (TenKHSua == null || TenKHSua == "" || SelectedSTK == null)
+            {
+                MessageBox.Show("Tên khách hàng chưa được nhập");
+                return;
+            }
+
+            SOTIETKIEM STK = new SOTIETKIEM();
+
+            ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+
+            foreach (var item in list_STK)
+                if (item.MaSoTietKiem == SelectedSTK.Ma)
+                    STK = item;
+
+            DataProvider.Ins.DB.SOTIETKIEMs.Remove(STK);
+
+            STK.TenKhachHang = TenKHSua;
+            DataProvider.Ins.DB.SOTIETKIEMs.Add(STK);
+            MessageBox.Show("Chỉnh sửa sổ tiết kiệm thành công");
+
+            STKDuocTraCuu STK_New = SelectedSTK;
+            STK_New.TenKH = TenKHSua;
+            for (int i = 0; i < ListSoTietKiem.Count(); i++)
+                if (ListSoTietKiem[i].Ma == SelectedSTK.Ma)
+                {
+                    ListSoTietKiem.RemoveAt(i);
+                    ListSoTietKiem.Insert(i, STK_New);
+                    break;
+                }
+        }
+
+        private void Search_STK()
+        {
+            ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+            ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+
+            if (MaSTK == null) MaSTK = "";
+            if (TenKH == null) TenKH = "";
+
+            decimal min = 0;
+            decimal max = -1;
+
+            if (SelectedMucSoDu == "0 VNĐ") max = 0;
+            else if (SelectedMucSoDu == "Dưới 5.000.000 VNĐ") max = 5000000;
+            else if (SelectedMucSoDu == "5.000.000 - 100.000.000 VNĐ")
+            {
+                min = 5000000;
+                max = 100000000;
+            }
+            else if (SelectedMucSoDu == "Từ 100.000.000 - 1.000.000.000 VNĐ")
+            {
+                min = 100000000;
+                max = 1000000000;
+            }
+            else
+            {
+                min = 1000000000;
+                max = -1;
+            }
+
+            if (SelectedMucSoDu == "Tất cả" || SelectedMucSoDu == null)
+            {
+                min = 0;
+                max = -1;
+            }
+
+            var results = from stk in STK_TABLE
+                          join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
+                          where (stk.MaSoTietKiem == MaSTK || MaSTK == "") && (stk.TenKhachHang.Contains(TenKH))
+                                && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
+                                && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK == "Tất cả")
+                                && (stk.SoDu >= min && (stk.SoDu <= max || max == -1))
+                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+
+            ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
+            #region fill id 
+            int count = 1;
+            for (int i = 0; i < ListSoTietKiem.Count(); i++)
+            {
+                ListSoTietKiem[i].STT = count.ToString();
+                count++;
+            }
+            #endregion
+        }
         private void reset_Control()
         {
             TenKH = "";
@@ -26,6 +113,7 @@ namespace MasterSaveDemo.ViewModel
         private void Search_Mode()
         {
             Content = "Tìm Kiếm";
+            Enable_NhapLaiVaoVon = QuyenNhapLai;
             Visibility_Search = Visibility.Visible;
             Visibility_Edit = Visibility.Hidden;
         }
@@ -33,6 +121,7 @@ namespace MasterSaveDemo.ViewModel
         private void Edit_Mode()
         {
             Content = "Xác nhận";
+            Enable_NhapLaiVaoVon = false;
             Visibility_Search = Visibility.Hidden;
             Visibility_Edit = Visibility.Visible;
         }
@@ -40,7 +129,9 @@ namespace MasterSaveDemo.ViewModel
         private void XetQuyenNhapLai()
         {
             Enable_NhapLaiVaoVon = false;
-          
+
+            QuyenNhapLai = false;
+
             if (LoginViewModel.TaiKhoanSuDung == null)
                 return;
 
@@ -51,16 +142,19 @@ namespace MasterSaveDemo.ViewModel
 
             foreach (var item in nhom)
                 if (item.MaNhom == ma && item.MaChucNang == 9)
+                {
                     Enable_NhapLaiVaoVon = true;
+                    QuyenNhapLai = true;
+                }
         }
 
         private string Delete_ThapPhan(string number)
         {
             string res = "";
             for (int i = 0; i < number.Length; i++)
-                if (number[i] == '.') break; 
-            else
-                res += number[i];
+                if (number[i] == '.') break;
+                else
+                    res += number[i];
             return res;
         }
 
@@ -90,6 +184,9 @@ namespace MasterSaveDemo.ViewModel
         private string _MaSTK;
         public string MaSTK { get => _MaSTK; set { _MaSTK = value; OnPropertyChanged(); } }
 
+        private string _TenKHSua;
+        public string TenKHSua { get => _TenKHSua; set { _TenKHSua = value; OnPropertyChanged(); } }
+
         private string _SelectedLTK;
         public string SelectedLTK { get => _SelectedLTK; set { _SelectedLTK = value; OnPropertyChanged(); } }
 
@@ -116,7 +213,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand SearchCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand CancelCommand { get; set; }
- 
+
         public TraCuu_ViewModel()
         {
             Search_Mode();
@@ -149,7 +246,7 @@ namespace MasterSaveDemo.ViewModel
 
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
-                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, 
+                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
                               Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
@@ -169,7 +266,7 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 Edit_Mode();
-                
+
             });
 
             CancelCommand = new RelayCommand<object>((p) =>
@@ -188,56 +285,12 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
-                ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-
-                if (MaSTK == null) MaSTK = "";
-                if (TenKH == null) TenKH = "";
-
-                decimal min = 0;
-                decimal max = -1;
-
-                if (SelectedMucSoDu == "0 VNĐ") max = 0;
-                else if (SelectedMucSoDu == "Dưới 5.000.000 VNĐ") max = 5000000;
-                else if (SelectedMucSoDu == "5.000.000 - 100.000.000 VNĐ")
-                {
-                    min = 5000000;
-                    max = 100000000;
-                }
-                else if (SelectedMucSoDu == "Từ 100.000.000 - 1.000.000.000 VNĐ")
-                {
-                    min = 100000000;
-                    max = 1000000000;
-                }
+                if (Content == "Tìm Kiếm") Search_STK();
                 else
                 {
-                    min = 1000000000;
-                    max = -1;
+                    Confirm_STK();
+                    Search_Mode();
                 }
-
-                if (SelectedMucSoDu == "Tất cả" || SelectedMucSoDu == null)
-                {
-                    min = 0;
-                    max = -1;
-                }
-
-                var results = from stk in STK_TABLE
-                              join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
-                              where (stk.MaSoTietKiem == MaSTK || MaSTK == "") && (stk.TenKhachHang.Contains(TenKH))
-                                    && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
-                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK=="Tất cả")
-                                    && (stk.SoDu >= min && (stk.SoDu <= max || max ==-1))                            
-                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
-
-                ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
-                #region fill id 
-                int count = 1;
-                for (int i=0; i<ListSoTietKiem.Count(); i++)
-                {
-                    ListSoTietKiem[i].STT = count.ToString();
-                    count++;
-                }
-                #endregion
             });
         }
     }

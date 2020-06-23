@@ -539,11 +539,7 @@ namespace MasterSaveDemo.ViewModel
                                ChenhLech = Math.Abs(SLSoMo - SLSoDong).ToString()
                            ));
 
-                            //lam on sua dum Database
-                            if (SLSoDong == 0)
-                                SLSoDong = 1;
-                            if (SLSoMo == 0)
-                                SLSoMo = 1;
+                           
 
                             //Add Database
                             if (CanAdd == true)

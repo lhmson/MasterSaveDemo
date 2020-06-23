@@ -134,11 +134,87 @@ namespace MasterSaveDemo.ViewModel
 			set { _TienRut = value; OnPropertyChanged(); }
 		}
 
+		//in phieu
+		private bool _CreatePR;
+		public bool CreatePR
+		{
+			get { return _CreatePR; }
+			set { _CreatePR = value; OnPropertyChanged(); }
+		}
+
+		//Cac nut dung cho thong bao
+		private string _ThongBao_MaSo;
+		public string ThongBao_MaSo
+		{
+			get { return _ThongBao_MaSo; }
+			set { _ThongBao_MaSo = value; OnPropertyChanged(); }
+		}
+
+		private string _SoTietKiem_Check;
+		public string SoTietKiem_Check
+		{
+			get { return _SoTietKiem_Check; }
+			set { _SoTietKiem_Check = value; OnPropertyChanged(); }
+		}
+
+		private string _ThongBao_TienRut;
+		public string ThongBao_TienRut
+		{
+			get { return _ThongBao_TienRut; }
+			set { _ThongBao_TienRut = value; OnPropertyChanged(); }
+		}
+
+		private string _SoTienRut_Check;
+		public string SoTienRut_Check
+		{
+			get { return _SoTienRut_Check; }
+			set { _SoTienRut_Check = value; OnPropertyChanged(); }
+		}
+
+		private string _ThongBao_DaoHan;
+		public string ThongBao_DaoHan
+		{
+			get { return _ThongBao_DaoHan; }
+			set { _ThongBao_DaoHan = value; OnPropertyChanged(); }
+		}
+
+		private string _DaoHan_Check;
+
+		public string DaoHan_Check
+		{
+			get { return _DaoHan_Check; }
+			set { _DaoHan_Check = value; OnPropertyChanged(); }
+		}
+
+		private string _ThongBao_NgayRut;
+		public string ThongBao_NgayRut
+		{
+			get { return _ThongBao_NgayRut; }
+			set { _ThongBao_NgayRut = value; OnPropertyChanged(); }
+		}
+
+		private string _NgayRut_Check;
+		public string NgayRut_Check
+		{
+			get { return _NgayRut_Check; }
+			set { _NgayRut_Check = value; OnPropertyChanged(); }
+		}
+		//DialogHost
+		private bool _DialogOpen;
+
+		public bool DialogOpen
+		{
+			get { return _DialogOpen; }
+			set { _DialogOpen = value; OnPropertyChanged(); }
+		}
+
 		#endregion
 		#region Khoi tao
 		//Khoi tao viewmodel
 		public RutTien_ViewModel()
 		{
+			Reset_Check();
+			CreatePR = true;
 			Result_KiemTraNhapLai = true;
 			//Dat ngay rut theo ngay hom nay
 			NgayRut = DateTime.Today.ToString("dd/MM/yyyy");
@@ -183,6 +259,7 @@ namespace MasterSaveDemo.ViewModel
 					ThongBao = "";
 					Result_KiemTraHopLe = false;
 					Result_KiemTraNhapLai = true;
+					ListLichSuGD = new List<ListLichSuPhieuRut>();
 				}
 				catch (Exception e)
 				{
@@ -201,7 +278,10 @@ namespace MasterSaveDemo.ViewModel
 				else
 				{
 					if (Result_KiemTraHopLe == true)
+					{
+						DialogOpen = true;
 						ThongBao = "Thông tin phiếu rút hợp lệ";
+					}
 				}
 			});
 			SoTienRutEnterKeyDown_Command = new RelayCommand<Object>((p) => { return true; }, (p) =>
@@ -215,7 +295,10 @@ namespace MasterSaveDemo.ViewModel
 				else
 				{
 					if (Result_KiemTraHopLe == true)
+					{
+						DialogOpen = true;
 						ThongBao = "Thông tin phiếu rút hợp lệ";
+					}
 				}
 			});
 			//Lenh thuc hien giao dich
@@ -228,6 +311,7 @@ namespace MasterSaveDemo.ViewModel
 				else
 				{
 					Result_KiemTraHopLe = false;
+					DialogOpen = true;
 					ThongBao += "Đã tạo phiếu rút thành công.";
 				}
 			});
@@ -258,13 +342,20 @@ namespace MasterSaveDemo.ViewModel
 				if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))
 				{
 					ThongBao = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
+					DaoHan_Check = "Error";
+					ThongBao_DaoHan = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
 				}
 				else
 				{
 					Result_KiemTraHopLe = false;
+					//DaoHan_Check = "Check";
+					//ThongBao_DaoHan = "Đã cập nhật lãi vào số dư";
+					DialogOpen = true;
 					ThongBao = "Đã cập nhật lãi vào số dư";
 					if (!CapNhatThongTin())
 					{
+						SoTietKiem_Check = "Error";
+						ThongBao_MaSo = "Lấy thông tin thất bại";
 						ThongBao = "Lấy thông tin thất bại";
 					}
 					else
@@ -284,6 +375,17 @@ namespace MasterSaveDemo.ViewModel
 
 				}
 			});
+		}
+		public void Reset_Check()
+		{
+			SoTietKiem_Check = "None";
+			SoTienRut_Check = "None";
+			DaoHan_Check = "None";
+			NgayRut_Check = "None";
+			ThongBao_DaoHan = "";
+			ThongBao_MaSo = "";
+			ThongBao_TienRut = "";
+			ThongBao_NgayRut = "";
 		}
 		public bool BindingLichSu(string mastk)
 		{
@@ -311,6 +413,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
+				Reset_Check();
 				SOTIETKIEM temp = Tim_MSTK(MaSoTietKiem);
 				if (temp != null)
 				{
@@ -318,25 +421,36 @@ namespace MasterSaveDemo.ViewModel
 					{
 						TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
 						TenKhachHang = temp.TenKhachHang;
-						if (temp.SoDu == 0)
+						if (temp.SoDu < 1000)
 						{
-							SoDu = "0";
+							SoDu = temp.SoDu.ToString();
 						}
 						else
 						{
 							SoDu = temp.SoDu.ToString("0,000");
 						}
 						CMND = temp.SoCMND;
-						NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+						if (Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).KyHan == 0)
+						{
+							NgayDaoHan = "Không xác định";
+						}
+						else
+						{
+							NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+						}
 						BindingLichSu(temp.MaSoTietKiem);
 						KiemTraNhapLai();
-						ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
+						//SoTietKiem_Check = "Check";
+						//ThongBao_MaSo = "Đã cập nhật thông tin sổ tiết kiệm.";
+						//ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
 					}
 					else
 					{
 						BindingLichSu(temp.MaSoTietKiem);
 						KiemTraNhapLai();
 						//Thong bao da dong so o day
+						SoTietKiem_Check = "Error";
+						ThongBao_MaSo = "Sổ tiết kiệm này đã đóng!";
 						ThongBao = "Sổ tiết kiệm này đã đóng!";
 					}
 				}
@@ -344,10 +458,14 @@ namespace MasterSaveDemo.ViewModel
 				{
 					if (MaSoTietKiem != null)
 					{
+						SoTietKiem_Check = "Error";
+						ThongBao_MaSo = "Không tìm thấy sổ tiết kiệm phù hợp!";
 						ThongBao = "Không tìm thấy sổ tiết kiệm phù hợp!";
 					}
 					else
 					{
+						SoTietKiem_Check = "Error";
+						ThongBao_MaSo = "Hãy nhập mã sổ tiết kiệm trước khi bấm kiểm tra!";
 						ThongBao = "Hãy nhập mã sổ tiết kiệm trước khi bấm kiểm tra!";
 					}
 				}
@@ -360,48 +478,68 @@ namespace MasterSaveDemo.ViewModel
 		}
 		private bool KiemTraHopLe()
 		{
+			Reset_Check();
 			ThongBao = "";
 			Result_KiemTraHopLe = true;
 			try
 			{
-				if (int.Parse(SoTienRut) == 0)
+				if (int.Parse(SoTienRut) < 1000)
 				{
-					SoTienRut = "0";
+
 				}
 				else
 				{
 					SoTienRut = int.Parse(SoTienRut).ToString("0,000");
+					Result_KiemTraHopLe = true;
 				}
 			}
 			catch (Exception e)
 			{
 
 			}
+
 			try
 			{
 				SOTIETKIEM info_stk = Tim_MSTK(MaSoTietKiem);
 				LOAITIETKIEM info_loaitietkiem = Tim_MaLoaiTietKiem(info_stk.MaLoaiTietKiem);
 				if(info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today )
 				{
+					NgayRut_Check = "Error";
+					ThongBao_NgayRut = "Chưa đủ số ngày gửi tối thiểu.";
 					ThongBao += "Chưa đủ số ngày gửi tối thiểu.\n";
 					Result_KiemTraHopLe = false;
 				}
 				else
 				{
-					if(!KiemTraNhapLai())
+					//NgayRut_Check = "Check";
+					//ThongBao_NgayRut = "Đã đủ số ngày gửi tối thiểu";
+					if (!KiemTraNhapLai())
 					{
+						DaoHan_Check = "Error";
+						ThongBao_DaoHan = "Lỗi, không xác định được thông tin đáo hạn.";
 						ThongBao += "Lỗi, không xác định được thông tin đáo hạn.\n";
+						Result_KiemTraHopLe = false;
 					}
 					else
 					{
 						if(Result_KiemTraNhapLai == false)
 						{
+							DaoHan_Check = "Error";
+							ThongBao_DaoHan = "Cần nhập lãi trước khi rút.";
 							ThongBao += "Cần nhập lãi trước khi rút.\n";
+							Result_KiemTraHopLe = false;
+						}
+						else
+						{
+							//DaoHan_Check = "Check";
+							//ThongBao_DaoHan = "Đã nhập lãi vào sổ này rồi";
 						}
 					}
 				}
 				if (SoTienRut == null)
 				{
+					SoTienRut_Check = "Error";
+					ThongBao_TienRut = "Vui lòng nhập số tiền rút.";
 					ThongBao += "Vui lòng nhập số tiền rút.\n";
 					Result_KiemTraHopLe = false;
 				}
@@ -409,13 +547,25 @@ namespace MasterSaveDemo.ViewModel
 				{
 					if (info_loaitietkiem.QuyDinhSoTienRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
 					{
+						SoTienRut_Check = "Error";
+						ThongBao_TienRut += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
 						ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
 						Result_KiemTraHopLe = false;
 					}
-					if (decimal.Parse(SoTienRut) > decimal.Parse(SoDu))
+					else
 					{
-						ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
-						Result_KiemTraHopLe = false;
+						if (decimal.Parse(SoTienRut) > decimal.Parse(SoDu))
+						{
+							SoTienRut_Check = "Error";
+							ThongBao_TienRut += "Không thể rút nhiều hơn số dư tài khoản.\n";
+							ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
+							Result_KiemTraHopLe = false;
+						}
+						else
+						{
+							//SoTienRut_Check = "Check";
+							//ThongBao_TienRut = "Có thể rút số tiền này.";
+						}
 					}
 				}
 				return true; 
@@ -468,6 +618,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
+				ThongBao = "";
 				PHIEURUT info_PhieuRut = new PHIEURUT();
 				if (DataProvider.Ins.DB.PHIEURUTs.Count() == 0)
 				{
@@ -495,6 +646,13 @@ namespace MasterSaveDemo.ViewModel
 				}
 				DataProvider.Ins.DB.SaveChanges();
 
+				if (CreatePR == true)
+				{
+					PhieuRut_PrintPreview_ViewModel PhieuRutVM = new PhieuRut_PrintPreview_ViewModel(info_PhieuRut.MaPhieuRut, TenKhachHang, info_PhieuRut.NgayRut.ToString("dd/MM/yyyy"), info_PhieuRut.SoTienRut.ToString());
+					PhieuRut_PrintPreview PhieuRut = new PhieuRut_PrintPreview(PhieuRutVM);
+					PhieuRut.ShowDialog();
+				}
+
 				if (stk.SoDu == 0)
 				{
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
@@ -509,6 +667,7 @@ namespace MasterSaveDemo.ViewModel
 					Result_KiemTraHopLe = false;	
 				}
 				SoTienRut = "";
+
 				return true;
 			}
 			catch(Exception e)

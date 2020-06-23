@@ -16,11 +16,19 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
       
+              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      
       DataContext="{StaticResource MoSoVM}"
       
       Name="MoSo"
       Title="Open Passbook">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding LostFocusPageCommand}" CommandParameter="{Binding ElementName=MoSo}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>

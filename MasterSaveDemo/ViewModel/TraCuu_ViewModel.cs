@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using MasterSaveDemo.Model;
+using MasterSaveDemo.Helper;
 using System.Data;
 
 namespace MasterSaveDemo.ViewModel
@@ -15,6 +15,46 @@ namespace MasterSaveDemo.ViewModel
     public class TraCuu_ViewModel : BaseViewModel
     {
         #region The sub funtions by Sanh
+
+        private void reset_Control()
+        {
+            TenKH = "";
+            MaSTK = "";
+            SelectedLTK = null;
+            SelectedMucSoDu = null;
+        }
+
+        private void Search_Mode()
+        {
+            Content = "Tìm Kiếm";
+            Visibility_Search = Visibility.Visible;
+            Visibility_Edit = Visibility.Hidden;
+        }
+
+        private void Edit_Mode()
+        {
+            Content = "Xác nhận";
+            Visibility_Search = Visibility.Hidden;
+            Visibility_Edit = Visibility.Visible;
+        }
+
+        private void XetQuyenNhapLai()
+        {
+            Enable_NhapLaiVaoVon = false;
+          
+            if (LoginViewModel.TaiKhoanSuDung == null)
+                return;
+
+            // Tìm mã nhóm quyền của user
+            int ma = LoginViewModel.TaiKhoanSuDung.MaNhom;
+
+            ObservableCollection<PHANQUYEN> nhom = new ObservableCollection<PHANQUYEN>(DataProvider.Ins.DB.PHANQUYENs);
+
+            foreach (var item in nhom)
+                if (item.MaNhom == ma && item.MaChucNang == 9)
+                    Enable_NhapLaiVaoVon = true;
+        }
+
         private string Delete_ThapPhan(string number)
         {
             string res = "";
@@ -28,6 +68,19 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Variables
+
+        private bool QuyenNhapLai;
+        private string _Content;
+        public string Content { get => _Content; set { _Content = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_Edit;
+        public Visibility Visibility_Edit { get => _Visibility_Edit; set { _Visibility_Edit = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_Search;
+        public Visibility Visibility_Search { get => _Visibility_Search; set { _Visibility_Search = value; OnPropertyChanged(); } }
+
+        private bool _Enable_NhapLaiVaoVon;
+        public bool Enable_NhapLaiVaoVon { get => _Enable_NhapLaiVaoVon; set { _Enable_NhapLaiVaoVon = value; OnPropertyChanged(); } }
 
         private List<string> _LoaiTietKiem;
         public List<string> LoaiTietKiem { get => _LoaiTietKiem; set { _LoaiTietKiem = value; OnPropertyChanged(); } }
@@ -55,13 +108,20 @@ namespace MasterSaveDemo.ViewModel
 
         private List<string> _MucSoDu;
         public List<string> MucSoDu { get => _MucSoDu; set { _MucSoDu = value; OnPropertyChanged(); } }
+
+        private STKDuocTraCuu _SelectedSTK;
+        public STKDuocTraCuu SelectedSTK { get => _SelectedSTK; set { _SelectedSTK = value; OnPropertyChanged(); } }
         #endregion
 
         public ICommand SeeAllCommand { get; set; }
         public ICommand SearchCommand { get; set; }
-
+        public ICommand NhapLaiVaoVon_All { get; set; }
+        public ICommand EditCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
         public TraCuu_ViewModel()
         {
+            Search_Mode();
+            XetQuyenNhapLai();
             NgayDaoHan = DateTime.Now;
             // Init Combobox LoaiTietKiem
             ObservableCollection<LOAITIETKIEM> _List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -90,7 +150,7 @@ namespace MasterSaveDemo.ViewModel
 
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
-                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, 
+                              select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
                               Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
@@ -103,6 +163,26 @@ namespace MasterSaveDemo.ViewModel
                 #endregion
             });
 
+            EditCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedSTK != null) return true;
+                return false;
+            }, (p) =>
+            {
+                Edit_Mode();
+                
+            });
+
+            CancelCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                reset_Control();
+                if (Visibility_Edit == Visibility.Visible)
+                    Search_Mode();
+
+            });
             //Button Search SO TIET KIEM
             SearchCommand = new RelayCommand<object>((p) =>
             {
@@ -146,19 +226,35 @@ namespace MasterSaveDemo.ViewModel
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               where (stk.MaSoTietKiem == MaSTK || MaSTK == "") && (stk.TenKhachHang.Contains(TenKH))
                                     && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
-                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK=="Tất cả")
-                                    && (stk.SoDu >= min && (stk.SoDu <= max || max ==-1))                            
+                                    && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK == "Tất cả")
+                                    && (stk.SoDu >= min && (stk.SoDu <= max || max == -1))
                               select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
 
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
                 int count = 1;
-                for (int i=0; i<ListSoTietKiem.Count(); i++)
+                for (int i = 0; i < ListSoTietKiem.Count(); i++)
                 {
                     ListSoTietKiem[i].STT = count.ToString();
                     count++;
                 }
                 #endregion
+            });
+
+            //Phan nay do Thang them vao
+            NhapLaiVaoVon_All = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (DateTime.Now.TimeOfDay.TotalMinutes >= 13 * 60 + 30)
+                {
+                    NhapLaiVaoVon.Ins.AllToday();
+                }
+                else
+                {
+                    MessageBox.Show("Chưa tới thời điểm nhập lãi vào vốn!");
+                }
             });
         }
     }

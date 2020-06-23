@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows;
 using MasterSaveDemo.Model;
 using MasterSaveDemo.Helper;
+using System.Collections.ObjectModel;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -15,6 +16,7 @@ namespace MasterSaveDemo.ViewModel
 	{
 		//Bien chua ket qua kiem tra hop le
 		private bool Result_KiemTraHopLe;
+		private bool Result_KiemTraNhapLai; //true = da nhap lai moi nhat, false = chua nhap lai moi nhat
 		//Khai bao cac command
 		public ICommand Click_MSTKCommand { get; set; }
 		public ICommand MSTK_TextChangedCommand { get; set; }
@@ -23,7 +25,9 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand STR_TextChangedCommand { get; set; }
 		public ICommand TKH_TextChangedCommand { get; set; }
 		public ICommand Click_CapNhatCommand { get; set; }
-		
+		public ICommand STKEnterKeyDown_Command { get; set; }
+		public ICommand SoTienRutEnterKeyDown_Command { get; set; }
+		public ICommand Click_CopySoDuSTRCommand { get; set; }
 
 		#region Binding tu view
 		//Ngay Rut, kieu string
@@ -89,7 +93,7 @@ namespace MasterSaveDemo.ViewModel
 			get { return _NgayDaoHan; }
 			set { _NgayDaoHan = value; OnPropertyChanged(); }
 		}
-		//Thong Bao
+		//Thong Bao //da bi xoa, nho bo di
 		private string _ThongBao;
 
 		public string ThongBao
@@ -97,26 +101,75 @@ namespace MasterSaveDemo.ViewModel
 			get { return _ThongBao; }
 			set { _ThongBao = value; OnPropertyChanged(); }
 		}
+		//listView
+		private List<ListLichSuPhieuRut> _ListLichSuGD;
+
+		public List<ListLichSuPhieuRut> ListLichSuGD
+		{
+			get { return _ListLichSuGD; }
+			set { _ListLichSuGD = value; OnPropertyChanged(); }
+		}
+
+		private string _MaPR;
+
+		public string MaPR
+		{
+			get { return _MaPR; }
+			set { _MaPR = value; OnPropertyChanged(); }
+		}
+
+		private string _NgayRutTien;
+
+		public string NgayRutTien
+		{
+			get { return _NgayRutTien; }
+			set { _NgayRutTien = value; OnPropertyChanged(); }
+		}
+
+
+		private string _TienRut;
+		public string TienRut
+		{
+			get { return _TienRut; }
+			set { _TienRut = value; OnPropertyChanged(); }
+		}
 
 		#endregion
 		#region Khoi tao
 		//Khoi tao viewmodel
 		public RutTien_ViewModel()
 		{
+			Result_KiemTraNhapLai = true;
 			//Dat ngay rut theo ngay hom nay
 			NgayRut = DateTime.Today.ToString("dd/MM/yyyy");
 			//Khi click vao nut ben canh MSTK
 			Click_MSTKCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
 			{
-				if(!CapNhatThongTin())
+				if (!CapNhatThongTin())
 				{
+					Result_KiemTraHopLe = false;
 					ThongBao = "Lấy thông tin thất bại";
 				}
 				else
 				{
+					KiemTraNhapLai();
 					Result_KiemTraHopLe = false;
 				}
 			});
+			//khi nhan enter o mo so
+			STKEnterKeyDown_Command = new RelayCommand<Object>((p) => { return true; }, (p) =>
+			 {
+				 if (!CapNhatThongTin())
+				 {
+					 Result_KiemTraHopLe = false;
+					 ThongBao = "Lấy thông tin thất bại";
+				 }
+				 else
+				 {
+					 KiemTraNhapLai();
+					 Result_KiemTraHopLe = false;
+				 }
+			 });
 			//khi thay doi textbox MSTK
 			MSTK_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
 			{
@@ -129,6 +182,7 @@ namespace MasterSaveDemo.ViewModel
 					NgayDaoHan = "";
 					ThongBao = "";
 					Result_KiemTraHopLe = false;
+					Result_KiemTraNhapLai = true;
 				}
 				catch (Exception e)
 				{
@@ -140,20 +194,41 @@ namespace MasterSaveDemo.ViewModel
 			{
 				if (!KiemTraHopLe())
 				{
+					Result_KiemTraHopLe = false;
+					Result_KiemTraNhapLai = true;
 					ThongBao = "Kiểm tra thất bại.";
-				};
+				}
+				else
+				{
+					if (Result_KiemTraHopLe == true)
+						ThongBao = "Thông tin phiếu rút hợp lệ";
+				}
+			});
+			SoTienRutEnterKeyDown_Command = new RelayCommand<Object>((p) => { return true; }, (p) =>
+			{
+				if (!KiemTraHopLe())
+				{
+					Result_KiemTraHopLe = false;
+					Result_KiemTraNhapLai = true;
+					ThongBao = "Kiểm tra thất bại.";
+				}
+				else
+				{
+					if (Result_KiemTraHopLe == true)
+						ThongBao = "Thông tin phiếu rút hợp lệ";
+				}
 			});
 			//Lenh thuc hien giao dich
 			Click_GiaoDichCommand = new RelayCommand<Button>((p) => { return Result_KiemTraHopLe; }, (p) =>
 			{
 				if (!ThucHienGiaoDich())
 				{
-					ThongBao = "Không thể thưc hiện giao dịch do lỗi không xác định.";
+					ThongBao += "Không thể thưc hiện giao dịch do lỗi không xác định.";
 				}
 				else
 				{
 					Result_KiemTraHopLe = false;
-					ThongBao = "Đã tạo phiếu rút thành công.";
+					ThongBao += "Đã tạo phiếu rút thành công.";
 				}
 			});
 			STR_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
@@ -178,7 +253,7 @@ namespace MasterSaveDemo.ViewModel
 
 				}
 			});
-			Click_CapNhatCommand = new RelayCommand<Button>((p) => { return true; }, (p) =>
+			Click_CapNhatCommand = new RelayCommand<Button>((p) => { return !Result_KiemTraNhapLai; }, (p) =>
 			{
 				if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))
 				{
@@ -188,9 +263,49 @@ namespace MasterSaveDemo.ViewModel
 				{
 					Result_KiemTraHopLe = false;
 					ThongBao = "Đã cập nhật lãi vào số dư";
+					if (!CapNhatThongTin())
+					{
+						ThongBao = "Lấy thông tin thất bại";
+					}
+					else
+					{
+						Result_KiemTraHopLe = false;
+					}
+				}
+			});
+			Click_CopySoDuSTRCommand = new RelayCommand<Button>((p) => { return true; }, (p) =>
+			{
+				if(!Copy_SD_STR())
+				{
+					ThongBao = "Sao chép không thành công!";
+				}
+				else
+				{
 
 				}
 			});
+		}
+		public bool BindingLichSu(string mastk)
+		{
+			try
+			{
+				ListLichSuGD = new List<ListLichSuPhieuRut>();
+
+				ObservableCollection<PHIEURUT> List_PR = new ObservableCollection<PHIEURUT>(DataProvider.Ins.DB.PHIEURUTs);
+				var lichsu = from list in List_PR
+							 where list.MaSoTietKiem == mastk
+							 orderby list.MaPhieuRut descending
+							 select new ListLichSuPhieuRut(list.MaPhieuRut, list.NgayRut.ToString("dd/MM/yyyy"), list.SoTienRut.ToString("0,000"));
+				foreach (var ls in lichsu)
+				{
+					ListLichSuGD.Add(ls);
+				}
+				return true;
+			}
+			catch(Exception e)
+			{
+				return false;
+			}
 		}
 		private bool CapNhatThongTin()
 		{
@@ -199,12 +314,31 @@ namespace MasterSaveDemo.ViewModel
 				SOTIETKIEM temp = Tim_MSTK(MaSoTietKiem);
 				if (temp != null)
 				{
-					TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
-					TenKhachHang = temp.TenKhachHang;
-					SoDu = temp.SoDu.ToString("0,000");
-					CMND = temp.SoCMND;
-					NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
-					ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
+					if (temp.NgayDongSo == null)
+					{
+						TenLoaiTietKiem = Tim_MaLoaiTietKiem(temp.MaLoaiTietKiem).TenLoaiTietKiem;
+						TenKhachHang = temp.TenKhachHang;
+						if (temp.SoDu == 0)
+						{
+							SoDu = "0";
+						}
+						else
+						{
+							SoDu = temp.SoDu.ToString("0,000");
+						}
+						CMND = temp.SoCMND;
+						NgayDaoHan = temp.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+						BindingLichSu(temp.MaSoTietKiem);
+						KiemTraNhapLai();
+						ThongBao = "Đã cập nhật thông tin sổ tiết kiệm.";
+					}
+					else
+					{
+						BindingLichSu(temp.MaSoTietKiem);
+						KiemTraNhapLai();
+						//Thong bao da dong so o day
+						ThongBao = "Sổ tiết kiệm này đã đóng!";
+					}
 				}
 				else
 				{
@@ -230,6 +364,21 @@ namespace MasterSaveDemo.ViewModel
 			Result_KiemTraHopLe = true;
 			try
 			{
+				if (int.Parse(SoTienRut) == 0)
+				{
+					SoTienRut = "0";
+				}
+				else
+				{
+					SoTienRut = int.Parse(SoTienRut).ToString("0,000");
+				}
+			}
+			catch (Exception e)
+			{
+
+			}
+			try
+			{
 				SOTIETKIEM info_stk = Tim_MSTK(MaSoTietKiem);
 				LOAITIETKIEM info_loaitietkiem = Tim_MaLoaiTietKiem(info_stk.MaLoaiTietKiem);
 				if(info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today )
@@ -237,9 +386,24 @@ namespace MasterSaveDemo.ViewModel
 					ThongBao += "Chưa đủ số ngày gửi tối thiểu.\n";
 					Result_KiemTraHopLe = false;
 				}
+				else
+				{
+					if(!KiemTraNhapLai())
+					{
+						ThongBao += "Lỗi, không xác định được thông tin đáo hạn.\n";
+					}
+					else
+					{
+						if(Result_KiemTraNhapLai == false)
+						{
+							ThongBao += "Cần nhập lãi trước khi rút.\n";
+						}
+					}
+				}
 				if (SoTienRut == null)
 				{
 					ThongBao += "Vui lòng nhập số tiền rút.\n";
+					Result_KiemTraHopLe = false;
 				}
 				else
 				{
@@ -258,7 +422,46 @@ namespace MasterSaveDemo.ViewModel
 			}
 			catch (Exception e)
 			{
+				Result_KiemTraHopLe = false;
 				return false; 
+			}
+		}
+		private bool KiemTraNhapLai()
+		{
+			try
+			{
+				Result_KiemTraNhapLai = true;
+				SOTIETKIEM info_stk = Tim_MSTK(MaSoTietKiem);
+				LOAITIETKIEM info_loaitietkiem = Tim_MaLoaiTietKiem(info_stk.MaLoaiTietKiem);
+				if (info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today)
+				{
+					//khong the tinh lai do chua du so ngay gui toi thieu (xem quy dinh)
+				}
+				else
+				{
+					if (info_loaitietkiem.KyHan != 0)
+					{
+						if (info_stk.NgayDaoHanKeTiep <= DateTime.Today.AddDays(info_loaitietkiem.KyHan))
+						{
+							Result_KiemTraHopLe = false;
+							Result_KiemTraNhapLai = false;
+						}
+					}
+					else
+					{
+						if (info_stk.NgayDaoHanKeTiep != DateTime.Today.AddDays(1))
+						{
+							Result_KiemTraHopLe = false;
+							Result_KiemTraNhapLai = false;
+						}
+					}
+				}
+				return true;
+			}
+			catch(Exception e)
+			{
+				Result_KiemTraNhapLai = true;
+				return false;
 			}
 		}
 		private bool ThucHienGiaoDich()
@@ -268,14 +471,14 @@ namespace MasterSaveDemo.ViewModel
 				PHIEURUT info_PhieuRut = new PHIEURUT();
 				if (DataProvider.Ins.DB.PHIEURUTs.Count() == 0)
 				{
-					info_PhieuRut.MaPhieuRut = "0000000001";
+					info_PhieuRut.MaPhieuRut = "PR0000001";
 				}
 				else
 				{
-					info_PhieuRut.MaPhieuRut = "0000000000";
+					info_PhieuRut.MaPhieuRut = "PR0000000";
 					decimal temp_dem = DataProvider.Ins.DB.PHIEURUTs.Count();
 					string temp = (temp_dem+1).ToString();
-					info_PhieuRut.MaPhieuRut.Remove(0, temp.Count());
+					info_PhieuRut.MaPhieuRut.Remove(0,temp.Length);
 					info_PhieuRut.MaPhieuRut += temp;
 				}
 				info_PhieuRut.MaSoTietKiem = this.MaSoTietKiem;
@@ -296,6 +499,16 @@ namespace MasterSaveDemo.ViewModel
 				{
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
 				}
+
+				if (!CapNhatThongTin())
+				{
+					ThongBao = "Lấy thông tin thất bại";
+				}
+				else
+				{
+					Result_KiemTraHopLe = false;	
+				}
+				SoTienRut = "";
 				return true;
 			}
 			catch(Exception e)
@@ -312,14 +525,27 @@ namespace MasterSaveDemo.ViewModel
 					SOTIETKIEM temp = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == mstk).SingleOrDefault();
 					temp.NgayDongSo = DateTime.Today;
 					DataProvider.Ins.DB.SaveChanges();
+					ThongBao = "Đã đóng sổ tiết kiệm.\n";
 				}
 				else
 				{
-					ThongBao = "Đã rút tiền thành công";
+					ThongBao = "Đã rút tiền thành công.\n";
 				}
 				return true;
 			}
 			catch (Exception e)
+			{
+				return false;
+			}
+		}
+		private bool Copy_SD_STR()
+		{
+			try
+			{
+				SoTienRut = SoDu.Replace(",", "");
+				return true;
+			}
+			catch(Exception e)
 			{
 				return false;
 			}

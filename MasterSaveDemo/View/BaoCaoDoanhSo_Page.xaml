@@ -46,7 +46,7 @@
                             HorizontalAlignment="Right" Margin="10,0,10,0"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                             SelectedDate="{Binding SelectedDateReport,StringFormat={}{0:dd/MM/yyyy}, Mode=TwoWay}"
-                            SelectedDateFormat="Short" >
+                            SelectedDateFormat="Short">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">
                             <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"

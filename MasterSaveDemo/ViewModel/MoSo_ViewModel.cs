@@ -30,7 +30,7 @@ namespace MasterSaveDemo.ViewModel
         {
             //CbxTenLoaiTietKiem = "";
             SelectedTenLoaiTietKiem = "";
-            TenLoaiTietKiem = new List<string>();
+            TenLoaiTietKiem = new ObservableCollection<string>();
             foreach (LOAITIETKIEM LTK in List)
                 TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
         }
@@ -163,8 +163,8 @@ namespace MasterSaveDemo.ViewModel
         public string NgayDaoHanKeTiep { get => _NgayDaoHanKeTiep; set { _NgayDaoHanKeTiep = value; OnPropertyChanged(); } }
 
 
-        private List<string> _TenLoaiTietKiem;
-        public List<string> TenLoaiTietKiem { get => _TenLoaiTietKiem; set { _TenLoaiTietKiem = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _TenLoaiTietKiem;
+        public ObservableCollection<string> TenLoaiTietKiem { get => _TenLoaiTietKiem; set { _TenLoaiTietKiem = value; OnPropertyChanged(); } }
 
         private string _SelectedTenLoaiTietKiem;
         public string SelectedTenLoaiTietKiem { get => _SelectedTenLoaiTietKiem; set 
@@ -201,6 +201,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ResetLTKCommand { get; set; }
         public ICommand GetCodeSTKcommand { get; set; }
         public ICommand MoSoCommand { get; set; }
+        public ICommand LoadedCommand { get; set; }
 
         public MoSo_ViewModel()
         {
@@ -273,6 +274,14 @@ namespace MasterSaveDemo.ViewModel
                 }
             });
 
+            LoadedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+                resetCombobox_LoaiTietKiem();
+            });
         }
     }
 }

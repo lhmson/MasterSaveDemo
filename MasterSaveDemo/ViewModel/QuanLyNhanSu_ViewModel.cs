@@ -243,7 +243,9 @@ namespace MasterSaveDemo.ViewModel
             foreach (var Nhom in List_Nhom)
             {
                 CbxTenNhom.Add(Nhom.TenNhom);
+                System.Windows.MessageBox.Show(Nhom.TenNhom);
             }
+            //MessageBox.Show(CbxTenNhom.Count().ToString());
             VisibilityOfAdd = vsAdd;
             VisibilityOfEdit = vsEdit;
         }

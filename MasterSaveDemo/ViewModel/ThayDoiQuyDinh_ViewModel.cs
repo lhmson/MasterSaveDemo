@@ -279,7 +279,9 @@ namespace MasterSaveDemo.ViewModel
                 if( !IsDeleting)
                 {
                     var maLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == MaLoaiTietKiem);
-                    if (maLoai == null || maLoai.Count() != 0)
+                    var tenLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == TenLoaiTietKiem);
+
+                    if ((maLoai.Count() != 0) || (tenLoai.Count() != 0))
                         return false;
                 }
                 return true;
@@ -441,7 +443,7 @@ namespace MasterSaveDemo.ViewModel
                 return 12;
             return 0;
         }
-        private void ResetAll()
+        public void ResetAll()
         {
             VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
             VisibilityOfEditThamSo = Visibility.Hidden;

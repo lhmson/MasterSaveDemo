@@ -69,7 +69,7 @@ namespace MasterSaveDemo.ViewModel
 
             MoSo_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
                 FrameContent = new MoSo_Page();
-                FrameContent.DataContext = new MoSo_ViewModel();
+                //FrameContent.DataContext = new MoSo_ViewModel();
             });
 
             GuiTien_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {

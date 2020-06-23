@@ -31,7 +31,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="8">
-                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">GIAO DỊCH MỞ SỔ TIẾT KIỆM</TextBlock>
+                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">TRA CỨU SỔ TIẾT KIỆM</TextBlock>
             </materialDesign:Card>
         </Grid>
         <Grid Grid.Row="1">
@@ -122,8 +122,9 @@
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" >
-                        <ListView ItemsSource="{Binding ListSoTietKiem}" SelectedItem="{Binding SelectedSTK, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="Auto">
+                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <ListView ItemsSource="{Binding ListSoTietKiem}" SelectedItem="{Binding SelectedSTK, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="Auto"
+                                  HorizontalAlignment="Stretch">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>

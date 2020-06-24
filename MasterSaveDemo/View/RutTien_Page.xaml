@@ -149,9 +149,9 @@
                                         <materialDesign:PackIcon Kind="{Binding SoTienRut_Check,Mode=TwoWay}" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
-                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
+                                <TextBox x:Name="SoTienRutTB" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5">
+                             Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5" PreviewTextInput="SoTienRutTB_PreviewTextInput">
                                     <TextBox.InputBindings>
                                         <KeyBinding 
                                     Key="Enter" 
@@ -159,11 +159,11 @@
                                     CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
                                     </TextBox.InputBindings>
                                     <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding STR_TextChangedCommand}"
-                                                           CommandParameter="{Binding MaSoTietKiemTB}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding STR_TextChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=SoTienRutTB}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                 </TextBox>
                             </StackPanel>
                         </Grid>

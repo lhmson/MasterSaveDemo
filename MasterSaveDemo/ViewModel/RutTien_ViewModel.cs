@@ -363,7 +363,7 @@ namespace MasterSaveDemo.ViewModel
 			});
 			Click_CapNhatCommand = new RelayCommand<Button>((p) => { return !Result_KiemTraNhapLai; }, (p) =>
 			{
-				MessageBoxResult re = MessageBox.Show("Đang tiến hành nhập lãi.\nSổ tiết kiệm có kì hạn chưa đến ngày đáo hạn sẽ được tính theo lãi suất không kì hạn.", "Thông báo", MessageBoxButton.OKCancel);
+				MessageBoxResult re = MessageBox.Show("Bạn có chắc muốn nhập lãi vào vốn? Tiến trình này không thể hoàn tác.", "Thông báo", MessageBoxButton.OKCancel);
 				if (re == MessageBoxResult.OK)
 				{
 					if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))

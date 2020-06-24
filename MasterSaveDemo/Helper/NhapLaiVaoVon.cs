@@ -42,6 +42,10 @@ namespace MasterSaveDemo.Helper
                 {
                     stk.NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.AddDays(ltk.KyHan);
                 }
+                if(stk.LaiSuatApDung != ltk.LaiSuat)
+                {
+                    stk.LaiSuatApDung = ltk.LaiSuat;
+                }
                 DataProvider.Ins.DB.SaveChanges();
                 return true;
             }

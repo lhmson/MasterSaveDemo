@@ -248,15 +248,57 @@
                         </ListView.View>
                     </ListView>
 
+                        <Grid Grid.Row="2">
 
-                    <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2">
-                        <Button Style="{StaticResource MaterialDesignRaisedButton}" Height="50" HorizontalAlignment="Left"
-                                materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Binding cái tham số ở đây" Margin="10" >
-                            <TextBlock Text="Quy định gửi tiền" />
-                        </Button>
-                    </materialDesign:Card>
+                            <materialDesign:Flipper >
+                                <materialDesign:Flipper.FrontContent>
+                                    <Button VerticalAlignment="Top"  Background="{DynamicResource PrimaryHueDarkBrush}"
+                                  Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                  Command="{x:Static materialDesign:Flipper.FlipCommand}">
+                                        <TextBlock VerticalAlignment="Center"
+                                    FontSize="18" >
+                                    Quy định gửi tiền
+                                        </TextBlock>
+                                    </Button>
+                                </materialDesign:Flipper.FrontContent>
+                                <materialDesign:Flipper.BackContent>
+                                    <Grid Grid.ColumnSpan="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <materialDesign:ColorZone Grid.Row="0" FontSize="16" Background="{DynamicResource PrimaryHueDarkBrush}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Grid.Column="0"
+                                                Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                                HorizontalAlignment="Left">
+                                                    <materialDesign:PackIcon
+                                                  Kind="ArrowLeft"
+                                                  HorizontalAlignment="Right" FontSize="20"/>
+                                                </Button>
+                                                <TextBlock Grid.Column="1"
+                                                Margin="8 0 0 0"
+                                                VerticalAlignment="Center">
+                                              Các quy định
+                                                </TextBlock>
+                                            </Grid>
+                                        </materialDesign:ColorZone>
+                                        <Grid  Grid.Row="1" Grid.ColumnSpan="2">
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock TextWrapping="Wrap" Text="{Binding QuyDinhRutTien}" FontSize="18" HorizontalAlignment="Left"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </materialDesign:Flipper.BackContent>
+                            </materialDesign:Flipper>
+                        </Grid>
 
-                </Grid>
+                    </Grid>
             </Grid>
             </Grid>
         </materialDesign:DialogHost>

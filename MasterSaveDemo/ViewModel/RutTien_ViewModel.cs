@@ -218,11 +218,22 @@ namespace MasterSaveDemo.ViewModel
 			set { _IsCancelVisible = value; OnPropertyChanged(); }
 		}
 
+		//Quy Dinh
+		private string _QuyDinhRutTien;
+
+		public string QuyDinhRutTien
+		{
+			get { return _QuyDinhRutTien; }
+			set { _QuyDinhRutTien = value; OnPropertyChanged(); }
+		}
+
+
 		#endregion
 		#region Khoi tao
 		//Khoi tao viewmodel
 		public RutTien_ViewModel()
 		{
+			CapNhatQuyDinh();
 			Reset_Check();
 			CreatePR = true;
 			Result_KiemTraNhapLai = true;
@@ -733,6 +744,18 @@ namespace MasterSaveDemo.ViewModel
 			catch(Exception e)
 			{
 				return false;
+			}
+		}
+		private void CapNhatQuyDinh()
+		{
+			QuyDinhRutTien = "Loại tiết kiệm có kỳ hạn chỉ được rút khi quá kỳ hạn và phải rút hết toàn bộ, khi này tiền lãi được tính với mức lãi suất của loại không kỳ hạn.\n"
+							+ "Loại tiết kiệm không kỳ hạn được rút khi gửi trên số ngày tối thiểu theo quy định và có thể rút số tiền nhỏ hơn hoặc bằng số dư hiện có.\n";
+			if (GetThamSo("DongSoTuDong") == 1)
+			{
+				QuyDinhRutTien += "Sổ sau khi rút hết tiền sẽ tự động đóng.";
+			}
+			else
+			{
 			}
 		}
         #endregion

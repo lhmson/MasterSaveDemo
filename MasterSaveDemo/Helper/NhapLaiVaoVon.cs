@@ -50,10 +50,11 @@ namespace MasterSaveDemo.Helper
                 return false;
             }
         }
-        public bool AllToday()
+        public List<string> AllToday()
         {
             try
             {
+                List<string> MaSo = new List<string>();
                 List<SOTIETKIEM> list_stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.NgayDaoHanKeTiep == DateTime.Today).ToList();
                 if (list_stk.Count == 0)
                 {
@@ -63,14 +64,24 @@ namespace MasterSaveDemo.Helper
                 {
                     foreach (SOTIETKIEM stk in list_stk)
                     {
-                        NhapLaiVaoVon.Ins.StartThis(stk.MaSoTietKiem, false);
+                        LOAITIETKIEM ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == stk.MaLoaiTietKiem).Single();
+                        if (ltk.KyHan == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            NhapLaiVaoVon.Ins.StartThis(stk.MaSoTietKiem, false);
+                            MaSo.Add(stk.MaSoTietKiem);
+                        }
                     }
                 }
-                return true;
+                return MaSo;
             }
             catch(Exception e)
             {
-                return false;
+                MessageBox.Show("Lỗi không xác định, vui lòng thử lại sau.");
+                return null;
             }
         }
         public bool StartThis(string MSTK, bool confirm)

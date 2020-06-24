@@ -96,7 +96,7 @@ namespace MasterSaveDemo.ViewModel
 			get { return _NgayDaoHan; }
 			set { _NgayDaoHan = value; OnPropertyChanged(); }
 		}
-		//Thong Bao //da bi xoa, nho bo di
+
 		private string _ThongBao;
 
 		public string ThongBao

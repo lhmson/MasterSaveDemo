@@ -27,10 +27,12 @@ namespace MasterSaveDemo.ViewModel
         public string NgayGioHienTai
         {
             get => _NgayGioHienTai;
-            set {
+            set
+            {
                 if (_NgayGioHienTai == value)
                     return;
-                _NgayGioHienTai = value; ; OnPropertyChanged(); }
+                _NgayGioHienTai = value; ; OnPropertyChanged();
+            }
         }
 
         private string _TenTaiKhoan;
@@ -40,6 +42,8 @@ namespace MasterSaveDemo.ViewModel
         public string ChucVu { get => _ChucVu; set { _ChucVu = value; OnPropertyChanged(); } }
 
         public DispatcherTimer _timer;
+
+        private NGUOIDUNG user;
         #endregion
 
         #region function
@@ -60,9 +64,11 @@ namespace MasterSaveDemo.ViewModel
 
         private void InitTaiKhoan()
         {
-            NGUOIDUNG user = LoginViewModel.TaiKhoanSuDung;
-            if (user == null) return;
-            if (TenTaiKhoan != null) return; // check to update Ten one time only for utilize
+            if (user == LoginViewModel.TaiKhoanSuDung) return; // check to update Ten one time only for utilize
+
+            user = LoginViewModel.TaiKhoanSuDung;
+            if (user == null) return; 
+
             TenTaiKhoan = user.HoTen;
             ObservableCollection<NHOMNGUOIDUNG> listNhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
             foreach (var item in listNhom)
@@ -84,7 +90,7 @@ namespace MasterSaveDemo.ViewModel
                     window.Close();
                 }
             });
-            
+
             MinimizeWindowCommand = new RelayCommand<UserControl>((p) => { return p == null ? false : true; }, (p) => {
                 Window window = GetWindowParent(p);
                 if (window != null)

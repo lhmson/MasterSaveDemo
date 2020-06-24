@@ -65,32 +65,32 @@
 
                 <Grid Grid.Row="1" Background="#49c7ab">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="27*"></ColumnDefinition>
-                        <ColumnDefinition Width="75*"/>
-                        <ColumnDefinition Width="97*"></ColumnDefinition>
-                        <ColumnDefinition Width="49*"></ColumnDefinition>
-                        <ColumnDefinition Width="49*"/>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid Grid.Column="0">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Tài khoản" Margin="10" >
                             <TextBlock Text="{Binding TenTaiKhoan}" />
                         </Button>
                     </Grid>
 
-                    <Grid Grid.Column="2">
+                    <Grid Grid.Column="1">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Chức vụ" Margin="10" >
                             <TextBlock Text="{Binding ChucVu}" />
                         </Button>
                     </Grid>
 
-                    <Grid Grid.Column="3" Grid.ColumnSpan="2">
+                    <Grid Grid.Column="2">
                         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="50"
                                 materialDesign:ButtonAssist.CornerRadius="5" ToolTip="Thời gian hiện tại" Margin="10" >
                             <TextBlock Text="{Binding NgayGioHienTai}" />
                         </Button>
                     </Grid>
+
+                  
                 </Grid>
             </Grid>
         </Grid>

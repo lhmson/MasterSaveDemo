@@ -167,11 +167,10 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="19*"/>
-                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <ListView x:Name="listViewNguoiDung" ItemsSource="{Binding ListNhanVien}" Visibility="{Binding VisibilityOfListNguoiDung}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemNguoiDung, Mode=TwoWay}" Grid.ColumnSpan="2">
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemNguoiDung, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDangNhap}" />
@@ -182,7 +181,7 @@
                     </ListView.View>
                 </ListView>
                 <ListView x:Name="listViewPhanQuyen" ItemsSource="{Binding ListPhanQuyen, Mode= TwoWay}" Visibility="{Binding VisibilityOfListPhanQuyen}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPhanQuyen, Mode=TwoWay}" FontSize="18" Grid.ColumnSpan="2">
+                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPhanQuyen, Mode=TwoWay}" FontSize="18">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />

@@ -20,6 +20,8 @@ namespace MasterSaveDemo.ViewModel
     public class BaoCaoDoanhSo_ViewModel : BaseViewModel
     {
         #region Variables
+        public bool isLoaded = false;
+
         // date chosen for reporting
         private DateTime _SelectedDateReport;
         public DateTime SelectedDateReport
@@ -291,7 +293,14 @@ namespace MasterSaveDemo.ViewModel
 
             );
 
-
+            PrintCommand = new RelayCommand<object>((p) => { return true; },
+                (p) => {
+                    BaoCaoDoanhSo_PrintPreview_ViewModel printPreviewBaoCaoDoanhSo = new BaoCaoDoanhSo_PrintPreview_ViewModel(ListBaoCaoDisplay, SelectedDateReport);
+                    BaoCaoDoanhSo_PrintPreview BaoCao = new BaoCaoDoanhSo_PrintPreview(printPreviewBaoCaoDoanhSo);
+                    BaoCao.ShowDialog();
+                    isLoaded = true;
+                }
+            );
         }
     }
 }

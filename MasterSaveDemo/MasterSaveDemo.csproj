@@ -107,6 +107,9 @@
     <Compile Include="PhieuGui_PrintPreview.xaml.cs">
       <DependentUpon>PhieuGui_PrintPreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BaoCaoDoanhSo_PrintPreview.xaml.cs">
+      <DependentUpon>BaoCaoDoanhSo_PrintPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaoCaoMoDong_PrintPreview.xaml.cs">
       <DependentUpon>BaoCaoMoDong_PrintPreview.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ThayDoiQuyDinh_Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\BaoCaoDoanhSo_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoDoanhSo_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoMoDong_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoMoDong_ViewModel.cs" />
@@ -200,6 +204,7 @@
     <Compile Include="ViewModel\Home_PageViewModel.cs" />
     <Compile Include="ViewModel\PhieuRut_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\PhieuGui_PrintPreview_ViewModel.cs" />
+    <Compile Include="ViewModel\CaiDatKhac_ViewModel.cs" />
     <Compile Include="ViewModel\QuanLyNhanSu_ViewModel.cs" />
     <Compile Include="ViewModel\RutTien_ViewModel.cs" />
     <Compile Include="ViewModel\ThayDoiQuyDinh_ViewModel.cs" />
@@ -249,6 +254,10 @@
     <Page Include="PhieuGui_PrintPreview.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaoCaoDoanhSo_PrintPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BaoCaoMoDong_PrintPreview.xaml">
       <SubType>Designer</SubType>
@@ -381,6 +390,7 @@
     <Resource Include="Images\new.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logout.png" />
     <Content Include="Model\QLSTKModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QLSTKModel.Context.cs</LastGenOutput>

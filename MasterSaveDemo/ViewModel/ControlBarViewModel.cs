@@ -87,7 +87,11 @@ namespace MasterSaveDemo.ViewModel
                 Window window = GetWindowParent(p);
                 if (window != null)
                 {
-                    window.Close();
+                    System.Windows.Forms.DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn có chắc chắn thoát không?", "Đăng xuất", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+                    if(kq == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        window.Close();
+                    }
                 }
             });
 

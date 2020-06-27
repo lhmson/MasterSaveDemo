@@ -1,4 +1,5 @@
-﻿using MasterSaveDemo.Model;
+﻿using MasterSaveDemo.Helper;
+using MasterSaveDemo.Model;
 ﻿using MasterSaveDemo.View;
 using System;
 using System.Collections.Generic;
@@ -225,7 +226,7 @@ namespace MasterSaveDemo.ViewModel
 
             });
 
-            Home_Page_SelectedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+            Home_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
                 //Selected_HOME = true;
                 //Selected_DangXuat = false;
                 FrameContent = new Home_Page();
@@ -294,7 +295,7 @@ namespace MasterSaveDemo.ViewModel
 
 
                     //p.Hide();
-                    //Home_Page_SelectedCommand.Execute(p);
+
                     //LoginWindow loginWindow = new LoginWindow();
                     //LoginViewModel.TaiKhoanSuDung = null;
                     //loginWindow.ShowDialog();

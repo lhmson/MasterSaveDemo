@@ -101,6 +101,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\DatabaseCheck.cs" />
+    <Compile Include="Helper\DialogBox.cs" />
     <Compile Include="PhieuRut_PrintPreview.xaml.cs">
       <DependentUpon>PhieuRut_PrintPreview.xaml</DependentUpon>
     </Compile>

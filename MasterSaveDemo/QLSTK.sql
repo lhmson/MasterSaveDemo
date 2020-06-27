@@ -77,8 +77,9 @@ CREATE TABLE CTBCMODONG
 (
 	MaBaoCaoMoDong VARCHAR(20) NOT NULL FOREIGN KEY REFERENCES BAOCAOMODONG(MaBaoCaoMoDong),
 	NgayXet SMALLDATETIME NOT NULL,
-	SoLuongSoMo INT NOT NULL CHECK (SoLuongSoMo>0),
-	SoLuongSoDong INT NOT NULL CHECK (SoLuongSoDong>0),
+	-----Sua lai rang buoc nho hon bang
+	SoLuongSoMo INT NOT NULL CHECK (SoLuongSoMo>=0),
+	SoLuongSoDong INT NOT NULL CHECK (SoLuongSoDong>=0),
 	ChenhLech INT NOT NULL,
 	---sua lai khoa chinh la hai thuoc tinh nay
 	PRIMARY KEY (MaBaoCaoMoDong,NgayXet)

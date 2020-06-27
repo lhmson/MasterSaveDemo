@@ -83,97 +83,174 @@
                     </ComboBox>
                 </Grid>
                 <Grid Grid.Row="2">
-                    <TextBox x:Name="txtMaLoai"   materialDesign:HintAssist.Hint="Mã loại tiết kiệm"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="Error" />
+                            </materialDesign:PopupBox.ToggleContent>
+                        </materialDesign:PopupBox>
+                    </Grid>
+                    <Grid Grid.Column="0">
+                        <TextBox x:Name="txtMaLoai"   materialDesign:HintAssist.Hint="Mã loại tiết kiệm"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MaLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Error" IsReadOnly="{Binding TextBoxReadOnly}"/>
-                    <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
+                        <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <TextBox materialDesign:HintAssist.Hint="Tên tham số"
+                        <TextBox materialDesign:HintAssist.Hint="Tên tham số"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          IsReadOnly="True"/>
+                    </Grid>
+                    
+                    
                 </Grid>
                 <Grid Grid.Row="3">
-                    <TextBox materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="Error" />
+                            </materialDesign:PopupBox.ToggleContent>
+                        </materialDesign:PopupBox>
+                    </Grid>
+                    <Grid Grid.Column="0">
+                        <TextBox materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
-                    <TextBox materialDesign:HintAssist.Hint="Lãi suất"
+                        <TextBox materialDesign:HintAssist.Hint="Lãi suất"
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                    <TextBox materialDesign:HintAssist.Hint="Giá trị"
+                        <TextBox materialDesign:HintAssist.Hint="Giá trị"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding GiaTri, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="4">
-                    <TextBox materialDesign:HintAssist.Hint="Kỳ hạn"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="Error" />
+                            </materialDesign:PopupBox.ToggleContent>
+                        </materialDesign:PopupBox>
+                    </Grid>
+                    <Grid Grid.Column="0">
+                        <TextBox materialDesign:HintAssist.Hint="Kỳ hạn"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding KyHan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="5">
-                    <TextBox materialDesign:HintAssist.Hint="Lãi suất"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="Error" />
+                            </materialDesign:PopupBox.ToggleContent>
+                        </materialDesign:PopupBox>
+                    </Grid>
+                    <Grid Grid.Column="0">
+                        <TextBox materialDesign:HintAssist.Hint="Lãi suất"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
-
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" Margin="0,0,-100,0">
-                        <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu"
+                    <Grid Grid.Column="1">
+                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="Error" />
+                            </materialDesign:PopupBox.ToggleContent>
+                        </materialDesign:PopupBox>
+                    </Grid>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0,0,-100,0">
+                            <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
-                    </Grid>
-                    <Grid Grid.Column="1" Margin="90,0,0,0">
-                        <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="90,0,0,0">
+                            <Button Style="{StaticResource MaterialDesignRaisedButton}" 
                             Margin="5,0,5,0" Content="ZZZ"
                             Command="{Binding GetThoiGianGuiToiThieuCommand}"
                             Visibility="{Binding VisibilityOfAdd}"/>
+                        </Grid>
                     </Grid>
-
                 </Grid>
                 <Grid Grid.Row="7">
-                    <ComboBox x:Name="cbbQuyDinh" materialDesign:HintAssist.Hint="Quy định số tiền được rút"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon Kind="Error" />
+                            </materialDesign:PopupBox.ToggleContent>
+                        </materialDesign:PopupBox>
+                    </Grid>
+                    <Grid Grid.Column="0">
+                        <ComboBox x:Name="cbbQuyDinh" materialDesign:HintAssist.Hint="Quy định số tiền được rút"
                           Visibility="{Binding VisibilityOfAdd}"
                           ItemsSource="{Binding ListQuyDinh}"
                           SelectedItem="{Binding SelectedQuyDinh}"
                           IsHitTestVisible="{Binding HitTestVisibleCbb}">
-                    </ComboBox>
+                        </ComboBox>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="8">
                     <Grid.ColumnDefinitions>

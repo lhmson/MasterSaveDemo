@@ -66,66 +66,117 @@
                 </ComboBox>
             </Grid>
             <Grid Grid.Row="2">
-                <TextBox x:Name="txtTenDangNhap"   materialDesign:HintAssist.Hint="Tên đăng nhập"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox.ToggleContent>
+                            <materialDesign:PackIcon Kind="Error" />
+                        </materialDesign:PopupBox.ToggleContent>
+                    </materialDesign:PopupBox>
+                </Grid>
+                <Grid Grid.Column="0">
+                    <TextBox x:Name="txtTenDangNhap"   materialDesign:HintAssist.Hint="Tên đăng nhập"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Error"/>
-                <TextBox materialDesign:HintAssist.Hint="Mật khẩu" 
+                    <TextBox materialDesign:HintAssist.Hint="Mật khẩu" 
                          Visibility="{Binding VisibilityOfEdit}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MatKhau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <TextBox materialDesign:HintAssist.Hint="Tên nhóm quyền"
+                    <TextBox materialDesign:HintAssist.Hint="Tên nhóm quyền"
                          Visibility="{Binding VisibilityOfTenNhomQuyen}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding txtTenNhomQuyen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
+                </Grid>
             </Grid>
             <Grid Grid.Row="3">
-                <TextBox materialDesign:HintAssist.Hint="Mật khẩu"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox.ToggleContent>
+                            <materialDesign:PackIcon Kind="Error" />
+                        </materialDesign:PopupBox.ToggleContent>
+                    </materialDesign:PopupBox>
+                </Grid>
+                <Grid Grid.Column="0">
+                    <TextBox materialDesign:HintAssist.Hint="Mật khẩu"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MatKhau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <TextBox materialDesign:HintAssist.Hint="Họ tên"
+                    <TextBox materialDesign:HintAssist.Hint="Họ tên"
                          Visibility="{Binding VisibilityOfEdit}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
             </Grid>
             <Grid Grid.Row="4">
-                <TextBox materialDesign:HintAssist.Hint="Họ tên"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox.ToggleContent>
+                            <materialDesign:PackIcon Kind="Error" />
+                        </materialDesign:PopupBox.ToggleContent>
+                    </materialDesign:PopupBox>
+                </Grid>
+                <Grid Grid.Column="0">
+                    <TextBox materialDesign:HintAssist.Hint="Họ tên"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
+                    <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfEdit}"
                           ItemsSource="{Binding CbxTenNhom, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
-                </ComboBox>
+                    </ComboBox>
+                </Grid>
             </Grid>
             <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="27*"/>
-                    <ColumnDefinition Width="293*"/>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
+                <Grid Grid.Column="1">
+                    <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox.ToggleContent>
+                            <materialDesign:PackIcon Kind="Error" />
+                        </materialDesign:PopupBox.ToggleContent>
+                    </materialDesign:PopupBox>
+                </Grid>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="293*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfAdd}"
                           ItemsSource="{Binding CbxTenNhom, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                           Grid.ColumnSpan="2" Margin="0,12,0,11" >
-                </ComboBox>
+                    </ComboBox>
+                </Grid>
             </Grid>
             <Grid Grid.Row="6">
 

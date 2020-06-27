@@ -42,19 +42,26 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày lẹ"
+                <StackPanel Orientation="Horizontal">
+                    <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày lẹ"
                             HorizontalAlignment="Right" Margin="10,0,10,0"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                             SelectedDate="{Binding SelectedDateReport,StringFormat={}{0:dd/MM/yyyy}, Mode=TwoWay}"
                             SelectedDateFormat="Short" >
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectedDateChanged">
-                            <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"
                                                CommandParameter="{Binding ElementName=dpReport}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
 
-                </DatePicker>
+                    </DatePicker>
+                    <materialDesign:PopupBox Visibility="{Binding }"  VerticalAlignment="Center" Margin="5" PopupContent="Chưa chọn loại tiết kiệm" >
+                        <materialDesign:PopupBox.ToggleContent>
+                            <materialDesign:PackIcon Kind="Error" />
+                        </materialDesign:PopupBox.ToggleContent>
+                    </materialDesign:PopupBox>
+                </StackPanel>
             </Grid>
             <Grid Grid.Column="1">
                 <Button Style="{StaticResource MaterialDesignRaisedButton}" 

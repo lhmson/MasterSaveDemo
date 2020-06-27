@@ -113,6 +113,14 @@ namespace MasterSaveDemo.ViewModel
             set { _TenDangNhap = value; OnPropertyChanged(); }
         }
 
+        //Tên thanh trên bảng List
+        private string _TenDanhSachNhom;
+        public string TenDanhSachNhom
+        {
+            get => _TenDanhSachNhom;
+            set { _TenDanhSachNhom = value; OnPropertyChanged(); }
+        }
+
         private string _txtTenNhomQuyen;
         public string txtTenNhomQuyen
         {
@@ -352,6 +360,7 @@ namespace MasterSaveDemo.ViewModel
 
         public QuanLyNhanSu_ViewModel()
         {
+            TenDanhSachNhom = "DANH SÁCH NGƯỜI DÙNG";
             isEdit = true;
             LoadData();
             LoadDataPhanQuyen();
@@ -644,12 +653,14 @@ namespace MasterSaveDemo.ViewModel
                 // selected index = 1: choosing list of PhanQuyen
                 if (SelectedIndexCbb == 0)
                 {
+                    TenDanhSachNhom = "DANH SÁCH NGƯỜI DÙNG";
                     VisibilityOfTenNhomQuyen = Visibility.Hidden;
                     VisibilityOfListNguoiDung = Visibility.Visible;
                     VisibilityOfListPhanQuyen = Visibility.Hidden;
                 }
                 else
                 {
+                    TenDanhSachNhom = "DANH SÁCH NHÓM QUYỀN";
                     VisibilityOfListNguoiDung = Visibility.Hidden;
                     VisibilityOfListPhanQuyen = Visibility.Visible;
                     // co muon an may cai nay ko?

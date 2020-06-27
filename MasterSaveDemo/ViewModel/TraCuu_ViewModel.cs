@@ -244,9 +244,9 @@ namespace MasterSaveDemo.ViewModel
             // Init Combobox LoaiTietKiem
             ObservableCollection<LOAITIETKIEM> _List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             LoaiTietKiem = new List<string>();
+            LoaiTietKiem.Add("Tất cả");
             foreach (LOAITIETKIEM LTK in _List)
                 LoaiTietKiem.Add(LTK.TenLoaiTietKiem);
-            LoaiTietKiem.Add("Tất cả");
 
             // Combobox MucSoDu
             MucSoDu = new List<string>();

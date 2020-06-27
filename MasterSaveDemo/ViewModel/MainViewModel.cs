@@ -186,8 +186,8 @@ namespace MasterSaveDemo.ViewModel
         #endregion
         public MainViewModel() // all main page handling goes there
         {
-            Selected_HOME = true;
-            Selected_DangXuat = false;
+            //Selected_HOME = true;
+            //Selected_DangXuat = false;
             LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
 
                 //if (p == null) return;
@@ -225,59 +225,60 @@ namespace MasterSaveDemo.ViewModel
 
             });
 
-            Home_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
+            Home_Page_SelectedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+                //Selected_HOME = true;
+                //Selected_DangXuat = false;
                 FrameContent = new Home_Page();
                 FrameContent.DataContext = new Home_PageViewModel();
-                Selected_DangXuat = false;
             });
 
             MoSo_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new MoSo_Page();
                 FrameContent.DataContext = new MoSo_ViewModel();
             });
 
             GuiTien_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new GuiTien_Page();
                 FrameContent.DataContext = new GuiTien_ViewModel();
             });
 
             RutTien_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new RutTien_Page();
                 FrameContent.DataContext = new RutTien_ViewModel();
             });
             TraCuu_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new TraCuu_Page();
                 FrameContent.DataContext = new TraCuu_ViewModel();
             });
             BaoCaoDoanhSo_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new BaoCaoDoanhSo_Page();
                 FrameContent.DataContext = new BaoCaoDoanhSo_ViewModel();
             });
             BaoCaoMoDong_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new BaoCaoMoDong_Page();
                 FrameContent.DataContext = new BaoCaoMoDong_ViewModel();
             });
             ThayDoiQuyDinh_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new ThayDoiQuyDinh_Page();
                 FrameContent.DataContext = new ThayDoiQuyDinh_ViewModel();
             });
             QuanLyNhanSu_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {
-                Selected_HOME = false;
-                Selected_DangXuat = false;
+                //Selected_HOME = false;
+                //Selected_DangXuat = false;
                 FrameContent = new QuanLyNhanSu_Page();
                 FrameContent.DataContext = new QuanLyNhanSu_ViewModel();
             });
@@ -286,16 +287,23 @@ namespace MasterSaveDemo.ViewModel
                 if (kq == System.Windows.Forms.DialogResult.Yes)
                 {
                     // xay ra bug khi nhan nut Home lan dau tien sau khi nhan No thi bi loi 2 nut selected do
-                    Selected_HOME = true;
-                    FrameContent = new Home_Page();
-                    FrameContent.DataContext = new Home_PageViewModel();
-                    
-                    p.Hide();
-                    LoginWindow loginWindow = new LoginWindow();
-                    LoginViewModel.TaiKhoanSuDung = null;
-                    loginWindow.ShowDialog();
-                    MainViewModel.Start_Timer();
-                    p.Show();
+                    //Selected_HOME = true;
+                    //FrameContent = new Home_Page();
+                    //FrameContent.DataContext = new Home_PageViewModel();
+
+
+
+                    //p.Hide();
+                    //Home_Page_SelectedCommand.Execute(p);
+                    //LoginWindow loginWindow = new LoginWindow();
+                    //LoginViewModel.TaiKhoanSuDung = null;
+                    //loginWindow.ShowDialog();
+                    //MainViewModel.Start_Timer();
+                    //p.Show();
+
+                    // restart the program
+                    System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                    Application.Current.Shutdown();
                 }
             });
         }

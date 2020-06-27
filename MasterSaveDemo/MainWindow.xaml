@@ -58,11 +58,11 @@
 
                 <Grid Grid.Row="0">
                     <HamburgerMenu:HamburgerMenu x:Name="hamburger" MaxWidth="230" Background="#49c7ab" MenuIconColor="#236084" SelectionIndicatorColor="#80fbdd" MenuItemForeground="#80fbdd" HorizontalAlignment="Left">
-                        <HamburgerMenu:HamburgerMenuItem x:Name="Home_Page_Button" Icon="/Images/home.png" Text="Trang chủ" SelectionCommand="" IsEnabled="{Binding Enable_Home}" IsSelected="{Binding Selected_HOME}">
+                        <HamburgerMenu:HamburgerMenuItem x:Name="Home_Page_Button" Icon="/Images/home.png" Text="Trang chủ" IsEnabled="{Binding Enable_Home}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Selected">
                                 <i:InvokeCommandAction Command="{Binding Home_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                   CommandParameter="{Binding ElementName=this_}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>

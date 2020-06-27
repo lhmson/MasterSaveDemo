@@ -211,11 +211,29 @@ namespace MasterSaveDemo.ViewModel
         public STKDuocTraCuu SelectedSTK { get => _SelectedSTK; set { _SelectedSTK = value; OnPropertyChanged(); } }
         #endregion
 
+        #region Variables cua Thang
+        private string _ThongBao;
+        public string ThongBao
+        {
+            get { return _ThongBao; }
+            set { _ThongBao = value; OnPropertyChanged(); }
+        }
+
+        private bool _DialogOpen;
+        public bool DialogOpen
+        {
+            get { return _DialogOpen; }
+            set { _DialogOpen = value; OnPropertyChanged(); }
+        }
+        #endregion
+
         public ICommand SeeAllCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand NhapLaiVaoVon_All { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+        //lenh ben duoi do Thang them vao
+        public ICommand DialogOK { get; set; }
 
 
         public TraCuu_ViewModel()
@@ -303,14 +321,45 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                if (DateTime.Now.TimeOfDay.TotalMinutes >= 13 * 60 + 30)
+                if (DateTime.Now.TimeOfDay.TotalMinutes >= 8 * 60 + 30)
                 {
-                    NhapLaiVaoVon.Ins.AllToday();
+                    List<string>DS_STK =  NhapLaiVaoVon.Ins.AllToday();
+                    ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>();
+                    if (DS_STK.Count > 0)
+                    {
+                        ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+                        ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+                        foreach (string mstk in DS_STK)
+                        {
+                            SOTIETKIEM stk = STK_TABLE.Where(x => x.MaSoTietKiem == mstk).Single();
+                            LOAITIETKIEM ltk = LTK_TABLE.Where(x => x.MaLoaiTietKiem == stk.MaLoaiTietKiem).Single();
+                            STKDuocTraCuu temp = new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+                            ListSoTietKiem.Add(temp);
+                        }
+                        int count = 1;
+                        for (int i = 0; i < ListSoTietKiem.Count(); i++)
+                        {
+                            ListSoTietKiem[i].STT = count.ToString();
+                            count++;
+                        }
+                        DialogOpen = true;
+                        ThongBao = "Đã nhập lãi vào vốn cho " + DS_STK.Count().ToString() + " sổ tiết kiệm.";
+                    }
+                    else
+                    {
+                        DialogOpen = true;
+                        ThongBao = "Không có sổ tiết kiệm nào cần nhập lãi hôm nay.";
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Chưa tới thời điểm nhập lãi vào vốn!");
+                    DialogOpen = true;
+                    ThongBao = "Chưa tới giờ nhập lãi.";
                 }
+            });
+            DialogOK = new RelayCommand<Object>((p) => { return true; }, (p) =>
+            {
+                DialogOpen = false;
             });
         }
     }

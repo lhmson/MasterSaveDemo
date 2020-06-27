@@ -17,6 +17,7 @@ namespace MasterSaveDemo.ViewModel
 		//Bien chua ket qua kiem tra hop le
 		private bool Result_KiemTraHopLe;
 		private bool Result_KiemTraNhapLai; //true = da nhap lai moi nhat, false = chua nhap lai moi nhat
+		private string Result_Dialog;
 		//Khai bao cac command
 		public ICommand Click_MSTKCommand { get; set; }
 		public ICommand MSTK_TextChangedCommand { get; set; }
@@ -28,6 +29,8 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand STKEnterKeyDown_Command { get; set; }
 		public ICommand SoTienRutEnterKeyDown_Command { get; set; }
 		public ICommand Click_CopySoDuSTRCommand { get; set; }
+		public ICommand DialogOK { get; set; }
+		public ICommand DialogCancel { get; set; }
 
 		#region Binding tu view
 		//Ngay Rut, kieu string
@@ -93,7 +96,7 @@ namespace MasterSaveDemo.ViewModel
 			get { return _NgayDaoHan; }
 			set { _NgayDaoHan = value; OnPropertyChanged(); }
 		}
-		//Thong Bao //da bi xoa, nho bo di
+
 		private string _ThongBao;
 
 		public string ThongBao
@@ -208,11 +211,29 @@ namespace MasterSaveDemo.ViewModel
 			set { _DialogOpen = value; OnPropertyChanged(); }
 		}
 
+		private string _IsCancelVisible;
+		public string IsCancelVisible
+		{
+			get { return _IsCancelVisible; }
+			set { _IsCancelVisible = value; OnPropertyChanged(); }
+		}
+
+		//Quy Dinh
+		private string _QuyDinhRutTien;
+
+		public string QuyDinhRutTien
+		{
+			get { return _QuyDinhRutTien; }
+			set { _QuyDinhRutTien = value; OnPropertyChanged(); }
+		}
+
+
 		#endregion
 		#region Khoi tao
 		//Khoi tao viewmodel
 		public RutTien_ViewModel()
 		{
+			CapNhatQuyDinh();
 			Reset_Check();
 			CreatePR = true;
 			Result_KiemTraNhapLai = true;
@@ -223,12 +244,12 @@ namespace MasterSaveDemo.ViewModel
 			{
 				if (!CapNhatThongTin())
 				{
+					Result_KiemTraNhapLai = true;
 					Result_KiemTraHopLe = false;
 					ThongBao = "Lấy thông tin thất bại";
 				}
 				else
 				{
-					KiemTraNhapLai();
 					Result_KiemTraHopLe = false;
 				}
 			});
@@ -237,12 +258,12 @@ namespace MasterSaveDemo.ViewModel
 			 {
 				 if (!CapNhatThongTin())
 				 {
+					 Result_KiemTraNhapLai = true;
 					 Result_KiemTraHopLe = false;
 					 ThongBao = "Lấy thông tin thất bại";
 				 }
 				 else
 				 {
-					 KiemTraNhapLai();
 					 Result_KiemTraHopLe = false;
 				 }
 			 });
@@ -280,6 +301,7 @@ namespace MasterSaveDemo.ViewModel
 					if (Result_KiemTraHopLe == true)
 					{
 						DialogOpen = true;
+						IsCancelVisible = "Collapsed";
 						ThongBao = "Thông tin phiếu rút hợp lệ";
 					}
 				}
@@ -297,6 +319,7 @@ namespace MasterSaveDemo.ViewModel
 					if (Result_KiemTraHopLe == true)
 					{
 						DialogOpen = true;
+						IsCancelVisible = "Collapsed";
 						ThongBao = "Thông tin phiếu rút hợp lệ";
 					}
 				}
@@ -312,6 +335,7 @@ namespace MasterSaveDemo.ViewModel
 				{
 					Result_KiemTraHopLe = false;
 					DialogOpen = true;
+					IsCancelVisible = "Collapsed";
 					ThongBao += "Đã tạo phiếu rút thành công.";
 				}
 			});
@@ -339,28 +363,33 @@ namespace MasterSaveDemo.ViewModel
 			});
 			Click_CapNhatCommand = new RelayCommand<Button>((p) => { return !Result_KiemTraNhapLai; }, (p) =>
 			{
-				if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))
+				MessageBoxResult re = MessageBox.Show("Bạn có chắc muốn nhập lãi vào vốn? Tiến trình này không thể hoàn tác.", "Thông báo", MessageBoxButton.OKCancel);
+				if (re == MessageBoxResult.OK)
 				{
-					ThongBao = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
-					DaoHan_Check = "Error";
-					ThongBao_DaoHan = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
-				}
-				else
-				{
-					Result_KiemTraHopLe = false;
-					//DaoHan_Check = "Check";
-					//ThongBao_DaoHan = "Đã cập nhật lãi vào số dư";
-					DialogOpen = true;
-					ThongBao = "Đã cập nhật lãi vào số dư";
-					if (!CapNhatThongTin())
+					if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))
 					{
-						SoTietKiem_Check = "Error";
-						ThongBao_MaSo = "Lấy thông tin thất bại";
-						ThongBao = "Lấy thông tin thất bại";
+						ThongBao = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
+						DaoHan_Check = "Error";
+						ThongBao_DaoHan = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
 					}
 					else
 					{
 						Result_KiemTraHopLe = false;
+						//DaoHan_Check = "Check";
+						//ThongBao_DaoHan = "Đã cập nhật lãi vào số dư";
+						DialogOpen = true;
+						IsCancelVisible = "Collapsed";
+						ThongBao = "Đã cập nhật lãi vào số dư";
+						if (!CapNhatThongTin())
+						{
+							SoTietKiem_Check = "Error";
+							ThongBao_MaSo = "Lấy thông tin thất bại";
+							ThongBao = "Lấy thông tin thất bại";
+						}
+						else
+						{
+							Result_KiemTraHopLe = false;
+						}
 					}
 				}
 			});
@@ -374,6 +403,16 @@ namespace MasterSaveDemo.ViewModel
 				{
 
 				}
+			});
+			DialogOK = new RelayCommand<Button>((p) => { return true; }, (p) =>
+			{
+				Result_Dialog = "OK";
+				DialogOpen = false;
+			});
+			DialogCancel = new RelayCommand<Button>((p) => { return IsCancelVisible == "Visible"; }, (p) =>
+			{
+				Result_Dialog = "Cancel";
+				DialogOpen = false;
 			});
 		}
 		public void Reset_Check()
@@ -447,7 +486,6 @@ namespace MasterSaveDemo.ViewModel
 					else
 					{
 						BindingLichSu(temp.MaSoTietKiem);
-						KiemTraNhapLai();
 						//Thong bao da dong so o day
 						SoTietKiem_Check = "Error";
 						ThongBao_MaSo = "Sổ tiết kiệm này đã đóng!";
@@ -500,6 +538,13 @@ namespace MasterSaveDemo.ViewModel
 
 			try
 			{
+				CapNhatThongTin();
+				if(SoTietKiem_Check == "Error")
+				{
+					Result_KiemTraHopLe = false;
+					Result_KiemTraNhapLai = true;
+					return true;
+				}
 				SOTIETKIEM info_stk = Tim_MSTK(MaSoTietKiem);
 				LOAITIETKIEM info_loaitietkiem = Tim_MaLoaiTietKiem(info_stk.MaLoaiTietKiem);
 				if(info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today )
@@ -536,7 +581,7 @@ namespace MasterSaveDemo.ViewModel
 						}
 					}
 				}
-				if (SoTienRut == null)
+				if (String.IsNullOrEmpty(SoTienRut))
 				{
 					SoTienRut_Check = "Error";
 					ThongBao_TienRut = "Vui lòng nhập số tiền rút.";
@@ -629,8 +674,7 @@ namespace MasterSaveDemo.ViewModel
 					info_PhieuRut.MaPhieuRut = "PR0000000";
 					decimal temp_dem = DataProvider.Ins.DB.PHIEURUTs.Count();
 					string temp = (temp_dem+1).ToString();
-					info_PhieuRut.MaPhieuRut.Remove(0,temp.Length);
-					info_PhieuRut.MaPhieuRut += temp;
+					info_PhieuRut.MaPhieuRut = info_PhieuRut.MaPhieuRut.Remove(9 - temp.Length, temp.Length) + temp;
 				}
 				info_PhieuRut.MaSoTietKiem = this.MaSoTietKiem;
 				info_PhieuRut.NgayRut = DateTime.Today;
@@ -658,14 +702,7 @@ namespace MasterSaveDemo.ViewModel
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
 				}
 
-				if (!CapNhatThongTin())
-				{
-					ThongBao = "Lấy thông tin thất bại";
-				}
-				else
-				{
-					Result_KiemTraHopLe = false;	
-				}
+				MaSoTietKiem = "";
 				SoTienRut = "";
 
 				return true;
@@ -707,6 +744,18 @@ namespace MasterSaveDemo.ViewModel
 			catch(Exception e)
 			{
 				return false;
+			}
+		}
+		private void CapNhatQuyDinh()
+		{
+			QuyDinhRutTien = "Loại tiết kiệm có kỳ hạn chỉ được rút khi quá kỳ hạn và phải rút hết toàn bộ, khi này tiền lãi được tính với mức lãi suất của loại không kỳ hạn.\n"
+							+ "Loại tiết kiệm không kỳ hạn được rút khi gửi trên số ngày tối thiểu theo quy định và có thể rút số tiền nhỏ hơn hoặc bằng số dư hiện có.\n";
+			if (GetThamSo("DongSoTuDong") == 1)
+			{
+				QuyDinhRutTien += "Sổ sau khi rút hết tiền sẽ tự động đóng.";
+			}
+			else
+			{
 			}
 		}
         #endregion

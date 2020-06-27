@@ -162,7 +162,7 @@
             <Grid Grid.Row="0">
                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  
                     materialDesign:ButtonProgressAssist.IsIndeterminate="False"
-                    Content="Danh sách nhân viên" FontSize="18"
+                    Content="{Binding TenDanhSachNhom}" FontSize="18"
                     VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Row="1">

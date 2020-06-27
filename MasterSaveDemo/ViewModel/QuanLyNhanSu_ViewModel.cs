@@ -113,6 +113,14 @@ namespace MasterSaveDemo.ViewModel
             set { _TenDangNhap = value; OnPropertyChanged(); }
         }
 
+        //Tên thanh trên bảng List
+        private string _TenDanhSachNhom;
+        public string TenDanhSachNhom
+        {
+            get => _TenDanhSachNhom;
+            set { _TenDanhSachNhom = value; OnPropertyChanged(); }
+        }
+
         private string _txtTenNhomQuyen;
         public string txtTenNhomQuyen
         {
@@ -352,6 +360,7 @@ namespace MasterSaveDemo.ViewModel
 
         public QuanLyNhanSu_ViewModel()
         {
+            TenDanhSachNhom = "DANH SÁCH NGƯỜI DÙNG";
             isEdit = true;
             LoadData();
             LoadDataPhanQuyen();
@@ -360,9 +369,11 @@ namespace MasterSaveDemo.ViewModel
             // show elements used for adding
             AddNguoiDungCommand = new RelayCommand<object>((p) => {
                 if (VisibilityOfListPhanQuyen == Visibility.Visible)
-                    if (SelectedPhanQuyen != null)
-                        if (SelectedPhanQuyen.EnabledCheckBox == true)
+                    foreach (var item in ListPhanQuyen)
+                        if (item.EnabledCheckBox == true)
                             return false;
+                if (VisibilityOfEdit == Visibility.Visible)
+                    return false;
 
                 return true; },
                 (p) => {
@@ -400,7 +411,11 @@ namespace MasterSaveDemo.ViewModel
 
             // show elements used for editing
             EditNguoiDungCommand = new RelayCommand<object>((p) => 
-            { return ((SelectedPhanQuyen != null || SelectedItemNguoiDung != null) && isEdit); },
+            {
+                if (VisibilityOfAdd == Visibility.Visible)
+                    return false;
+
+                return ((SelectedPhanQuyen != null || SelectedItemNguoiDung != null) && isEdit); },
                 (p) => {
                    
                     if (VisibilityOfListNguoiDung==Visibility.Visible && SelectedItemNguoiDung != null) // Edit Nhóm người dùng
@@ -638,11 +653,14 @@ namespace MasterSaveDemo.ViewModel
                 // selected index = 1: choosing list of PhanQuyen
                 if (SelectedIndexCbb == 0)
                 {
+                    TenDanhSachNhom = "DANH SÁCH NGƯỜI DÙNG";
+                    VisibilityOfTenNhomQuyen = Visibility.Hidden;
                     VisibilityOfListNguoiDung = Visibility.Visible;
                     VisibilityOfListPhanQuyen = Visibility.Hidden;
                 }
                 else
                 {
+                    TenDanhSachNhom = "DANH SÁCH NHÓM QUYỀN";
                     VisibilityOfListNguoiDung = Visibility.Hidden;
                     VisibilityOfListPhanQuyen = Visibility.Visible;
                     // co muon an may cai nay ko?

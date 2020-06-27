@@ -360,9 +360,11 @@ namespace MasterSaveDemo.ViewModel
             // show elements used for adding
             AddNguoiDungCommand = new RelayCommand<object>((p) => {
                 if (VisibilityOfListPhanQuyen == Visibility.Visible)
-                    if (SelectedPhanQuyen != null)
-                        if (SelectedPhanQuyen.EnabledCheckBox == true)
+                    foreach (var item in ListPhanQuyen)
+                        if (item.EnabledCheckBox == true)
                             return false;
+                if (VisibilityOfEdit == Visibility.Visible)
+                    return false;
 
                 return true; },
                 (p) => {
@@ -400,7 +402,11 @@ namespace MasterSaveDemo.ViewModel
 
             // show elements used for editing
             EditNguoiDungCommand = new RelayCommand<object>((p) => 
-            { return ((SelectedPhanQuyen != null || SelectedItemNguoiDung != null) && isEdit); },
+            {
+                if (VisibilityOfAdd == Visibility.Visible)
+                    return false;
+
+                return ((SelectedPhanQuyen != null || SelectedItemNguoiDung != null) && isEdit); },
                 (p) => {
                    
                     if (VisibilityOfListNguoiDung==Visibility.Visible && SelectedItemNguoiDung != null) // Edit Nhóm người dùng
@@ -638,6 +644,7 @@ namespace MasterSaveDemo.ViewModel
                 // selected index = 1: choosing list of PhanQuyen
                 if (SelectedIndexCbb == 0)
                 {
+                    VisibilityOfTenNhomQuyen = Visibility.Hidden;
                     VisibilityOfListNguoiDung = Visibility.Visible;
                     VisibilityOfListPhanQuyen = Visibility.Hidden;
                 }

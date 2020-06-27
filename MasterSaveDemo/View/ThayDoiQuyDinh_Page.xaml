@@ -225,6 +225,7 @@
                                     <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"/>
                                     <GridViewColumn Header="Thời gian gửi tối thiểu" DisplayMemberBinding="{Binding ThoiGianGuiToiThieu}"/>
                                     <GridViewColumn Header="Quy định số tiền được rút" DisplayMemberBinding="{Binding QuyDinhSoTienRut}"/>
+                                    <GridViewColumn Header="Đang sử dụng" DisplayMemberBinding="{Binding DangSuDung}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

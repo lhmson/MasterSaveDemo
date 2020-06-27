@@ -227,7 +227,7 @@ namespace MasterSaveDemo.ViewModel
         #region Function
         private void LoadData()
         {
-            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung != 0);
+            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs;
 
             ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
@@ -407,17 +407,28 @@ namespace MasterSaveDemo.ViewModel
         }
         private void DeleteLTK()
         {
+            // Count SoTietKiem using SelectedLTK as LoaiTietKiem
             List<SOTIETKIEM> list = DataProvider.Ins.DB.SOTIETKIEMs.ToList();
             var listSTK = from stk in list
                           where stk.MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem
                           select stk;
 
+            // if not used by any STKs
             if( listSTK.Count() == 0)
             {
                 SelectedItemLTK.DangSuDung = 0;
                 DataProvider.Ins.DB.SaveChanges();
 
-                ListLTK.Remove(SelectedItemLTK);
+                var temp = SelectedItemLTK;
+                for (int i = 0; i < ListLTK.Count(); i++)
+                {
+                    if (ListLTK[i].MaLoaiTietKiem == SelectedItemLTK.MaLoaiTietKiem)
+                    {
+                        ListLTK.RemoveAt(i);
+                        ListLTK.Insert(i, temp);
+                        break;
+                    }
+                }
                 ResetTextbox();
             }
             else
@@ -631,17 +642,23 @@ namespace MasterSaveDemo.ViewModel
                 if (SelectedIndexCbb == 0)
                 {
                     NameOfList = "Danh sách loại tiết kiệm";
+                    SelectedItemLTK = null;
+
                     VisibilityOfListLTK = Visibility.Visible;
                     VisibilityOfListThamSo = Visibility.Hidden;
 
                     VisibilityOfEditThamSo = Visibility.Hidden;
+                    VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
                 } else
                 {
                     NameOfList = "Danh sách tham số";
+                    SelectedItemThamSo = null;
+
                     VisibilityOfListThamSo = Visibility.Visible;
                     VisibilityOfListLTK = Visibility.Hidden;
 
                     VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
+                    VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
                 }
 
             });

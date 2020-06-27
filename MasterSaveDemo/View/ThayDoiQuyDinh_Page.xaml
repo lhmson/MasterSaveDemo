@@ -116,8 +116,8 @@
                          Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          IsReadOnly="True"/>
                     </Grid>
-                    
-                    
+
+
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -289,7 +289,11 @@
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListLTK}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="189*"/>
+                        <ColumnDefinition Width="257*"/>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListLTK}" Grid.ColumnSpan="2" >
                         <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" 
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
                           SelectionMode="Single" Grid.ColumnSpan="2">
@@ -305,7 +309,7 @@
                             </ListView.View>
                         </ListView>
                     </materialDesign:Card>
-                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListThamSo}">
+                    <materialDesign:Card Margin="128,5,128,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListThamSo}" Grid.ColumnSpan="2">
                         <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}"
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=TwoWay}"
                           SelectionMode="Single" Grid.ColumnSpan="2">

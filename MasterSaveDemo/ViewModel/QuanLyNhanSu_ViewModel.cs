@@ -360,7 +360,7 @@ namespace MasterSaveDemo.ViewModel
 
         public QuanLyNhanSu_ViewModel()
         {
-            TenDanhSachNhom = "DANH SÁCH NGƯỜI DÙNG";
+            TenDanhSachNhom = "Danh sách người dùng";
             isEdit = true;
             LoadData();
             LoadDataPhanQuyen();
@@ -653,14 +653,14 @@ namespace MasterSaveDemo.ViewModel
                 // selected index = 1: choosing list of PhanQuyen
                 if (SelectedIndexCbb == 0)
                 {
-                    TenDanhSachNhom = "DANH SÁCH NGƯỜI DÙNG";
+                    TenDanhSachNhom = "Danh sách người dùng";
                     VisibilityOfTenNhomQuyen = Visibility.Hidden;
                     VisibilityOfListNguoiDung = Visibility.Visible;
                     VisibilityOfListPhanQuyen = Visibility.Hidden;
                 }
                 else
                 {
-                    TenDanhSachNhom = "DANH SÁCH NHÓM QUYỀN";
+                    TenDanhSachNhom = "Danh sách phân quyền";
                     VisibilityOfListNguoiDung = Visibility.Hidden;
                     VisibilityOfListPhanQuyen = Visibility.Visible;
                     // co muon an may cai nay ko?

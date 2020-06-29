@@ -9,11 +9,39 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MasterSaveDemo.ViewModel
 {
     public class MoSo_ViewModel : BaseViewModel
     {
+
+        #region Singleton
+        private static MoSo_ViewModel _ins;
+        public static MoSo_ViewModel Ins
+        {
+            get
+            {
+                if (_ins == null) _ins = new MoSo_ViewModel();
+                return _ins;
+            }
+            set
+            {
+                _ins = value;
+            }
+        }
+
+        public void reset_changepage()
+        {
+            MaSoTietKiem = "";
+            resetCombobox_LoaiTietKiem();
+            TenKhachHang = "";
+            CMND = "";
+            DiaChi = "";
+            NgayDaoHanKeTiep = "";
+            SoTienGuiBanDau = "";
+        }
+        #endregion
         #region The sub functions by Sanh
         private string FormatDateTime(string date)
         {
@@ -152,10 +180,19 @@ namespace MasterSaveDemo.ViewModel
         }
 
         #endregion
+
         private ObservableCollection<LOAITIETKIEM> _List;
         public ObservableCollection<LOAITIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
         #region Variables
+
+        private bool isMoSo = false;
+        private bool _Enable_KiemTraHopLe;
+        public bool Enable_KiemTraHopLe { get => _Enable_KiemTraHopLe; set { _Enable_KiemTraHopLe = value; OnPropertyChanged(); } }
+
+        private bool _Enable_ThucHienGiaoDich;
+        public bool Enable_ThucHienGiaoDich { get => _Enable_ThucHienGiaoDich; set { _Enable_ThucHienGiaoDich = value; OnPropertyChanged(); } }
+
         private string _NgayMoSo;
         public  string NgayMoSo { get => _NgayMoSo; set { _NgayMoSo = value; OnPropertyChanged(); } }
 
@@ -201,10 +238,18 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ResetLTKCommand { get; set; }
         public ICommand GetCodeSTKcommand { get; set; }
         public ICommand MoSoCommand { get; set; }
-        public ICommand LoadedCommand { get; set; }
+        public ICommand TenKH_TextChangedCommand { get; set; }
+        public ICommand DiaChi_TextChangedCommand { get; set; }
+        public ICommand SoTienGui_TextChangedCommand { get; set; }
+        public ICommand LTK_SelectionChangedCommand { get; set; }
+        public ICommand CMND_TextChangedCommand { get; set; }
+
+        // Test change page
+        public ICommand LostFocusPageCommand { get; set; }
 
         public MoSo_ViewModel()
         {
+
             NgayDaoHanKeTiep = "";
             // Display List LOAITIETKIEM
             List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -241,7 +286,11 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 string error = CheckValid();
-                if (error == "") System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                if (error == "")
+                {
+                    System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                    isMoSo = true;
+                }
                 else
                     System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK); 
             });
@@ -249,7 +298,7 @@ namespace MasterSaveDemo.ViewModel
             //Button Mo So 
             MoSoCommand = new RelayCommand<object>((p) =>
             {
-                return true;
+                return isMoSo;
             }, (p) =>
             {
                 string error = CheckValid();
@@ -274,14 +323,51 @@ namespace MasterSaveDemo.ViewModel
                 }
             });
 
-            LoadedCommand = new RelayCommand<object>((p) =>
+
+            LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
+            });
+
+            #region TextChanged Events
+            TenKH_TextChangedCommand = new RelayCommand<object>((p) =>
             {
                 return true;
             }, (p) =>
             {
-                List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-                resetCombobox_LoaiTietKiem();
+                isMoSo = false;
             });
+
+            DiaChi_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+
+            SoTienGui_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+
+            LTK_SelectionChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+
+            CMND_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                isMoSo = false;
+            });
+            #endregion
         }
     }
 }

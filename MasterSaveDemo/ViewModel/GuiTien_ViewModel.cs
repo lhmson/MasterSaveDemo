@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-//using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MasterSaveDemo.ViewModel
@@ -15,12 +14,36 @@ namespace MasterSaveDemo.ViewModel
     public class GuiTien_ViewModel : BaseViewModel
     {
         #region variables
+        private string _Notify;
+
+        public string Notify
+        {
+            get { return _Notify; }
+            set { _Notify = value; OnPropertyChanged(); }
+        }
+
+        private bool _OpenDialog;
+
+        public bool OpenDialog
+        {
+            get { return _OpenDialog; }
+            set { _OpenDialog = value; OnPropertyChanged();}
+        }
+       
         private List<ListLichSuPhieuGui> _ListLichSuGD;
 
         public List<ListLichSuPhieuGui> ListLichSuGD
         {
             get { return _ListLichSuGD; }
             set { _ListLichSuGD = value; OnPropertyChanged(); }
+        }
+
+        private string _SoTienGuiToiThieu;
+
+        public string SoTienGuiToiThieu
+        {
+            get { return _SoTienGuiToiThieu; }
+            set { _SoTienGuiToiThieu = value; OnPropertyChanged(); }
         }
 
         private string _MaPG;
@@ -69,20 +92,7 @@ namespace MasterSaveDemo.ViewModel
             set { _Notify_money = value; OnPropertyChanged(); }
         }
 
-        private string _Notify_Done;
-
-        public string Notify_Done
-        {
-            get { return _Notify_Done; }
-            set { _Notify_Done = value; OnPropertyChanged(); }
-        }
-        private string _Done;
-
-        public string Done
-        {
-            get { return _Done; }
-            set { _Done = value; OnPropertyChanged(); }
-        }
+        
         private string _MaSoTietKiem_check;
         public string MaSoTietKiem_check
         {
@@ -166,6 +176,15 @@ namespace MasterSaveDemo.ViewModel
             get { return _NgayDaoHanKeTiep; }
             set { _NgayDaoHanKeTiep = value; OnPropertyChanged(); }
         }
+
+        private bool _CreateReport;
+
+        public bool CreateReport
+        {
+            get { return _CreateReport; }
+            set { _CreateReport = value; OnPropertyChanged(); }
+        }
+
         #endregion
         #region function 
         public void BindingLichSu(string mastk)
@@ -175,12 +194,28 @@ namespace MasterSaveDemo.ViewModel
             ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
             var lichsu = from list in List_PG
                          where list.MaSoTietKiem == mastk
-                         orderby list.NgayGui descending
+                         orderby list.MaPhieuGui descending
                          select new ListLichSuPhieuGui(list.MaPhieuGui, list.NgayGui.ToString("dd/MM/yyyy"), list.SoTienGui.ToString());
             foreach (var ls in lichsu)
                 ListLichSuGD.Add(ls);
         }
-        
+        private void Init()
+        {
+            
+            SoTienGui_check = "None";
+            NgayDaoHanKeTiep_check = "None";
+            MaSoTietKiem_check = "None";
+            TenKhachHang = "";
+            SoDu = "";
+            SoCMND = "";
+            TenLoaiTietKiem = "";
+            NgayDaoHanKeTiep = "";
+            SoTienGui = "";
+            Notify_date = "";
+            Notify_Ma = "";
+            Notify_money = "";
+            
+        }
         private SOTIETKIEM search_MaSo(string MaSo)
         {
             ObservableCollection<SOTIETKIEM> List_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
@@ -224,7 +259,6 @@ namespace MasterSaveDemo.ViewModel
         {
             try
             {
-                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
                 if (MaSoTietKiem == "" || MaSoTietKiem == null)
                 {
                     Notify_Ma="Sổ chưa được tạo mã sổ";
@@ -232,41 +266,44 @@ namespace MasterSaveDemo.ViewModel
                 }
                 else
                 {
-                    MaSoTietKiem_check = "Check";
+                    MaSoTietKiem_check = "None";
                     Notify_Ma = "";
                 }
-                decimal STG_TT = decimal.Parse(search_ThamSo("TienGuiThemToiThieu"));
-                if (decimal.Parse(SoTienGui) < STG_TT)
+                if (SoTienGui == null || SoTienGui == "")
+                {
+                    Notify_money = "Chưa nhập số tiền gửi";
+                    SoTienGui_check = "Error";
+                } else
+                if (decimal.Parse(SoTienGui) < decimal.Parse(SoTienGuiToiThieu))
                 {
                     Notify_money = "Số tiền gửi tối thiểu không đủ";
                     SoTienGui_check = "Error";
-                }
-                else
+                } else
+                if (decimal.Parse(SoTienGui) >= decimal.Parse(SoTienGuiToiThieu))
                 {
-                    SoTienGui_check = "Check";
+                    SoTienGui_check = "None";
                     Notify_money = "";
                 }
-                
                 if (NgayGui != NgayDaoHanKeTiep && TenLoaiTietKiem != "Không kì hạn")
                 {
                     Notify_date = "Không thể gửi hôm nay";
                     NgayDaoHanKeTiep_check = "Error";
                 }
-                else 
+                if (TenLoaiTietKiem== "Không kì hạn")
                 {
-                    NgayDaoHanKeTiep_check = "Check";
-                    Notify_date = "";
+                    NgayDaoHanKeTiep_check = "None";
+                    Notify_date = ""; 
                 }
                 if (MaSoTietKiem_check == "Error" || SoTienGui_check == "Error" || NgayDaoHanKeTiep_check == "Error")
                 {
                     CanCreate = false;
-                    Done = "Error";
-                    Notify_Done = "Chưa thể tạo phiếu gửi";
                 }
                 else
                 {
                     CanCreate = true;
-                    Done = "Check";
+                    
+                    Notify = "Thông tin phiếu gửi hợp lệ";
+                    OpenDialog = true;
                 }
             }
             catch (Exception ex)
@@ -289,39 +326,82 @@ namespace MasterSaveDemo.ViewModel
             int tmp = List_PG.Count();
             return "PG" + formatPG((tmp + 1).ToString());
         }
+        private void ExecuteSTK()
+        {
+            SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
+            if (stk == null)
+            {
+                MaSoTietKiem_check = "Error";
+                Notify_Ma = "Mã STK không đúng hoặc không tồn tại, kiểm tra xem đã đúng định dạng hay chưa";
+            }
+            else
+            if (stk.NgayDongSo != null)
+            {
+                MaSoTietKiem_check = "Error";
+                Notify_Ma = "Sổ đã đóng không thể gửi tiền";
+            }
+            else
 
+            {
+                
+                SoTienGui_check = "None";
+                NgayDaoHanKeTiep_check = "None";
+                MaSoTietKiem_check = "None";
+                TenKhachHang = stk.TenKhachHang;
+                TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
+                if (TenLoaiTietKiem != "Không kì hạn")
+                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
+                else NgayDaoHanKeTiep = "Không xác định";
+                SoCMND = stk.SoCMND;
+                SoDu = stk.SoDu.ToString();
+                SoTienGui = "";
+                BindingLichSu(stk.MaSoTietKiem);
+            }
+        }
         #endregion
-        
+        public ICommand MSTK_TextChangedCommand { get; set; }
         public ICommand CheckoutCommand { get; set; }
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
         public ICommand EnterKeyDown_Command { get; set; }
+        
         public GuiTien_ViewModel()
         {
+            Init();
+            OpenDialog = false;
+
             NgayGui = DateTime.Now.ToString("dd/MM/yyyy");
-            Done = "None";
+            
             SoTienGui_check = "None";
             NgayDaoHanKeTiep_check = "None";
             MaSoTietKiem_check = "None";
+            SoTienGuiToiThieu = (search_ThamSo("TienGuiThemToiThieu"));
+            CreateReport = true;
+            MSTK_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
+            {
+                try
+                {
+                    Init();
+                }
+                catch (Exception e)
+                {
+
+                }
+            });
             ShowINFO = new RelayCommand<object>((p) =>
             {
                 return true;
             }, (p) =>
             {
-                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
-                if (stk != null)
-                {
-                    Done = "None";
-                    SoTienGui_check = "None";
-                    NgayDaoHanKeTiep_check = "None";
-                    MaSoTietKiem_check = "None";
-                    TenKhachHang = stk.TenKhachHang;
-                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
-                    TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
-                    SoCMND = stk.SoCMND;
-                    SoDu = stk.SoDu.ToString();
-                    BindingLichSu(stk.MaSoTietKiem);
-                }
+                ExecuteSTK();
+                
+            });
+            EnterKeyDown_Command = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                ExecuteSTK();
             });
             CheckCommand = new RelayCommand<object>((p) =>
             {
@@ -340,14 +420,15 @@ namespace MasterSaveDemo.ViewModel
             {
                 CheckValid();
 
-                if (CanCreate == true) ;
+                if (CanCreate == true)
                 {
                     
+                    string mapg = GetCodeMPG();
                     PHIEUGUI Phieugui = new PHIEUGUI()
                     {
-                        MaPhieuGui = GetCodeMPG(),
+                        MaPhieuGui = mapg,
                         MaSoTietKiem = MaSoTietKiem,
-                        NgayGui = DateTime.Parse(NgayGui),
+                        NgayGui = DateTime.Now,
                         SoTienGui = int.Parse(SoTienGui),
                     };
                     //edit PhieuGui
@@ -358,28 +439,18 @@ namespace MasterSaveDemo.ViewModel
                     SotietKiem.SoDu += decimal.Parse(SoTienGui);             
                     DataProvider.Ins.DB.SaveChanges();
                     BindingLichSu(MaSoTietKiem);
-                    Done = "Check";
-                    Notify_Done = "Đã tạo phiếu gửi thành công";
-                }
-            });
-            EnterKeyDown_Command = new RelayCommand<object>((p) =>
-            {
-                return true;
-            }, (p)=>
-            {
-                SOTIETKIEM stk = search_MaSo(MaSoTietKiem);
-                if (stk != null)
-                {
-                    Done = "None";
-                    SoTienGui_check = "None";
-                    NgayDaoHanKeTiep_check = "None";
-                    MaSoTietKiem_check = "None";
-                    TenKhachHang = stk.TenKhachHang;
-                    NgayDaoHanKeTiep = stk.NgayDaoHanKeTiep.ToString("dd/MM/yyyy");
-                    TenLoaiTietKiem = search_TenLTK(stk.MaLoaiTietKiem);
-                    SoCMND = stk.SoCMND;
-                    SoDu = stk.SoDu.ToString();
-                    BindingLichSu(stk.MaSoTietKiem);
+
+                    Notify = "Đã tạo phiếu gửi thành công";
+                    OpenDialog = true;
+                    if (CreateReport==true)
+                    {
+                        PhieuGui_PrintPreview_ViewModel PhieuGuiVM = new PhieuGui_PrintPreview_ViewModel(mapg,TenKhachHang,NgayGui,SoTienGui);
+                        PhieuGui_PrintPreview PhieuGui = new PhieuGui_PrintPreview(PhieuGuiVM);
+                        PhieuGui.ShowDialog();
+                        
+                    }
+                    Init();
+                   
                 }
             });
         }

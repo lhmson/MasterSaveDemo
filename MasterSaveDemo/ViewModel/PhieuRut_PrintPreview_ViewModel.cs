@@ -12,80 +12,80 @@ using System.Windows.Controls;
 
 namespace MasterSaveDemo.ViewModel
 {
-    public class BaoCaoMoDong_PrintPreview_ViewModel : BaseViewModel
+    public class PhieuRut_PrintPreview_ViewModel : BaseViewModel
     {
         //---------------
 
 
 
         //---------------
-        private string _ThangBaoCao;
+        private string _NguoiTaoPhieu;
 
-        public string ThangBaoCao
+        public string NguoiTaoPhieu
         {
-            get { return _ThangBaoCao; }
-            set { _ThangBaoCao = value; OnPropertyChanged(); }
+            get { return _NguoiTaoPhieu; }
+            set { _NguoiTaoPhieu = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _NamBaoCao;
+        private string _MaPhieuRut;
 
-        public string NamBaoCao
+        public string MaPhieuRut
         {
-            get { return _NamBaoCao; }
-            set { _NamBaoCao = value; OnPropertyChanged(); }
+            get { return _MaPhieuRut; }
+            set { _MaPhieuRut = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _NgayLapBaoCao;
+        private string _NgayTaoPhieu;
 
-        public string NgayLapBaoCao
+        public string NgayTaoPhieu
         {
-            get { return _NgayLapBaoCao; }
-            set { _NgayLapBaoCao = value; OnPropertyChanged(); }
+            get { return _NgayTaoPhieu; }
+            set { _NgayTaoPhieu = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _MaBaoCao;
+        private string _TenKhachhang;
 
-        public string MaBaoCao
+        public string TenKhachhang
         {
-            get { return _MaBaoCao; }
-            set { _MaBaoCao = value; OnPropertyChanged(); }
+            get { return _TenKhachhang; }
+            set { _TenKhachhang = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _LoaiTietKiem;
+        private string _NgayRut;
 
-        public string LoaiTietKiem
+        public string NgayRut
         {
-            get { return _LoaiTietKiem; }
-            set { _LoaiTietKiem = value; OnPropertyChanged(); }
+            get { return _NgayRut; }
+            set { _NgayRut = value; OnPropertyChanged(); }
+        }
+        private string _SoTienRut;
+
+        public string SoTienRut
+        {
+            get { return _SoTienRut; }
+            set { _SoTienRut = value; OnPropertyChanged(); }
         }
 
         //---------------
-        private ObservableCollection<ListBaoCaoDongMo> _ListBaoCaoDMPP;
-
-        public ObservableCollection<ListBaoCaoDongMo> ListBaoCaoDMPP
-        {
-            get { return _ListBaoCaoDMPP; }
-            set { _ListBaoCaoDMPP = value; OnPropertyChanged(); }
-        }
+        
+        
         //--------------
 
         public ICommand CloseWindowCommand { get; set; }
         public ICommand Print_Command { get; set; }
 
-        public BaoCaoMoDong_PrintPreview_ViewModel(string MaBC, string Thang, string Nam, string LTK, ObservableCollection<ListBaoCaoDongMo> list)
+        public PhieuRut_PrintPreview_ViewModel(string MaPR, string TenKH, string Ngay, string Tien)
         {
-            ListBaoCaoDMPP = list;
-            NamBaoCao = Nam;
-            MaBaoCao = MaBC;
-            ThangBaoCao = Thang;
-            LoaiTietKiem = LTK;
-            NgayLapBaoCao = DateTime.Now.ToString("dd/MM/yyyy");
+            MaPhieuRut = MaPR;
+            TenKhachhang = TenKH;
+            NgayRut = Ngay;
+            SoTienRut = Tien;
+            NgayTaoPhieu = DateTime.Now.ToString("dd/MM/yyyy");
             CloseWindowCommand = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) => {
                 var ex = p as Window;
                 ex.Close();
 
             });
-
             Print_Command = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) =>
             {
                 var ex = p as Window;

@@ -1,4 +1,5 @@
-﻿using MasterSaveDemo.Model;
+﻿using MasterSaveDemo.Helper;
+using MasterSaveDemo.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace MasterSaveDemo.ViewModel
     public class GuiTien_ViewModel : BaseViewModel
     {
         #region variables
+        private bool Result_KiemTraNhapLai;
         private string _Notify;
 
         public string Notify
@@ -199,6 +201,52 @@ namespace MasterSaveDemo.ViewModel
             foreach (var ls in lichsu)
                 ListLichSuGD.Add(ls);
         }
+        private LOAITIETKIEM search_MaLTK(string mltk)
+        {
+            List<LOAITIETKIEM> List_LoaiTietKiem = DataProvider.Ins.DB.LOAITIETKIEMs.ToList();
+            foreach (LOAITIETKIEM ltk in List_LoaiTietKiem)
+            {
+                if (ltk.MaLoaiTietKiem == mltk)
+                    return ltk;
+            }
+            return null;
+        }
+        private bool KiemTraNhapLai()
+        {
+            try
+            {
+                Result_KiemTraNhapLai = true;
+                SOTIETKIEM info_stk = search_MaSo(MaSoTietKiem);
+                LOAITIETKIEM info_loaitietkiem = search_MaLTK(info_stk.MaLoaiTietKiem);
+                if (info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today)
+                {
+                    //khong the tinh lai do chua du so ngay gui toi thieu (xem quy dinh)
+                }
+                else
+                {
+                    if (info_loaitietkiem.KyHan != 0)
+                    {
+                        if (info_stk.NgayDaoHanKeTiep <= DateTime.Today.AddDays(info_loaitietkiem.KyHan))
+                        {
+                            Result_KiemTraNhapLai = false;
+                        }
+                    }
+                    else
+                    {
+                        if (info_stk.NgayDaoHanKeTiep != DateTime.Today.AddDays(1))
+                        {
+                            Result_KiemTraNhapLai = false;
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Result_KiemTraNhapLai = true;
+                return false;
+            }
+        }
         private void Init()
         {
             
@@ -259,6 +307,23 @@ namespace MasterSaveDemo.ViewModel
         {
             try
             {
+                if (!KiemTraNhapLai())
+                {
+                    NgayDaoHanKeTiep_check = "Error";
+                    Notify_date = "Lỗi, không xác định được thông tin đáo hạn.";
+                }
+                else
+                {
+                    if (Result_KiemTraNhapLai == false)
+                    {
+                        NgayDaoHanKeTiep_check = "Error";
+                        Notify_date = "Cần nhập lãi trước khi rút.";
+                    }
+                    else
+                    {
+                        
+                    }
+                }
                 if (MaSoTietKiem == "" || MaSoTietKiem == null)
                 {
                     Notify_Ma="Sổ chưa được tạo mã sổ";
@@ -364,14 +429,15 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
         public ICommand EnterKeyDown_Command { get; set; }
-        
+        public ICommand Click_CapNhatCommand { get; set; }
+
         public GuiTien_ViewModel()
         {
             Init();
             OpenDialog = false;
 
             NgayGui = DateTime.Now.ToString("dd/MM/yyyy");
-            
+            Result_KiemTraNhapLai = true;
             SoTienGui_check = "None";
             NgayDaoHanKeTiep_check = "None";
             MaSoTietKiem_check = "None";
@@ -411,7 +477,28 @@ namespace MasterSaveDemo.ViewModel
                 CheckValid();
                
             });
-
+            //button nhap lai vao von
+            Click_CapNhatCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                MessageBoxResult re = MessageBox.Show("Bạn có chắc muốn nhập lãi vào vốn? Tiến trình này không thể hoàn tác.", "Thông báo", MessageBoxButton.OKCancel);
+                if (re == MessageBoxResult.OK)
+                {
+                    if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))
+                    {
+                        Notify = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
+                        NgayDaoHanKeTiep_check = "Error";
+                        Notify_date = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
+                    }
+                    else
+                    {
+                        //DaoHan_Check = "Check";
+                        //ThongBao_DaoHan = "Đã cập nhật lãi vào số dư";
+                        OpenDialog = true;
+                        Notify = "Đã cập nhật lãi vào số dư";
+                        ExecuteSTK();
+                    }
+                }
+            });
             //Button Mo So 
             CheckoutCommand = new RelayCommand<object>((p) =>
             {

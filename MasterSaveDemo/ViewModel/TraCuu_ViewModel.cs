@@ -37,7 +37,8 @@ namespace MasterSaveDemo.ViewModel
 
             STK.TenKhachHang = TenKHSua;
             DataProvider.Ins.DB.SOTIETKIEMs.Add(STK);
-            MessageBox.Show("Chỉnh sửa sổ tiết kiệm thành công");
+            DialogOpen = true;
+            ThongBao = "Chỉnh sửa tên khách hàng thành công";
 
             STKDuocTraCuu STK_New = SelectedSTK;
             STK_New.TenKH = TenKHSua;
@@ -160,6 +161,26 @@ namespace MasterSaveDemo.ViewModel
             return res;
         }
 
+        private void Init_XemToanBo()
+        {
+            ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+            ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+
+            var results = from stk in STK_TABLE
+                          join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
+                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
+                          Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+            ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
+            #region fill id 
+            int count = 1;
+            for (int i = 0; i < ListSoTietKiem.Count(); i++)
+            {
+                ListSoTietKiem[i].STT = count.ToString();
+                count++;
+            }
+            #endregion
+        }
+
         #endregion
 
         #region Variables
@@ -238,6 +259,7 @@ namespace MasterSaveDemo.ViewModel
 
         public TraCuu_ViewModel()
         {
+            Init_XemToanBo();
             Search_Mode();
             XetQuyenNhapLai();
             NgayDaoHan = DateTime.Now;

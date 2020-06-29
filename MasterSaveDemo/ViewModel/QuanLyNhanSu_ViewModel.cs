@@ -19,6 +19,12 @@ namespace MasterSaveDemo.ViewModel
         #region Variables
         private bool isEdit;
 
+        private bool _DialogOpen;
+        public bool DialogOpen { get => _DialogOpen; set { _DialogOpen = value; OnPropertyChanged(); } }
+
+        private string _ThongBao;
+        public string ThongBao { get => _ThongBao; set { _ThongBao = value; OnPropertyChanged(); } }
+
         private ObservableCollection<NhanVien> _ListNhanVien;
         public ObservableCollection<NhanVien> ListNhanVien
         {
@@ -356,6 +362,8 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ConfirmCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand CbbSelectionChangedCommand { get; set; }
+        public ICommand DialogOK { get; set; }
+
         #endregion
 
         public QuanLyNhanSu_ViewModel()
@@ -366,6 +374,15 @@ namespace MasterSaveDemo.ViewModel
             LoadDataPhanQuyen();
             VisibilityOfListPhanQuyen = Visibility.Hidden;
             VisibilityOfTenNhomQuyen = Visibility.Hidden;
+            //DialogHost
+            DialogOK = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                DialogOpen = false;
+            });
+
             // show elements used for adding
             AddNguoiDungCommand = new RelayCommand<object>((p) => {
                 if (VisibilityOfListPhanQuyen == Visibility.Visible)
@@ -467,7 +484,9 @@ namespace MasterSaveDemo.ViewModel
                                     break;
                                 }
                             }
-                            System.Windows.Forms.MessageBox.Show("Xóa người dùng thành công");
+                            //System.Windows.Forms.MessageBox.Show("Xóa người dùng thành công");
+                            DialogOpen = true;
+                            ThongBao = "Xóa người dùng thành công";
                         }
                     }
                     else
@@ -479,7 +498,9 @@ namespace MasterSaveDemo.ViewModel
                             string error = check_DeleteNhomNguoiDung(search_MaNhom(SelectedPhanQuyen.TenNhomQuyen));
                             if (error == "")
                             {
-                                System.Windows.Forms.MessageBox.Show("Đã xóa nhóm " + SelectedPhanQuyen.TenNhomQuyen + " thành công!");
+                                //System.Windows.Forms.MessageBox.Show("Đã xóa nhóm " + SelectedPhanQuyen.TenNhomQuyen + " thành công!");
+                                DialogOpen = true;
+                                ThongBao = "Đã xóa nhóm " + SelectedPhanQuyen.TenNhomQuyen + " thành công!";
                                 int maNhom = search_MaNhom(SelectedPhanQuyen.TenNhomQuyen);
                                 Delete_PhanQuyen(maNhom);
                                 Delete_NhomNguoiDung(SelectedPhanQuyen.TenNhomQuyen);
@@ -530,6 +551,9 @@ namespace MasterSaveDemo.ViewModel
 
                         NhanVien nv = new NhanVien(TenDangNhap, MatKhau, HoTen, SelectedTenNhom);
                         ListNhanVien.Add(nv);
+                        DialogOpen = true;
+                        ThongBao = "Đã thêm thành công nhân viên " + nv.HoTen + " thành công!";
+
                         VisibilityOfAdd = Visibility.Hidden;
                         ResetTextbox();
                         VisibilityOfAdd = Visibility.Hidden;
@@ -554,6 +578,9 @@ namespace MasterSaveDemo.ViewModel
                                 break;
                             }
                         }
+
+                        DialogOpen = true;
+                        ThongBao = "Chỉnh sửa thành công";
 
                         VisibilityOfEdit = Visibility.Hidden;
                         ////After confirming, selected item will die huhu, this line is used for making selected item reborn. 
@@ -581,6 +608,9 @@ namespace MasterSaveDemo.ViewModel
                             DataProvider.Ins.DB.NHOMNGUOIDUNGs.Add(nhom);
                             DataProvider.Ins.DB.SaveChanges();
                             VisibilityOfTenNhomQuyen = Visibility.Hidden;
+
+                            DialogOpen = true;
+                            ThongBao = "Thêm nhóm quyền thành công";
                            
                         }
                     }
@@ -598,7 +628,9 @@ namespace MasterSaveDemo.ViewModel
                         if (SelectedPhanQuyen.chkBCMD) Add_PhanQuyen(maNhom, 7);
                         if (SelectedPhanQuyen.chkTDQD) Add_PhanQuyen(maNhom, 8);
                         if (SelectedPhanQuyen.chkNLVV) Add_PhanQuyen(maNhom, 9);
-                        System.Windows.Forms.MessageBox.Show("Chỉnh sửa quyền thành công cho nhóm " + SelectedPhanQuyen.TenNhomQuyen);
+                        //System.Windows.Forms.MessageBox.Show("Chỉnh sửa quyền thành công cho nhóm " + SelectedPhanQuyen.TenNhomQuyen);
+                        DialogOpen = true;
+                        ThongBao = "Chỉnh sửa quyền thành công cho nhóm " + SelectedPhanQuyen.TenNhomQuyen;
 
                         BangPhanQuyen PQ = SelectedPhanQuyen;
                         PQ.EnabledCheckBox = false;

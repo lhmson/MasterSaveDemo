@@ -25,7 +25,20 @@
       Title="QuanLyNhanSu_Page">
 
     <Grid>
-        <Grid.ColumnDefinitions>
+        <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Width="Auto" Height="Auto" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical" Margin="15">
+                        <materialDesign:PackIcon Kind="CheckCircleOutline" Foreground="{StaticResource PrimaryHueMidBrush}" Width="50" Height="50" HorizontalAlignment="Center"/>
+                        <TextBlock FontSize="18" Foreground="Gray" Width="auto" Margin="15 15 15 15" TextWrapping="Wrap" Text="{Binding ThongBao}" HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="OK" Command="{Binding DialogOK}" Style="{DynamicResource MaterialDesignFlatButton}" Margin="4" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+            <Grid>
+                <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="15"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
@@ -321,5 +334,7 @@
                        FontSize="30"
                        TextWrapping="WrapWithOverflow"/>-->
         </Grid>
+    </Grid>
+        </materialDesign:DialogHost>
     </Grid>
 </Page>

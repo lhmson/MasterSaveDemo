@@ -237,7 +237,7 @@ namespace MasterSaveDemo.ViewModel
                 //Selected_HOME = false;
                 //Selected_DangXuat = false;
                 FrameContent = new MoSo_Page();
-                FrameContent.DataContext = new MoSo_ViewModel();
+                //FrameContent.DataContext = new MoSo_ViewModel();
             });
 
             GuiTien_Page_SelectedCommand = new RelayCommand<HamburgerMenu.HamburgerMenu>((p) => { return true; }, (p) => {

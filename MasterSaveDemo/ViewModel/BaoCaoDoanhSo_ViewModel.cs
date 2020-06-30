@@ -164,7 +164,7 @@ namespace MasterSaveDemo.ViewModel
                             select bc.NgayDoanhSo).Distinct();
             ListNgayBaoCao = new ObservableCollection<DateTime>(listNgay);
 
-            SelectedDateReport = DateTime.Now;
+            SelectedDateReport = DateTime.Today;
         }
 
         private BAOCAODOANHSO FindBaoCao(LOAITIETKIEM ltk)
@@ -190,7 +190,7 @@ namespace MasterSaveDemo.ViewModel
             TongChi += baoCao.TongChi;
             ChenhLech = baoCao.ChenhLech;
 
-            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
+            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu.ToString("0"), TongChi.ToString("0"), ChenhLech.ToString("0"));
             ListBaoCaoDisplay.Add(baoCaoDisplay);
         }
         private BAOCAODOANHSO CreateBaoCao(int i, LOAITIETKIEM ltk)
@@ -216,7 +216,7 @@ namespace MasterSaveDemo.ViewModel
 
             ChenhLech = (TongThu - TongChi);
 
-            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
+            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu.ToString("0"), TongChi.ToString("0"), ChenhLech.ToString("0"));
             ListBaoCaoDisplay.Add(baoCaoDisplay);
 
             BAOCAODOANHSO baoCao = new BAOCAODOANHSO()
@@ -266,7 +266,7 @@ namespace MasterSaveDemo.ViewModel
                     // clear all elements of ListBaoCaoDisplay to clear screen
                     ListBaoCaoDisplay.Clear();
                     
-                    if(SelectedDateReport > DateTime.Now.Date)
+                    if(SelectedDateReport > DateTime.Today)
                     {
                         VisibilityDatePicker = Visibility.Visible;
                     }
@@ -278,7 +278,7 @@ namespace MasterSaveDemo.ViewModel
                         for (int i = 0; i < ListLTK.Count(); i++)
                         {
                             TongThu = TongChi = 0;
-                            BAOCAODOANHSO baoCao = FindBaoCao(ListLTK[i]);
+                            BAOCAODOANHSO baoCao = FindBaoCao(ListLTK[i]); ;
 
                             if (baoCao != null)
                             {
@@ -299,14 +299,18 @@ namespace MasterSaveDemo.ViewModel
                         {
                             if (ListNgayBaoCao.Count() == 0 || (SelectedDateReport < ListNgayBaoCao[ListNgayBaoCao.Count() - 1]))
                                 ListNgayBaoCao.Add(SelectedDateReport);
-                            for (int i = 0; i < ListNgayBaoCao.Count(); i++)
+                            else
                             {
-                                if (SelectedDateReport > ListNgayBaoCao[i])
+                                for (int i = 0; i < ListNgayBaoCao.Count(); i++)
                                 {
-                                    ListNgayBaoCao.Insert(i, SelectedDateReport);
-                                    break;
+                                    if (SelectedDateReport > ListNgayBaoCao[i])
+                                    {
+                                        ListNgayBaoCao.Insert(i, SelectedDateReport);
+                                        break;
+                                    }
                                 }
                             }
+                            
                         }
                     }
                 }

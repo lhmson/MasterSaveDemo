@@ -43,10 +43,10 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày lẹ"
-                            HorizontalAlignment="Right" Margin="10,0,10,0"
+                    <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày báo cáo"
+                            HorizontalAlignment="Right" Margin="10,4,10,3.6"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                            SelectedDate="{Binding SelectedDateReport,StringFormat={}{0:dd/MM/yyyy}, Mode=TwoWay}"
+                            SelectedDate="{Binding SelectedDateReport,StringFormat= 'dd/MM/yyyy', Mode=TwoWay}"
 
                             SelectedDateFormat="Short" >
                         <i:Interaction.Triggers>

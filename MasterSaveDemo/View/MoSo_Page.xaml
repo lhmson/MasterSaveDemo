@@ -50,7 +50,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="8">
-                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">GIAO DỊCH MỞ SỔ</TextBlock>
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">GIAO DỊCH MỞ SỔ TIẾT KIỆM</TextBlock>
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">
@@ -69,7 +69,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="5">
-                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin"></TextBlock>
+                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin sổ tiết kiệm"></TextBlock>
                             </materialDesign:Card>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -222,7 +222,7 @@
 
                                 </Grid>
                                 <Grid Grid.Row="5">
-                                    <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170"/>
+                                    <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedButton}" Width="170"/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -249,8 +249,8 @@
                                   HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding MaLoaiTietKiem}"></GridViewColumn>
-                                        <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"></GridViewColumn>
+                                        <GridViewColumn Width="180"  Header="Mã số" DisplayMemberBinding="{Binding MaLoaiTietKiem}"></GridViewColumn>
+                                        <GridViewColumn Width="260" Header="Loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"></GridViewColumn>
                                         <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>

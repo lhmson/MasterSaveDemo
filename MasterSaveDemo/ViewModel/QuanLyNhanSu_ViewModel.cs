@@ -781,7 +781,7 @@ namespace MasterSaveDemo.ViewModel
                             DataProvider.Ins.DB.SaveChanges();
                             VisibilityOfTenNhomQuyen = Visibility.Hidden;
                             DialogOpen = true;
-                            ThongBao = "Thêm nhóm quyền thành công";
+                            ThongBao = "Thêm nhóm quyên thành công";
                             Tat_ToolTip();
                         }
                     }

@@ -68,7 +68,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="5">
-                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin"></TextBlock>
+                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin phiếu rút"></TextBlock>
                             </materialDesign:Card>
                         </Grid>
 
@@ -222,7 +222,7 @@
                                     <CheckBox IsChecked="{Binding CreatePR}" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="0,0,0,0" />
                                 </Grid>
                                 <Grid Grid.Row="5">
-                                    <Button Command="{Binding Click_GiaoDichCommand}" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170" Content="Thực hiện giao dịch" Margin="10,10,20,14" />
+                                    <Button Command="{Binding Click_GiaoDichCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" Content="Thực hiện giao dịch" Margin="10,10,20,14" />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -239,7 +239,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="5">
-                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Lịch sử giao dịch"></TextBlock>
+                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Lịch sử giao dịch của sổ"></TextBlock>
                             </materialDesign:Card>
                         </Grid>
                         <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Stretch">

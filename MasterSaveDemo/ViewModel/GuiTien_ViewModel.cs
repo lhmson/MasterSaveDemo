@@ -326,7 +326,7 @@ namespace MasterSaveDemo.ViewModel
 
                 }
                 
-                if (MaSoTietKiem == "" || MaSoTietKiem == null)
+                if ( String.IsNullOrWhiteSpace(MaSoTietKiem))
                 {
                     Notify_Ma="Sổ chưa được tạo mã sổ";
                     MaSoTietKiem_check = "Error";
@@ -359,7 +359,7 @@ namespace MasterSaveDemo.ViewModel
                         }
                         MaSoTietKiem_check = "None";
                         Notify_Ma = "";
-                        if (SoTienGui == null || SoTienGui == "")
+                        if (String.IsNullOrWhiteSpace(SoTienGui))
                         {
                             Notify_money = "Chưa nhập số tiền gửi";
                             SoTienGui_check = "Error";
@@ -466,7 +466,6 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CheckoutCommand { get; set; }
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
-        public ICommand EnterKeyDown_Command { get; set; }
         public ICommand Click_CapNhatCommand { get; set; }
         #endregion
         public GuiTien_ViewModel()
@@ -505,14 +504,6 @@ namespace MasterSaveDemo.ViewModel
                 ExecuteSTK();
                 KiemTraNhapLai();
                 
-            });
-            EnterKeyDown_Command = new RelayCommand<object>((p) =>
-            {
-                return true;
-            }, (p) =>
-            {
-                ExecuteSTK();
-                KiemTraNhapLai();
             });
             CheckCommand = new RelayCommand<object>((p) =>
             {

@@ -580,7 +580,7 @@ namespace MasterSaveDemo.ViewModel
 						}
 					}
 				}
-				if (String.IsNu(SoTienRut))
+				if (String.IsNullOrWhiteSpace(SoTienRut))
 				{
 					SoTienRut_Check = "Error";
 					ThongBao_TienRut = "Vui lòng nhập số tiền rút.";

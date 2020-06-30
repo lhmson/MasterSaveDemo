@@ -58,7 +58,7 @@ namespace MasterSaveDemo.ViewModel
         {
             //CbxTenLoaiTietKiem = "";
             SelectedTenLoaiTietKiem = "";
-            TenLoaiTietKiem = new List<string>();
+            TenLoaiTietKiem = new ObservableCollection<string>();
             foreach (LOAITIETKIEM LTK in List)
                 TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
         }
@@ -200,8 +200,8 @@ namespace MasterSaveDemo.ViewModel
         public string NgayDaoHanKeTiep { get => _NgayDaoHanKeTiep; set { _NgayDaoHanKeTiep = value; OnPropertyChanged(); } }
 
 
-        private List<string> _TenLoaiTietKiem;
-        public List<string> TenLoaiTietKiem { get => _TenLoaiTietKiem; set { _TenLoaiTietKiem = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _TenLoaiTietKiem;
+        public ObservableCollection<string> TenLoaiTietKiem { get => _TenLoaiTietKiem; set { _TenLoaiTietKiem = value; OnPropertyChanged(); } }
 
         private string _SelectedTenLoaiTietKiem;
         public string SelectedTenLoaiTietKiem { get => _SelectedTenLoaiTietKiem; set 
@@ -322,6 +322,7 @@ namespace MasterSaveDemo.ViewModel
                     DataProvider.Ins.DB.SaveChanges();
                 }
             });
+
 
             LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
             });

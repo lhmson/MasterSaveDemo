@@ -226,6 +226,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand CreateReportCommand { get; set; }
         public ICommand PrintCommand { get; set; }
+        public ICommand SelectedDateChangedCommand { get; set; }
 
 
         #endregion
@@ -250,7 +251,7 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // button for finding report and create if ... not available
-            CreateReportCommand = new RelayCommand<object>((p) => { return true; },
+            CreateReportCommand = new RelayCommand<object>((p) => { return SelectedDateReport > DateTime.Now ? false : true; },
                 (p) => {
                     bool isNew = false;
                     // clear all elements of ListBaoCaoDisplay to clear screen
@@ -293,12 +294,25 @@ namespace MasterSaveDemo.ViewModel
 
             );
 
-            PrintCommand = new RelayCommand<object>((p) => { return true; },
+            PrintCommand = new RelayCommand<object>((p) => 
+                {
+                    if (SelectedDateReportDisplay == DateTime.MinValue || ListBaoCaoDisplay.Count == 0)
+                        return false;
+                    return true;
+                },
                 (p) => {
                     BaoCaoDoanhSo_PrintPreview_ViewModel printPreviewBaoCaoDoanhSo = new BaoCaoDoanhSo_PrintPreview_ViewModel(ListBaoCaoDisplay, SelectedDateReport);
                     BaoCaoDoanhSo_PrintPreview BaoCao = new BaoCaoDoanhSo_PrintPreview(printPreviewBaoCaoDoanhSo);
                     BaoCao.ShowDialog();
                     isLoaded = true;
+                }
+            );
+
+            SelectedDateChangedCommand = new RelayCommand<object>((p) => { return true; },
+                (p) => {
+                    ListBaoCaoDisplay.Clear();
+                    if (SelectedDateReport > DateTime.Now)
+                        MessageBox.Show("Không thể lập báo cáo cho ngày trong tương lai!");
                 }
             );
         }

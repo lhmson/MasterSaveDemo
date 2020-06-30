@@ -62,7 +62,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="5">
-                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Quy định"></TextBlock>
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin"></TextBlock>
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">
@@ -88,7 +88,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding VisibilityPopup1}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent1}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -125,7 +125,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding VisibilityPopup2}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent2}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -159,7 +159,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding VisibilityPopup3}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent3}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -181,7 +181,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding VisibilityPopup4}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent4}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -203,7 +203,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding VisibilityPopup5}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent5}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -237,10 +237,10 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding VisibilityPopup6}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent6}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
-                            </materialDesign:PopupBox.ToggleContent>
+                            </materialDesign:PopupBox.ToggleContent>    
                         </materialDesign:PopupBox>
                     </Grid>
                     <Grid Grid.Column="0">
@@ -305,6 +305,7 @@
                                     <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"/>
                                     <GridViewColumn Header="Thời gian gửi tối thiểu" DisplayMemberBinding="{Binding ThoiGianGuiToiThieu}"/>
                                     <GridViewColumn Header="Quy định số tiền được rút" DisplayMemberBinding="{Binding QuyDinhSoTienRut}"/>
+                                    <GridViewColumn Header="Đang sử dụng" DisplayMemberBinding="{Binding DangSuDung}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

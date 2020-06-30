@@ -34,7 +34,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="8">
-                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">THAY ĐỔI QUY ĐỊNH</TextBlock>
+                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">QUẢN LÝ NHÂN SỰ</TextBlock>
             </materialDesign:Card>
         </Grid>
         <Grid Grid.Row="1">
@@ -62,7 +62,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="5">
-                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Quy định"></TextBlock>
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin"></TextBlock>
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">

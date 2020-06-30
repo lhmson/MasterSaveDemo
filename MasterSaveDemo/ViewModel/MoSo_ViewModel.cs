@@ -43,6 +43,25 @@ namespace MasterSaveDemo.ViewModel
         }
         #endregion
         #region The sub functions by Sanh
+    
+        private bool check_hasaWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item == ' ')
+                    return true;
+            return false;
+        }
+
+        private bool check_hasallWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item != ' ')
+                    return false;
+            return true;
+        }
+
         private void Reset()
         {
             MaSoTietKiem = "";
@@ -191,6 +210,13 @@ namespace MasterSaveDemo.ViewModel
                 Error_TienGui = "Số tiền chưa được nhập";
             }
             else
+            if (check_hasallWhiteSpace(SoTienGuiBanDau))
+            {
+                //error += "\nSố tiền gửi của khách hàng chưa được nhập";
+                Visibility_TienGui = Visibility.Visible;
+                Error_TienGui = "Số tiền không được có khoảng trắng";
+            }
+            else
             if (CheckAllNumber(SoTienGuiBanDau)==false)
             {
                 Visibility_TienGui = Visibility.Visible;
@@ -211,6 +237,7 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
             }
+
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
             {
                 //error += "Sổ chưa được tạo mã sổ";
@@ -223,23 +250,32 @@ namespace MasterSaveDemo.ViewModel
                 Visibility_LTK = Visibility.Visible;
                 Error_LTK = "Sổ chưa chọn hình thức loại tiết kiệm";
             }
-            if (TenKhachHang == "" || TenKhachHang == null)
+            if (TenKhachHang == "" || TenKhachHang == null || check_hasallWhiteSpace(TenKhachHang))
             {
                 //error += "\nTên khách hàng chưa được nhập";
                 Visibility_TenKH = Visibility.Visible;
                 Error_TenKH = "Tên khách hàng chưa được nhập";
             }
+            
             if (CMND == "" || CMND == null)
             {
                 //error += "\nCMND chưa được nhập";
                 Visibility_CMND = Visibility.Visible;
                 Error_CMND = "CMND chưa được nhập";
             }
+            else
+            if (check_hasaWhiteSpace(CMND))
+            {
+                Visibility_CMND = Visibility.Visible;
+                Error_CMND = "CMND không thể chứ khoảng trắng";
+            }
+            else
             if (CheckAllNumber(CMND)==false)
             {
                 Visibility_CMND = Visibility.Visible;
                 Error_CMND = "CMND chỉ chứa kí tự chữ số";
             }
+
             if (DiaChi == "" || DiaChi == null)
             {
                 //error += "\nĐịa chỉ chưa được nhập";
@@ -309,6 +345,13 @@ namespace MasterSaveDemo.ViewModel
         public ObservableCollection<LOAITIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
         #region Variables
+
+        private bool _DialogOpen;
+        public bool DialogOpen { get => _DialogOpen; set { _DialogOpen = value; OnPropertyChanged(); } }
+
+        private string _ThongBao;
+        public string ThongBao { get => _ThongBao; set { _ThongBao = value; OnPropertyChanged(); } }
+
         private Visibility _Visibility_MaSo;
         public Visibility Visibility_MaSo { get => _Visibility_MaSo; set { _Visibility_MaSo = value; OnPropertyChanged(); } }
 
@@ -348,11 +391,6 @@ namespace MasterSaveDemo.ViewModel
         #region ToolTips
 
         #endregion
-        private bool _DialogOpen;
-        public bool DialogOpen { get => _DialogOpen; set { _DialogOpen = value; OnPropertyChanged(); } }
-
-        private string _ThongBao;
-        public string ThongBao { get => _ThongBao; set { _ThongBao = value; OnPropertyChanged(); } }
 
         private bool isMoSo = false;
         private bool _Enable_KiemTraHopLe;
@@ -430,6 +468,15 @@ namespace MasterSaveDemo.ViewModel
 
             //Display combobox TenLoaiTietKiem
             resetCombobox_LoaiTietKiem();
+
+            //DialogHost
+            DialogOK = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                DialogOpen = false;
+            });
 
             //Event Click of Button Reset Combobox LoaiTietKiem
             ResetLTKCommand = new RelayCommand<object>((p) =>

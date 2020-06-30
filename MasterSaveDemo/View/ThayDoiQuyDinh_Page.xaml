@@ -101,7 +101,7 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MaLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                         ToolTip="Error" IsReadOnly="{Binding TextBoxReadOnly}"/>
+                         ToolTip="Error" IsReadOnly="{Binding MaLoaiTietKiemReadOnly}"/>
                         <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 

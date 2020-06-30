@@ -43,6 +43,25 @@ namespace MasterSaveDemo.ViewModel
         }
         #endregion
         #region The sub functions by Sanh
+    
+        private bool check_hasaWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item == ' ')
+                    return true;
+            return false;
+        }
+
+        private bool check_hasallWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item != ' ')
+                    return false;
+            return true;
+        }
+
         private void Reset()
         {
             MaSoTietKiem = "";
@@ -151,6 +170,16 @@ namespace MasterSaveDemo.ViewModel
                     return LTK.LaiSuat;
             return ls;
         }
+
+        //Quy Dinh
+        private string _QuyDinhMoSo;
+
+        public string QuyDinhMoSo
+        {
+            get { return _QuyDinhMoSo; }
+            set { _QuyDinhMoSo = value; OnPropertyChanged(); }
+        }
+
         #endregion
         #region CheckValid
 
@@ -181,6 +210,13 @@ namespace MasterSaveDemo.ViewModel
                 Error_TienGui = "Số tiền chưa được nhập";
             }
             else
+            if (check_hasallWhiteSpace(SoTienGuiBanDau))
+            {
+                //error += "\nSố tiền gửi của khách hàng chưa được nhập";
+                Visibility_TienGui = Visibility.Visible;
+                Error_TienGui = "Số tiền không được có khoảng trắng";
+            }
+            else
             if (CheckAllNumber(SoTienGuiBanDau)==false)
             {
                 Visibility_TienGui = Visibility.Visible;
@@ -201,35 +237,45 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
             }
+
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
             {
                 //error += "Sổ chưa được tạo mã sổ";
                 Visibility_MaSo = Visibility.Visible;
                 Error_MaSo = "Sổ chưa được tạo mã sổ";
             }
-            if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null)
+            if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null || SelectedTenLoaiTietKiem == null)
             {
                 //error += "\nSổ chưa chọn hình thức loại tiết kiệm";
                 Visibility_LTK = Visibility.Visible;
-                Error_MaSo = "Sổ chưa chọn hình thức loại tiết kiệm";
+                Error_LTK = "Sổ chưa chọn hình thức loại tiết kiệm";
             }
-            if (TenKhachHang == "" || TenKhachHang == null)
+            if (TenKhachHang == "" || TenKhachHang == null || check_hasallWhiteSpace(TenKhachHang))
             {
                 //error += "\nTên khách hàng chưa được nhập";
                 Visibility_TenKH = Visibility.Visible;
                 Error_TenKH = "Tên khách hàng chưa được nhập";
             }
+            
             if (CMND == "" || CMND == null)
             {
                 //error += "\nCMND chưa được nhập";
                 Visibility_CMND = Visibility.Visible;
                 Error_CMND = "CMND chưa được nhập";
             }
+            else
+            if (check_hasaWhiteSpace(CMND))
+            {
+                Visibility_CMND = Visibility.Visible;
+                Error_CMND = "CMND không thể chứ khoảng trắng";
+            }
+            else
             if (CheckAllNumber(CMND)==false)
             {
                 Visibility_CMND = Visibility.Visible;
                 Error_CMND = "CMND chỉ chứa kí tự chữ số";
             }
+
             if (DiaChi == "" || DiaChi == null)
             {
                 //error += "\nĐịa chỉ chưa được nhập";
@@ -411,6 +457,7 @@ namespace MasterSaveDemo.ViewModel
         public MoSo_ViewModel()
         {
             Reset_ToolTip();
+            CapNhatQuyDinh();
             NgayDaoHanKeTiep = "";
             // Display List LOAITIETKIEM
             List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -500,6 +547,7 @@ namespace MasterSaveDemo.ViewModel
             LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
             });
 
+
             #region TextChanged Events
             TenKH_TextChangedCommand = new RelayCommand<object>((p) =>
             {
@@ -541,6 +589,30 @@ namespace MasterSaveDemo.ViewModel
                 isMoSo = false;
             });
             #endregion
+        }
+
+        private void CapNhatQuyDinh()
+        {
+            QuyDinhMoSo = "Số tiền gửi ban đầu tối thiếu là: ";
+            if (GetThamSo("SoTienGuiToiThieu") < 1000)
+            {
+                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString() + " đồng";
+            }
+            else
+            {
+                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString("0,000") + " đồng";
+            }
+        }
+
+        private decimal GetThamSo(string tenthamso)
+        {
+            List<THAMSO> List_ThamSo = DataProvider.Ins.DB.THAMSOes.ToList();
+            foreach (THAMSO ts in List_ThamSo)
+            {
+                if (ts.TenThamSo == tenthamso)
+                    return ts.GiaTri;
+            }
+            return -1;
         }
     }
 }

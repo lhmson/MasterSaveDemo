@@ -242,6 +242,24 @@ namespace MasterSaveDemo.ViewModel
 
         #region Function
 
+        private bool check_hasaWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item == ' ')
+                    return true;
+            return false;
+        }
+
+        private bool check_hasallWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item != ' ')
+                    return false;
+            return true;
+        }
+
         private bool Check_TenNhomQuyen(string name)
         {
             ObservableCollection<NHOMNGUOIDUNG> nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
@@ -448,6 +466,12 @@ namespace MasterSaveDemo.ViewModel
                 Visibility_1 = Visibility.Visible;
                 check = false;
             }
+            else if (check_hasaWhiteSpace(TenDangNhap))
+            {
+                Error1 = "Tên đăng nhập không được chứa khoảng trắng";
+                Visibility_1 = Visibility.Visible;
+                check = false;
+            }
             else
             {
                 ObservableCollection<NGUOIDUNG> list_ngdung = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
@@ -470,7 +494,8 @@ namespace MasterSaveDemo.ViewModel
                 Visibility_2 = Visibility.Visible;
                 check = false;
             }       
-            if (HoTen == null || HoTen == "")
+
+            if (HoTen == null || HoTen == "" || check_hasallWhiteSpace(HoTen))
             {
                 Error3 = "Họ tên không được để trống";
                 Visibility_3 = Visibility.Visible;
@@ -495,7 +520,7 @@ namespace MasterSaveDemo.ViewModel
                 Visibility_1 = Visibility.Visible;
                 check = false;
             }
-            if (HoTen == null || HoTen == "")
+            if (HoTen == null || HoTen == "" || check_hasallWhiteSpace(HoTen))
             {
                 Error2 = "Họ tên không được để trống";
                 Visibility_2 = Visibility.Visible;
@@ -514,7 +539,7 @@ namespace MasterSaveDemo.ViewModel
         private bool check_ThemNhomQuyen()
         {
             bool check = true;
-            if (txtTenNhomQuyen == null || txtTenNhomQuyen == "")
+            if (txtTenNhomQuyen == null || txtTenNhomQuyen == "" || check_hasallWhiteSpace(txtTenNhomQuyen))
             {
                 Error1 = "Tên nhóm không để trống";
                 Visibility_1 = Visibility.Visible;
@@ -608,8 +633,8 @@ namespace MasterSaveDemo.ViewModel
                         VisibilityOfAdd = Visibility.Hidden;
                         MatKhau = SelectedItemNguoiDung.MatKhau;
                         HoTen = SelectedItemNguoiDung.HoTen;
-                        SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
                         ResetCbxTenNhom();
+                        SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
                     }
 
                     if (VisibilityOfListPhanQuyen == Visibility.Visible && SelectedPhanQuyen != null) // Edit Bảng phân quyền

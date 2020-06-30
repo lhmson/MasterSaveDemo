@@ -494,7 +494,7 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if (MaSoTietKiem != null && MaSoTietKiem != "")
+					if (!String.IsNullOrWhiteSpace(MaSoTietKiem))
 					{
 						SoTietKiem_Check = "Error";
 						ThongBao_MaSo = "Không tìm thấy sổ tiết kiệm phù hợp!";
@@ -521,13 +521,12 @@ namespace MasterSaveDemo.ViewModel
 			Result_KiemTraHopLe = true;
 			try
 			{
-				if (int.Parse(SoTienRut) < 1000)
+				if (decimal.Parse(SoTienRut) < 1000)
 				{
-
 				}
 				else
 				{
-					SoTienRut = int.Parse(SoTienRut).ToString("0,000");
+					SoTienRut = decimal.Parse(SoTienRut).ToString("0,000");
 					Result_KiemTraHopLe = true;
 				}
 			}
@@ -581,7 +580,7 @@ namespace MasterSaveDemo.ViewModel
 						}
 					}
 				}
-				if (String.IsNullOrEmpty(SoTienRut))
+				if (String.IsNullOrWhiteSpace(SoTienRut))
 				{
 					SoTienRut_Check = "Error";
 					ThongBao_TienRut = "Vui lòng nhập số tiền rút.";
@@ -590,26 +589,35 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if (info_loaitietkiem.QuyDinhSoTienRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
+					if (decimal.Parse(SoTienRut) < 1000)
 					{
 						SoTienRut_Check = "Error";
-						ThongBao_TienRut += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
-						ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
+						ThongBao_TienRut += "Không thể rút số tiền ít hơn 1000 đồng.";
 						Result_KiemTraHopLe = false;
 					}
 					else
 					{
-						if (decimal.Parse(SoTienRut) > decimal.Parse(SoDu))
+						if (info_loaitietkiem.QuyDinhSoTienRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
 						{
 							SoTienRut_Check = "Error";
-							ThongBao_TienRut += "Không thể rút nhiều hơn số dư tài khoản.\n";
-							ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
+							ThongBao_TienRut += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
+							ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
 							Result_KiemTraHopLe = false;
 						}
 						else
 						{
-							//SoTienRut_Check = "Check";
-							//ThongBao_TienRut = "Có thể rút số tiền này.";
+							if (decimal.Parse(SoTienRut) > decimal.Parse(SoDu))
+							{
+								SoTienRut_Check = "Error";
+								ThongBao_TienRut += "Không thể rút nhiều hơn số dư tài khoản.\n";
+								ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
+								Result_KiemTraHopLe = false;
+							}
+							else
+							{
+								//SoTienRut_Check = "Check";
+								//ThongBao_TienRut = "Có thể rút số tiền này.";
+							}
 						}
 					}
 				}
@@ -701,7 +709,7 @@ namespace MasterSaveDemo.ViewModel
 				{
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
 				}
-
+				CapNhatThongTin();
 				TenKhachHang = "";
 				SoDu = "";
 				CMND = "";

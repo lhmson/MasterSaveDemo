@@ -258,61 +258,24 @@
                         </materialDesign:Card>
 
                         <Grid Grid.Row="2">
-                            <materialDesign:Flipper >
-                                <materialDesign:Flipper.FrontContent>
-                                    <Button VerticalAlignment="Top"  Background="{DynamicResource PrimaryHueDarkBrush}"
-                                  Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                  Command="{x:Static materialDesign:Flipper.FlipCommand}">
-                                        <TextBlock VerticalAlignment="Center"
-                                    FontSize="18" >
-                                    Quy định gửi tiền
-                                        </TextBlock>
-                                    </Button>
-                                </materialDesign:Flipper.FrontContent>
-                                <materialDesign:Flipper.BackContent>
-                                    <Grid Grid.ColumnSpan="3">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <materialDesign:ColorZone Grid.Row="0" FontSize="16" Background="{DynamicResource PrimaryHueDarkBrush}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Button Grid.Column="0"
-                                                Style="{StaticResource MaterialDesignToolForegroundButton}"
-                                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
-                                                HorizontalAlignment="Left">
-                                                    <materialDesign:PackIcon
-                                                  Kind="ArrowLeft"
-                                                  HorizontalAlignment="Right" FontSize="20"/>
-                                                </Button>
-                                                <TextBlock Grid.Column="1"
-                                                Margin="8 0 0 0"
-                                                VerticalAlignment="Center">
-                                              Các quy định
-                                                </TextBlock>
-                                            </Grid>
-                                        </materialDesign:ColorZone>
-                                        <Grid  Grid.Row="1" Grid.ColumnSpan="2">
-                                            <StackPanel Orientation="Vertical">
+                            <materialDesign:Card
+  Background="{DynamicResource MaterialDesignBackground}">
+                                <StackPanel>
+                                    <Expander
+      HorizontalAlignment="Stretch"
+      Header="Quy định mở sổ" FontSize="18">
+                                        <StackPanel
+        Orientation="Vertical"
+        TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+        Margin="24,8,24,16">
 
-                                                <TextBlock>
-                                              Chỉ nhận gởi thêm tiền khi đến kỳ hạn tính lãi suất của các loại tiết kiệm tương ứng.
-                                                </TextBlock>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock> 
-                                                 Số tiền gởi thêm tối thiểu là:
-                                                    </TextBlock>
-                                                    <TextBlock Text="{Binding SoTienGuiToiThieu}"/>
-                                                </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock TextWrapping="Wrap" LineHeight="30" Text="{Binding QuyDinhMoSo}" FontSize="18" HorizontalAlignment="Left"/>
                                             </StackPanel>
-                                        </Grid>
-                                    </Grid>
-                                </materialDesign:Flipper.BackContent>
-                            </materialDesign:Flipper>
+                                        </StackPanel>
+                                    </Expander>
+                                </StackPanel>
+                            </materialDesign:Card>
                         </Grid>
                     </Grid>
                 </Grid>

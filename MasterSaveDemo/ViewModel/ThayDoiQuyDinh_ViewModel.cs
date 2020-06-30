@@ -264,6 +264,13 @@ namespace MasterSaveDemo.ViewModel
             set { _TextBoxReadOnly = value; OnPropertyChanged(); }
         }
 
+        private bool _MaLoaiTietKiemReadOnly;
+        public bool MaLoaiTietKiemReadOnly
+        {
+            get => _MaLoaiTietKiemReadOnly;
+            set { _MaLoaiTietKiemReadOnly = value; OnPropertyChanged(); }
+        }
+
         private bool _HitTestVisibleCbb;
         public bool HitTestVisibleCbb
         {
@@ -357,26 +364,26 @@ namespace MasterSaveDemo.ViewModel
                 //{
                     
                 //}
-                if (string.IsNullOrEmpty(TenLoaiTietKiem))
+                if (string.IsNullOrWhiteSpace(TenLoaiTietKiem))
                 {
                     VisibilityPopup2 = Visibility.Visible;
                     PopupContent2 = "Chưa nhập tên loại tiết kiệm";
                     flag = false;
                 }
-                // check if null or not a number, return false
-                if (string.IsNullOrEmpty(KyHan))
+                // check if null, return false
+                if (string.IsNullOrWhiteSpace(KyHan))
                 {
                     VisibilityPopup3 = Visibility.Visible;
                     PopupContent3 = "Chưa nhập kỳ hạn";
                     flag = false;
                 }
-                if (string.IsNullOrEmpty(LaiSuat))
+                if (string.IsNullOrWhiteSpace(LaiSuat))
                 {
                     VisibilityPopup4 = Visibility.Visible;
                     PopupContent4 = "Chưa nhập lãi suất";
                     flag = false;
                 }
-                if (string.IsNullOrEmpty(ThoiGianGuiToiThieu))
+                if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
                 {
                     VisibilityPopup5 = Visibility.Visible;
                     PopupContent5 = "Chưa nhập thời gian gửi tối thiểu";
@@ -411,13 +418,13 @@ namespace MasterSaveDemo.ViewModel
             } 
             else if (VisibilityOfEditLTK == Visibility.Visible)
             {
-                if (string.IsNullOrEmpty(LaiSuat))
+                if (string.IsNullOrWhiteSpace(LaiSuat))
                 {
                     VisibilityPopup2 = Visibility.Visible;
                     PopupContent2 = "Chưa nhập lãi suất mới";
                     flag = false;
                 }
-                if (string.IsNullOrEmpty(ThoiGianGuiToiThieu))
+                if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
                 {
                     VisibilityPopup1 = Visibility.Visible;
                     PopupContent1 = "Chưa nhập thời gian gửi tối thiểu mới";
@@ -441,13 +448,13 @@ namespace MasterSaveDemo.ViewModel
             }
             else if (VisibilityOfEditThamSo == Visibility.Visible)
             {
-                if (string.IsNullOrEmpty(TenThamSo))
+                if (string.IsNullOrWhiteSpace(TenThamSo))
                 {
                     VisibilityPopup1 = Visibility.Visible;
                     PopupContent1 = "Chưa nhập tên tham số";
                     flag = false;
                 }
-                if (string.IsNullOrEmpty(GiaTri))
+                if (string.IsNullOrWhiteSpace(GiaTri))
                 {
                     VisibilityPopup2 = Visibility.Visible;
                     PopupContent2 = "Chưa nhập giá trị của tham số";
@@ -612,6 +619,7 @@ namespace MasterSaveDemo.ViewModel
             SelectedItemThamSo = null;
             TextBoxReadOnly = false;
             HitTestVisibleCbb = true;
+            MaLoaiTietKiemReadOnly = false;
         }
         
         #endregion
@@ -652,6 +660,7 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                     HiddenPopupBox();
                     SelectedItemLTK = null;
+                    MaLoaiTietKiemReadOnly = true;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
@@ -734,6 +743,7 @@ namespace MasterSaveDemo.ViewModel
                         IsDeleting = true;
                         SetTextboxValue();
                         TextBoxReadOnly = true;
+                        MaLoaiTietKiemReadOnly = true;
                         HitTestVisibleCbb = false;
                         VisibilityOfAdd = Visibility.Visible;
                         VisibilityOfEditLTK = Visibility.Hidden;

@@ -17,11 +17,30 @@ namespace MasterSaveDemo.ViewModel
     public class TraCuu_ViewModel : BaseViewModel
     {
         #region The sub funtions by Sanh
+
+        private bool check_hasaWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item == ' ')
+                    return true;
+            return false;
+        }
+
+        private bool check_hasallWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item != ' ')
+                    return false;
+            return true;
+        }
+
         private void Confirm_STK()
         {
             Visibility_TenKH = Visibility.Hidden;
             Error_KH = "";
-            if (TenKHSua == null || TenKHSua == "" || SelectedSTK == null)
+            if (TenKHSua == null || TenKHSua == "" || SelectedSTK == null || check_hasallWhiteSpace(TenKHSua))
             {
                 //MessageBox.Show("Tên khách hàng chưa được nhập");
                 Visibility_TenKH = Visibility.Visible;
@@ -44,7 +63,6 @@ namespace MasterSaveDemo.ViewModel
             //MessageBox.Show("Chỉnh sửa sổ tiết kiệm thành công");
             DialogOpen = true;
             ThongBao = "Chỉnh sửa sổ tiết kiệm thành công";
-
 
             STKDuocTraCuu STK_New = SelectedSTK;
             STK_New.TenKH = TenKHSua;

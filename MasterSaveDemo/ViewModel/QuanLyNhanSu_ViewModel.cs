@@ -1,13 +1,9 @@
-﻿using MasterSaveDemo.Helper;
-using MasterSaveDemo.Model;
+﻿using MasterSaveDemo.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.ServiceModel.Configuration;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -244,7 +240,7 @@ namespace MasterSaveDemo.ViewModel
             ObservableCollection<NHOMNGUOIDUNG> nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
 
             foreach (var item in nhom)
-                if (item.TenNhom == name)
+                if (item.TenNhom.ToUpper() == name.ToUpper())
                     return true;
 
             return false;
@@ -583,7 +579,8 @@ namespace MasterSaveDemo.ViewModel
             {
                 if (VisibilityOfAdd == Visibility.Visible)
                     return false;
-
+                if (VisibilityOfTenNhomQuyen == Visibility.Visible)
+                    return false;
                 return ((SelectedPhanQuyen != null || SelectedItemNguoiDung != null) && isEdit); },
                 (p) => {
                    
@@ -617,6 +614,8 @@ namespace MasterSaveDemo.ViewModel
 
             DeleteNguoiDungKCommand = new RelayCommand<object>((p) => {
                 if (VisibilityOfAdd == Visibility.Visible || VisibilityOfEdit == Visibility.Visible) return false;
+                if (VisibilityOfTenNhomQuyen == Visibility.Visible)
+                    return false;
                 return ((SelectedItemNguoiDung != null || SelectedPhanQuyen!= null) && isEdit); },
                 (p) => {
                     if (VisibilityOfListNguoiDung == Visibility.Visible)

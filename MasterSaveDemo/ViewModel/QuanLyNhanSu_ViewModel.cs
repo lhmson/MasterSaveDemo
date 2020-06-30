@@ -610,8 +610,8 @@ namespace MasterSaveDemo.ViewModel
                         VisibilityOfAdd = Visibility.Hidden;
                         MatKhau = SelectedItemNguoiDung.MatKhau;
                         HoTen = SelectedItemNguoiDung.HoTen;
-                        SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
                         ResetCbxTenNhom();
+                        SelectedTenNhom = SelectedItemNguoiDung.TenNhom;
                     }
 
                     if (VisibilityOfListPhanQuyen == Visibility.Visible && SelectedPhanQuyen != null) // Edit Bảng phân quyền
@@ -728,6 +728,7 @@ namespace MasterSaveDemo.ViewModel
                             ThongBao = "Đã thêm nhân viên thành công";
                             NhanVien nv = new NhanVien(TenDangNhap, MatKhau, HoTen, SelectedTenNhom);
                             ListNhanVien.Add(nv);
+                            //System.Windows.MessageBox.Show(nv.TenDangNhap);
                             VisibilityOfAdd = Visibility.Hidden;
                             ResetTextbox();
                             VisibilityOfAdd = Visibility.Hidden;

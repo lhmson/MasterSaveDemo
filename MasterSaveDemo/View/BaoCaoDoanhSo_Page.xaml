@@ -25,6 +25,135 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" >
+            <materialDesign:Card Margin="5"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="8">
+                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">BÁO CÁO DOANH SỐ HOẠT ĐỘNG NGÀY</TextBlock>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <DatePicker x:Name="dpReport" Width="150" materialDesign:HintAssist.Hint="Chọn ngày báo cáo"
+                            HorizontalAlignment="Right" Margin="10,4,10,3.6"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                            SelectedDate="{Binding SelectedDateReport,StringFormat='dd/MM/yyyy', Mode=TwoWay}"
+                            SelectedDateFormat="Short" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"
+                                               CommandParameter="{Binding ElementName=dpReport}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                    </DatePicker>
+                    <materialDesign:PopupBox Visibility="{Binding VisibilityDatePicker}"  VerticalAlignment="Center" Margin="5" PopupContent="Ngày được chọn không thể lớn hơn ngày hiện tại" >
+                        <materialDesign:PopupBox.ToggleContent>
+                            <materialDesign:PackIcon Kind="Error" />
+                        </materialDesign:PopupBox.ToggleContent>
+                    </materialDesign:PopupBox>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        HorizontalAlignment="Right"
+                        Margin="10,0,5,0" Content="Lập báo cáo"
+                        Width="150" Height="35" Command="{Binding CreateReportCommand}"/>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Button Style="{StaticResource MaterialDesignRaisedButton}" 
+                        HorizontalAlignment="Left"
+                        Margin="50,0,5,0" Content="Xuất phiếu"
+                        Width="150" Height="35" Command="{Binding PrintCommand}"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="15"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <materialDesign:Card Height="35"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="5">
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Kết quả báo cáo"></TextBlock>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <materialDesign:Card Margin="5,5,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <ListView FontSize="18" ItemsSource="{Binding ListBaoCaoDisplay}"
+                          HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="100" Header="STT" DisplayMemberBinding="{Binding SoThuTu}"/>
+                                    <GridViewColumn Width="200" Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
+                                    <GridViewColumn Width="200" Header="Tổng thu" DisplayMemberBinding="{Binding TongThu}"/>
+                                    <GridViewColumn Width="200" Header="Tổng chi" DisplayMemberBinding="{Binding TongChi}"/>
+                                    <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    </materialDesign:Card>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid Grid.Column="0" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <materialDesign:Card Height="35"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="5">
+                            <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Danh sách báo cáo đã lập"></TextBlock>
+                        </materialDesign:Card>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListView x:Name="listDateDisplayed" 
+                          ItemsSource="{Binding ListNgayBaoCao}" SelectedItem="{Binding SelectedDateReportDisplay}"
+                          HorizontalAlignment="Center" VerticalAlignment="Top" SelectionMode="Single" FontSize="18">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Ngày báo cáo"/>
+                                </GridView>
+                            </ListView.View>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                                   CommandParameter="{Binding ElementName=listDateDisplayed}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListView>
+                    </Grid>
+                </Grid>
+                
+                
+            </Grid>
+        </Grid>
+
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="35" ></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -117,6 +246,6 @@
                     </i:Interaction.Triggers>
                 </ListView>
             </Grid>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Page>

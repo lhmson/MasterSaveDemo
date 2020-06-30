@@ -289,11 +289,7 @@
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="189*"/>
-                        <ColumnDefinition Width="257*"/>
-                    </Grid.ColumnDefinitions>
-                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListLTK}" Grid.ColumnSpan="2" >
+                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListLTK}">
                         <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" 
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
                           SelectionMode="Single" Grid.ColumnSpan="2">
@@ -313,7 +309,7 @@
                     <materialDesign:Card Margin="128,5,128,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListThamSo}" Grid.ColumnSpan="2">
                         <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}"
                           HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=TwoWay}"
-                          SelectionMode="Single" Grid.ColumnSpan="2">
+                          SelectionMode="Single">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>

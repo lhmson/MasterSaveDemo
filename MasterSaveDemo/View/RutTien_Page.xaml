@@ -270,7 +270,7 @@
         Margin="24,8,24,16">
 
                                             <StackPanel Orientation="Vertical">
-                                                <TextBlock TextWrapping="Wrap" Text="{Binding QuyDinhRutTien}" FontSize="18" HorizontalAlignment="Left"/>
+                                                <TextBlock TextWrapping="Wrap" LineHeight="30" Text="{Binding QuyDinhRutTien}" FontSize="18" HorizontalAlignment="Left"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Expander>

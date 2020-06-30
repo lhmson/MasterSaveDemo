@@ -151,6 +151,16 @@ namespace MasterSaveDemo.ViewModel
                     return LTK.LaiSuat;
             return ls;
         }
+
+        //Quy Dinh
+        private string _QuyDinhMoSo;
+
+        public string QuyDinhMoSo
+        {
+            get { return _QuyDinhMoSo; }
+            set { _QuyDinhMoSo = value; OnPropertyChanged(); }
+        }
+
         #endregion
         #region CheckValid
 
@@ -403,6 +413,7 @@ namespace MasterSaveDemo.ViewModel
         public MoSo_ViewModel()
         {
             Reset_ToolTip();
+            CapNhatQuyDinh();
             NgayDaoHanKeTiep = "";
             // Display List LOAITIETKIEM
             List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -479,6 +490,7 @@ namespace MasterSaveDemo.ViewModel
             LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
             });
 
+
             #region TextChanged Events
             TenKH_TextChangedCommand = new RelayCommand<object>((p) =>
             {
@@ -520,6 +532,30 @@ namespace MasterSaveDemo.ViewModel
                 isMoSo = false;
             });
             #endregion
+        }
+
+        private void CapNhatQuyDinh()
+        {
+            QuyDinhMoSo = "Số tiền gửi ban đầu tối thiếu là: ";
+            if (GetThamSo("SoTienGuiToiThieu") < 1000)
+            {
+                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString() + " đồng";
+            }
+            else
+            {
+                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString("0,000") + " đồng";
+            }
+        }
+
+        private decimal GetThamSo(string tenthamso)
+        {
+            List<THAMSO> List_ThamSo = DataProvider.Ins.DB.THAMSOes.ToList();
+            foreach (THAMSO ts in List_ThamSo)
+            {
+                if (ts.TenThamSo == tenthamso)
+                    return ts.GiaTri;
+            }
+            return -1;
         }
     }
 }

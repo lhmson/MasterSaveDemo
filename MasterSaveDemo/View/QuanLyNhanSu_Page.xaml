@@ -88,7 +88,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding Visibility_1}"  HorizontalAlignment="Right" PopupContent="{Binding Error1}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -122,7 +122,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding Visibility_2}"  HorizontalAlignment="Right" PopupContent="{Binding Error2}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -149,7 +149,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding Visibility_3}"  HorizontalAlignment="Right" PopupContent="{Binding Error3}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
@@ -176,7 +176,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Right" PopupContent="" >
+                        <materialDesign:PopupBox Visibility="{Binding Visibility_4}"  HorizontalAlignment="Right" PopupContent="{Binding Error4}" >
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>

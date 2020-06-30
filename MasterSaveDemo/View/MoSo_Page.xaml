@@ -82,7 +82,7 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Left" PopupContent="" >
+                                <materialDesign:PopupBox Visibility="{Binding Visibility_MaSo}"  HorizontalAlignment="Left" PopupContent="{Binding Error_MaSo}" >
                                     <materialDesign:PopupBox.ToggleContent>
                                         <materialDesign:PackIcon Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
@@ -95,7 +95,7 @@
                         </Grid>
                         <Grid Grid.Row="2">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Left" PopupContent="" >
+                                <materialDesign:PopupBox Visibility="{Binding Visibility_TenKH}"  HorizontalAlignment="Left" PopupContent="{Binding Error_TenKH}" >
                                     <materialDesign:PopupBox.ToggleContent>
                                         <materialDesign:PackIcon Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
@@ -113,7 +113,7 @@
                         </Grid>
                         <Grid Grid.Row="3">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Left" PopupContent="" >
+                                <materialDesign:PopupBox Visibility="{Binding Visibility_DiaChi}"  HorizontalAlignment="Left" PopupContent="{Binding Error_DiaChi}" >
                                     <materialDesign:PopupBox.ToggleContent>
                                         <materialDesign:PackIcon Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
@@ -131,7 +131,7 @@
                         </Grid>
                         <Grid Grid.Row="4">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Left" PopupContent="" >
+                                <materialDesign:PopupBox Visibility="{Binding Visibility_TienGui}"  HorizontalAlignment="Left" PopupContent="{Binding Error_TienGui}" >
                                     <materialDesign:PopupBox.ToggleContent>
                                         <materialDesign:PackIcon Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
@@ -167,7 +167,7 @@
                         <Grid Grid.Row="0"/>
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Left" PopupContent="" >
+                                <materialDesign:PopupBox Visibility="{Binding Visibility_LTK}"  HorizontalAlignment="Left" PopupContent="{Binding Error_LTK}" >
                                     <materialDesign:PopupBox.ToggleContent>
                                         <materialDesign:PackIcon Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
@@ -184,7 +184,7 @@
                         </Grid>
                         <Grid Grid.Row="2">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding }"  HorizontalAlignment="Left" PopupContent="" >
+                                <materialDesign:PopupBox Visibility="{Binding Visibility_CMND}"  HorizontalAlignment="Left" PopupContent="{Binding Error_CMND}" >
                                     <materialDesign:PopupBox.ToggleContent>
                                         <materialDesign:PackIcon Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>

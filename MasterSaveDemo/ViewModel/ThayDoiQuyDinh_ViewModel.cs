@@ -264,6 +264,13 @@ namespace MasterSaveDemo.ViewModel
             set { _TextBoxReadOnly = value; OnPropertyChanged(); }
         }
 
+        private bool _MaLoaiTietKiemReadOnly;
+        public bool MaLoaiTietKiemReadOnly
+        {
+            get => _MaLoaiTietKiemReadOnly;
+            set { _MaLoaiTietKiemReadOnly = value; OnPropertyChanged(); }
+        }
+
         private bool _HitTestVisibleCbb;
         public bool HitTestVisibleCbb
         {
@@ -612,6 +619,7 @@ namespace MasterSaveDemo.ViewModel
             SelectedItemThamSo = null;
             TextBoxReadOnly = false;
             HitTestVisibleCbb = true;
+            MaLoaiTietKiemReadOnly = false;
         }
         
         #endregion
@@ -652,6 +660,7 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                     HiddenPopupBox();
                     SelectedItemLTK = null;
+                    MaLoaiTietKiemReadOnly = true;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
@@ -734,6 +743,7 @@ namespace MasterSaveDemo.ViewModel
                         IsDeleting = true;
                         SetTextboxValue();
                         TextBoxReadOnly = true;
+                        MaLoaiTietKiemReadOnly = true;
                         HitTestVisibleCbb = false;
                         VisibilityOfAdd = Visibility.Visible;
                         VisibilityOfEditLTK = Visibility.Hidden;

@@ -494,7 +494,7 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if (MaSoTietKiem != null)
+					if (MaSoTietKiem != null && MaSoTietKiem != "")
 					{
 						SoTietKiem_Check = "Error";
 						ThongBao_MaSo = "Không tìm thấy sổ tiết kiệm phù hợp!";
@@ -702,7 +702,13 @@ namespace MasterSaveDemo.ViewModel
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
 				}
 
-				MaSoTietKiem = "";
+				TenKhachHang = "";
+				SoDu = "";
+				CMND = "";
+				TenLoaiTietKiem = "";
+				NgayDaoHan = "";
+				Result_KiemTraHopLe = false;
+				Result_KiemTraNhapLai = true;
 				SoTienRut = "";
 
 				return true;

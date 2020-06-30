@@ -135,11 +135,21 @@ namespace MasterSaveDemo.ViewModel
             get => _FlowDoc;
             set { _FlowDoc = value; OnPropertyChanged(); }
         }
+
+        //
+        private Visibility _VisibilityDatePicker;
+        public Visibility VisibilityDatePicker
+        {
+            get => _VisibilityDatePicker;
+            set { _VisibilityDatePicker = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
         private void LoadData()
         {
+            VisibilityDatePicker = Visibility.Hidden;
+
             var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung != 0);
             ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
 
@@ -251,42 +261,51 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // button for finding report and create if ... not available
-            CreateReportCommand = new RelayCommand<object>((p) => { return SelectedDateReport > DateTime.Now ? false : true; },
+            CreateReportCommand = new RelayCommand<object>((p) => { return true; },
                 (p) => {
-                    bool isNew = false;
                     // clear all elements of ListBaoCaoDisplay to clear screen
                     ListBaoCaoDisplay.Clear();
                     
-                    for (int i = 0; i < ListLTK.Count(); i++)
+                    if(SelectedDateReport > DateTime.Now.Date)
                     {
-                        TongThu = TongChi = 0;
-                        BAOCAODOANHSO baoCao = FindBaoCao(ListLTK[i]);
-
-                        if(baoCao != null)
-                        {
-                            isNew = false;
-                            GetBaoCaoToDisplay(i, ListLTK[i], baoCao);
-                        }
-                        else
-                        {
-                            isNew = true;
-                            baoCao = CreateBaoCao(i, ListLTK[i]);
-                            DataProvider.Ins.DB.BAOCAODOANHSOes.Add(baoCao);
-                            DataProvider.Ins.DB.SaveChanges();
-
-                            ListBaoCaoDoanhSo.Add(baoCao);
-                        }
+                        VisibilityDatePicker = Visibility.Visible;
                     }
-                    if (isNew)
+                    else
                     {
-                        if (ListNgayBaoCao.Count() == 0 || (SelectedDateReport < ListNgayBaoCao[ListNgayBaoCao.Count() - 1]) )
-                            ListNgayBaoCao.Add(SelectedDateReport);
-                        for (int i = 0; i < ListNgayBaoCao.Count(); i++)
+                        VisibilityDatePicker = Visibility.Hidden;
+                        bool isNew = false;
+
+                        for (int i = 0; i < ListLTK.Count(); i++)
                         {
-                            if (SelectedDateReport > ListNgayBaoCao[i])
+                            TongThu = TongChi = 0;
+                            BAOCAODOANHSO baoCao = FindBaoCao(ListLTK[i]);
+
+                            if (baoCao != null)
                             {
-                                ListNgayBaoCao.Insert(i, SelectedDateReport);
-                                break;
+                                isNew = false;
+                                GetBaoCaoToDisplay(i, ListLTK[i], baoCao);
+                            }
+                            else
+                            {
+                                isNew = true;
+                                baoCao = CreateBaoCao(i, ListLTK[i]);
+                                DataProvider.Ins.DB.BAOCAODOANHSOes.Add(baoCao);
+                                DataProvider.Ins.DB.SaveChanges();
+
+                                ListBaoCaoDoanhSo.Add(baoCao);
+                            }
+                        }
+                        if (isNew)
+                        {
+                            if (ListNgayBaoCao.Count() == 0 || (SelectedDateReport < ListNgayBaoCao[ListNgayBaoCao.Count() - 1]))
+                                ListNgayBaoCao.Add(SelectedDateReport);
+                            for (int i = 0; i < ListNgayBaoCao.Count(); i++)
+                            {
+                                if (SelectedDateReport > ListNgayBaoCao[i])
+                                {
+                                    ListNgayBaoCao.Insert(i, SelectedDateReport);
+                                    break;
+                                }
                             }
                         }
                     }
@@ -308,13 +327,19 @@ namespace MasterSaveDemo.ViewModel
                 }
             );
 
-            SelectedDateChangedCommand = new RelayCommand<object>((p) => { return true; },
-                (p) => {
-                    ListBaoCaoDisplay.Clear();
-                    if (SelectedDateReport > DateTime.Now)
-                        MessageBox.Show("Không thể lập báo cáo cho ngày trong tương lai!");
-                }
-            );
+            //SelectedDateChangedCommand = new RelayCommand<object>((p) => { return true; },
+            //    (p) => {
+            //        ListBaoCaoDisplay.Clear();
+            //        if (SelectedDateReport > DateTime.Now)
+            //        {
+            //            VisibilityDatePicker = Visibility.Visible;
+            //        }
+            //        else
+            //        {
+            //            VisibilityDatePicker = Visibility.Hidden;
+            //        }
+            //    }
+            //);
         }
     }
 }

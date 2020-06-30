@@ -255,7 +255,6 @@ namespace MasterSaveDemo.ViewModel
             
             SoTienGui_check = "None";
             NgayDaoHanKeTiep_check = "None";
-            MaSoTietKiem_check = "None";
             TenKhachHang = "";
             SoDu = "";
             SoCMND = "";
@@ -263,7 +262,6 @@ namespace MasterSaveDemo.ViewModel
             NgayDaoHanKeTiep = "";
             SoTienGui = "";
             Notify_date = "";
-            Notify_Ma = "";
             Notify_money = "";
             Result_KiemTraNhapLai = true;
             CanCreate = false;
@@ -294,7 +292,7 @@ namespace MasterSaveDemo.ViewModel
             return "0";
         }
         
-        private string search_ThamSo(string MaThamSo)
+        private decimal search_ThamSo(string MaThamSo)
         {
             ObservableCollection<THAMSO> List_TS = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
@@ -302,10 +300,10 @@ namespace MasterSaveDemo.ViewModel
             {
 
                 if (TS.TenThamSo == MaThamSo)
-                    return TS.GiaTri.ToString();
+                    return TS.GiaTri;
 
             }
-            return "";
+            return 0;
         }
 
         private void CheckValid()
@@ -314,13 +312,13 @@ namespace MasterSaveDemo.ViewModel
             {
                 try
                 {
-                    if (int.Parse(SoTienGui) < 1000)
+                    if (decimal.Parse(SoTienGui) < 1000)
                     {
 
                     }
                     else
                     {
-                        SoTienGui = int.Parse(SoTienGui).ToString("0,000");
+                        SoTienGui = decimal.Parse(SoTienGui).ToString("0,000");
                     }
                 }
                 catch (Exception e)
@@ -328,7 +326,7 @@ namespace MasterSaveDemo.ViewModel
 
                 }
                 
-                if (MaSoTietKiem == "" || MaSoTietKiem == null)
+                if ( String.IsNullOrWhiteSpace(MaSoTietKiem))
                 {
                     Notify_Ma="Sổ chưa được tạo mã sổ";
                     MaSoTietKiem_check = "Error";
@@ -361,7 +359,7 @@ namespace MasterSaveDemo.ViewModel
                         }
                         MaSoTietKiem_check = "None";
                         Notify_Ma = "";
-                        if (SoTienGui == null || SoTienGui == "")
+                        if (String.IsNullOrWhiteSpace(SoTienGui))
                         {
                             Notify_money = "Chưa nhập số tiền gửi";
                             SoTienGui_check = "Error";
@@ -468,15 +466,23 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CheckoutCommand { get; set; }
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
-        public ICommand EnterKeyDown_Command { get; set; }
         public ICommand Click_CapNhatCommand { get; set; }
         #endregion
         public GuiTien_ViewModel()
         {
             Init();
+            MaSoTietKiem_check = "None"; Notify_Ma = "";
             OpenDialog = false;
             NgayGui = DateTime.Now.ToString("dd/MM/yyyy");
-            SoTienGuiToiThieu = (search_ThamSo("TienGuiThemToiThieu"));
+            decimal temp = search_ThamSo("TienGuiThemToiThieu");
+            if (temp< 1000)
+            {
+                SoTienGuiToiThieu = temp.ToString();
+            }
+            else
+            {
+                SoTienGuiToiThieu = temp.ToString("0,000");
+            }
             CreateReport = true;
             MSTK_TextChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) =>
             {
@@ -498,14 +504,6 @@ namespace MasterSaveDemo.ViewModel
                 ExecuteSTK();
                 KiemTraNhapLai();
                 
-            });
-            EnterKeyDown_Command = new RelayCommand<object>((p) =>
-            {
-                return true;
-            }, (p) =>
-            {
-                ExecuteSTK();
-                KiemTraNhapLai();
             });
             CheckCommand = new RelayCommand<object>((p) =>
             {
@@ -576,7 +574,7 @@ namespace MasterSaveDemo.ViewModel
                         
                     }
                     Init();
-                   
+                    MaSoTietKiem_check = "None"; Notify_Ma = "";
                 }
             });
         }

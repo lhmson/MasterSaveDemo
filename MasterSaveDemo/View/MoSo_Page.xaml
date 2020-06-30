@@ -28,282 +28,295 @@
             <i:InvokeCommandAction Command="{Binding LostFocusPageCommand}" CommandParameter="{Binding ElementName=MoSo}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <materialDesign:Card Margin="5"
-                  Background="{DynamicResource PrimaryHueDarkBrush}"
-                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                  Padding="8">
-                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">GIAO DỊCH MỞ SỔ</TextBlock>
-            </materialDesign:Card>
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="15"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="5">
+        <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Width="Auto" Height="Auto" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical" Margin="15">
+                        <materialDesign:PackIcon Kind="CheckCircleOutline" Foreground="{StaticResource PrimaryHueMidBrush}" Width="50" Height="50" HorizontalAlignment="Center"/>
+                        <TextBlock FontSize="18" Foreground="Gray" Width="auto" Margin="15 15 15 15" TextWrapping="Wrap" Text="{Binding ThongBao}" HorizontalAlignment="Center"/>
+                        <Button Content="OK" Command="{Binding DialogOK}" Style="{DynamicResource MaterialDesignFlatButton}" Margin="4" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <materialDesign:Card Height="35"
+                    <materialDesign:Card Margin="5"
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                  Padding="5">
-                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin"></TextBlock>
+                  Padding="8">
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20">GIAO DỊCH MỞ SỔ</TextBlock>
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition ></ColumnDefinition>
-                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="15"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
+                    <Grid Grid.Column="0" Margin="5">
                         <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày mở sổ" IsEnabled="False"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding NgayMoSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding Visibility_MaSo}"  HorizontalAlignment="Left" PopupContent="{Binding Error_MaSo}" >
-                                    <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
-                                    </materialDesign:PopupBox.ToggleContent>
-                                </materialDesign:PopupBox>
-                                <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ" IsEnabled="False"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"                         
-                             Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Lấy mã sổ" />
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding Visibility_TenKH}"  HorizontalAlignment="Left" PopupContent="{Binding Error_TenKH}" >
-                                    <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
-                                    </materialDesign:PopupBox.ToggleContent>
-                                </materialDesign:PopupBox>
-                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding TenKH_TextChangedCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="3">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding Visibility_DiaChi}"  HorizontalAlignment="Left" PopupContent="{Binding Error_DiaChi}" >
-                                    <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
-                                    </materialDesign:PopupBox.ToggleContent>
-                                </materialDesign:PopupBox>
-                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Địa chỉ"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding DiaChi_TextChangedCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="4">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding Visibility_TienGui}"  HorizontalAlignment="Left" PopupContent="{Binding Error_TienGui}" >
-                                    <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
-                                    </materialDesign:PopupBox.ToggleContent>
-                                </materialDesign:PopupBox>
-                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi ban đầu"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding SoTienGuiBanDau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding SoTienGui_TextChangedCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="5">
-                            <Button Command="{Binding CheckValidCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170">
-                                Kiểm tra họp lệ
-                            </Button>
-                        </Grid>
-                        
-                    </Grid>
-                    
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0"/>
-                        <Grid Grid.Row="1">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding Visibility_LTK}"  HorizontalAlignment="Left" PopupContent="{Binding Error_LTK}" >
-                                    <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
-                                    </materialDesign:PopupBox.ToggleContent>
-                                </materialDesign:PopupBox>
-                                <ComboBox Width="200" materialDesign:HintAssist.Hint="Loại tiết kiệm"
-                                  ItemsSource="{Binding TenLoaiTietKiem}" Text ="{Binding CbxTenLoaiTietKiem}" SelectedItem="{Binding SelectedTenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding LTK_SelectionChangedCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ComboBox>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <materialDesign:PopupBox Visibility="{Binding Visibility_CMND}"  HorizontalAlignment="Left" PopupContent="{Binding Error_CMND}" >
-                                    <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
-                                    </materialDesign:PopupBox.ToggleContent>
-                                </materialDesign:PopupBox>
-                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="CMND"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding CMND}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding CMND_TextChangedCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="3">
-                            <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp" IsReadOnly="true" IsEnabled="False"
-                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                            Text="{Binding NgayDaoHanKeTiep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                        </Grid>
-                        <Grid Grid.Row="4">
-                            <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="46,0" />
-
-                        </Grid>
-                        <Grid Grid.Row="5">
-                            <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170"/>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                
-                
-            </Grid>
-
-            <Grid Grid.Column="2" Margin="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <materialDesign:Card Height="35"
+                            <materialDesign:Card Height="35"
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="5">
-                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Danh sách loại tiết kiệm"></TextBlock>
-                    </materialDesign:Card>
-                </Grid>
-                <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Stretch">
-                        <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                  HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="STT" DisplayMemberBinding="{Binding MaLoaiTietKiem}"></GridViewColumn>
-                                    <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"></GridViewColumn>
-                                    <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                </materialDesign:Card>
+                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Thông tin"></TextBlock>
+                            </materialDesign:Card>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition ></ColumnDefinition>
+                                <ColumnDefinition ></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày mở sổ" IsEnabled="False"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding NgayMoSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="{Binding Visibility_MaSo}"  HorizontalAlignment="Left" PopupContent="{Binding Error_MaSo}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ" IsEnabled="False"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"                         
+                             Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                        <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Lấy mã sổ" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="{Binding Visibility_TenKH}"  HorizontalAlignment="Left" PopupContent="{Binding Error_TenKH}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding TenKH_TextChangedCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="3">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="{Binding Visibility_DiaChi}"  HorizontalAlignment="Left" PopupContent="{Binding Error_DiaChi}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Địa chỉ"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding DiaChi_TextChangedCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="4">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="{Binding Visibility_TienGui}"  HorizontalAlignment="Left" PopupContent="{Binding Error_TienGui}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi ban đầu"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding SoTienGuiBanDau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding SoTienGui_TextChangedCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="5">
+                                    <Button Command="{Binding CheckValidCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170">
+                                        Kiểm tra họp lệ
+                                    </Button>
+                                </Grid>
 
-                <Grid Grid.Row="2">
-                    <materialDesign:Flipper >
-                        <materialDesign:Flipper.FrontContent>
-                            <Button VerticalAlignment="Top"  Background="{DynamicResource PrimaryHueDarkBrush}"
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0"/>
+                                <Grid Grid.Row="1">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="{Binding Visibility_LTK}"  HorizontalAlignment="Left" PopupContent="{Binding Error_LTK}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <ComboBox Width="200" materialDesign:HintAssist.Hint="Loại tiết kiệm"
+                                  ItemsSource="{Binding TenLoaiTietKiem}" Text ="{Binding CbxTenLoaiTietKiem}" SelectedItem="{Binding SelectedTenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding LTK_SelectionChangedCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="{Binding Visibility_CMND}"  HorizontalAlignment="Left" PopupContent="{Binding Error_CMND}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="CMND"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Text="{Binding CMND}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding CMND_TextChangedCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="3">
+                                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp" IsReadOnly="true" IsEnabled="False"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                            Text="{Binding NgayDaoHanKeTiep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                </Grid>
+                                <Grid Grid.Row="4">
+                                    <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="46,0" />
+
+                                </Grid>
+                                <Grid Grid.Row="5">
+                                    <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="170"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+
+                    </Grid>
+
+                    <Grid Grid.Column="2" Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <materialDesign:Card Height="35"
+                  Background="{DynamicResource PrimaryHueDarkBrush}"
+                  Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                  Padding="5">
+                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="Danh sách loại tiết kiệm"></TextBlock>
+                            </materialDesign:Card>
+                        </Grid>
+                        <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Stretch">
+                            <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="STT" DisplayMemberBinding="{Binding MaLoaiTietKiem}"></GridViewColumn>
+                                        <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"></GridViewColumn>
+                                        <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </materialDesign:Card>
+
+                        <Grid Grid.Row="2">
+                            <materialDesign:Flipper >
+                                <materialDesign:Flipper.FrontContent>
+                                    <Button VerticalAlignment="Top"  Background="{DynamicResource PrimaryHueDarkBrush}"
                                   Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                   Command="{x:Static materialDesign:Flipper.FlipCommand}">
-                                <TextBlock VerticalAlignment="Center"
+                                        <TextBlock VerticalAlignment="Center"
                                     FontSize="18" >
                                     Quy định gửi tiền
-                                </TextBlock>
-                            </Button>
-                        </materialDesign:Flipper.FrontContent>
-                        <materialDesign:Flipper.BackContent>
-                            <Grid Grid.ColumnSpan="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <materialDesign:ColorZone Grid.Row="0" FontSize="16" Background="{DynamicResource PrimaryHueDarkBrush}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Button Grid.Column="0"
+                                        </TextBlock>
+                                    </Button>
+                                </materialDesign:Flipper.FrontContent>
+                                <materialDesign:Flipper.BackContent>
+                                    <Grid Grid.ColumnSpan="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <materialDesign:ColorZone Grid.Row="0" FontSize="16" Background="{DynamicResource PrimaryHueDarkBrush}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Grid.Column="0"
                                                 Style="{StaticResource MaterialDesignToolForegroundButton}"
                                                 Command="{x:Static materialDesign:Flipper.FlipCommand}"
                                                 HorizontalAlignment="Left">
-                                            <materialDesign:PackIcon
+                                                    <materialDesign:PackIcon
                                                   Kind="ArrowLeft"
                                                   HorizontalAlignment="Right" FontSize="20"/>
-                                        </Button>
-                                        <TextBlock Grid.Column="1"
+                                                </Button>
+                                                <TextBlock Grid.Column="1"
                                                 Margin="8 0 0 0"
                                                 VerticalAlignment="Center">
                                               Các quy định
-                                        </TextBlock>
-                                    </Grid>
-                                </materialDesign:ColorZone>
-                                <Grid  Grid.Row="1" Grid.ColumnSpan="2">
-                                    <StackPanel Orientation="Vertical">
+                                                </TextBlock>
+                                            </Grid>
+                                        </materialDesign:ColorZone>
+                                        <Grid  Grid.Row="1" Grid.ColumnSpan="2">
+                                            <StackPanel Orientation="Vertical">
 
-                                        <TextBlock>
+                                                <TextBlock>
                                               Chỉ nhận gởi thêm tiền khi đến kỳ hạn tính lãi suất của các loại tiết kiệm tương ứng.
-                                        </TextBlock>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock> 
+                                                </TextBlock>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock> 
                                                  Số tiền gởi thêm tối thiểu là:
-                                            </TextBlock>
-                                            <TextBlock Text="{Binding SoTienGuiToiThieu}"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </materialDesign:Flipper.BackContent>
-                    </materialDesign:Flipper>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding SoTienGuiToiThieu}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </materialDesign:Flipper.BackContent>
+                            </materialDesign:Flipper>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </materialDesign:DialogHost>
     </Grid>
 </Page>

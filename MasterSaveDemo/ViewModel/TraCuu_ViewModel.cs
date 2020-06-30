@@ -10,21 +10,25 @@ using System.Windows.Input;
 using MasterSaveDemo.Helper;
 using System.Data;
 using System.Windows.Documents;
+using MaterialDesignColors;
 
 namespace MasterSaveDemo.ViewModel
 {
     public class TraCuu_ViewModel : BaseViewModel
     {
         #region The sub funtions by Sanh
-
         private void Confirm_STK()
         {
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
             if (TenKHSua == null || TenKHSua == "" || SelectedSTK == null)
             {
-                MessageBox.Show("Tên khách hàng chưa được nhập");
+                //MessageBox.Show("Tên khách hàng chưa được nhập");
+                Visibility_TenKH = Visibility.Visible;
+                Error_KH = "Tên khách hàng chưa được nhập";
                 return;
             }
-
+            
             SOTIETKIEM STK = new SOTIETKIEM();
 
             ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
@@ -37,7 +41,10 @@ namespace MasterSaveDemo.ViewModel
 
             STK.TenKhachHang = TenKHSua;
             DataProvider.Ins.DB.SOTIETKIEMs.Add(STK);
-            MessageBox.Show("Chỉnh sửa sổ tiết kiệm thành công");
+            //MessageBox.Show("Chỉnh sửa sổ tiết kiệm thành công");
+            DialogOpen = true;
+            ThongBao = "Chỉnh sửa sổ tiết kiệm thành công";
+
 
             STKDuocTraCuu STK_New = SelectedSTK;
             STK_New.TenKH = TenKHSua;
@@ -109,6 +116,8 @@ namespace MasterSaveDemo.ViewModel
             MaSTK = "";
             SelectedLTK = null;
             SelectedMucSoDu = null;
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
         }
 
         private void Search_Mode()
@@ -117,6 +126,8 @@ namespace MasterSaveDemo.ViewModel
             Enable_NhapLaiVaoVon = QuyenNhapLai;
             Visibility_Search = Visibility.Visible;
             Visibility_Edit = Visibility.Hidden;
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
         }
 
         private void Edit_Mode()
@@ -126,6 +137,8 @@ namespace MasterSaveDemo.ViewModel
             Visibility_Search = Visibility.Hidden;
             Visibility_Edit = Visibility.Visible;
             TenKHSua = SelectedSTK.TenKH;
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
         }
 
         private void XetQuyenNhapLai()
@@ -163,10 +176,15 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Variables
-
         private bool QuyenNhapLai;
         private string _Content;
         public string Content { get => _Content; set { _Content = value; OnPropertyChanged(); } }
+
+        private string _Error_KH;
+        public string Error_KH { get => _Error_KH; set { _Error_KH = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_TenKH;
+        public Visibility Visibility_TenKH { get => _Visibility_TenKH; set { _Visibility_TenKH = value; OnPropertyChanged(); } }
 
         private Visibility _Visibility_Edit;
         public Visibility Visibility_Edit { get => _Visibility_Edit; set { _Visibility_Edit = value; OnPropertyChanged(); } }
@@ -238,6 +256,9 @@ namespace MasterSaveDemo.ViewModel
 
         public TraCuu_ViewModel()
         {
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
+
             Search_Mode();
             XetQuyenNhapLai();
             NgayDaoHan = DateTime.Now;
@@ -263,6 +284,9 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
+                Visibility_TenKH = Visibility.Hidden;
+                Error_KH = "";
+                Visibility_Edit = Visibility.Hidden;
                 ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
                 ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
 
@@ -311,6 +335,7 @@ namespace MasterSaveDemo.ViewModel
                 else
                 {
                     Confirm_STK();
+                    if (Visibility_TenKH == Visibility.Hidden)
                     Search_Mode();
                 }
             });

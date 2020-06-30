@@ -300,6 +300,13 @@ namespace MasterSaveDemo.ViewModel
         public ObservableCollection<LOAITIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
         #region Variables
+
+        private bool _DialogOpen;
+        public bool DialogOpen { get => _DialogOpen; set { _DialogOpen = value; OnPropertyChanged(); } }
+
+        private string _ThongBao;
+        public string ThongBao { get => _ThongBao; set { _ThongBao = value; OnPropertyChanged(); } }
+
         private Visibility _Visibility_MaSo;
         public Visibility Visibility_MaSo { get => _Visibility_MaSo; set { _Visibility_MaSo = value; OnPropertyChanged(); } }
 
@@ -396,6 +403,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand SoTienGui_TextChangedCommand { get; set; }
         public ICommand LTK_SelectionChangedCommand { get; set; }
         public ICommand CMND_TextChangedCommand { get; set; }
+        public ICommand DialogOK { get; set; }
 
         // Test change page
         public ICommand LostFocusPageCommand { get; set; }
@@ -413,6 +421,15 @@ namespace MasterSaveDemo.ViewModel
 
             //Display combobox TenLoaiTietKiem
             resetCombobox_LoaiTietKiem();
+
+            //DialogHost
+            DialogOK = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                DialogOpen = false;
+            });
 
             //Event Click of Button Reset Combobox LoaiTietKiem
             ResetLTKCommand = new RelayCommand<object>((p) =>
@@ -441,7 +458,9 @@ namespace MasterSaveDemo.ViewModel
                 CheckValid_ToolTip();
                 if (KiemTraHopLe())
                 {
-                    System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                    //System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
+                    DialogOpen = true;
+                    ThongBao = "Thông tin sổ này hợp lệ! Đã có thể mở sổ";
                     isMoSo = true;
                 }
             });
@@ -456,7 +475,9 @@ namespace MasterSaveDemo.ViewModel
                 if (error != "") System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK);
                 else
                 {
-                    System.Windows.MessageBox.Show("Đã tao một sổ mới");
+                    //System.Windows.MessageBox.Show("Đã tao một sổ mới");
+                    DialogOpen = true;
+                    ThongBao = "Đã tao một sổ mới";
                     SOTIETKIEM SoTietKiem = new SOTIETKIEM();
                     SoTietKiem.MaSoTietKiem = MaSoTietKiem;
                     SoTietKiem.SoCMND = CMND;

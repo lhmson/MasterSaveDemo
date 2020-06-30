@@ -28,8 +28,8 @@ namespace MasterSaveDemo.View
 
         private void SoTienRutTB_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-                var textBox = sender as TextBox;
-                e.Handled = Regex.IsMatch(e.Text, "[^0-9,]+");
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9,]+");
         }
     }
 }

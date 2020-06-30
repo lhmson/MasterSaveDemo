@@ -701,7 +701,7 @@ namespace MasterSaveDemo.ViewModel
 				{
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
 				}
-
+				CapNhatThongTin();
 				TenKhachHang = "";
 				SoDu = "";
 				CMND = "";

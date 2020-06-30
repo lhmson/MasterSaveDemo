@@ -494,7 +494,7 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if (MaSoTietKiem != null && MaSoTietKiem != "")
+					if (!String.IsNullOrWhiteSpace(MaSoTietKiem))
 					{
 						SoTietKiem_Check = "Error";
 						ThongBao_MaSo = "Không tìm thấy sổ tiết kiệm phù hợp!";
@@ -580,7 +580,7 @@ namespace MasterSaveDemo.ViewModel
 						}
 					}
 				}
-				if (String.IsNullOrEmpty(SoTienRut))
+				if (String.IsNu(SoTienRut))
 				{
 					SoTienRut_Check = "Error";
 					ThongBao_TienRut = "Vui lòng nhập số tiền rút.";

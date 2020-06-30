@@ -823,6 +823,7 @@ namespace MasterSaveDemo.ViewModel
                 // selected index = 1: choosing list of PhanQuyen
                 if (SelectedIndexCbb == 0)
                 {
+                    Tat_ToolTip();
                     TenDanhSachNhom = "Danh sách người dùng";
                     VisibilityOfTenNhomQuyen = Visibility.Hidden;
                     VisibilityOfListNguoiDung = Visibility.Visible;
@@ -830,6 +831,7 @@ namespace MasterSaveDemo.ViewModel
                 }
                 else
                 {
+                    Tat_ToolTip();
                     TenDanhSachNhom = "Danh sách phân quyền";
                     VisibilityOfListNguoiDung = Visibility.Hidden;
                     VisibilityOfListPhanQuyen = Visibility.Visible;

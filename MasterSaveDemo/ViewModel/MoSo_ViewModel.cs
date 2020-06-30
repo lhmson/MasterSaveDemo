@@ -207,11 +207,11 @@ namespace MasterSaveDemo.ViewModel
                 Visibility_MaSo = Visibility.Visible;
                 Error_MaSo = "Sổ chưa được tạo mã sổ";
             }
-            if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null)
+            if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null || SelectedTenLoaiTietKiem == null)
             {
                 //error += "\nSổ chưa chọn hình thức loại tiết kiệm";
                 Visibility_LTK = Visibility.Visible;
-                Error_MaSo = "Sổ chưa chọn hình thức loại tiết kiệm";
+                Error_LTK = "Sổ chưa chọn hình thức loại tiết kiệm";
             }
             if (TenKhachHang == "" || TenKhachHang == null)
             {

@@ -361,6 +361,8 @@ namespace MasterSaveDemo.ViewModel
             {
                 DialogOpen = false;
             });
+            ///Khởi tạo xem toàn bộ sổ lần đầu tiên 
+            SeeAllCommand.Execute(new object());
         }
     }
 }

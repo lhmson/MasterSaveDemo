@@ -43,6 +43,26 @@ namespace MasterSaveDemo.ViewModel
         }
         #endregion
         #region The sub functions by Sanh
+        private void Reset()
+        {
+            MaSoTietKiem = "";
+            SelectedTenLoaiTietKiem = null;
+            CbxTenLoaiTietKiem = "";
+            TenKhachHang = "";
+            CMND = "";
+            DiaChi = "";
+            NgayDaoHanKeTiep = "";
+            SoTienGuiBanDau = "";
+        }
+        private bool CheckAllNumber(string number)
+        {
+            if (number == null || number == "") return false;
+            for (int i = 0; i < number.Length; i++)
+                if (number[i] < '0' || number[i] > '9')
+                    return false;
+            return true;
+        }
+
         private string FormatDateTime(string date)
         {
             string res = "";
@@ -133,13 +153,101 @@ namespace MasterSaveDemo.ViewModel
         }
         #endregion
         #region CheckValid
+
+        private void Reset_ToolTip()
+        {
+            Visibility_MaSo = Visibility_LTK = Visibility_TenKH = Visibility_CMND = Visibility_TienGui = Visibility_DiaChi = Visibility.Hidden;
+            Error_CMND = Error_DiaChi = Error_LTK = Error_MaSo = Error_TenKH = Error_TienGui = "";
+        }
+
+        private void Tat_ToolTip()
+        {
+            if (Error_CMND == "") Visibility_CMND = Visibility.Hidden;
+            if (Error_DiaChi == "") Visibility_DiaChi = Visibility.Hidden;
+            if (Error_LTK == "") Visibility_LTK = Visibility.Hidden;
+            if (Error_MaSo == "") Visibility_MaSo = Visibility.Hidden;
+            if (Error_TenKH == "") Visibility_TenKH = Visibility.Hidden;
+            if (Error_TienGui == "") Visibility_TienGui = Visibility.Hidden;
+        }
+
+        private void CheckValid_ToolTip()
+        {
+            ObservableCollection<THAMSO> listThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
+            Reset_ToolTip();
+            if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
+            {
+                //error += "\nSố tiền gửi của khách hàng chưa được nhập";
+                Visibility_TienGui = Visibility.Visible;
+                Error_TienGui = "Số tiền chưa được nhập";
+            }
+            else
+            if (CheckAllNumber(SoTienGuiBanDau)==false)
+            {
+                Visibility_TienGui = Visibility.Visible;
+                Error_TienGui = "Tiền gửi chỉ chứa kí tự số";
+            }
+            else
+            {
+                foreach (var item in listThamSo)
+                {
+                    if (item.TenThamSo == "SoTienGuiToiThieu")
+                    {
+                        if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                        {
+                            //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                            Visibility_TienGui = Visibility.Visible;
+                            Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                        }
+                    }
+                }
+            }
+            if (MaSoTietKiem == "" || MaSoTietKiem == null)
+            {
+                //error += "Sổ chưa được tạo mã sổ";
+                Visibility_MaSo = Visibility.Visible;
+                Error_MaSo = "Sổ chưa được tạo mã sổ";
+            }
+            if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null)
+            {
+                //error += "\nSổ chưa chọn hình thức loại tiết kiệm";
+                Visibility_LTK = Visibility.Visible;
+                Error_MaSo = "Sổ chưa chọn hình thức loại tiết kiệm";
+            }
+            if (TenKhachHang == "" || TenKhachHang == null)
+            {
+                //error += "\nTên khách hàng chưa được nhập";
+                Visibility_TenKH = Visibility.Visible;
+                Error_TenKH = "Tên khách hàng chưa được nhập";
+            }
+            if (CMND == "" || CMND == null)
+            {
+                //error += "\nCMND chưa được nhập";
+                Visibility_CMND = Visibility.Visible;
+                Error_CMND = "CMND chưa được nhập";
+            }
+            if (CheckAllNumber(CMND)==false)
+            {
+                Visibility_CMND = Visibility.Visible;
+                Error_CMND = "CMND chỉ chứa kí tự chữ số";
+            }
+            if (DiaChi == "" || DiaChi == null)
+            {
+                //error += "\nĐịa chỉ chưa được nhập";
+                Visibility_DiaChi = Visibility.Visible;
+                Error_DiaChi = "Địa chỉ chưa được nhập";
+            }
+            Tat_ToolTip();
+        }
+
         private string CheckValid()
         {
             string error = "";
             ObservableCollection<THAMSO> listThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
             if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
+            {
                 error += "\nSố tiền gửi của khách hàng chưa được nhập";
+            }
             else
             {
                 foreach (var item in listThamSo)
@@ -179,13 +287,58 @@ namespace MasterSaveDemo.ViewModel
             return date_NgayDaoHan;
         }
 
+        private bool KiemTraHopLe()
+        {
+            if ((Visibility_CMND == Visibility.Visible) || (Visibility_DiaChi == Visibility.Visible) || Visibility_LTK == Visibility.Visible || 
+                Visibility_MaSo == Visibility.Visible || Visibility_TenKH == Visibility.Visible || Visibility_TienGui == Visibility.Visible)
+                return false;
+            return true;
+        }
         #endregion
 
         private ObservableCollection<LOAITIETKIEM> _List;
         public ObservableCollection<LOAITIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
         #region Variables
+        private Visibility _Visibility_MaSo;
+        public Visibility Visibility_MaSo { get => _Visibility_MaSo; set { _Visibility_MaSo = value; OnPropertyChanged(); } }
 
+        private Visibility _Visibility_LTK;
+        public Visibility Visibility_LTK { get => _Visibility_LTK; set { _Visibility_LTK = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_TenKH;
+        public Visibility Visibility_TenKH { get => _Visibility_TenKH; set { _Visibility_TenKH = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_CMND;
+        public Visibility Visibility_CMND { get => _Visibility_CMND; set { _Visibility_CMND = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_DiaChi;
+        public Visibility Visibility_DiaChi { get => _Visibility_DiaChi; set { _Visibility_DiaChi = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_TienGui;
+        public Visibility Visibility_TienGui { get => _Visibility_TienGui; set { _Visibility_TienGui = value; OnPropertyChanged(); } }
+
+        private string _Error_MaSo;
+        public string Error_MaSo { get => _Error_MaSo; set { _Error_MaSo = value; OnPropertyChanged(); } }
+
+        private string _Error_LTK;
+        public string Error_LTK { get => _Error_LTK; set { _Error_LTK = value; OnPropertyChanged(); } }
+
+        private string _Error_TenKH;
+        public string Error_TenKH { get => _Error_TenKH; set { _Error_TenKH = value; OnPropertyChanged(); } }
+
+        private string _Error_CMND;
+        public string Error_CMND { get => _Error_CMND; set { _Error_CMND = value; OnPropertyChanged(); } }
+
+        private string _Error_DiaChi;
+        public string Error_DiaChi { get => _Error_DiaChi; set { _Error_DiaChi = value; OnPropertyChanged(); } }
+
+        private string _Error_TienGui;
+        public string Error_TienGui { get => _Error_TienGui; set { _Error_TienGui = value; OnPropertyChanged(); } }
+
+        #region ToolTips
+
+        #endregion
         private bool isMoSo = false;
         private bool _Enable_KiemTraHopLe;
         public bool Enable_KiemTraHopLe { get => _Enable_KiemTraHopLe; set { _Enable_KiemTraHopLe = value; OnPropertyChanged(); } }
@@ -249,7 +402,7 @@ namespace MasterSaveDemo.ViewModel
 
         public MoSo_ViewModel()
         {
-
+            Reset_ToolTip();
             NgayDaoHanKeTiep = "";
             // Display List LOAITIETKIEM
             List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -285,14 +438,12 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
-                string error = CheckValid();
-                if (error == "")
+                CheckValid_ToolTip();
+                if (KiemTraHopLe())
                 {
                     System.Windows.MessageBox.Show("Thông tin sổ này hợp lệ! Đã có thể mở sổ");
                     isMoSo = true;
                 }
-                else
-                    System.Windows.MessageBox.Show(error, "Thông tin không hợp lệ", MessageBoxButton.OK); 
             });
 
             //Button Mo So 
@@ -320,6 +471,7 @@ namespace MasterSaveDemo.ViewModel
                     SoTietKiem.LaiSuatApDung = search_LaiSuat(search_MaLTK(SelectedTenLoaiTietKiem));
                     DataProvider.Ins.DB.SOTIETKIEMs.Add(SoTietKiem);
                     DataProvider.Ins.DB.SaveChanges();
+                    Reset();
                 }
             });
 

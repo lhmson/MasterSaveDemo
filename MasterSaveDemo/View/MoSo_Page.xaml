@@ -73,10 +73,12 @@
                             </materialDesign:Card>
                         </Grid>
                         <Grid Grid.Row="1">
+                            
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition ></ColumnDefinition>
                                 <ColumnDefinition ></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            
                             <Grid Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition></RowDefinition>
@@ -87,9 +89,18 @@
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-                                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày mở sổ" IsEnabled="False"
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left" PopupContent="{Binding Error_MaSo}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày mở sổ" IsEnabled="False"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding NgayMoSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                    
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -98,7 +109,7 @@
                                                 <materialDesign:PackIcon Kind="Error" />
                                             </materialDesign:PopupBox.ToggleContent>
                                         </materialDesign:PopupBox>
-                                        <TextBox Width="150" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ" IsEnabled="False"
+                                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ" IsEnabled="False"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"                         
                              Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                         <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Lấy mã sổ" />
@@ -120,6 +131,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBox>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="3">
@@ -138,6 +150,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBox>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="4">
@@ -156,12 +169,22 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBox>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="5">
-                                    <Button Command="{Binding CheckValidCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170">
-                                        Kiểm tra họp lệ
-                                    </Button>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left" PopupContent="{Binding Error_TienGui}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <Button Command="{Binding CheckValidCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170">
+                                            Kiểm tra họp lệ
+                                        </Button>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                    
                                 </Grid>
 
                             </Grid>
@@ -191,6 +214,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </ComboBox>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="2">
@@ -209,20 +233,47 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBox>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="3">
-                                    <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp" IsReadOnly="true" IsEnabled="False"
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left" PopupContent="{Binding Error_CMND}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp" IsReadOnly="true" IsEnabled="False"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                             Text="{Binding NgayDaoHanKeTiep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                    
 
                                 </Grid>
                                 <Grid Grid.Row="4">
-                                    <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" Margin="46,0" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left" PopupContent="{Binding Error_CMND}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <CheckBox IsChecked="True" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+                                    
 
                                 </Grid>
                                 <Grid Grid.Row="5">
-                                    <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedButton}" Width="170"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left" PopupContent="{Binding Error_TienGui}" >
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="Error" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                        </materialDesign:PopupBox>
+                                        <Button Command="{Binding MoSoCommand}" Content="Thực hiện giao dịch" Style="{StaticResource MaterialDesignRaisedButton}" Width="170"/>
+                                        <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
+                                    </StackPanel>
                                 </Grid>
                             </Grid>
                         </Grid>

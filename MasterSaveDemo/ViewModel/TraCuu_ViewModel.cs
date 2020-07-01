@@ -10,6 +10,7 @@ using System.Windows.Input;
 using MasterSaveDemo.Helper;
 using System.Data;
 using System.Windows.Documents;
+using MaterialDesignColors;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -17,14 +18,36 @@ namespace MasterSaveDemo.ViewModel
     {
         #region The sub funtions by Sanh
 
+        private bool check_hasaWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item == ' ')
+                    return true;
+            return false;
+        }
+
+        private bool check_hasallWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item != ' ')
+                    return false;
+            return true;
+        }
+
         private void Confirm_STK()
         {
-            if (TenKHSua == null || TenKHSua == "" || SelectedSTK == null)
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
+            if (TenKHSua == null || TenKHSua == "" || SelectedSTK == null || check_hasallWhiteSpace(TenKHSua))
             {
-                MessageBox.Show("Tên khách hàng chưa được nhập");
+                //MessageBox.Show("Tên khách hàng chưa được nhập");
+                Visibility_TenKH = Visibility.Visible;
+                Error_KH = "Tên khách hàng chưa được nhập";
                 return;
             }
-
+            
             SOTIETKIEM STK = new SOTIETKIEM();
 
             ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
@@ -37,7 +60,9 @@ namespace MasterSaveDemo.ViewModel
 
             STK.TenKhachHang = TenKHSua;
             DataProvider.Ins.DB.SOTIETKIEMs.Add(STK);
-            MessageBox.Show("Chỉnh sửa sổ tiết kiệm thành công");
+
+            DialogOpen = true;
+            ThongBao = "Chỉnh sửa tên khách hàng thành công";
 
             STKDuocTraCuu STK_New = SelectedSTK;
             STK_New.TenKH = TenKHSua;
@@ -109,6 +134,8 @@ namespace MasterSaveDemo.ViewModel
             MaSTK = "";
             SelectedLTK = null;
             SelectedMucSoDu = null;
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
         }
 
         private void Search_Mode()
@@ -117,6 +144,8 @@ namespace MasterSaveDemo.ViewModel
             Enable_NhapLaiVaoVon = QuyenNhapLai;
             Visibility_Search = Visibility.Visible;
             Visibility_Edit = Visibility.Hidden;
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
         }
 
         private void Edit_Mode()
@@ -126,6 +155,8 @@ namespace MasterSaveDemo.ViewModel
             Visibility_Search = Visibility.Hidden;
             Visibility_Edit = Visibility.Visible;
             TenKHSua = SelectedSTK.TenKH;
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
         }
 
         private void XetQuyenNhapLai()
@@ -160,13 +191,38 @@ namespace MasterSaveDemo.ViewModel
             return res;
         }
 
+        private void Init_XemToanBo()
+        {
+            ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+            ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+
+            var results = from stk in STK_TABLE
+                          join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
+                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
+                          Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+            ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
+            #region fill id 
+            int count = 1;
+            for (int i = 0; i < ListSoTietKiem.Count(); i++)
+            {
+                ListSoTietKiem[i].STT = count.ToString();
+                count++;
+            }
+            #endregion
+        }
+
         #endregion
 
         #region Variables
-
         private bool QuyenNhapLai;
         private string _Content;
         public string Content { get => _Content; set { _Content = value; OnPropertyChanged(); } }
+
+        private string _Error_KH;
+        public string Error_KH { get => _Error_KH; set { _Error_KH = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_TenKH;
+        public Visibility Visibility_TenKH { get => _Visibility_TenKH; set { _Visibility_TenKH = value; OnPropertyChanged(); } }
 
         private Visibility _Visibility_Edit;
         public Visibility Visibility_Edit { get => _Visibility_Edit; set { _Visibility_Edit = value; OnPropertyChanged(); } }
@@ -238,15 +294,19 @@ namespace MasterSaveDemo.ViewModel
 
         public TraCuu_ViewModel()
         {
+            Init_XemToanBo();
+            Visibility_TenKH = Visibility.Hidden;
+            Error_KH = "";
+
             Search_Mode();
             XetQuyenNhapLai();
             NgayDaoHan = DateTime.Now;
             // Init Combobox LoaiTietKiem
             ObservableCollection<LOAITIETKIEM> _List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             LoaiTietKiem = new List<string>();
+            LoaiTietKiem.Add("Tất cả");
             foreach (LOAITIETKIEM LTK in _List)
                 LoaiTietKiem.Add(LTK.TenLoaiTietKiem);
-            LoaiTietKiem.Add("Tất cả");
 
             // Combobox MucSoDu
             MucSoDu = new List<string>();
@@ -263,6 +323,9 @@ namespace MasterSaveDemo.ViewModel
                 return true;
             }, (p) =>
             {
+                Visibility_TenKH = Visibility.Hidden;
+                Error_KH = "";
+                Visibility_Edit = Visibility.Hidden;
                 ObservableCollection<SOTIETKIEM> STK_TABLE = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
                 ObservableCollection<LOAITIETKIEM> LTK_TABLE = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
 
@@ -311,6 +374,7 @@ namespace MasterSaveDemo.ViewModel
                 else
                 {
                     Confirm_STK();
+                    if (Visibility_TenKH == Visibility.Hidden)
                     Search_Mode();
                 }
             });
@@ -361,6 +425,8 @@ namespace MasterSaveDemo.ViewModel
             {
                 DialogOpen = false;
             });
+            ///Khởi tạo xem toàn bộ sổ lần đầu tiên 
+            SeeAllCommand.Execute(new object());
         }
     }
 }

@@ -51,104 +51,108 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <HamburgerMenu:HamburgerMenu x:Name="hamburger" MaxWidth="230" Background="#49c7ab" MenuIconColor="#236084" SelectionIndicatorColor="#80fbdd" MenuItemForeground="#80fbdd" HorizontalAlignment="Left">
-                        <HamburgerMenu:HamburgerMenuItem x:Name="Home_Page_Button" Icon="/Images/home.png" Text="Trang chủ" SelectionCommand="" IsEnabled="{Binding Enable_Home}" IsSelected="{Binding Selected_HOME}">
+                <HamburgerMenu:HamburgerMenu x:Name="hamburger" MaxWidth="230" Background="#49c7ab" MenuIconColor="#236084" SelectionIndicatorColor="#80fbdd" MenuItemForeground="FloralWhite" HorizontalAlignment="Left">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="Home_Page_Button" Icon="/Images/home.png" Text="Trang chủ" IsEnabled="{Binding Enable_Home}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Selected">
                                 <i:InvokeCommandAction Command="{Binding Home_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="MoSo_Page_Button" Icon="/Images/new.png" Text="Giao dịch mở sổ" IsEnabled="{Binding Enable_MoSo}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="MoSo_Page_Button" Icon="/Images/1-MoSo.png" Text="Giao dịch mở sổ" IsEnabled="{Binding Enable_MoSo}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding MoSo_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="GuiTien_Page_Button" Icon="/Images/favorite.png" Text="Giao dịch gửi tiền" IsEnabled="{Binding Enable_GuiTien}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="GuiTien_Page_Button" Icon="/Images/2-GuiTien.png" Text="Giao dịch gửi tiền" IsEnabled="{Binding Enable_GuiTien}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding GuiTien_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="RutTien_Page_Button" Icon="/Images/favorite.png" Text="Giao dịch rút tiền" IsEnabled="{Binding Enable_RutTien}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="RutTien_Page_Button" Icon="/Images/3-RutTien.png" Text="Giao dịch rút tiền" IsEnabled="{Binding Enable_RutTien}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding RutTien_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="TraCuu_Page_Button" Icon="/Images/search.png" Text="Tra cứu sổ" IsEnabled="{Binding Enable_TraCuu}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="TraCuu_Page_Button" Icon="/Images/search.png" Text="Tra cứu sổ" IsEnabled="{Binding Enable_TraCuu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding TraCuu_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="BaoCaoDoanhSo_Page_Button" Icon="/Images/list.png" Text="Lập báo cáo doanh số" IsEnabled="{Binding Enable_BCDS}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="BaoCaoDoanhSo_Page_Button" Icon="/Images/5-BaoCaoDoanhThu.png" Text="Lập báo cáo doanh số" IsEnabled="{Binding Enable_BCDS}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding BaoCaoDoanhSo_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="BaoCaoMoDong_Page_Button" Icon="/Images/list.png" Text="Lập báo cáo mở đóng" IsEnabled="{Binding Enable_BCMD}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="BaoCaoMoDong_Page_Button" Icon="/Images/6-BaoCaoMoDong.png" Text="Lập báo cáo mở đóng" IsEnabled="{Binding Enable_BCMD}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding BaoCaoMoDong_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="ThayDoiQuyDinh_Page_Button" Icon="/Images/spam.png" Text="Thay đổi quy định" IsEnabled="{Binding Enable_TDQD}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="ThayDoiQuyDinh_Page_Button" Icon="/Images/7-ThayDoiQuyDinh.png" Text="Thay đổi quy định" IsEnabled="{Binding Enable_TDQD}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding ThayDoiQuyDinh_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem x:Name="QuanLyNhanSu_Page_Button" Icon="/Images/person.png" Text="Quản lí nhân sự" IsEnabled="{Binding Enable_QLNS}">
+                    <HamburgerMenu:HamburgerMenuItem x:Name="QuanLyNhanSu_Page_Button" Icon="/Images/8-QuanLyNhanSu.png" Text="Quản lí nhân sự" IsEnabled="{Binding Enable_QLNS}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{Binding QuanLyNhanSu_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=hamburger}"/>
+                                                    CommandParameter="{Binding ElementName=hamburger}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-                        <HamburgerMenu:HamburgerMenuItem Icon="/Images/setting.png" Text="Đăng xuất">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Selected">
-                                <i:InvokeCommandAction Command="{Binding CaiDatKhac_Page_SelectedCommand}"
+                    <HamburgerMenu:HamburgerMenuItem Icon="/Images/10-info.png" Text="Thông tin phần mềm">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Selected">
+                                    <i:InvokeCommandAction Command="{Binding CaiDatKhac_Page_SelectedCommand}"
                                                    CommandParameter="{Binding ElementName=this_}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HamburgerMenu:HamburgerMenuItem>
+
+                    <HamburgerMenu:HamburgerMenuItem IsEnabled="False" Height="146">
+                    </HamburgerMenu:HamburgerMenuItem>
+                    <HamburgerMenu:HamburgerMenuItem x:Name="Logout_Button" Icon="/Images/11-logout.png" Text="Đăng xuất">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="GotFocus">
+                                <i:InvokeCommandAction Command="{Binding DangXuat_SelectedCommand}"
+                                                    CommandParameter="{Binding ElementName=this_}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </HamburgerMenu:HamburgerMenuItem>
-
                 </HamburgerMenu:HamburgerMenu>
-                </Grid>
+                <!--</Grid>-->
 
-                <Grid Grid.Row="1" VerticalAlignment="Bottom">
+                <!--<Grid Grid.Row="1" VerticalAlignment="Bottom">
                     <Button Background='#49c7ab' Height="50"
                                 ToolTip="Đăng xuất" Command="{Binding DangXuat_SelectedCommand}"
                                                    CommandParameter="{Binding ElementName=this_}">
                         <Image Source="/Images/logout.png" Width="10" Height="10" />
                     </Button>
-                </Grid>
+                </Grid>-->
                 
             </Grid>
             <Grid Grid.Column="1">

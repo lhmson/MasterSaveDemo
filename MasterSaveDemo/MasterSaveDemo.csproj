@@ -391,6 +391,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logout.png" />
+    <Resource Include="Images\1-MoSo.png" />
+    <Resource Include="Images\10-info.png" />
+    <Resource Include="Images\11-logout.png" />
+    <Resource Include="Images\2-GuiTien.png" />
+    <Resource Include="Images\3-RutTien.png" />
+    <Resource Include="Images\5-BaoCaoDoanhThu.png" />
+    <Resource Include="Images\6-BaoCaoMoDong.png" />
+    <Resource Include="Images\7-ThayDoiQuyDinh.png" />
+    <Resource Include="Images\8-QuanLyNhanSu.png" />
     <Content Include="Model\QLSTKModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QLSTKModel.Context.cs</LastGenOutput>

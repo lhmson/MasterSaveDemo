@@ -123,7 +123,7 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBox>
-                                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra"
+                                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon AccountSearch}" ToolTip="Kiểm tra"
                                         Command="{Binding Click_MSTKCommand}"/>
                                     </StackPanel>
                                 </Grid>
@@ -145,7 +145,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                             Text="{Binding SoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsReadOnly="True"/>
-                                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Sao chép số tiền"
+                                        <Button Margin="5" Width="50" Content="{materialDesign:PackIcon ContentCopy}" ToolTip="Sao chép số tiền"
                                 Command="{Binding Click_CopySoDuSTRCommand}" IsCancel="True"/>
                                     </StackPanel>
                                 </Grid>
@@ -213,7 +213,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                             Text="{Binding NgayDaoHan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsReadOnly="True" Margin="0,0,0,8" Width="180"/>
-                                        <Button Margin="0,16" Content="{materialDesign:PackIcon Refresh}" ToolTip="Cập nhật tiền lãi"
+                                        <Button Margin="0,16" Content="{materialDesign:PackIcon Update}" ToolTip="Cập nhật tiền lãi"
                             Command="{Binding Click_CapNhatCommand}"/>
                                     </StackPanel>
 

@@ -102,7 +102,7 @@
                          VerticalAlignment="Center"
                          Text="{Binding MaLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Error" IsReadOnly="{Binding MaLoaiTietKiemReadOnly}"/>
-                        <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu" 
+                        <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu (ngày)" 
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
@@ -139,7 +139,7 @@
                          VerticalAlignment="Center"
                          Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
-                        <TextBox materialDesign:HintAssist.Hint="Lãi suất"
+                        <TextBox materialDesign:HintAssist.Hint="Lãi suất (%)"
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
@@ -166,7 +166,7 @@
                         </materialDesign:PopupBox>
                     </Grid>
                     <Grid Grid.Column="0">
-                        <TextBox materialDesign:HintAssist.Hint="Kỳ hạn"
+                        <TextBox materialDesign:HintAssist.Hint="Kỳ hạn (ngày)"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
@@ -188,7 +188,7 @@
                         </materialDesign:PopupBox>
                     </Grid>
                     <Grid Grid.Column="0">
-                        <TextBox materialDesign:HintAssist.Hint="Lãi suất"
+                        <TextBox materialDesign:HintAssist.Hint="Lãi suất (%)"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
@@ -210,25 +210,17 @@
                         </materialDesign:PopupBox>
                     </Grid>
                     <Grid Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Margin="0,0,-100,0">
-                            <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu"
+                        <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu (ngày)" HorizontalAlignment="Stretch"
                          Visibility="{Binding VisibilityOfAdd}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
-                        </Grid>
-                        <Grid Grid.Column="1" Margin="90,0,0,0">
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}" 
-                            Margin="5,0,5,0" Content="ZZZ"
-                            Command="{Binding GetThoiGianGuiToiThieuCommand}"
+                            <Button Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Right" 
+                            Margin="5,0,5,0" Content="{materialDesign:PackIcon ArrowDownDropCircle}"
+                            Command="{Binding GetThoiGianGuiToiThieuCommand}" ToolTip="Sao chép kì hạn"
                             Visibility="{Binding VisibilityOfAdd}"/>
-                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="7">

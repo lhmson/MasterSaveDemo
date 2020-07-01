@@ -86,14 +86,14 @@ namespace MasterSaveDemo.ViewModel
             decimal min = 0;
             decimal max = -1;
 
-            if (SelectedMucSoDu == "0 VNĐ") max = 0;
-            else if (SelectedMucSoDu == "Dưới 5.000.000 VNĐ") max = 5000000;
-            else if (SelectedMucSoDu == "5.000.000 - 100.000.000 VNĐ")
+            if (SelectedMucSoDu == "0 VND") max = 0;
+            else if (SelectedMucSoDu == "Dưới 5.000.000 VND") max = 5000000;
+            else if (SelectedMucSoDu == "5.000.000 - 100.000.000 VND")
             {
                 min = 5000000;
                 max = 100000000;
             }
-            else if (SelectedMucSoDu == "Từ 100.000.000 - 1.000.000.000 VNĐ")
+            else if (SelectedMucSoDu == "Từ 100.000.000 - 1.000.000.000 VND")
             {
                 min = 100000000;
                 max = 1000000000;
@@ -311,11 +311,11 @@ namespace MasterSaveDemo.ViewModel
             // Combobox MucSoDu
             MucSoDu = new List<string>();
             MucSoDu.Add("Tất cả");
-            MucSoDu.Add("0 VNĐ");
-            MucSoDu.Add("Dưới 5.000.000 VNĐ");
-            MucSoDu.Add("5.000.000 - 100.000.000 VNĐ");
-            MucSoDu.Add("Từ 100.000.000 - 1.000.000.000 VNĐ");
-            MucSoDu.Add("Trên 1.000.000.000 VNĐ");
+            MucSoDu.Add("0 VND");
+            MucSoDu.Add("Dưới 5.000.000 VND");
+            MucSoDu.Add("5.000.000 - 100.000.000 VND");
+            MucSoDu.Add("Từ 100.000.000 - 1.000.000.000 VND");
+            MucSoDu.Add("Trên 1.000.000.000 VND");
 
             //Button Xem tất cả
             SeeAllCommand = new RelayCommand<object>((p) =>

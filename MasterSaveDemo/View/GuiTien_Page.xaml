@@ -128,7 +128,7 @@
                                         CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
                                                     </TextBox.InputBindings>
                                                 </TextBox>
-                                                <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Kiểm tra" 
+                                                <Button Margin="5" Width="50" Content="{materialDesign:PackIcon ClipboardArrowDown}" ToolTip="Lấy thông tin tự dộng" 
                                     Command="{Binding ShowINFO}"/>
 
                                             </StackPanel>
@@ -155,7 +155,7 @@
                                                         <materialDesign:PackIcon Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư"
+                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư tài khoản (VND)"
                                  IsReadOnly="true" 
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
                                  Text="{Binding SoDu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,StringFormat='$#,##0;$(#,##0)'}" />
@@ -169,7 +169,7 @@
                                                         <materialDesign:PackIcon Kind="{Binding SoTienGui_check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <TextBox  Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                                                <TextBox  Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi (VND)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                                                   PreviewTextInput="TextBox_PreviewTextInput"
                                                   Text="{Binding SoTienGui, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
                                                     <TextBox.InputBindings>
@@ -250,7 +250,7 @@
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center" IsEnabled="False"
                                  Text="{Binding NgayDaoHanKeTiep, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                                                <Button Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Cập nhật tiền lãi"
+                                                <Button Margin="5" Width="50" Content="{materialDesign:PackIcon PlusBox}" ToolTip="Cập nhật số dư cho sổ"
                         Command="{Binding Click_CapNhatCommand}"/>
                                             </StackPanel>
                                         </Grid>

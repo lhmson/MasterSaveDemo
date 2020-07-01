@@ -113,7 +113,7 @@
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ" IsEnabled="False"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"                         
                              Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                                <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Lấy mã sổ" />
+                                                <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon ClipboardArrowDown}" ToolTip="Tạo mã sổ" />
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="2">
@@ -161,7 +161,7 @@
                                                         <materialDesign:PackIcon Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi ban đầu"
+                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền ban đầu (VND)"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding SoTienGuiBanDau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     <i:Interaction.Triggers>

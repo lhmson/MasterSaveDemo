@@ -155,9 +155,9 @@
                                             <GridViewColumn Header="Mã sổ" DisplayMemberBinding="{Binding Ma}"></GridViewColumn>
                                             <GridViewColumn Header="Loại tiết kiệm" DisplayMemberBinding="{Binding LoaiTietKiem}"></GridViewColumn>
                                             <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding TenKH}"></GridViewColumn>
-                                            <GridViewColumn Header="Số dư" DisplayMemberBinding="{Binding SoDu}"></GridViewColumn>
+                                            <GridViewColumn Header="Số dư (VND)" DisplayMemberBinding="{Binding SoDu}"></GridViewColumn>
                                             <GridViewColumn Header="Ngày đáo hạn kế tiếp" DisplayMemberBinding="{Binding NgayDaoHan}"></GridViewColumn>
-                                            <GridViewColumn Header="Lãi suất áp dụng" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
+                                            <GridViewColumn Header="Lãi suất áp dụng (%)" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

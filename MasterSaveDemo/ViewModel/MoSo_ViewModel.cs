@@ -533,7 +533,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     //System.Windows.MessageBox.Show("Đã tao một sổ mới");
                     DialogOpen = true;
-                    ThongBao = "Đã tao một sổ mới";
+                    ThongBao = "Đã tạo một sổ mới";
                     SOTIETKIEM SoTietKiem = new SOTIETKIEM();
                     SoTietKiem.MaSoTietKiem = MaSoTietKiem;
                     SoTietKiem.SoCMND = CMND;

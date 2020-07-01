@@ -173,7 +173,7 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
+                                <ComboBox materialDesign:HintAssist.Hint="Chức vụ (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfEdit}"
                           ItemsSource="{Binding CbxTenNhom, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -198,7 +198,7 @@
                                     <ColumnDefinition Width="27*"/>
                                     <ColumnDefinition Width="293*"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox materialDesign:HintAssist.Hint="Vị trí (tên nhóm quyền)"
+                                <ComboBox materialDesign:HintAssist.Hint="Chức vụ (tên nhóm quyền)"
                           Visibility="{Binding VisibilityOfAdd}"
                           ItemsSource="{Binding CbxTenNhom, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"

@@ -250,7 +250,7 @@
                                     <GridView>
                                         <GridViewColumn Width="230" Header="Mã phiếu rút" DisplayMemberBinding="{Binding MaPR}"/>
                                         <GridViewColumn Width="180" Header="Ngày rút" DisplayMemberBinding="{Binding NgayRutTien}"/>
-                                        <GridViewColumn Header="Số tiền rút" DisplayMemberBinding="{Binding TienRut}"/>
+                                        <GridViewColumn Header="Số tiền rút (VND)" DisplayMemberBinding="{Binding TienRut}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>

@@ -238,9 +238,9 @@
                             </materialDesign:Card>
                         </Grid>
                         <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Stretch">
-                            <ListView x:Name="listViewReport" ItemsSource="{Binding ListLichSuGD}" HorizontalAlignment="Stretch"
-                              FontSize="18" VerticalAlignment="Top"
-                              HorizontalContentAlignment="Stretch" >
+                            <ListView x:Name="listViewReport" ItemsSource="{Binding ListLichSuGD}" HorizontalAlignment="Center"
+                              FontSize="18" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              HorizontalContentAlignment="Stretch" SelectionMode="Single">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="230" Header="Mã phiếu gửi" DisplayMemberBinding="{Binding MaPG}"/>

@@ -289,10 +289,10 @@
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListLTK}">
-                        <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" 
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
-                          SelectionMode="Single" Grid.ColumnSpan="2">
+                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListLTK}">
+                        <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          HorizontalAlignment="Center" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
+                          SelectionMode="Single" FontSize="18">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Mã loại tiết kiệm" DisplayMemberBinding="{Binding MaLoaiTietKiem}" />
@@ -306,14 +306,14 @@
                             </ListView.View>
                         </ListView>
                     </materialDesign:Card>
-                    <materialDesign:Card Margin="128,5,128,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListThamSo}" Grid.ColumnSpan="2">
+                    <materialDesign:Card Margin="128,5,128,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListThamSo}" Grid.ColumnSpan="2">
                         <ListView x:Name="listViewThamSo" ItemsSource="{Binding ListThamSo}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemThamSo, Mode=TwoWay}"
+                          HorizontalAlignment="Center" FontSize="18" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedItemThamSo, Mode=TwoWay}"
                           SelectionMode="Single">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
-                                    <GridViewColumn Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
+                                    <GridViewColumn Width="250" Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
+                                    <GridViewColumn Width="210" Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
 
                                 </GridView>
                             </ListView.View>

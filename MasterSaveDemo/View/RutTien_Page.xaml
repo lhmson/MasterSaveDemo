@@ -243,8 +243,8 @@
                             </materialDesign:Card>
                         </Grid>
                         <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Stretch">
-                            <ListView x:Name="listViewReport" ItemsSource="{Binding ListLichSuGD, Mode=TwoWay}"
-                              HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Top"
+                            <ListView x:Name="listViewReport" ItemsSource="{Binding ListLichSuGD, Mode=TwoWay}" SelectionMode="Single"
+                              HorizontalAlignment="Center" FontSize="18" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto"
                               HorizontalContentAlignment="Stretch">
                                 <ListView.View>
                                     <GridView>

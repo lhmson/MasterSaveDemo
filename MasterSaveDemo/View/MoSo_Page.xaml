@@ -245,8 +245,8 @@
                             </materialDesign:Card>
                         </Grid>
                         <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Stretch">
-                            <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                  HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                            <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Single"
+                                  HorizontalAlignment="Center" FontSize="18" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="180"  Header="Mã số" DisplayMemberBinding="{Binding MaLoaiTietKiem}"></GridViewColumn>

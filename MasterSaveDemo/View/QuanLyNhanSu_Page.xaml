@@ -243,22 +243,22 @@
                             <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding TenDanhSachNhom}"></TextBlock>
                         </materialDesign:Card>
                         <Grid Grid.Row="1">
-                            <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListNguoiDung}" >
+                            <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListNguoiDung}" >
                                 <ListView x:Name="listViewNguoiDung" ItemsSource="{Binding ListNhanVien}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedItemNguoiDung, Mode=TwoWay}">
+                          HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedItemNguoiDung, Mode=TwoWay}" FontSize="18" SelectionMode="Single">
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDangNhap}" />
-                                            <GridViewColumn Header="Mật khẩu" DisplayMemberBinding="{Binding MatKhau}"/>
-                                            <GridViewColumn Header="Họ tên" DisplayMemberBinding="{Binding HoTen}"/>
+                                            <GridViewColumn Width="150" Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDangNhap}" />
+                                            <GridViewColumn Width="150" Header="Mật khẩu" DisplayMemberBinding="{Binding MatKhau}"/>
+                                            <GridViewColumn Width="260" Header="Họ tên" DisplayMemberBinding="{Binding HoTen}"/>
                                             <GridViewColumn Header="Vị trí (nhóm quyền)" DisplayMemberBinding="{Binding TenNhom}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
                             </materialDesign:Card>
-                            <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding VisibilityOfListPhanQuyen}" >
+                            <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListPhanQuyen}" >
                                 <ListView x:Name="listViewPhanQuyen" ItemsSource="{Binding ListPhanQuyen, Mode= TwoWay}"
-                          HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPhanQuyen, Mode=TwoWay}" FontSize="18">
+                          HorizontalAlignment="Center" SelectedItem="{Binding SelectedPhanQuyen, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="18" SelectionMode="Single">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="ListViewItem">
                                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />

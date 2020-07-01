@@ -146,9 +146,9 @@
                             </materialDesign:Card>
                         </Grid>
                         <Grid Grid.Row="1">
-                            <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Center">
-                                <ListView ItemsSource="{Binding ListSoTietKiem}" SelectedItem="{Binding SelectedSTK, Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="Auto"
-                                  HorizontalAlignment="Stretch">
+                            <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                <ListView ItemsSource="{Binding ListSoTietKiem}" SelectedItem="{Binding SelectedSTK, Mode=TwoWay}" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="18"
+                                  HorizontalAlignment="Center">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>

@@ -280,8 +280,8 @@
                         <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding NameOfList}"></TextBlock>
                     </materialDesign:Card>
                 </Grid>
-                <Grid Grid.Row="1">
-                    <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListLTK}">
+                <Grid Grid.Row="1" Margin="5">
+                    <materialDesign:Card Margin="0,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListLTK}">
                         <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" ScrollViewer.VerticalScrollBarVisibility="Auto"
                           HorizontalAlignment="Center" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
                           SelectionMode="Single" FontSize="18">

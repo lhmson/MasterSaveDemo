@@ -242,8 +242,8 @@
                   Padding="5">
                             <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding TenDanhSachNhom}"></TextBlock>
                         </materialDesign:Card>
-                        <Grid Grid.Row="1">
-                            <materialDesign:Card Margin="5,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListNguoiDung}" >
+                        <Grid Grid.Row="1" Margin="5">
+                            <materialDesign:Card Margin="0,0,0,5" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListNguoiDung}" >
                                 <ListView x:Name="listViewNguoiDung" ItemsSource="{Binding ListNhanVien}"
                           HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedItemNguoiDung, Mode=TwoWay}" FontSize="18" SelectionMode="Single">
                                     <ListView.View>
@@ -251,7 +251,7 @@
                                             <GridViewColumn Width="150" Header="Tên đăng nhập" DisplayMemberBinding="{Binding TenDangNhap}" />
                                             <GridViewColumn Width="150" Header="Mật khẩu" DisplayMemberBinding="{Binding MatKhau}"/>
                                             <GridViewColumn Width="260" Header="Họ tên" DisplayMemberBinding="{Binding HoTen}"/>
-                                            <GridViewColumn Header="Vị trí (nhóm quyền)" DisplayMemberBinding="{Binding TenNhom}"/>
+                                            <GridViewColumn Header="Chức vụ (nhóm quyền)" DisplayMemberBinding="{Binding TenNhom}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

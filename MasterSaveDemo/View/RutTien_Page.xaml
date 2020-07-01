@@ -79,7 +79,7 @@
                                         <ColumnDefinition ></ColumnDefinition>
                                         <ColumnDefinition ></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
+                                    <Grid Grid.Column="0" Margin="5">
                                         <Grid.RowDefinitions>
                                             <RowDefinition></RowDefinition>
                                             <RowDefinition></RowDefinition>
@@ -157,7 +157,7 @@
                                                         <materialDesign:PackIcon Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư tài khoản (VND)" IsEnabled="False"
+                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư (VND)" IsEnabled="False"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                             Text="{Binding SoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsReadOnly="True"/>
@@ -204,7 +204,7 @@
                                         </Grid>
                                     </Grid>
 
-                                    <Grid Grid.Column="1">
+                                    <Grid Grid.Column="1" Margin="5">
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition/>

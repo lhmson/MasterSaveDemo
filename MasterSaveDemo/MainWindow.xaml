@@ -128,7 +128,7 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Selected">
                                     <i:InvokeCommandAction Command="{Binding CaiDatKhac_Page_SelectedCommand}"
-                                                   CommandParameter="{Binding ElementName=this_}" />
+                                                   CommandParameter="{Binding ElementName=_this}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </HamburgerMenu:HamburgerMenuItem>

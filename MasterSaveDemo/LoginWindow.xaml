@@ -38,7 +38,7 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Button Background="{StaticResource PrimaryHueDarkBrush}" Name="titleBtn" Content="Master Save Banking System Login"></Button>
+            <Button Background="{StaticResource PrimaryHueDarkBrush}" Name="titleBtn" Content="Đăng nhập hệ thống Master Save"></Button>
             
             <!--<UC:ControlBarUC Tag="{Binding Title, ElementName=loginWindow}"></UC:ControlBarUC>-->
         </Grid>

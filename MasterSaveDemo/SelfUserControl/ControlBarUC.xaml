@@ -39,7 +39,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="8">
-                            <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="14" Text="Master Save Banking System - Hệ thống quản lý sổ tiết kiệm chuyên nghiệp"></TextBlock>
+                            <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="14" Text="Master Save Banking System - Phần mềm quản lý sổ tiết kiệm chuyên nghiệp"></TextBlock>
                         </materialDesign:Card>
                     </Grid>
                     <Grid Grid.Column="1">

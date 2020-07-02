@@ -178,6 +178,12 @@
                                                     Command="{Binding CheckCommand}" 
                                                     CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
                                                     </TextBox.InputBindings>
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="TextChanged">
+                                                            <i:InvokeCommandAction Command="{Binding STG_TextChangedCommand}"
+                                                               CommandParameter="{Binding SoTienGuiTB}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
                                                 </TextBox>
                                                 <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                             </StackPanel>

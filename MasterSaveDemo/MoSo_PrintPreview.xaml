@@ -155,6 +155,7 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Số tiền gửi: "></TextBlock>
                             <TextBlock Text="{Binding SoTienGui}"></TextBlock>
+                            <TextBlock Text=" đồng"></TextBlock>
                         </StackPanel>
 
                     </Grid>

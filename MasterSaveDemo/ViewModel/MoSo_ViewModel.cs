@@ -489,7 +489,6 @@ namespace MasterSaveDemo.ViewModel
             NgayMoSo = FormatDateTime(DateTimeNow.ToString("dd/MM/yyyy")); // co edit
 
             CreateReport = true;
-            MessageBox.Show(CreateReport.ToString());
 
             //Display combobox TenLoaiTietKiem
             resetCombobox_LoaiTietKiem();

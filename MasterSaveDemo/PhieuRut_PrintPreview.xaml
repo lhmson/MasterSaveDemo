@@ -117,6 +117,7 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Sổ tiền rút: "></TextBlock>
                             <TextBlock Text="{Binding SoTienRut}"></TextBlock>
+                            <TextBlock Text=" đồng"></TextBlock>
                         </StackPanel>
                     </Grid>
                 </Grid>

@@ -467,6 +467,8 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
         public ICommand Click_CapNhatCommand { get; set; }
+        public ICommand STG_TextChangedCommand { get; set; }
+        
         #endregion
         public GuiTien_ViewModel()
         {
@@ -512,6 +514,13 @@ namespace MasterSaveDemo.ViewModel
             {
                 CheckValid();
                
+            });
+            STG_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                CanCreate = false;
             });
             //button nhap lai vao von
             Click_CapNhatCommand = new RelayCommand<object>((p) => { return !Result_KiemTraNhapLai; }, (p) =>

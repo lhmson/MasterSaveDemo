@@ -92,7 +92,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_NgayRut,Mode=TwoWay}" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="{Binding NgayRut_Check,Mode=TwoWay}" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="{Binding NgayRut_Check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày rút"
@@ -106,7 +106,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_MaSo,Mode=TwoWay}" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="{Binding SoTietKiem_Check,Mode=TwoWay}" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="{Binding SoTietKiem_Check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox x:Name="MaSoTietKiemTB"
@@ -134,7 +134,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng" IsEnabled="False"
@@ -154,7 +154,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư (VND)" IsEnabled="False"
@@ -168,7 +168,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_TienRut,Mode=TwoWay}" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="{Binding SoTienRut_Check,Mode=TwoWay}" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="{Binding SoTienRut_Check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox x:Name="SoTienRutTB" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút (VND)"
@@ -195,7 +195,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <Button Command="{Binding KiemTraCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" Content="Kiểm tra họp lệ" />
@@ -213,12 +213,14 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0"/>
+                                        <Grid Grid.Row="0">
+                                            <Button Command ="{Binding Refresh}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Làm mới" HorizontalAlignment="Right" Background="{StaticResource SecondaryAccentBrush}"/>
+                                        </Grid>
                                         <Grid Grid.Row="1">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm" IsEnabled="False"
@@ -231,7 +233,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số CMND" IsEnabled="False"
@@ -245,7 +247,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding ThongBao_DaoHan,Mode=TwoWay}" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="{Binding DaoHan_Check,Mode=TwoWay}" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="{Binding DaoHan_Check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox FontSize="18" IsEnabled="False" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp"
@@ -261,7 +263,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <CheckBox IsChecked="{Binding CreatePR, Mode=TwoWay}" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" />
@@ -273,7 +275,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <Button Command="{Binding Click_GiaoDichCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" Content="Thực hiện giao dịch"/>

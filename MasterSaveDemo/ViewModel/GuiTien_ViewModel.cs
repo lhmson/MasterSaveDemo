@@ -463,7 +463,8 @@ namespace MasterSaveDemo.ViewModel
         public ICommand ShowINFO { get; set; }
         public ICommand Click_CapNhatCommand { get; set; }
         public ICommand STG_TextChangedCommand { get; set; }
-        
+        public ICommand Refresh { get; set; }
+
         #endregion
         public GuiTien_ViewModel()
         {
@@ -580,6 +581,14 @@ namespace MasterSaveDemo.ViewModel
                     Init();
                     MaSoTietKiem_check = "None"; Notify_Ma = "";
                 }
+            });
+
+            Refresh = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Init();
+                MaSoTietKiem = "";
+                Notify_Ma = "";
+                MaSoTietKiem_check = "None";
             });
         }
     }

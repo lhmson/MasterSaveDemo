@@ -505,6 +505,8 @@ namespace MasterSaveDemo.ViewModel
         public ICommand LTK_SelectionChangedCommand { get; set; }
         public ICommand CMND_TextChangedCommand { get; set; }
         public ICommand DialogOK { get; set; }
+        public ICommand Refresh { get; set; }
+
 
         // Test change page
         public ICommand LostFocusPageCommand { get; set; }
@@ -631,6 +633,12 @@ namespace MasterSaveDemo.ViewModel
             LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
             });
 
+            Refresh = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Reset();
+                Reset_ToolTip();
+            });
+
 
             #region TextChanged Events
             TenKH_TextChangedCommand = new RelayCommand<object>((p) =>
@@ -698,5 +706,6 @@ namespace MasterSaveDemo.ViewModel
             }
             return -1;
         }
+
     }
 }

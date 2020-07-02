@@ -16,8 +16,10 @@ namespace MasterSaveDemo.Model
             public string SoDu { get; set; }
             public string NgayDaoHan { get; set; }
             public string LaiSuat { get; set; }
+            public string NgayMoSo { get; set; }
+            public string NgayDongSo { get; set; }
 
-            public STKDuocTraCuu(string MaSo, string TenLTK, string KH, string SoDu, string NgayDH, string LS)
+            public STKDuocTraCuu(string MaSo, string TenLTK, string KH, string SoDu, string NgayDH, string LS, string NgayMoSo, int KyHan, DateTime? NgayDongSo)
             {
                 STT = "";
                 Ma = MaSo;
@@ -26,6 +28,12 @@ namespace MasterSaveDemo.Model
                 this.SoDu = SoDu;
                 NgayDaoHan = NgayDH;
                 LaiSuat = LS;
+                this.NgayMoSo = NgayMoSo;
+                if (KyHan == 0)
+                    NgayDaoHan = "Không xác định";
+            if (NgayDongSo == null)
+                this.NgayDongSo = "Chưa đóng";
+            else this.NgayDongSo = NgayDongSo.Value.ToString("dd-MM-yyyy");
             }
     }
 }

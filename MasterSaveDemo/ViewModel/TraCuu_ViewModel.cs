@@ -36,17 +36,68 @@ namespace MasterSaveDemo.ViewModel
             return true;
         }
 
+        private bool KiemTraThongTinRong()
+        {
+            if (MaSTK != null && check_hasallWhiteSpace(MaSTK)==false)
+                return false;
+            if (SelectedLTK != null)
+                return false;
+            if (TenKH != null && check_hasallWhiteSpace(TenKH)==false)
+                return false;
+            if (SelectedMucSoDu != null)
+                return false;
+            return true;
+        }
+
+        private bool CheckAllNumber(string number)
+        {
+            if (number == null || number == "") return false;
+            for (int i = 0; i < number.Length; i++)
+                if (number[i] < '0' || number[i] > '9')
+                    return false;
+            return true;
+        }
+
         private void Confirm_STK()
         {
             Visibility_TenKH = Visibility.Hidden;
-            Error_KH = "";
+            Visibility_CMND = Visibility.Hidden;
+            Visibility_DiaChi = Visibility.Hidden;
+
+            Error_KH = Error_CMND = Error_DiaChi = "";
+
+            bool exit = false;
+
             if (TenKHSua == null || TenKHSua == "" || SelectedSTK == null || check_hasallWhiteSpace(TenKHSua))
             {
                 //MessageBox.Show("Tên khách hàng chưa được nhập");
                 Visibility_TenKH = Visibility.Visible;
                 Error_KH = "Tên khách hàng chưa được nhập";
-                return;
+                exit = true;
             }
+
+            if (CMNDSua == null || CMNDSua == "" || check_hasallWhiteSpace(CMNDSua))
+            {
+                Visibility_CMND = Visibility.Visible;
+                Error_CMND = "CMND chưa được nhập";
+                exit = true;
+            }
+
+            if (CMNDSua != null && CheckAllNumber(CMNDSua)==false)
+            {
+                Visibility_CMND = Visibility.Visible;
+                Error_CMND = "CMND chỉ cho phép kí tự số";
+                exit = true;
+            }
+
+            if (DiaChiSua == null || DiaChiSua == "" || check_hasallWhiteSpace(DiaChiSua))
+            {
+                Visibility_DiaChi = Visibility.Visible;
+                Error_DiaChi = "Địa chỉ chưa được nhập";
+                exit = true;
+            }
+
+            if (exit) return;
 
             SOTIETKIEM STK = new SOTIETKIEM();
 
@@ -59,6 +110,9 @@ namespace MasterSaveDemo.ViewModel
             DataProvider.Ins.DB.SOTIETKIEMs.Remove(STK);
 
             STK.TenKhachHang = TenKHSua;
+            STK.SoCMND = CMNDSua;
+            STK.DiaChi = DiaChiSua;
+
             DataProvider.Ins.DB.SOTIETKIEMs.Add(STK);
 
             DialogOpen = true;
@@ -116,7 +170,8 @@ namespace MasterSaveDemo.ViewModel
                                 && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
                                 && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK == "Tất cả")
                                 && (stk.SoDu >= min && (stk.SoDu <= max || max == -1))
-                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), 
+                          stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"),ltk.KyHan,stk.NgayDongSo);
 
             ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
             #region fill id 
@@ -128,6 +183,17 @@ namespace MasterSaveDemo.ViewModel
             }
             #endregion
         }
+
+        private SOTIETKIEM get_STK(string maSTK)
+        {
+            ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+
+            foreach (var item in list_STK)
+                if (item.MaSoTietKiem == maSTK)
+                    return item;
+            return null;
+        }
+
         private void reset_Control()
         {
             TenKH = "";
@@ -145,6 +211,8 @@ namespace MasterSaveDemo.ViewModel
             Visibility_Search = Visibility.Visible;
             Visibility_Edit = Visibility.Hidden;
             Visibility_TenKH = Visibility.Hidden;
+            Visibility_CMND = Visibility.Hidden;
+            Visibility_DiaChi = Visibility.Hidden;
             Error_KH = "";
         }
 
@@ -155,7 +223,11 @@ namespace MasterSaveDemo.ViewModel
             Visibility_Search = Visibility.Hidden;
             Visibility_Edit = Visibility.Visible;
             TenKHSua = SelectedSTK.TenKH;
+            CMNDSua = get_STK(SelectedSTK.Ma).SoCMND;
+            DiaChiSua = get_STK(SelectedSTK.Ma).DiaChi;
             Visibility_TenKH = Visibility.Hidden;
+            Visibility_CMND = Visibility.Hidden;
+            Visibility_DiaChi = Visibility.Hidden;
             Error_KH = "";
         }
 
@@ -199,7 +271,7 @@ namespace MasterSaveDemo.ViewModel
             var results = from stk in STK_TABLE
                           join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                           select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
-                          Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+                          Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"),ltk.KyHan, stk.NgayDongSo) ;
             ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
             #region fill id 
             int count = 1;
@@ -214,15 +286,30 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Variables
+
+        
         private bool QuyenNhapLai;
+
         private string _Content;
         public string Content { get => _Content; set { _Content = value; OnPropertyChanged(); } }
 
         private string _Error_KH;
         public string Error_KH { get => _Error_KH; set { _Error_KH = value; OnPropertyChanged(); } }
 
+        private string _Error_CMND;
+        public string Error_CMND { get => _Error_CMND; set { _Error_CMND = value; OnPropertyChanged(); } }
+
+        private string _Error_DiaChi;
+        public string Error_DiaChi { get => _Error_DiaChi; set { _Error_DiaChi = value; OnPropertyChanged(); } }
+
         private Visibility _Visibility_TenKH;
         public Visibility Visibility_TenKH { get => _Visibility_TenKH; set { _Visibility_TenKH = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_CMND;
+        public Visibility Visibility_CMND { get => _Visibility_CMND; set { _Visibility_CMND = value; OnPropertyChanged(); } }
+
+        private Visibility _Visibility_DiaChi;
+        public Visibility Visibility_DiaChi { get => _Visibility_DiaChi; set { _Visibility_DiaChi = value; OnPropertyChanged(); } }
 
         private Visibility _Visibility_Edit;
         public Visibility Visibility_Edit { get => _Visibility_Edit; set { _Visibility_Edit = value; OnPropertyChanged(); } }
@@ -244,6 +331,12 @@ namespace MasterSaveDemo.ViewModel
 
         private string _TenKHSua;
         public string TenKHSua { get => _TenKHSua; set { _TenKHSua = value; OnPropertyChanged(); } }
+
+        private string _CMNDSua;
+        public string CMNDSua { get => _CMNDSua; set { _CMNDSua = value; OnPropertyChanged(); } }
+
+        private string _DiaChiSua;
+        public string DiaChiSua { get => _DiaChiSua; set { _DiaChiSua = value; OnPropertyChanged(); } }
 
         private string _SelectedLTK;
         public string SelectedLTK { get => _SelectedLTK; set { _SelectedLTK = value; OnPropertyChanged(); } }
@@ -290,6 +383,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CancelCommand { get; set; }
         //lenh ben duoi do Thang them vao
         public ICommand DialogOK { get; set; }
+        public ICommand MaSTK_TextChangedCommand { get; set; }
 
 
         public TraCuu_ViewModel()
@@ -336,7 +430,7 @@ namespace MasterSaveDemo.ViewModel
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
-                              Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+                              Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
                 int count = 1;
@@ -360,6 +454,8 @@ namespace MasterSaveDemo.ViewModel
 
             CancelCommand = new RelayCommand<object>((p) =>
             {
+                if (Visibility_Search == Visibility.Visible && KiemTraThongTinRong())
+                    return false;
                 return true;
             }, (p) =>
             {
@@ -371,6 +467,10 @@ namespace MasterSaveDemo.ViewModel
             //Button Search SO TIET KIEM
             SearchCommand = new RelayCommand<object>((p) =>
             {
+                if (Visibility_Search == Visibility.Visible && KiemTraThongTinRong())
+                    return false;
+                if (Visibility_Edit == Visibility.Visible && TenKHSua == "" && CMNDSua == "" && DiaChiSua == "")
+                    return false;
                 return true;
             }, (p) =>
             {
@@ -378,7 +478,7 @@ namespace MasterSaveDemo.ViewModel
                 else
                 {
                     Confirm_STK();
-                    if (Visibility_TenKH == Visibility.Hidden)
+                    if (Visibility_TenKH == Visibility.Hidden && Visibility_CMND == Visibility.Hidden && Visibility_DiaChi == Visibility.Hidden)
                         Search_Mode();
                 }
             });
@@ -401,7 +501,8 @@ namespace MasterSaveDemo.ViewModel
                         {
                             SOTIETKIEM stk = STK_TABLE.Where(x => x.MaSoTietKiem == mstk).Single();
                             LOAITIETKIEM ltk = LTK_TABLE.Where(x => x.MaLoaiTietKiem == stk.MaLoaiTietKiem).Single();
-                            STKDuocTraCuu temp = new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString());
+                            STKDuocTraCuu temp = new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), 
+                                stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
                             ListSoTietKiem.Add(temp);
                         }
                         int count = 1;
@@ -431,6 +532,16 @@ namespace MasterSaveDemo.ViewModel
             });
             ///Khởi tạo xem toàn bộ sổ lần đầu tiên 
             SeeAllCommand.Execute(new object());
+
+            #region TextChange
+            MaSTK_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                
+            });
+            #endregion
         }
     }
 }

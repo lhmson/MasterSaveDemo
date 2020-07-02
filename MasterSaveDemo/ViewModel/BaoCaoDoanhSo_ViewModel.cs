@@ -137,18 +137,32 @@ namespace MasterSaveDemo.ViewModel
         }
 
         //
-        private Visibility _VisibilityDatePicker;
-        public Visibility VisibilityDatePicker
+        private Visibility _VisibilityDatePickerPopup;
+        public Visibility VisibilityDatePickerPopup
         {
-            get => _VisibilityDatePicker;
-            set { _VisibilityDatePicker = value; OnPropertyChanged(); }
+            get => _VisibilityDatePickerPopup;
+            set { _VisibilityDatePickerPopup = value; OnPropertyChanged(); }
+        }
+
+        private bool _DialogOpen;
+        public bool DialogOpen
+        {
+            get => _DialogOpen;
+            set { _DialogOpen = value; OnPropertyChanged(); }
+        }
+
+        private string _Notify;
+        public string Notify
+        {
+            get => _Notify;
+            set { _Notify = value; OnPropertyChanged(); }
         }
         #endregion
 
         #region Function
         private void LoadData()
         {
-            VisibilityDatePicker = Visibility.Hidden;
+            VisibilityDatePickerPopup = Visibility.Hidden;
 
             var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung != 0);
             ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
@@ -230,6 +244,8 @@ namespace MasterSaveDemo.ViewModel
             };
             return baoCao;
         }
+
+        
         #endregion
 
         #region ICommand
@@ -268,11 +284,11 @@ namespace MasterSaveDemo.ViewModel
                     
                     if(SelectedDateReport > DateTime.Today)
                     {
-                        VisibilityDatePicker = Visibility.Visible;
+                        VisibilityDatePickerPopup = Visibility.Visible;
                     }
                     else
                     {
-                        VisibilityDatePicker = Visibility.Hidden;
+                        VisibilityDatePickerPopup = Visibility.Hidden;
                         bool isNew = false;
 
                         for (int i = 0; i < ListLTK.Count(); i++)
@@ -284,6 +300,9 @@ namespace MasterSaveDemo.ViewModel
                             {
                                 isNew = false;
                                 GetBaoCaoToDisplay(i, ListLTK[i], baoCao);
+
+                                DialogOpen = true;
+                                Notify = "Lấy báo cáo doanh số thành công.";
                             }
                             else
                             {
@@ -293,6 +312,9 @@ namespace MasterSaveDemo.ViewModel
                                 DataProvider.Ins.DB.SaveChanges();
 
                                 ListBaoCaoDoanhSo.Add(baoCao);
+
+                                DialogOpen = true;
+                                Notify = "Tạo báo cáo doanh số mới thành công.";
                             }
                         }
                         if (isNew)
@@ -310,7 +332,6 @@ namespace MasterSaveDemo.ViewModel
                                     }
                                 }
                             }
-                            
                         }
                     }
                 }

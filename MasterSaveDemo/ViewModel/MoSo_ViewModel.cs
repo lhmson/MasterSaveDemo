@@ -239,7 +239,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (item.TenThamSo == "SoTienGuiToiThieu")
                     {
-                        if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                        if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
                         {
                             //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
                             Visibility_TienGui = Visibility.Visible;
@@ -311,7 +311,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (item.TenThamSo == "SoTienGuiToiThieu")
                     {
-                        if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                        if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
                         {
                             error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
                         }
@@ -452,6 +452,14 @@ namespace MasterSaveDemo.ViewModel
         private string _SoTienGuiBanDau;
         public string SoTienGuiBanDau { get => _SoTienGuiBanDau; set { _SoTienGuiBanDau = value; OnPropertyChanged(); } }
 
+        private bool _CreateReport;
+
+        public bool CreateReport
+        {
+            get { return _CreateReport; }
+            set { _CreateReport = value; OnPropertyChanged(); }
+        }
+
         #endregion
 
         public ICommand CheckValidCommand { get; set; }
@@ -479,6 +487,9 @@ namespace MasterSaveDemo.ViewModel
             //Auto display content of NgayMoSo
             DateTime DateTimeNow = DateTime.Now;
             NgayMoSo = FormatDateTime(DateTimeNow.ToString("dd/MM/yyyy")); // co edit
+
+            CreateReport = true;
+            MessageBox.Show(CreateReport.ToString());
 
             //Display combobox TenLoaiTietKiem
             resetCombobox_LoaiTietKiem();
@@ -548,6 +559,16 @@ namespace MasterSaveDemo.ViewModel
                     //System.Windows.MessageBox.Show("Đã tao một sổ mới");
                     DialogOpen = true;
                     ThongBao = "Đã tạo một sổ mới";
+
+                    // xuat preview Mo So (Son lam)
+                    if (CreateReport == true)
+                    {
+                        MoSo_PrintPreview_ViewModel MoSoPPVM = new MoSo_PrintPreview_ViewModel(MaSoTietKiem, TenKhachHang, SoTienGuiBanDau, SelectedTenLoaiTietKiem, CMND, DiaChi);
+                        MoSo_PrintPreview PhieuGui = new MoSo_PrintPreview(MoSoPPVM);
+                        PhieuGui.ShowDialog();
+
+                    }
+
                     SOTIETKIEM SoTietKiem = new SOTIETKIEM();
                     SoTietKiem.MaSoTietKiem = MaSoTietKiem;
                     SoTietKiem.SoCMND = CMND;

@@ -264,7 +264,7 @@
                                                         <materialDesign:PackIcon Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <CheckBox IsChecked="{Binding CreatePR}" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" />
+                                                <CheckBox IsChecked="{Binding CreatePR, Mode=TwoWay}" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" HorizontalAlignment="Center" />
                                                 <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                             </StackPanel>
 

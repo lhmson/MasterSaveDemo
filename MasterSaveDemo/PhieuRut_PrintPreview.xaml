@@ -47,12 +47,7 @@
                             <TextBlock Text="Ngân hàng Thương mại cổ phần StarthenD" FontSize="20" Margin="5" FontStyle="Italic"/>
                         </StackPanel>
                     </Grid>
-                    <Grid Grid.Row="1" Margin="5">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Ngày tạo phiếu:" FontSize="16" Margin="5"/>
-                            <TextBlock Text="{Binding NgayTaoPhieu}" FontSize="16" Margin="5" FontWeight="DemiBold"/>
-                        </StackPanel>
-                    </Grid>
+                    <Grid Grid.Row="1" Margin="5"/>
                     <Grid Grid.Row="2" Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Người lập phiếu:" FontSize="16" Margin="5"/>

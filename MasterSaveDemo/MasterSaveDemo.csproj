@@ -101,6 +101,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\DatabaseCheck.cs" />
+    <Compile Include="MoSo_PrintPreview.xaml.cs">
+      <DependentUpon>MoSo_PrintPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PhieuRut_PrintPreview.xaml.cs">
       <DependentUpon>PhieuRut_PrintPreview.xaml</DependentUpon>
     </Compile>
@@ -202,6 +205,7 @@
     <Compile Include="ViewModel\BaoCaoMoDong_ViewModel.cs" />
     <Compile Include="ViewModel\GuiTien_ViewModel.cs" />
     <Compile Include="ViewModel\Home_PageViewModel.cs" />
+    <Compile Include="ViewModel\MoSo_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\PhieuRut_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\PhieuGui_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\CaiDatKhac_ViewModel.cs" />
@@ -247,6 +251,10 @@
     <Compile Include="View\TraCuu_Page.xaml.cs">
       <DependentUpon>TraCuu_Page.xaml</DependentUpon>
     </Compile>
+    <Page Include="MoSo_PrintPreview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PhieuRut_PrintPreview.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

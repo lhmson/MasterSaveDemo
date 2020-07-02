@@ -108,8 +108,8 @@
                                 <GridView>
                                     <GridViewColumn Width="100" Header="STT" DisplayMemberBinding="{Binding SoThuTu}"/>
                                     <GridViewColumn Width="200" Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
-                                    <GridViewColumn Width="200" Header="Tổng thu" DisplayMemberBinding="{Binding TongThu}"/>
-                                    <GridViewColumn Width="200" Header="Tổng chi" DisplayMemberBinding="{Binding TongChi}"/>
+                                    <GridViewColumn Width="200" Header="Tổng thu (VND)" DisplayMemberBinding="{Binding TongThu}"/>
+                                    <GridViewColumn Width="200" Header="Tổng chi (VND)" DisplayMemberBinding="{Binding TongChi}"/>
                                     <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"/>
                                 </GridView>
                             </ListView.View>

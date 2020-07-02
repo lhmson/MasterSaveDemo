@@ -242,6 +242,27 @@ namespace MasterSaveDemo.ViewModel
 
         #region Function
 
+        private void Reset()
+        {
+            SelectedItemNguoiDung = null;
+            SelectedItemNhomNguoiDung = null;
+            if (SelectedPhanQuyen != null)
+            {
+                BangPhanQuyen PQ = SelectedPhanQuyen;
+                PQ.EnabledCheckBox = false;
+                foreach (var pq in ListPhanQuyen)
+                    if (pq.TenNhomQuyen == PQ.TenNhomQuyen)
+                    {
+                        ListPhanQuyen.Remove(pq);
+                        ListPhanQuyen.Add(PQ);
+                        SelectedPhanQuyen = PQ;
+                        break;
+                    }
+                isEdit = true;
+            }
+            SelectedPhanQuyen = null;
+        }
+
         private bool check_hasaWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
@@ -493,7 +514,7 @@ namespace MasterSaveDemo.ViewModel
                 Error2 = "Mật khẩu không được để trống";
                 Visibility_2 = Visibility.Visible;
                 check = false;
-            }       
+            }
 
             if (HoTen == null || HoTen == "" || check_hasallWhiteSpace(HoTen))
             {
@@ -555,6 +576,7 @@ namespace MasterSaveDemo.ViewModel
             return check;
         }
         #endregion
+
         public QuanLyNhanSu_ViewModel()
         {
             Tat_ToolTip();
@@ -575,7 +597,8 @@ namespace MasterSaveDemo.ViewModel
             });
 
             // show elements used for adding
-            AddNguoiDungCommand = new RelayCommand<object>((p) => {
+            AddNguoiDungCommand = new RelayCommand<object>((p) =>
+            {
                 if (VisibilityOfListPhanQuyen == Visibility.Visible)
                     foreach (var item in ListPhanQuyen)
                         if (item.EnabledCheckBox == true)
@@ -585,7 +608,8 @@ namespace MasterSaveDemo.ViewModel
 
                 return true;
             },
-                (p) => {
+                (p) =>
+                {
                     if (VisibilityOfListPhanQuyen == Visibility.Hidden)
                     {
                         VisibilityOfAdd = Visibility.Visible;
@@ -627,7 +651,8 @@ namespace MasterSaveDemo.ViewModel
                     return false;
                 return ((SelectedPhanQuyen != null || SelectedItemNguoiDung != null) && isEdit);
             },
-                (p) => {
+                (p) =>
+                {
 
                     if (VisibilityOfListNguoiDung == Visibility.Visible && SelectedItemNguoiDung != null) // Edit Nhóm người dùng
                     {
@@ -657,13 +682,15 @@ namespace MasterSaveDemo.ViewModel
                 }
             );
 
-            DeleteNguoiDungKCommand = new RelayCommand<object>((p) => {
+            DeleteNguoiDungKCommand = new RelayCommand<object>((p) =>
+            {
                 if (VisibilityOfAdd == Visibility.Visible || VisibilityOfEdit == Visibility.Visible) return false;
                 if (VisibilityOfTenNhomQuyen == Visibility.Visible)
                     return false;
                 return ((SelectedItemNguoiDung != null || SelectedPhanQuyen != null) && isEdit);
             },
-                (p) => {
+                (p) =>
+                {
                     if (VisibilityOfListNguoiDung == Visibility.Visible)
                     {
                         VisibilityOfEdit = Visibility.Hidden;
@@ -883,6 +910,7 @@ namespace MasterSaveDemo.ViewModel
                 if (SelectedIndexCbb == 0)
                 {
                     Tat_ToolTip();
+                    Reset();
                     TenDanhSachNhom = "Danh sách người dùng";
                     VisibilityOfTenNhomQuyen = Visibility.Hidden;
                     VisibilityOfListNguoiDung = Visibility.Visible;
@@ -891,6 +919,7 @@ namespace MasterSaveDemo.ViewModel
                 else
                 {
                     Tat_ToolTip();
+                    Reset();
                     TenDanhSachNhom = "Danh sách phân quyền";
                     VisibilityOfListNguoiDung = Visibility.Hidden;
                     VisibilityOfListPhanQuyen = Visibility.Visible;

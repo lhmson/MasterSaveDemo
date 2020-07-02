@@ -34,9 +34,9 @@ namespace MasterSaveDemo.ViewModel
             set { _OpenDialog = value; OnPropertyChanged();}
         }
        
-        private List<ListLichSuPhieuGui> _ListLichSuGD;
+        private ObservableCollection<ListLichSuPhieuGui> _ListLichSuGD;
 
-        public List<ListLichSuPhieuGui> ListLichSuGD
+        public ObservableCollection<ListLichSuPhieuGui> ListLichSuGD
         {
             get { return _ListLichSuGD; }
             set { _ListLichSuGD = value; OnPropertyChanged(); }
@@ -191,9 +191,59 @@ namespace MasterSaveDemo.ViewModel
 
         #endregion
         #region function 
+        #region function to DataBase
+        private LOAITIETKIEM search_MaLTK(string mltk)
+        {
+            ObservableCollection<LOAITIETKIEM> List_LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+            foreach (LOAITIETKIEM ltk in List_LoaiTietKiem)
+            {
+                if (ltk.MaLoaiTietKiem == mltk)
+                    return ltk;
+            }
+            return null;
+        }
+        private SOTIETKIEM search_MaSo(string MaSo)
+        {
+            ObservableCollection<SOTIETKIEM> List_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+
+            foreach (SOTIETKIEM STK in List_STK)
+            {
+                if (STK.MaSoTietKiem == MaSo)
+                    return STK;
+
+
+            }
+            return null;
+        }
+        private string search_TenLTK(string MaLTK)
+        {
+            ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+
+            foreach (LOAITIETKIEM LTK in List_LTK)
+            {
+                if (LTK.MaLoaiTietKiem == MaLTK)
+                    return LTK.TenLoaiTietKiem;
+            }
+            return "0";
+        }
+
+        private decimal search_ThamSo(string MaThamSo)
+        {
+            ObservableCollection<THAMSO> List_TS = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
+
+            foreach (THAMSO TS in List_TS)
+            {
+
+                if (TS.TenThamSo == MaThamSo)
+                    return TS.GiaTri;
+
+            }
+            return 0;
+        }
+        #endregion
         public void BindingLichSu(string mastk)
         {
-            ListLichSuGD = new List<ListLichSuPhieuGui>();
+            ListLichSuGD = new ObservableCollection<ListLichSuPhieuGui>();
 
             ObservableCollection<PHIEUGUI> List_PG = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
             var lichsu = from list in List_PG
@@ -203,16 +253,7 @@ namespace MasterSaveDemo.ViewModel
             foreach (var ls in lichsu)
                 ListLichSuGD.Add(ls);
         }
-        private LOAITIETKIEM search_MaLTK(string mltk)
-        {
-            List<LOAITIETKIEM> List_LoaiTietKiem = DataProvider.Ins.DB.LOAITIETKIEMs.ToList();
-            foreach (LOAITIETKIEM ltk in List_LoaiTietKiem)
-            {
-                if (ltk.MaLoaiTietKiem == mltk)
-                    return ltk;
-            }
-            return null;
-        }
+        
         private bool KiemTraNhapLai()
         {
             try
@@ -221,25 +262,18 @@ namespace MasterSaveDemo.ViewModel
                 SOTIETKIEM info_stk = search_MaSo(MaSoTietKiem);
                 LOAITIETKIEM info_loaitietkiem = search_MaLTK(info_stk.MaLoaiTietKiem);
                 kyHan = info_loaitietkiem.KyHan;
-                if (info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today)
+                if (info_loaitietkiem.KyHan != 0)
                 {
-                    //khong the tinh lai do chua du so ngay gui toi thieu (xem quy dinh)
+                    if (info_stk.NgayDaoHanKeTiep == DateTime.Today)
+                    {
+                        Result_KiemTraNhapLai = false;
+                    }
                 }
                 else
                 {
-                    if (info_loaitietkiem.KyHan != 0)
+                    if (info_stk.NgayDaoHanKeTiep != DateTime.Today.AddDays(1))
                     {
-                        if (info_stk.NgayDaoHanKeTiep == DateTime.Today)
-                        {
-                            Result_KiemTraNhapLai = false;
-                        }
-                    }
-                    else
-                    {
-                        if (info_stk.NgayDaoHanKeTiep != DateTime.Today.AddDays(1))
-                        {
-                            Result_KiemTraNhapLai = false;
-                        }
+                        Result_KiemTraNhapLai = false;
                     }
                 }
                 return true;
@@ -267,45 +301,7 @@ namespace MasterSaveDemo.ViewModel
             CanCreate = false;
 
         }
-        private SOTIETKIEM search_MaSo(string MaSo)
-        {
-            ObservableCollection<SOTIETKIEM> List_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
-
-            foreach (SOTIETKIEM STK in List_STK)
-            {
-                if (STK.MaSoTietKiem == MaSo)
-                    return STK;
-
-              
-            }
-            return null;
-        }
-        private string search_TenLTK(string MaLTK)
-        {
-            ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-
-            foreach (LOAITIETKIEM LTK in List_LTK)
-            {
-                if (LTK.MaLoaiTietKiem == MaLTK)
-                    return LTK.TenLoaiTietKiem;              
-            }
-            return "0";
-        }
         
-        private decimal search_ThamSo(string MaThamSo)
-        {
-            ObservableCollection<THAMSO> List_TS = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
-
-            foreach (THAMSO TS in List_TS)
-            {
-
-                if (TS.TenThamSo == MaThamSo)
-                    return TS.GiaTri;
-
-            }
-            return 0;
-        }
-
         private void CheckValid()
         {
             try
@@ -406,7 +402,6 @@ namespace MasterSaveDemo.ViewModel
             }
 
         }
-
         public string formatPG(string a)
         {
             string tmp = a;
@@ -467,6 +462,8 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CheckCommand { get; set; }
         public ICommand ShowINFO { get; set; }
         public ICommand Click_CapNhatCommand { get; set; }
+        public ICommand STG_TextChangedCommand { get; set; }
+        
         #endregion
         public GuiTien_ViewModel()
         {
@@ -512,6 +509,13 @@ namespace MasterSaveDemo.ViewModel
             {
                 CheckValid();
                
+            });
+            STG_TextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                CanCreate = false;
             });
             //button nhap lai vao von
             Click_CapNhatCommand = new RelayCommand<object>((p) => { return !Result_KiemTraNhapLai; }, (p) =>

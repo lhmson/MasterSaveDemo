@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media.TextFormatting;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MasterSaveDemo.ViewModel
@@ -43,7 +44,16 @@ namespace MasterSaveDemo.ViewModel
         }
         #endregion
         #region The sub functions by Sanh
-    
+
+        private void HienThiLTKDangSuDung()
+        {
+            ObservableCollection<LOAITIETKIEM> temp = new ObservableCollection<LOAITIETKIEM>();
+            foreach (var item in List)
+                if (item.DangSuDung == 1)
+                    temp.Add(item);
+            List = temp;
+        }
+
         private bool check_hasaWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
@@ -87,8 +97,8 @@ namespace MasterSaveDemo.ViewModel
             string res = "";
             for (int i = 0; i < date.Length; i++)
                 if (date[i] == ' ') break;
-             else
-                res += date[i];
+                else
+                    res += date[i];
 
             return res;
         }
@@ -99,7 +109,8 @@ namespace MasterSaveDemo.ViewModel
             SelectedTenLoaiTietKiem = "";
             TenLoaiTietKiem = new ObservableCollection<string>();
             foreach (LOAITIETKIEM LTK in List)
-                TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
+                if (LTK.DangSuDung == 1)
+                    TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
         }
 
         private int analysis_CodeSTK(string code)
@@ -140,7 +151,7 @@ namespace MasterSaveDemo.ViewModel
 
             foreach (LOAITIETKIEM LTK in List_LTK)
             {
-                if (LTK.TenLoaiTietKiem == TenLTK)  
+                if (LTK.TenLoaiTietKiem == TenLTK)
                     return LTK.KyHan;
 
                 //debug += "\n" + LTK.TenLoaiTietKiem + "a";
@@ -210,25 +221,12 @@ namespace MasterSaveDemo.ViewModel
                 Error_TienGui = "Số tiền chưa được nhập";
             }
             else
-            if (check_hasallWhiteSpace(SoTienGuiBanDau))
-            {
-                //error += "\nSố tiền gửi của khách hàng chưa được nhập";
-                Visibility_TienGui = Visibility.Visible;
-                Error_TienGui = "Số tiền không được có khoảng trắng";
-            }
-            else
-            if (CheckAllNumber(SoTienGuiBanDau)==false)
-            {
-                Visibility_TienGui = Visibility.Visible;
-                Error_TienGui = "Tiền gửi chỉ chứa kí tự số";
-            }
-            else
             {
                 foreach (var item in listThamSo)
                 {
                     if (item.TenThamSo == "SoTienGuiToiThieu")
                     {
-                        if (item.GiaTri > int.Parse(SoTienGuiBanDau))
+                        if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
                         {
                             //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
                             Visibility_TienGui = Visibility.Visible;
@@ -237,6 +235,46 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
             }
+            try
+            {
+                if (decimal.Parse(SoTienGuiBanDau) < 1000)
+                {
+                }
+                else
+                {
+                    SoTienGuiBanDau = decimal.Parse(SoTienGuiBanDau).ToString("0,000");
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            //if (check_hasallWhiteSpace(SoTienGuiBanDau))
+            //{
+            //    //error += "\nSố tiền gửi của khách hàng chưa được nhập";
+            //    Visibility_TienGui = Visibility.Visible;
+            //    Error_TienGui = "Số tiền không được có khoảng trắng";
+            //}
+            //if (CheckAllNumber(SoTienGuiBanDau) == false)
+            //{
+            //    Visibility_TienGui = Visibility.Visible;
+            //    Error_TienGui = "Tiền gửi chỉ chứa kí tự số";
+            //}
+            //else
+            //{
+            //    foreach (var item in listThamSo)
+            //    {
+            //        if (item.TenThamSo == "SoTienGuiToiThieu")
+            //        {
+            //            if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+            //            {
+            //                //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+            //                Visibility_TienGui = Visibility.Visible;
+            //                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+            //            }
+            //        }
+            //    }
+            //}
 
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
             {
@@ -256,7 +294,7 @@ namespace MasterSaveDemo.ViewModel
                 Visibility_TenKH = Visibility.Visible;
                 Error_TenKH = "Tên khách hàng chưa được nhập";
             }
-            
+
             if (CMND == "" || CMND == null)
             {
                 //error += "\nCMND chưa được nhập";
@@ -270,7 +308,7 @@ namespace MasterSaveDemo.ViewModel
                 Error_CMND = "CMND không thể chứ khoảng trắng";
             }
             else
-            if (CheckAllNumber(CMND)==false)
+            if (CheckAllNumber(CMND) == false)
             {
                 Visibility_CMND = Visibility.Visible;
                 Error_CMND = "CMND chỉ chứa kí tự chữ số";
@@ -290,7 +328,7 @@ namespace MasterSaveDemo.ViewModel
             string error = "";
             ObservableCollection<THAMSO> listThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
-            if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
+            if (String.IsNullOrWhiteSpace(SoTienGuiBanDau))
             {
                 error += "\nSố tiền gửi của khách hàng chưa được nhập";
             }
@@ -300,15 +338,15 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (item.TenThamSo == "SoTienGuiToiThieu")
                     {
-                        if (item.GiaTri > int.Parse(SoTienGuiBanDau))
-                        {                          
+                        if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+                        {
                             error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
                         }
                     }
                 }
             }
 
-            
+
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
                 error += "Sổ chưa được tạo mã sổ";
             if (CbxTenLoaiTietKiem == "" || CbxTenLoaiTietKiem == null)
@@ -324,17 +362,16 @@ namespace MasterSaveDemo.ViewModel
 
         }
 
-        private string Cal_NgayDaoHan(int days)
+        private DateTime Cal_NgayDaoHan(int days)
         {
             double d = Double.Parse(days.ToString());
-            string date_NgayDaoHan = DateTime.Today.AddDays(d).ToString();
-            date_NgayDaoHan = FormatDateTime(date_NgayDaoHan);
+            DateTime date_NgayDaoHan = DateTime.Today.AddDays(d);
             return date_NgayDaoHan;
         }
 
         private bool KiemTraHopLe()
         {
-            if ((Visibility_CMND == Visibility.Visible) || (Visibility_DiaChi == Visibility.Visible) || Visibility_LTK == Visibility.Visible || 
+            if ((Visibility_CMND == Visibility.Visible) || (Visibility_DiaChi == Visibility.Visible) || Visibility_LTK == Visibility.Visible ||
                 Visibility_MaSo == Visibility.Visible || Visibility_TenKH == Visibility.Visible || Visibility_TienGui == Visibility.Visible)
                 return false;
             return true;
@@ -400,7 +437,7 @@ namespace MasterSaveDemo.ViewModel
         public bool Enable_ThucHienGiaoDich { get => _Enable_ThucHienGiaoDich; set { _Enable_ThucHienGiaoDich = value; OnPropertyChanged(); } }
 
         private string _NgayMoSo;
-        public  string NgayMoSo { get => _NgayMoSo; set { _NgayMoSo = value; OnPropertyChanged(); } }
+        public string NgayMoSo { get => _NgayMoSo; set { _NgayMoSo = value; OnPropertyChanged(); } }
 
         private string _NgayDaoHanKeTiep;
         public string NgayDaoHanKeTiep { get => _NgayDaoHanKeTiep; set { _NgayDaoHanKeTiep = value; OnPropertyChanged(); } }
@@ -410,15 +447,25 @@ namespace MasterSaveDemo.ViewModel
         public ObservableCollection<string> TenLoaiTietKiem { get => _TenLoaiTietKiem; set { _TenLoaiTietKiem = value; OnPropertyChanged(); } }
 
         private string _SelectedTenLoaiTietKiem;
-        public string SelectedTenLoaiTietKiem { get => _SelectedTenLoaiTietKiem; set 
-            { 
+        public string SelectedTenLoaiTietKiem
+        {
+            get => _SelectedTenLoaiTietKiem; set
+            {
                 _SelectedTenLoaiTietKiem = value;
-                OnPropertyChanged(); 
+                OnPropertyChanged();
                 if (SelectedTenLoaiTietKiem != null && SelectedTenLoaiTietKiem != "")
                 {
-                    NgayDaoHanKeTiep = Cal_NgayDaoHan(search_KyHan(SelectedTenLoaiTietKiem));
+                    if (search_KyHan(SelectedTenLoaiTietKiem) == 0)
+                    {
+                        NgayDaoHanKeTiep = "Không xác định";
+                    }
+                    else
+                    {
+                        NgayDaoHanKeTiep = Cal_NgayDaoHan(search_KyHan(SelectedTenLoaiTietKiem)).ToString("dd/MM/yyyy");
+                    }
                 }
-            } }
+            }
+        }
 
         private string _CbxTenLoaiTietKiem;
         public string CbxTenLoaiTietKiem { get => _CbxTenLoaiTietKiem; set { _CbxTenLoaiTietKiem = value; OnPropertyChanged(); } }
@@ -437,6 +484,14 @@ namespace MasterSaveDemo.ViewModel
 
         private string _SoTienGuiBanDau;
         public string SoTienGuiBanDau { get => _SoTienGuiBanDau; set { _SoTienGuiBanDau = value; OnPropertyChanged(); } }
+
+        private bool _CreateReport;
+
+        public bool CreateReport
+        {
+            get { return _CreateReport; }
+            set { _CreateReport = value; OnPropertyChanged(); }
+        }
 
         #endregion
 
@@ -461,10 +516,12 @@ namespace MasterSaveDemo.ViewModel
             NgayDaoHanKeTiep = "";
             // Display List LOAITIETKIEM
             List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
-
+            HienThiLTKDangSuDung();
             //Auto display content of NgayMoSo
             DateTime DateTimeNow = DateTime.Now;
-            NgayMoSo = FormatDateTime(DateTimeNow.ToString());
+            NgayMoSo = FormatDateTime(DateTimeNow.ToString("dd/MM/yyyy")); // co edit
+
+            CreateReport = true;
 
             //Display combobox TenLoaiTietKiem
             resetCombobox_LoaiTietKiem();
@@ -534,16 +591,34 @@ namespace MasterSaveDemo.ViewModel
                     //System.Windows.MessageBox.Show("Đã tao một sổ mới");
                     DialogOpen = true;
                     ThongBao = "Đã tạo một sổ mới";
+
+                    // xuat preview Mo So (Son lam)
+                    if (CreateReport == true)
+                    {
+                        MoSo_PrintPreview_ViewModel MoSoPPVM = new MoSo_PrintPreview_ViewModel(MaSoTietKiem, TenKhachHang, SoTienGuiBanDau, SelectedTenLoaiTietKiem, CMND, DiaChi);
+                        MoSo_PrintPreview PhieuGui = new MoSo_PrintPreview(MoSoPPVM);
+                        PhieuGui.ShowDialog();
+
+                    }
+
                     SOTIETKIEM SoTietKiem = new SOTIETKIEM();
                     SoTietKiem.MaSoTietKiem = MaSoTietKiem;
                     SoTietKiem.SoCMND = CMND;
                     SoTietKiem.DiaChi = DiaChi;
                     SoTietKiem.TenKhachHang = TenKhachHang;
                     SoTietKiem.SoTienGuiBanDau = Decimal.Parse(SoTienGuiBanDau);
-                    SoTietKiem.NgayMoSo = DateTime.Parse(NgayMoSo);
+                    //SoTietKiem.NgayMoSo = DateTime.Parse(NgayMoSo);
+                    SoTietKiem.NgayMoSo = DateTime.Today;
                     SoTietKiem.SoDu = Decimal.Parse(SoTienGuiBanDau);
                     //SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
-                    SoTietKiem.NgayDaoHanKeTiep = DateTime.Parse(NgayDaoHanKeTiep);
+                    if (search_KyHan(SelectedTenLoaiTietKiem) == 0)
+                    {
+                        SoTietKiem.NgayDaoHanKeTiep = Cal_NgayDaoHan(1);
+                    }
+                    else
+                    {
+                        SoTietKiem.NgayDaoHanKeTiep = Cal_NgayDaoHan(search_KyHan(SelectedTenLoaiTietKiem));
+                    }
                     SoTietKiem.MaLoaiTietKiem = search_MaLTK(SelectedTenLoaiTietKiem);
                     SoTietKiem.LaiSuatApDung = search_LaiSuat(search_MaLTK(SelectedTenLoaiTietKiem));
                     DataProvider.Ins.DB.SOTIETKIEMs.Add(SoTietKiem);

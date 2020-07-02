@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace MasterSaveDemo.ViewModel
 {
-    public class PhieuGui_PrintPreview_ViewModel : BaseViewModel
+    public class MoSo_PrintPreview_ViewModel : BaseViewModel
     {
         //---------------
 
@@ -27,37 +27,30 @@ namespace MasterSaveDemo.ViewModel
             set { _NguoiTaoPhieu = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _MaPhieuGui;
+        private string _MaSo;
 
-        public string MaPhieuGui
+        public string MaSo
         {
-            get { return _MaPhieuGui; }
-            set { _MaPhieuGui = value; OnPropertyChanged(); }
+            get { return _MaSo; }
+            set { _MaSo = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _NgayTaoPhieu;
+        private string _LoaiTietKiem;
 
-        public string NgayTaoPhieu
+        public string LoaiTietKiem
         {
-            get { return _NgayTaoPhieu; }
-            set { _NgayTaoPhieu = value; OnPropertyChanged(); }
+            get { return _LoaiTietKiem; }
+            set { _LoaiTietKiem = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _TenKhachhang;
+        private string _TenKH;
 
-        public string TenKhachhang
+        public string TenKH
         {
-            get { return _TenKhachhang; }
-            set { _TenKhachhang = value; OnPropertyChanged(); }
+            get { return _TenKH; }
+            set { _TenKH = value; OnPropertyChanged(); }
         }
         //---------------
-        private string _NgayGui;
-
-        public string NgayGui
-        {
-            get { return _NgayGui; }
-            set { _NgayGui = value; OnPropertyChanged(); }
-        }
         private string _SoTienGui;
 
         public string SoTienGui
@@ -65,6 +58,30 @@ namespace MasterSaveDemo.ViewModel
             get { return _SoTienGui; }
             set { _SoTienGui = value; OnPropertyChanged(); }
         }
+        private string _DiaChi;
+
+        public string DiaChi
+        {
+            get { return _DiaChi; }
+            set { _DiaChi = value; OnPropertyChanged(); }
+        }
+
+        private string _CMND;
+
+        public string CMND
+        {
+            get { return _CMND; }
+            set { _CMND = value; OnPropertyChanged(); }
+        }
+
+        private string _NgayMoSo;
+
+        public string NgayMoSo
+        {
+            get { return _NgayMoSo; }
+            set { _NgayMoSo = value; OnPropertyChanged(); }
+        }
+
 
         //---------------
 
@@ -74,14 +91,16 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CloseWindowCommand { get; set; }
         public ICommand Print_Command { get; set; }
 
-        public PhieuGui_PrintPreview_ViewModel(string MaPG, string TenKH, string Ngay, string Tien)
+        public MoSo_PrintPreview_ViewModel(string MaSo, string TenKH, string Tien, string LTK, string CMND, string DiaChi)
         {
             NguoiTaoPhieu = LoginViewModel.TaiKhoanSuDung.HoTen;
-            MaPhieuGui = MaPG;
-            TenKhachhang = TenKH;
-            NgayGui = Ngay;
+            this.MaSo = MaSo;
+            this.TenKH = TenKH;
             SoTienGui = Tien;
-            NgayTaoPhieu = DateTime.Now.ToString("dd/MM/yyyy");
+            NgayMoSo = DateTime.Now.ToString("dd/MM/yyyy");
+            LoaiTietKiem = LTK;
+            this.CMND = CMND;
+            this.DiaChi = DiaChi;
             CloseWindowCommand = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) => {
                 var ex = p as Window;
                 ex.Close();
@@ -106,6 +125,7 @@ namespace MasterSaveDemo.ViewModel
                 }
 
             });
+
 
         }
 

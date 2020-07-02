@@ -218,13 +218,13 @@ namespace MasterSaveDemo.ViewModel
 
             var listThu = from phieuGui in ListPhieuGui
                           join stk in ListSTK on phieuGui.MaSoTietKiem equals stk.MaSoTietKiem
-                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuGui.NgayGui == SelectedDateReport)
+                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuGui.NgayGui.Date == SelectedDateReport.Date)
                           select phieuGui.SoTienGui;
             TongThu += listThu.Sum();
 
             var listChi = from phieuRut in ListPhieuRut
                           join stk in ListSTK on phieuRut.MaSoTietKiem equals stk.MaSoTietKiem
-                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuRut.NgayRut == SelectedDateReport)
+                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuRut.NgayRut.Date == SelectedDateReport.Date)
                           select phieuRut.SoTienRut;
             TongChi += listChi.Sum();
 

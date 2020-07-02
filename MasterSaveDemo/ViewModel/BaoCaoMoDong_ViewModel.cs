@@ -29,7 +29,7 @@ namespace MasterSaveDemo.ViewModel
             set { _canExecute = value; OnPropertyChanged(); }
         }
 
-       
+
         //--------------
         private string _Notify_Month;
 
@@ -52,7 +52,7 @@ namespace MasterSaveDemo.ViewModel
         public string Notify_LTK
         {
             get { return _Notify_LTK; }
-            set { _Notify_LTK = value;OnPropertyChanged(); }
+            set { _Notify_LTK = value; OnPropertyChanged(); }
         }
         //--------------
         private bool _EnableCreate;
@@ -269,14 +269,14 @@ namespace MasterSaveDemo.ViewModel
             int tmp = List_BCMD.Count();
             return "BCDM" + FormatBaoCao((tmp + 1).ToString());
         }
-        
+
         private void BindingListThang(int ThangToiDa)
         {
             List_Thang = new ObservableCollection<string>();
-           
+
 
             string formatThang = "Tháng";
-          
+
             for (int i = 1; i <= ThangToiDa; i++)
             {
                 string month = i.ToString();
@@ -284,11 +284,11 @@ namespace MasterSaveDemo.ViewModel
                 string temp = formatThang + ' ' + month;
                 List_Thang.Add(temp);
             }
-           
+
         }
         private void CheckValid()
         {
-            if (Selected_LTK == null || Selected_LTK=="")
+            if (Selected_LTK == null || Selected_LTK == "")
                 Notify_LTK = "Visible";
             else Notify_LTK = "Hidden";
             if (Selected_Thang == null || Selected_Thang == "")
@@ -311,12 +311,13 @@ namespace MasterSaveDemo.ViewModel
             BindingListDaBaoCao();
 
             //Binding LoaiTietKiem_CBB
+
+            //Hiển thị loại tiết kiệm DangSuDung = 1 ____ by Sanh
             ObservableCollection<LOAITIETKIEM> LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             List_LTK = new ObservableCollection<string>();
             foreach (LOAITIETKIEM temp in LTK)
-            {
-                List_LTK.Add(temp.TenLoaiTietKiem);
-            }
+                if (temp.DangSuDung == 1)
+                    List_LTK.Add(temp.TenLoaiTietKiem);
 
             //Binding List_Nam
             List_Nam = new ObservableCollection<string>();
@@ -326,13 +327,13 @@ namespace MasterSaveDemo.ViewModel
             {
                 List_Nam.Add(i.ToString());
             }
-            
+
 
             //Binding List_Thang_CBB
             string Nam = DateTime.Now.Year.ToString();
             int NgayHomNay = int.Parse(DateTime.Now.Day.ToString());
             int ThangToiDa = int.Parse(DateTime.Now.Month.ToString());
-            
+
             if (NgayHomNay != Daysinmonth(ThangToiDa, int.Parse(Nam)))
                 ThangToiDa--;
             BindingListThang(ThangToiDa);
@@ -361,7 +362,7 @@ namespace MasterSaveDemo.ViewModel
                      else if (int.Parse(Selected_Nam) < int.Parse(Nam))
                      {
                          BindingListThang(12);
-                         
+
                      }
                  }
                  catch (Exception e)
@@ -377,15 +378,15 @@ namespace MasterSaveDemo.ViewModel
             },
            (p) =>
            {
-               
+
                if (SelectedMonth != null)
                {
                    EnableCreate = true;
-                   
+
                    ObservableCollection<SOTIETKIEM> stk = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
                    ObservableCollection<LOAITIETKIEM> ltk = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
                    ObservableCollection<BAOCAOMODONG> BCMD = new ObservableCollection<BAOCAOMODONG>(DataProvider.Ins.DB.BAOCAOMODONGs);
-                 
+
                    string ThangChon = SelectedMonth.ThangNamDaBaoCao.Substring(0, 2);
                    string NamChon = SelectedMonth.ThangNamDaBaoCao.Substring(3, 4);
                    int NgayToiDaThang = Daysinmonth(int.Parse(ThangChon), int.Parse(NamChon));
@@ -412,7 +413,7 @@ namespace MasterSaveDemo.ViewModel
                    Selected_Thang = "Tháng " + SelectedMonth.ThangNamDaBaoCao.Substring(0, 2);
                    Selected_Nam = SelectedMonth.ThangNamDaBaoCao.Substring(3, 4);
 
-                  
+
                    // BInding to PrintPreview
                    ThangBaoCao_BD = ThangChon;
                    NamBaoCao_BD = NamChon;
@@ -461,7 +462,7 @@ namespace MasterSaveDemo.ViewModel
                 try
                 {
                     CheckValid();
-                    if (Notify_LTK=="Hidden" && Notify_Month==Notify_LTK && Notify_Year==Notify_Month)
+                    if (Notify_LTK == "Hidden" && Notify_Month == Notify_LTK && Notify_Year == Notify_Month)
                     {
                         EnableCreate = true;
                         ObservableCollection<SOTIETKIEM> stk = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
@@ -539,7 +540,7 @@ namespace MasterSaveDemo.ViewModel
                                ChenhLech = Math.Abs(SLSoMo - SLSoDong).ToString()
                            ));
 
-                           
+
 
                             //Add Database
                             if (CanAdd == true)
@@ -560,7 +561,7 @@ namespace MasterSaveDemo.ViewModel
                         BindingListDaBaoCao();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return;
                 }

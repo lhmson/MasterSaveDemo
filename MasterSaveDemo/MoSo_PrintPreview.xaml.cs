@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MasterSaveDemo.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,25 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MasterSaveDemo
 {
     /// <summary>
-    /// Interaction logic for MoSo_Page.xaml
+    /// Interaction logic for 
     /// </summary>
-    public partial class MoSo_Page : Page
+    public partial class MoSo_PrintPreview : Window
     {
-        public MoSo_Page()
+        public MoSo_PrintPreview(BaseViewModel x)
         {
             InitializeComponent();
-        }
-
-        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9,]+");
+            this.DataContext = x;
         }
     }
 }

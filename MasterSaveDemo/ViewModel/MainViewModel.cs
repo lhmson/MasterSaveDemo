@@ -103,6 +103,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand BaoCaoMoDong_Page_SelectedCommand { get; set; }
         public ICommand ThayDoiQuyDinh_Page_SelectedCommand { get; set; }
         public ICommand QuanLyNhanSu_Page_SelectedCommand { get; set; }
+        public ICommand CaiDatKhac_Page_SelectedCommand { get; set; }
         public ICommand DangXuat_SelectedCommand { get; set; }
         #endregion
 
@@ -283,25 +284,14 @@ namespace MasterSaveDemo.ViewModel
                 FrameContent = new QuanLyNhanSu_Page();
                 FrameContent.DataContext = new QuanLyNhanSu_ViewModel();
             });
+            CaiDatKhac_Page_SelectedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                FrameContent = new CaiDatKhac_Page();
+                FrameContent.DataContext = new CaiDatKhac_Page();
+            });
             DangXuat_SelectedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
                 System.Windows.Forms.DialogResult kq = System.Windows.Forms.MessageBox.Show("Bạn có chắc đăng xuất tài khoản này không?", "Đăng xuất", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
                 if (kq == System.Windows.Forms.DialogResult.Yes)
                 {
-                    // xay ra bug khi nhan nut Home lan dau tien sau khi nhan No thi bi loi 2 nut selected do
-                    //Selected_HOME = true;
-                    //FrameContent = new Home_Page();
-                    //FrameContent.DataContext = new Home_PageViewModel();
-
-
-
-                    //p.Hide();
-
-                    //LoginWindow loginWindow = new LoginWindow();
-                    //LoginViewModel.TaiKhoanSuDung = null;
-                    //loginWindow.ShowDialog();
-                    //MainViewModel.Start_Timer();
-                    //p.Show();
-
                     // restart the program
                     System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
                     Application.Current.Shutdown();

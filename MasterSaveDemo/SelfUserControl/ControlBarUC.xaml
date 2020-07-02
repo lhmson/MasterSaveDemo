@@ -39,7 +39,7 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="8">
-                            <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="14" Text="Master Save Banking System - Hệ thống quản lý sổ tiết kiệm chuyên nghiệp"></TextBlock>
+                            <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="14" Text="Master Save Banking System - Phần mềm quản lý sổ tiết kiệm chuyên nghiệp"></TextBlock>
                         </materialDesign:Card>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -70,7 +70,9 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <materialDesign:Card Background="{StaticResource PrimaryHueMidBrush}" Foreground="White" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="20">
+                        <materialDesign:Card Background="{StaticResource PrimaryHueMidBrush}"
+                                             materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                    materialDesign:ShadowAssist.ShadowEdges="All" Foreground="White" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="20">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Tên người dùng" HorizontalAlignment="Center" LineHeight="26"></TextBlock>
                                 <TextBlock Text="{Binding TenTaiKhoan}" HorizontalAlignment="Center" LineHeight="26" FontSize="18" FontWeight="SemiBold"/>
@@ -79,7 +81,9 @@
                     </Grid>
 
                     <Grid Grid.Column="1">
-                        <materialDesign:Card Background="{StaticResource PrimaryHueMidBrush}" Foreground="White" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="20">
+                        <materialDesign:Card Background="{StaticResource PrimaryHueMidBrush}"
+                                             materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                    materialDesign:ShadowAssist.ShadowEdges="All" Foreground="White" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="20">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Chức vụ" HorizontalAlignment="Center" LineHeight="26"></TextBlock>
                                 <TextBlock Text="{Binding ChucVu}" HorizontalAlignment="Center" LineHeight="26" FontSize="18" FontWeight="SemiBold"/>
@@ -88,7 +92,9 @@
                     </Grid>
 
                     <Grid Grid.Column="2">
-                        <materialDesign:Card Background="{StaticResource PrimaryHueMidBrush}" Foreground="White" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="20">
+                        <materialDesign:Card Background="{StaticResource PrimaryHueMidBrush}" Foreground="White"
+                                             materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                    materialDesign:ShadowAssist.ShadowEdges="All" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="20">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Thời gian hiện tại" HorizontalAlignment="Center" LineHeight="26"></TextBlock>
                                 <TextBlock Text="{Binding NgayGioHienTai}" HorizontalAlignment="Center" LineHeight="26" FontSize="18" FontWeight="SemiBold"/>

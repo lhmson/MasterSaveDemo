@@ -24,34 +24,43 @@
       >
 
     <ScrollViewer>
-        <Grid>
-
-            <Grid x:Name="print">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="120"/>
-                    <RowDefinition Height="180"/>
-                    <RowDefinition Height="200"/>
-                </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
+        <Grid x:Name="print" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Tên Đơn vị:" FontSize="20" Margin="5"/>
-                            <TextBlock Text="MasterSave" FontSize="20" Margin="5" FontStyle="Italic"/>
+                            <TextBlock Text="Tên Đơn vị: " FontSize="20" Margin="5"/>
+                            <TextBlock Text="Ngân hàng Thương mại cổ phần StarthenD" FontSize="20" Margin="5" FontStyle="Italic"/>
                         </StackPanel>
-
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Ngày tạo phiếu:" FontSize="12" Margin="5"/>
-                            <TextBlock Text="{Binding NgayTaoPhieu}" FontSize="12" Margin="5" FontWeight="DemiBold"/>
+                            <TextBlock Text="Ngày tạo phiếu:" FontSize="16" Margin="5"/>
+                            <TextBlock Text="{Binding NgayTaoPhieu}" FontSize="16" Margin="5" FontWeight="DemiBold"/>
                         </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Người tạo phiếu:" FontSize="12" Margin="5"/>
-                            <TextBlock Text="{Binding NguoiTaoPhieu}" FontSize="12" Margin="5" FontWeight="DemiBold"/>
+                            <TextBlock Text="Người lập phiếu:" FontSize="16" Margin="5"/>
+                            <TextBlock Text="{Binding NguoiTaoPhieu}" FontSize="16" Margin="5" FontWeight="DemiBold"/>
                         </StackPanel>
-                    </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1">
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button  HorizontalAlignment="Right" Margin="10"  VerticalAlignment="Top"
                             Command="{Binding Print_Command}">
@@ -65,57 +74,73 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
-                    <TextBlock Text="Phiếu gửi tiền" VerticalAlignment="Center" FontSize="35" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center"/>
-                    <Rectangle Fill="Black" Height="1" Margin="10 2" Opacity="0.5"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <TextBlock Text="Mã phiếu gửi:"></TextBlock>
+                
+            </Grid>
+            <Grid Grid.Row="1" Margin="30,5,30,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
+                        <TextBlock Text="PHIẾU GỬI TIỀN" VerticalAlignment="Center" FontSize="35" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center"/>
+                        <Rectangle Fill="Black" Height="1" Margin="10 5" Opacity="0.5"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Mã số phiếu: "></TextBlock>
                             <TextBlock Text="{Binding MaPhieuGui}"></TextBlock>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <TextBlock Text="Tên khách hàng:"></TextBlock>
+
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Tên khách hàng: "></TextBlock>
                             <TextBlock Text="{Binding TenKhachhang}"></TextBlock>
                         </StackPanel>
                     </Grid>
-                    <Rectangle Fill="Black" Height="1" Margin="10 2" Opacity="0.5"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <TextBlock Text="Ngày gửi:"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="2" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Ngày gửi: "></TextBlock>
                             <TextBlock Text="{Binding NgayGui}"></TextBlock>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <TextBlock Text="Sổ tiền gửi:"></TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Sổ tiền gửi: "></TextBlock>
                             <TextBlock Text="{Binding SoTienGui}"></TextBlock>
                         </StackPanel>
                     </Grid>
-                    <Rectangle Fill="Black" Height="1" Margin="10 2" Opacity="0.5"/>
-                   
-                </StackPanel>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Column="0">
-                        <TextBlock/>
-                        <TextBlock Text="Người gửi tiền" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock Text="(Ký, ghi rõ họ và tên)" FontWeight="Thin" FontStyle="Oblique" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Grid.Column="1">
-                        <TextBlock Text=".........,ngày....tháng.....năm...." FontStyle="Italic" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Người lập phiếu" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock Text="(Ký, ghi rõ họ và tên)" FontWeight="Thin" FontStyle="Oblique" HorizontalAlignment="Center"/>
-                    </StackPanel>
                 </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <TextBlock />
+                    <TextBlock Text="Người gửi tiền" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="(Ký, ghi rõ họ và tên)" FontWeight="Thin" FontStyle="Oblique" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Text=".........,ngày....tháng.....năm...." FontStyle="Italic" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Người lập phiếu" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="(Ký, ghi rõ họ và tên)" FontWeight="Thin" FontStyle="Oblique" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </ScrollViewer>

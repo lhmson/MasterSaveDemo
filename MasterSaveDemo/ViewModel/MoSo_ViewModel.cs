@@ -478,7 +478,7 @@ namespace MasterSaveDemo.ViewModel
             HienThiLTKDangSuDung();
             //Auto display content of NgayMoSo
             DateTime DateTimeNow = DateTime.Now;
-            NgayMoSo = FormatDateTime(DateTimeNow.ToString());
+            NgayMoSo = FormatDateTime(DateTimeNow.ToString("dd/MM/yyyy")); // co edit
 
             //Display combobox TenLoaiTietKiem
             resetCombobox_LoaiTietKiem();
@@ -554,7 +554,8 @@ namespace MasterSaveDemo.ViewModel
                     SoTietKiem.DiaChi = DiaChi;
                     SoTietKiem.TenKhachHang = TenKhachHang;
                     SoTietKiem.SoTienGuiBanDau = Decimal.Parse(SoTienGuiBanDau);
-                    SoTietKiem.NgayMoSo = DateTime.Parse(NgayMoSo);
+                    //SoTietKiem.NgayMoSo = DateTime.Parse(NgayMoSo);
+                    SoTietKiem.NgayMoSo = DateTime.Today;
                     SoTietKiem.SoDu = Decimal.Parse(SoTienGuiBanDau);
                     //SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
                     SoTietKiem.NgayDaoHanKeTiep = DateTime.Parse(NgayDaoHanKeTiep);

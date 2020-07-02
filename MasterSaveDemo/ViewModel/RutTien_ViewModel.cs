@@ -105,9 +105,9 @@ namespace MasterSaveDemo.ViewModel
 			set { _ThongBao = value; OnPropertyChanged(); }
 		}
 		//listView
-		private List<ListLichSuPhieuRut> _ListLichSuGD;
+		private ObservableCollection<ListLichSuPhieuRut> _ListLichSuGD;
 
-		public List<ListLichSuPhieuRut> ListLichSuGD
+		public ObservableCollection<ListLichSuPhieuRut> ListLichSuGD
 		{
 			get { return _ListLichSuGD; }
 			set { _ListLichSuGD = value; OnPropertyChanged(); }
@@ -280,7 +280,7 @@ namespace MasterSaveDemo.ViewModel
 					ThongBao = "";
 					Result_KiemTraHopLe = false;
 					Result_KiemTraNhapLai = true;
-					ListLichSuGD = new List<ListLichSuPhieuRut>();
+					ListLichSuGD = new ObservableCollection<ListLichSuPhieuRut>();
 				}
 				catch (Exception e)
 				{
@@ -430,7 +430,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
-				ListLichSuGD = new List<ListLichSuPhieuRut>();
+				ListLichSuGD = new ObservableCollection<ListLichSuPhieuRut>();
 
 				ObservableCollection<PHIEURUT> List_PR = new ObservableCollection<PHIEURUT>(DataProvider.Ins.DB.PHIEURUTs);
 				var lichsu = from list in List_PR

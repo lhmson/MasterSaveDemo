@@ -262,25 +262,18 @@ namespace MasterSaveDemo.ViewModel
                 SOTIETKIEM info_stk = search_MaSo(MaSoTietKiem);
                 LOAITIETKIEM info_loaitietkiem = search_MaLTK(info_stk.MaLoaiTietKiem);
                 kyHan = info_loaitietkiem.KyHan;
-                if (info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today)
+                if (info_loaitietkiem.KyHan != 0)
                 {
-                    //khong the tinh lai do chua du so ngay gui toi thieu (xem quy dinh)
+                    if (info_stk.NgayDaoHanKeTiep == DateTime.Today)
+                    {
+                        Result_KiemTraNhapLai = false;
+                    }
                 }
                 else
                 {
-                    if (info_loaitietkiem.KyHan != 0)
+                    if (info_stk.NgayDaoHanKeTiep != DateTime.Today.AddDays(1))
                     {
-                        if (info_stk.NgayDaoHanKeTiep == DateTime.Today)
-                        {
-                            Result_KiemTraNhapLai = false;
-                        }
-                    }
-                    else
-                    {
-                        if (info_stk.NgayDaoHanKeTiep != DateTime.Today.AddDays(1))
-                        {
-                            Result_KiemTraNhapLai = false;
-                        }
+                        Result_KiemTraNhapLai = false;
                     }
                 }
                 return true;

@@ -163,7 +163,7 @@
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền ban đầu (VND)"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                             Text="{Binding SoTienGuiBanDau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                             Text="{Binding SoTienGuiBanDau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewTextInput="TextBox_PreviewTextInput">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="TextChanged">
                                                             <i:InvokeCommandAction Command="{Binding SoTienGui_TextChangedCommand}"/>

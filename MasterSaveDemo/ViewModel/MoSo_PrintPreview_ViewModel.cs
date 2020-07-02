@@ -89,9 +89,11 @@ namespace MasterSaveDemo.ViewModel
         //--------------
 
         public ICommand CloseWindowCommand { get; set; }
+        public ICommand Print_Command { get; set; }
 
         public MoSo_PrintPreview_ViewModel(string MaSo, string TenKH, string Tien, string LTK, string CMND, string DiaChi)
         {
+            NguoiTaoPhieu = LoginViewModel.TaiKhoanSuDung.HoTen;
             this.MaSo = MaSo;
             this.TenKH = TenKH;
             SoTienGui = Tien;
@@ -102,6 +104,25 @@ namespace MasterSaveDemo.ViewModel
             CloseWindowCommand = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) => {
                 var ex = p as Window;
                 ex.Close();
+
+            });
+
+            Print_Command = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                var ex = p as Window;
+                try
+                {
+                    System.Windows.Controls.PrintDialog printDialog = new System.Windows.Controls.PrintDialog();
+                    if (printDialog.ShowDialog() == true)
+                    {
+                        printDialog.PrintVisual(ex, "Print report");
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show("Cannot print");
+                }
 
             });
 

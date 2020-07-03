@@ -54,7 +54,7 @@
                         </ComboBox>
                         <materialDesign:PopupBox Visibility="{Binding Notify_LTK}"  VerticalAlignment="Center" Margin="5" PopupContent="Chưa chọn loại tiết kiệm" >
                             <materialDesign:PopupBox.ToggleContent>
-                                <materialDesign:PackIcon Kind="Error" />
+                                <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -72,7 +72,7 @@
                         </ComboBox>
                         <materialDesign:PopupBox Visibility="{Binding Notify_Month}" VerticalAlignment="Center" Margin="5" PopupContent="Chưa chọn tháng báo cáo" >
                             <materialDesign:PopupBox.ToggleContent>
-                                <materialDesign:PackIcon Kind="Error" />
+                                <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -95,7 +95,7 @@
                         </ComboBox>
                         <materialDesign:PopupBox Visibility="{Binding Notify_Year}"  VerticalAlignment="Center" Margin="5" PopupContent="Chưa chọn tháng báo cáo" >
                             <materialDesign:PopupBox.ToggleContent>
-                                <materialDesign:PackIcon Kind="Error" />
+                                <materialDesign:PackIcon Foreground="Red"  Kind="Error" />
                             </materialDesign:PopupBox.ToggleContent>
                         </materialDesign:PopupBox>
                     </StackPanel>

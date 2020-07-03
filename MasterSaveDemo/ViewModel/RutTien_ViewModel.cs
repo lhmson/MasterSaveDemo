@@ -31,10 +31,11 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand Click_CopySoDuSTRCommand { get; set; }
 		public ICommand DialogOK { get; set; }
 		public ICommand DialogCancel { get; set; }
+        public ICommand Refresh { get; set; }
 
-		#region Binding tu view
-		//Ngay Rut, kieu string
-		private string _NgayRut;
+        #region Binding tu view
+        //Ngay Rut, kieu string
+        private string _NgayRut;
 		public string NgayRut
 		{
 			get => _NgayRut;
@@ -105,9 +106,9 @@ namespace MasterSaveDemo.ViewModel
 			set { _ThongBao = value; OnPropertyChanged(); }
 		}
 		//listView
-		private List<ListLichSuPhieuRut> _ListLichSuGD;
+		private ObservableCollection<ListLichSuPhieuRut> _ListLichSuGD;
 
-		public List<ListLichSuPhieuRut> ListLichSuGD
+		public ObservableCollection<ListLichSuPhieuRut> ListLichSuGD
 		{
 			get { return _ListLichSuGD; }
 			set { _ListLichSuGD = value; OnPropertyChanged(); }
@@ -280,7 +281,7 @@ namespace MasterSaveDemo.ViewModel
 					ThongBao = "";
 					Result_KiemTraHopLe = false;
 					Result_KiemTraNhapLai = true;
-					ListLichSuGD = new List<ListLichSuPhieuRut>();
+					ListLichSuGD = new ObservableCollection<ListLichSuPhieuRut>();
 				}
 				catch (Exception e)
 				{
@@ -414,7 +415,15 @@ namespace MasterSaveDemo.ViewModel
 				Result_Dialog = "Cancel";
 				DialogOpen = false;
 			});
-		}
+
+            Refresh = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Reset_Check();
+                MaSoTietKiem = "";
+                SoTienRut = "";
+                TenKhachHang = "";
+            });
+        }
 		public void Reset_Check()
 		{
 			SoTietKiem_Check = "None";
@@ -430,7 +439,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
-				ListLichSuGD = new List<ListLichSuPhieuRut>();
+				ListLichSuGD = new ObservableCollection<ListLichSuPhieuRut>();
 
 				ObservableCollection<PHIEURUT> List_PR = new ObservableCollection<PHIEURUT>(DataProvider.Ins.DB.PHIEURUTs);
 				var lichsu = from list in List_PR

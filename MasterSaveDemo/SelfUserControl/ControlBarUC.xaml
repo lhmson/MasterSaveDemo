@@ -18,6 +18,7 @@
              FontFamily="{DynamicResource MaterialDesignFont}"
              
              Name="UC_ControlBar" >
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>

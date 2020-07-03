@@ -93,7 +93,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red"  Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày gửi" IsEnabled="False"
@@ -107,11 +107,11 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox PopupContent="{Binding Notify_Ma,Mode=TwoWay}" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="{Binding MaSoTietKiem_check, Mode=TwoWay}" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="{Binding MaSoTietKiem_check, Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox
-                                x:Name="Masotietkiem_textbox"
+                                x:Name="Masotietkiem_textbox" KeyboardNavigation.TabIndex="0"
                                 Width="200" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                                  Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -138,7 +138,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng" IsEnabled="False"
@@ -152,7 +152,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red"  Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số dư (VND)"
@@ -166,10 +166,10 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding Notify_money,Mode=TwoWay}" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="{Binding SoTienGui_check,Mode=TwoWay}" />
+                                                        <materialDesign:PackIcon Foreground="Red"  Kind="{Binding SoTienGui_check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <TextBox  Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi (VND)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                                                <TextBox  Width="200" FontSize="18" KeyboardNavigation.TabIndex="1" materialDesign:HintAssist.Hint="Số tiền gửi (VND)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                                                   PreviewTextInput="TextBox_PreviewTextInput"
                                                   Text="{Binding SoTienGui, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
                                                     <TextBox.InputBindings>
@@ -178,6 +178,12 @@
                                                     Command="{Binding CheckCommand}" 
                                                     CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
                                                     </TextBox.InputBindings>
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="TextChanged">
+                                                            <i:InvokeCommandAction Command="{Binding STG_TextChangedCommand}"
+                                                               CommandParameter="{Binding SoTienGuiTB}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
                                                 </TextBox>
                                                 <Button Visibility="Hidden" Margin="5" Width="50" HorizontalAlignment="Right"/>
                                             </StackPanel>
@@ -187,7 +193,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <Button Command="{Binding CheckCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170" >
@@ -208,13 +214,13 @@
                                             <RowDefinition></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-
+                                            <Button Command ="{Binding Refresh}" Margin="5" Width="50" Content="{materialDesign:PackIcon Refresh}" ToolTip="Làm mới" HorizontalAlignment="Right" Background="{StaticResource SecondaryAccentBrush}"/>
                                         </Grid>
                                         <Grid Grid.Row="1">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Loại tiết kiệm"
@@ -228,7 +234,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số CMND"
@@ -242,7 +248,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox  HorizontalAlignment="Left" PopupContent="{Binding Notify_date,Mode=TwoWay}" >
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="{Binding NgayDaoHanKeTiep_check,Mode=TwoWay}" />
+                                                        <materialDesign:PackIcon Foreground="Red"  Kind="{Binding NgayDaoHanKeTiep_check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox  Width="200" FontSize="18" materialDesign:HintAssist.Hint="Ngày đáo hạn kế tiếp"
@@ -259,7 +265,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <CheckBox IsChecked="{Binding CreateReport, Mode=TwoWay}" Style="{StaticResource MaterialDesignCheckBox}" Content="Xuất phiếu" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -270,7 +276,7 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <materialDesign:PopupBox Visibility="Hidden"  HorizontalAlignment="Left">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon Kind="Error" />
+                                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <Button Command="{Binding CheckoutCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="170"

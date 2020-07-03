@@ -320,6 +320,19 @@ namespace MasterSaveDemo.ViewModel
             set { _PopupContent6 = value; OnPropertyChanged(); }
         }
 
+        private bool _DialogOpen;
+        public bool DialogOpen
+        {
+            get => _DialogOpen;
+            set { _DialogOpen = value; OnPropertyChanged(); }
+        }
+
+        private string _Notify;
+        public string Notify
+        {
+            get => _Notify;
+            set { _Notify = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -537,7 +550,7 @@ namespace MasterSaveDemo.ViewModel
         private void EditThamSo()
         {
             SelectedItemThamSo.TenThamSo = TenThamSo;
-            SelectedItemThamSo.GiaTri = Decimal.Parse(GiaTri);
+            SelectedItemThamSo.GiaTri = decimal.Parse(GiaTri);
             DataProvider.Ins.DB.SaveChanges();
 
             var temp = SelectedItemThamSo;
@@ -632,6 +645,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CancelCommand { get; set; }
         public ICommand CbbSelectionChangedCommand { get; set; }
         public ICommand GetThoiGianGuiToiThieuCommand { get; set; }
+        public ICommand DialogOK { get; set; }
 
         #endregion
 
@@ -770,12 +784,18 @@ namespace MasterSaveDemo.ViewModel
                             {
                                 AddLTK();
                                 ResetAll();
+
+                                DialogOpen = true;
+                                Notify = "Thêm loại tiết kiệm thành công.";
                             }
                         }
                         else
                         {
                             DeleteLTK();
                             ResetAll();
+
+                            DialogOpen = true;
+                            Notify = "Xóa loại tiết kiệm thành công.";
                         }
                     } 
                     else if(VisibilityOfEditLTK == Visibility.Visible)
@@ -784,6 +804,9 @@ namespace MasterSaveDemo.ViewModel
                         {
                             EditLTK();
                             ResetAll();
+
+                            DialogOpen = true;
+                            Notify = "Sửa thông tin loại tiết kiệm thành công.";
                         }
                     }
                     else if (VisibilityOfEditThamSo == Visibility.Visible)
@@ -792,6 +815,9 @@ namespace MasterSaveDemo.ViewModel
                         {
                             EditThamSo();
                             ResetAll();
+
+                            DialogOpen = true;
+                            Notify = "Sửa thông tin tham số thành công.";
                         }
                     }
                 }
@@ -845,6 +871,14 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 ThoiGianGuiToiThieu = KyHan;
+            });
+
+            DialogOK = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                DialogOpen = false;
             });
         }
     }

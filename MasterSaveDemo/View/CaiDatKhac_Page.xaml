@@ -48,8 +48,7 @@
                         <Expander HorizontalAlignment="Stretch" Header="Tên sản phẩm" FontSize="18">
                             <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" Margin="24,8,24,16">
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock TextWrapping="Wrap" LineHeight="30" Text="Tiếng Việt: Phần mềm quản lý sổ tiết kiệm Master Save" FontSize="18" HorizontalAlignment="Left"/>
-                                    <TextBlock TextWrapping="Wrap" LineHeight="30" Text="Tiếng Anh: Master Save Banking System" FontSize="18" HorizontalAlignment="Left"/>
+                                    <TextBlock TextWrapping="Wrap" LineHeight="30" Text="Phần mềm quản lý sổ tiết kiệm Master Save - Master Save Banking System" FontSize="18" HorizontalAlignment="Left"/>
                                 </StackPanel>
                             </StackPanel>
                         </Expander>

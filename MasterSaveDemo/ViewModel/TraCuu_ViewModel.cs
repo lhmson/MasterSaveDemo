@@ -417,7 +417,7 @@ namespace MasterSaveDemo.ViewModel
             LoaiTietKiem = new List<string>();
             LoaiTietKiem.Add("Tất cả");
             foreach (LOAITIETKIEM LTK in _List)
-                if (LTK.DangSuDung == 1)
+                if (LTK.DangSuDung == "Có")
                     LoaiTietKiem.Add(LTK.TenLoaiTietKiem);
 
             // Combobox MucSoDu

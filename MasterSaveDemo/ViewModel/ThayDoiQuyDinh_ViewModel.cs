@@ -516,8 +516,8 @@ namespace MasterSaveDemo.ViewModel
                 KyHan = Int32.Parse(KyHan),
                 LaiSuat = double.Parse(LaiSuat),
                 ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                QuyDinhSoTienRut = Int32.Parse(SelectedQuyDinh),
-                DangSuDung = 1
+                QuyDinhSoTienRut = SelectedQuyDinh,
+                DangSuDung = "Có"
             };
             DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
             DataProvider.Ins.DB.SaveChanges();
@@ -582,7 +582,7 @@ namespace MasterSaveDemo.ViewModel
             // if not used by any STKs
             if( listSTK.Count() == 0)
             {
-                SelectedItemLTK.DangSuDung = 0;
+                SelectedItemLTK.DangSuDung = "Không";
                 DataProvider.Ins.DB.SaveChanges();
 
                 var temp = SelectedItemLTK;
@@ -690,7 +690,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if(SelectedIndexCbb == 0)
                     {
-                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == 1)
+                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                         {
                             int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
                             if (disable == 13 || disable == 0)
@@ -737,7 +737,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (SelectedIndexCbb == 0)
                     {
-                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == 1)
+                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                         {
                             int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
                             if (disable == 12 || disable == 0)

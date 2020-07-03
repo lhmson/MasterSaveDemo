@@ -487,7 +487,7 @@ namespace MasterSaveDemo.ViewModel
             MaSoTietKiem_check = "None"; Notify_Ma = "";
             OpenDialog = false;
             NgayGui = DateTime.Now.ToString("dd/MM/yyyy");
-            decimal temp = search_ThamSo("TienGuiThemToiThieu");
+            decimal temp = search_ThamSo("Tiền gửi thêm tối thiểu");
             if (temp< 1000)
             {
                 SoTienGuiToiThieu = temp.ToString();

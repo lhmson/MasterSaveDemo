@@ -614,7 +614,7 @@ namespace MasterSaveDemo.ViewModel
 						}
 						else
 						{
-							if (info_loaitietkiem.QuyDinhSoTienRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
+							if (info_loaitietkiem.QuyDinhSoTienRut == "Rút hết" && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
 							{
 								SoTienRut_Check = "Error";
 								ThongBao_TienRut += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
@@ -748,7 +748,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
-				if(GetThamSo("DongSoTuDong") == 1)
+				if(GetThamSo("Đóng sổ tự động") == 1)
 				{
 					SOTIETKIEM temp = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == mstk).Single();
 					temp.NgayDongSo = DateTime.Today;
@@ -782,7 +782,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			QuyDinhRutTien = "Loại tiết kiệm có kỳ hạn chỉ được rút khi quá kỳ hạn và phải rút hết toàn bộ, khi này tiền lãi được tính với mức lãi suất của loại không kỳ hạn.\n"
 							+ "Loại tiết kiệm không kỳ hạn được rút khi gửi trên số ngày tối thiểu theo quy định và có thể rút số tiền nhỏ hơn hoặc bằng số dư hiện có.\n";
-			if (GetThamSo("DongSoTuDong") == 1)
+			if (GetThamSo("Đóng sổ tự động") == 1)
 			{
 				QuyDinhRutTien += "Sổ sau khi rút hết tiền sẽ tự động đóng.";
 			}

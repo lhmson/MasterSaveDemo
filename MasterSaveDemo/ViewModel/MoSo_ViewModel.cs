@@ -49,7 +49,7 @@ namespace MasterSaveDemo.ViewModel
         {
             ObservableCollection<LOAITIETKIEM> temp = new ObservableCollection<LOAITIETKIEM>();
             foreach (var item in List)
-                if (item.DangSuDung == 1)
+                if (item.DangSuDung == "Có")
                     temp.Add(item);
             List = temp;
         }
@@ -109,7 +109,7 @@ namespace MasterSaveDemo.ViewModel
             SelectedTenLoaiTietKiem = "";
             TenLoaiTietKiem = new ObservableCollection<string>();
             foreach (LOAITIETKIEM LTK in List)
-                if (LTK.DangSuDung == 1)
+                if (LTK.DangSuDung == "Có")
                     TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
         }
 
@@ -232,7 +232,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     foreach (var item in listThamSo)
                     {
-                        if (item.TenThamSo == "SoTienGuiToiThieu")
+                        if (item.TenThamSo == "Số tiền gửi tối thiểu")
                         {
                             if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
                             {
@@ -340,7 +340,7 @@ namespace MasterSaveDemo.ViewModel
             {
                 foreach (var item in listThamSo)
                 {
-                    if (item.TenThamSo == "SoTienGuiToiThieu")
+                    if (item.TenThamSo == "Số tiền gửi tối thiểu")
                     {
                         if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
                         {
@@ -690,13 +690,13 @@ namespace MasterSaveDemo.ViewModel
         private void CapNhatQuyDinh()
         {
             QuyDinhMoSo = "Số tiền gửi ban đầu tối thiếu là: ";
-            if (GetThamSo("SoTienGuiToiThieu") < 1000)
+            if (GetThamSo("Số tiền gửi tối thiểu") < 1000)
             {
-                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString() + " đồng";
+                QuyDinhMoSo += GetThamSo("Số tiền gửi tối thiểu").ToString() + " đồng";
             }
             else
             {
-                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString("0,000") + " đồng";
+                QuyDinhMoSo += GetThamSo("Số tiền gửi tối thiểu").ToString("0,000") + " đồng";
             }
         }
 

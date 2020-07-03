@@ -171,7 +171,7 @@ namespace MasterSaveDemo.ViewModel
         {
             VisibilityDatePickerPopup = Visibility.Hidden;
 
-            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung != 0);
+            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung == "Có");
             ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
 
             ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);

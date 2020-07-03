@@ -332,7 +332,7 @@ namespace MasterSaveDemo.ViewModel
             ObservableCollection<LOAITIETKIEM> LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             List_LTK = new ObservableCollection<string>();
             foreach (LOAITIETKIEM temp in LTK)
-                if (temp.DangSuDung == 1)
+                if (temp.DangSuDung == "Có")
                     List_LTK.Add(temp.TenLoaiTietKiem);
 
             //Binding List_Nam

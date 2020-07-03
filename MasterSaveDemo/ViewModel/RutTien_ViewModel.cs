@@ -690,7 +690,7 @@ namespace MasterSaveDemo.ViewModel
 				DataProvider.Ins.DB.PHIEURUTs.Add(info_PhieuRut);
 				DataProvider.Ins.DB.SaveChanges();
 
-				SOTIETKIEM stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == this.MaSoTietKiem).SingleOrDefault();
+				SOTIETKIEM stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == this.MaSoTietKiem).Single();
 				stk.SoDu -= decimal.Parse(this.SoTienRut);
 				if(stk.SoDu<1)
 				{
@@ -705,7 +705,7 @@ namespace MasterSaveDemo.ViewModel
 					PhieuRut.ShowDialog();
 				}
 
-				if (stk.SoDu == 0)
+				if (stk.SoDu < 1)
 				{
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
 				}
@@ -730,9 +730,9 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
-				if(GetThamSo("DongSoTuDong")==1)
+				if(GetThamSo("DongSoTuDong") == 1)
 				{
-					SOTIETKIEM temp = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == mstk).SingleOrDefault();
+					SOTIETKIEM temp = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == mstk).Single();
 					temp.NgayDongSo = DateTime.Today;
 					DataProvider.Ins.DB.SaveChanges();
 					ThongBao = "Đã đóng sổ tiết kiệm.\n";

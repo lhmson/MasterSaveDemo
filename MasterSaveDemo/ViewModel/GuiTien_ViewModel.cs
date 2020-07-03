@@ -519,7 +519,7 @@ namespace MasterSaveDemo.ViewModel
                 MessageBoxResult re = MessageBox.Show("Bạn có chắc muốn nhập lãi vào vốn? Tiến trình này không thể hoàn tác.", "Thông báo", MessageBoxButton.OKCancel);
                 if (re == MessageBoxResult.OK)
                 {
-                    if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, false))
+                    if (!NhapLaiVaoVon.Ins.StartThis(MaSoTietKiem, true))
                     {
                         Notify = "Có lỗi xảy ra hoặc sổ tiết kiệm này đã được nhập lãi rồi!";
                         NgayDaoHanKeTiep_check = "Error";
@@ -527,8 +527,6 @@ namespace MasterSaveDemo.ViewModel
                     }
                     else
                     {
-                        //DaoHan_Check = "Check";
-                        //ThongBao_DaoHan = "Đã cập nhật lãi vào số dư";
                         OpenDialog = true;
                         Notify = "Đã cập nhật lãi vào số dư";
                         KiemTraNhapLai();

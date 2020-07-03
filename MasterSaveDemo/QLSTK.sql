@@ -8,12 +8,12 @@ CREATE TABLE LOAITIETKIEM
 	MaLoaiTietKiem VARCHAR(20) NOT NULL PRIMARY KEY,
 	TenLoaiTietKiem NVARCHAR(50) NOT NULL,
 	KyHan INT NOT NULL,
-	LaiSuat FLOAT NOT NULL CHECK(LaiSuat>0),
-	ThoiGianGuiToiThieu INT NOT NULL CHECK(ThoiGianGuiToiThieu>0),
+	LaiSuat FLOAT NOT NULL CHECK(LaiSuat>=0),
+	ThoiGianGuiToiThieu INT NOT NULL CHECK(ThoiGianGuiToiThieu>=0),
 	--Doi ten tu SoTienDuocRut va sua thanh Nvarchar de hien thi bang loai tiet kiem
 	QuyDinhSoTienRut NVARCHAR(50) NOT NULL,
 	---Them DangSuDung de xoa 1 loai tiet kiem, thuc ra la chuyen no ve khong su dung nua de khong bi loi du lieu ay
-	DangSuDung INT NOT NULL,
+	DangSuDung NVARCHAR(10) NOT NULL,
 )
 GO
 
@@ -26,7 +26,7 @@ CREATE TABLE SOTIETKIEM
 	SoTienGuiBanDau MONEY NOT NULL CHECK(SoTienGuiBanDau>0),
 	SoCMND VARCHAR(20) NOT NULL,
 	NgayMoSo SMALLDATETIME NOT NULL,
-	LaiSuatApDung FLOAT NOT NULL CHECK (LaiSuatApDung>0), 
+	LaiSuatApDung FLOAT NOT NULL CHECK (LaiSuatApDung>=0), 
 	NgayDaoHanKeTiep SMALLDATETIME NOT NULL,
 	SoDu MONEY NOT NULL CHECK (SoDu>=0), 
 	NgayDongSo SMALLDATETIME,
@@ -88,7 +88,8 @@ GO
 
 CREATE TABLE THAMSO
 (
-	TenThamSo VARCHAR(50) NOT NULL PRIMARY KEY,
+	MaThamSo INT NOT NULL PRIMARY KEY,
+	TenThamSo NVARCHAR(50) NOT NULL,
 	GiaTri MONEY NOT NULL
 )
 GO

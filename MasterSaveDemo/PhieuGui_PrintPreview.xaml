@@ -58,7 +58,7 @@
                 <Grid Grid.Column="1">
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button  HorizontalAlignment="Right" Margin="10"  VerticalAlignment="Top"
-                            Command="{Binding Print_Command}">
+                            Command="{Binding Print_Command}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
                             <materialDesign:PackIcon Kind="Printer"/>
                         </Button>
                         <Button  HorizontalAlignment="Center" Margin="10"  VerticalAlignment="Top"
@@ -133,7 +133,7 @@
                     <TextBlock Text="(Ký, ghi rõ họ và tên)" FontWeight="Thin" FontStyle="Oblique" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Text=".........,ngày....tháng.....năm...." FontStyle="Italic" HorizontalAlignment="Center"/>
+                    <TextBlock Text="........., ngày....tháng.....năm...." FontStyle="Italic" HorizontalAlignment="Center"/>
                     <TextBlock Text="Người lập phiếu" FontWeight="Bold" HorizontalAlignment="Center"/>
                     <TextBlock Text="(Ký, ghi rõ họ và tên)" FontWeight="Thin" FontStyle="Oblique" HorizontalAlignment="Center"/>
                 </StackPanel>

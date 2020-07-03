@@ -14,6 +14,7 @@ namespace MasterSaveDemo.Model
     
     public partial class THAMSO
     {
+        public int MaThamSo { get; set; }
         public string TenThamSo { get; set; }
         public decimal GiaTri { get; set; }
     }

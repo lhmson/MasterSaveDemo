@@ -101,7 +101,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding Visibility_1}"  HorizontalAlignment="Right" PopupContent="{Binding Error1}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -124,7 +124,14 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding txtTenNhomQuyen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding txtTenNhomQuyen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding ConfirmCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="3">
@@ -135,7 +142,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding Visibility_2}"  HorizontalAlignment="Right" PopupContent="{Binding Error2}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -162,7 +169,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding Visibility_3}"  HorizontalAlignment="Right" PopupContent="{Binding Error3}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -173,7 +180,7 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                <ComboBox materialDesign:HintAssist.Hint="Chức vụ (tên nhóm quyền)"
+                                <ComboBox materialDesign:HintAssist.Hint="Chức vụ (tên nhóm quyền)" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                           Visibility="{Binding VisibilityOfEdit}"
                           ItemsSource="{Binding CbxTenNhom, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -189,7 +196,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding Visibility_4}"  HorizontalAlignment="Right" PopupContent="{Binding Error4}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -198,7 +205,7 @@
                                     <ColumnDefinition Width="27*"/>
                                     <ColumnDefinition Width="293*"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox materialDesign:HintAssist.Hint="Chức vụ (tên nhóm quyền)"
+                                <ComboBox materialDesign:HintAssist.Hint="Chức vụ (tên nhóm quyền)" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                           Visibility="{Binding VisibilityOfAdd}"
                           ItemsSource="{Binding CbxTenNhom, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
                           Text ="{Binding TextTenNhom}" SelectedItem="{Binding SelectedTenNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"

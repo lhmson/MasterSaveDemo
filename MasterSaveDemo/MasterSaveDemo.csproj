@@ -188,9 +188,6 @@
     <Compile Include="Model\SOTIETKIEM.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\sysdiagram.cs">
-      <DependentUpon>QLSTKModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\THAMSO.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>

@@ -67,14 +67,16 @@ namespace MasterSaveDemo.ViewModel
         }
 
         //---------------
-        
-        
+
+
         //--------------
 
         public ICommand CloseWindowCommand { get; set; }
+        public ICommand Print_Command { get; set; }
 
         public PhieuGui_PrintPreview_ViewModel(string MaPG, string TenKH, string Ngay, string Tien)
         {
+            NguoiTaoPhieu = LoginViewModel.TaiKhoanSuDung.HoTen;
             MaPhieuGui = MaPG;
             TenKhachhang = TenKH;
             NgayGui = Ngay;
@@ -86,6 +88,24 @@ namespace MasterSaveDemo.ViewModel
 
             });
 
+            Print_Command = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) =>
+            {
+                var ex = p as Window;
+                try
+                {
+                    System.Windows.Controls.PrintDialog printDialog = new System.Windows.Controls.PrintDialog();
+                    if (printDialog.ShowDialog() == true)
+                    {
+                        printDialog.PrintVisual(ex, "Print report");
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show("Cannot print");
+                }
+
+            });
 
         }
 

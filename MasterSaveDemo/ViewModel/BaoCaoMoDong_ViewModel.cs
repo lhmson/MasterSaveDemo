@@ -443,7 +443,7 @@ namespace MasterSaveDemo.ViewModel
                        string tempNgay = date.ToString();
                        string SoTT = date.ToString();
                        if ((date >= 1) && date <= 9) tempNgay = '0' + tempNgay;
-                       string ngaykt = tempNgay + '-' + ThangChon + "-" + NamChon;
+                       string ngaykt = tempNgay + '/' + ThangChon + "/" + NamChon;
                        int SLSoMo = 0, SLSoDong = 0;
                        foreach (var _stk in stk)
                        {
@@ -464,8 +464,8 @@ namespace MasterSaveDemo.ViewModel
                            ChenhLech = Math.Abs(SLSoMo - SLSoDong).ToString()
                        ));
                    }
-                   NotifyDialog = "Lấy báo cáo thành công";
-                   DialogOpen = true;
+                   //NotifyDialog = "Lấy báo cáo thành công";
+                   //DialogOpen = true;
                }
 
 
@@ -539,7 +539,7 @@ namespace MasterSaveDemo.ViewModel
                             string tempNgay = date.ToString();
                             string SoTT = date.ToString();
                             if ((date >= 1) && date <= 9) tempNgay = '0' + tempNgay;
-                            string ngaykt = tempNgay + '-' + thangdangchon_st + "-" + namdangchon.ToString();
+                            string ngaykt = tempNgay + '/' + thangdangchon_st + "/" + namdangchon.ToString();
                             int SLSoMo = 0, SLSoDong = 0;
                             foreach (var _stk in stk)
                             {
@@ -576,14 +576,14 @@ namespace MasterSaveDemo.ViewModel
                                     ChenhLech = Math.Abs(SLSoMo - SLSoDong)
                                 };
                                 DataProvider.Ins.DB.CTBCMODONGs.Add(baocao);
-                                MessageBox.Show("ditme1");
+
                                 DataProvider.Ins.DB.SaveChanges();
-                                MessageBox.Show("ditme2");
+
                             }
                         }
-                        MessageBox.Show("ditme3");
+
                         BindingListDaBaoCao();
-                        MessageBox.Show("ditme4");
+
                         if (CanAdd)
                             NotifyDialog = "Tạo báo cáo thành công";
                         DialogOpen = true;

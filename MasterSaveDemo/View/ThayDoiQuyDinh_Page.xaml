@@ -118,7 +118,8 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         PreviewTextInput="TextBox_PreviewTextInput"/>
                                 <TextBox materialDesign:HintAssist.Hint="Tên tham số"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
@@ -155,6 +156,7 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
+                         PreviewTextInput="TextBox_PreviewTextInput_1"                
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                     <TextBox.InputBindings>
                                         <KeyBinding 
@@ -197,6 +199,7 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding KyHan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         PreviewTextInput="TextBox_PreviewTextInput"
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
                             </Grid>
                         </Grid>
@@ -219,7 +222,8 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                         PreviewTextInput="TextBox_PreviewTextInput_1"
+                                         IsReadOnly="{Binding TextBoxReadOnly}"/>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="6">
@@ -241,6 +245,7 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         PreviewTextInput="TextBox_PreviewTextInput"
                          IsReadOnly="{Binding TextBoxReadOnly}"/>
                                 <Button Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Right" 
                             Margin="5,0,5,0" Content="{materialDesign:PackIcon ArrowDownDropCircle}"

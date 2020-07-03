@@ -558,8 +558,8 @@ namespace MasterSaveDemo.ViewModel
 				if(info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today )
 				{
 					NgayRut_Check = "Error";
-					ThongBao_NgayRut = "Chưa đủ số ngày gửi tối thiểu.";
-					ThongBao += "Chưa đủ số ngày gửi tối thiểu.\n";
+                    ThongBao_NgayRut = "Ngày mở sổ là: " + info_stk.NgayMoSo.ToString("dd/MM/yyyy") + ". Chưa đủ số ngày gửi tối thiểu (" + info_loaitietkiem.ThoiGianGuiToiThieu.ToString() + " ngày)"; ;
+					//ThongBao += "Chưa đủ số ngày gửi tối thiểu.\n";
 					Result_KiemTraHopLe = false;
 				}
 				else

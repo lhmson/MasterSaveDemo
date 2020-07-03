@@ -353,8 +353,8 @@ namespace MasterSaveDemo.ViewModel
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
             ListQuyDinh = new ObservableCollection<string>();
-            ListQuyDinh.Add("0");
-            ListQuyDinh.Add("1");
+            ListQuyDinh.Add("Rút nhỏ hơn hoặc bằng");
+            ListQuyDinh.Add("Rút hết");
 
             VisibilityOfAdd = Visibility.Hidden;
             VisibilityOfEditLTK = Visibility.Hidden;
@@ -596,10 +596,15 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
                 ResetTextbox();
+                ResetAll();
+
+                DialogOpen = true;
+                Notify = "Xóa loại tiết kiệm thành công.";
             }
             else
             {
-                System.Windows.MessageBox.Show("Can't");
+                VisibilityPopup1 = Visibility.Visible;
+                PopupContent1 = "Không thế xóa vì còn sổ tiết kiệm đang mở thuộc loại này";
             }
         }
         private string Create_MaLTK(int stt)
@@ -792,10 +797,6 @@ namespace MasterSaveDemo.ViewModel
                         else
                         {
                             DeleteLTK();
-                            ResetAll();
-
-                            DialogOpen = true;
-                            Notify = "Xóa loại tiết kiệm thành công.";
                         }
                     } 
                     else if(VisibilityOfEditLTK == Visibility.Visible)

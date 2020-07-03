@@ -11,6 +11,7 @@ using MasterSaveDemo.Helper;
 using System.Data;
 using System.Windows.Documents;
 using MaterialDesignColors;
+using System.Windows.Controls;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -107,13 +108,14 @@ namespace MasterSaveDemo.ViewModel
                 if (item.MaSoTietKiem == SelectedSTK.Ma)
                     STK = item;
 
-            DataProvider.Ins.DB.SOTIETKIEMs.Remove(STK);
+            //DataProvider.Ins.DB.SOTIETKIEMs.Remove(STK);
+            //DataProvider.Ins.DB.SaveChanges();
 
             STK.TenKhachHang = TenKHSua;
             STK.SoCMND = CMNDSua;
             STK.DiaChi = DiaChiSua;
 
-            DataProvider.Ins.DB.SOTIETKIEMs.Add(STK);
+            DataProvider.Ins.DB.SaveChanges();
 
             DialogOpen = true;
             ThongBao = "Chỉnh sửa thông tin khách hàng thành công";
@@ -170,7 +172,7 @@ namespace MasterSaveDemo.ViewModel
                                 && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
                                 && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK == "Tất cả")
                                 && (stk.SoDu >= min && (stk.SoDu <= max || max == -1))
-                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"),
+                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, ChinhSoDu(stk.SoDu), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"),
                           stk.LaiSuatApDung.ToString(), stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
 
             ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
@@ -183,6 +185,20 @@ namespace MasterSaveDemo.ViewModel
             }
             #endregion
         }
+
+        //Thang them vao
+        private string ChinhSoDu(decimal s)
+        {
+            if (s < 1000)
+            {
+                return s.ToString();
+            }
+            else
+            {
+                return s.ToString("0,000");
+            }
+        }
+        //
 
         private SOTIETKIEM get_STK(string maSTK)
         {
@@ -271,7 +287,7 @@ namespace MasterSaveDemo.ViewModel
             var results = from stk in STK_TABLE
                           join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                           select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
-                          Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(), stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
+                          ChinhSoDu(stk.SoDu), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(), stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
             ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
             #region fill id 
             int count = 1;
@@ -384,6 +400,7 @@ namespace MasterSaveDemo.ViewModel
         //lenh ben duoi do Thang them vao
         public ICommand DialogOK { get; set; }
         public ICommand MaSTK_TextChangedCommand { get; set; }
+        public ICommand TenKH_TextChangedCommand { get; set; }
 
 
         public TraCuu_ViewModel()
@@ -430,7 +447,7 @@ namespace MasterSaveDemo.ViewModel
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
-                              Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(), stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
+                              ChinhSoDu(stk.SoDu), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(), stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
                 int count = 1;
@@ -501,7 +518,7 @@ namespace MasterSaveDemo.ViewModel
                         {
                             SOTIETKIEM stk = STK_TABLE.Where(x => x.MaSoTietKiem == mstk).Single();
                             LOAITIETKIEM ltk = LTK_TABLE.Where(x => x.MaLoaiTietKiem == stk.MaLoaiTietKiem).Single();
-                            STKDuocTraCuu temp = new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()),
+                            STKDuocTraCuu temp = new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, ChinhSoDu(stk.SoDu),
                                 stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(), stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
                             ListSoTietKiem.Add(temp);
                         }
@@ -534,12 +551,24 @@ namespace MasterSaveDemo.ViewModel
             SeeAllCommand.Execute(new object());
 
             #region TextChange
-            MaSTK_TextChangedCommand = new RelayCommand<object>((p) =>
+            MaSTK_TextChangedCommand = new RelayCommand<TextBox>((p) =>
             {
                 return true;
             }, (p) =>
             {
+                if (p.Text == null)
+                    return;
+                MaSTK = p.Text;
+            });
 
+            TenKH_TextChangedCommand = new RelayCommand<TextBox>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (p.Text == null)
+                    return;
+                TenKH = p.Text;
             });
             #endregion
         }

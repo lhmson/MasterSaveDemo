@@ -108,7 +108,10 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="0" Background="Transparent">
-            <Image Source="/Images/logoms.png" Width="210" Margin="10"/>
+            <materialDesign:Card Margin="5,5,5,5">
+                <Image Source="/Images/logoms.png" Width="210" Margin="10"/>
+            </materialDesign:Card>
+            
         </Grid>
     </Grid>
 </UserControl>

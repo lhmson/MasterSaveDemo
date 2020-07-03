@@ -157,6 +157,13 @@ namespace MasterSaveDemo.ViewModel
             get => _Notify;
             set { _Notify = value; OnPropertyChanged(); }
         }
+
+        private string _PopupContent;
+        public string PopupContent
+        {
+            get => _PopupContent;
+            set { _PopupContent = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -184,8 +191,8 @@ namespace MasterSaveDemo.ViewModel
         private BAOCAODOANHSO FindBaoCao(LOAITIETKIEM ltk)
         {
             var baoCao = (from bc in ListBaoCaoDoanhSo
-                         where bc.MaLoaiTietKiem == ltk.MaLoaiTietKiem && bc.NgayDoanhSo == SelectedDateReport
-                         select bc).SingleOrDefault();
+                          where bc.MaLoaiTietKiem == ltk.MaLoaiTietKiem && bc.NgayDoanhSo == SelectedDateReport
+                          select bc).SingleOrDefault();
             return baoCao;
         }
         private string Create_MaBCDS(int stt)
@@ -245,7 +252,7 @@ namespace MasterSaveDemo.ViewModel
             return baoCao;
         }
 
-        
+
         #endregion
 
         #region ICommand
@@ -266,9 +273,9 @@ namespace MasterSaveDemo.ViewModel
                     ListBaoCaoDisplay.Clear();
                     SelectedDateReport = SelectedDateReportDisplay;
                     var listBaoCao = (from bc in ListBaoCaoDoanhSo
-                                     where bc.NgayDoanhSo == SelectedDateReport
-                                     select bc).ToList();
-                    for(int i=0; i<listBaoCao.Count(); i++)
+                                      where bc.NgayDoanhSo == SelectedDateReport
+                                      select bc).ToList();
+                    for (int i = 0; i < listBaoCao.Count(); i++)
                     {
                         TongThu = TongChi = 0;
                         GetBaoCaoToDisplay(i, listBaoCao[i].LOAITIETKIEM, listBaoCao[i]);
@@ -281,10 +288,16 @@ namespace MasterSaveDemo.ViewModel
                 (p) => {
                     // clear all elements of ListBaoCaoDisplay to clear screen
                     ListBaoCaoDisplay.Clear();
-                    
-                    if(SelectedDateReport > DateTime.Today)
+
+                    if (SelectedDateReport > DateTime.Today)
                     {
                         VisibilityDatePickerPopup = Visibility.Visible;
+                        PopupContent = "Không thể lập báo cáo cho ngày sau ngày hiện tại";
+                    }
+                    else if (SelectedDateReport.Year < 1990)
+                    {
+                        VisibilityDatePickerPopup = Visibility.Visible;
+                        PopupContent = "Không thể lập báo cáo cho những ngày trước năm 1990";
                     }
                     else
                     {
@@ -338,12 +351,12 @@ namespace MasterSaveDemo.ViewModel
 
             );
 
-            PrintCommand = new RelayCommand<object>((p) => 
-                {
-                    if (SelectedDateReportDisplay == DateTime.MinValue || ListBaoCaoDisplay.Count == 0)
-                        return false;
-                    return true;
-                },
+            PrintCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedDateReportDisplay == DateTime.MinValue || ListBaoCaoDisplay.Count == 0)
+                    return false;
+                return true;
+            },
                 (p) => {
                     BaoCaoDoanhSo_PrintPreview_ViewModel printPreviewBaoCaoDoanhSo = new BaoCaoDoanhSo_PrintPreview_ViewModel(ListBaoCaoDisplay, SelectedDateReport);
                     BaoCaoDoanhSo_PrintPreview BaoCao = new BaoCaoDoanhSo_PrintPreview(printPreviewBaoCaoDoanhSo);

@@ -199,6 +199,21 @@ namespace MasterSaveDemo.ViewModel
             set { _SelectedMonth = value; OnPropertyChanged(); }
         }
 
+        // notify
+        private bool _DialogOpen;
+        public bool DialogOpen
+        {
+            get => _DialogOpen;
+            set { _DialogOpen = value; OnPropertyChanged(); }
+        }
+
+        private string _NotifyDialog;
+        public string NotifyDialog
+        {
+            get => _NotifyDialog;
+            set { _NotifyDialog = value; OnPropertyChanged(); }
+        }
+
         #endregion
         #region function
         #region Code NgayThangNam
@@ -306,7 +321,8 @@ namespace MasterSaveDemo.ViewModel
         public BaoCaoMoDong_ViewModel()
         {
 
-
+            DialogOpen = false;
+            NotifyDialog = "";
 
             BindingListDaBaoCao();
 
@@ -448,6 +464,8 @@ namespace MasterSaveDemo.ViewModel
                            ChenhLech = Math.Abs(SLSoMo - SLSoDong).ToString()
                        ));
                    }
+                   NotifyDialog = "Lấy báo cáo thành công";
+                   DialogOpen = true;
                }
 
 
@@ -497,7 +515,10 @@ namespace MasterSaveDemo.ViewModel
                                _bcmd.ThangBaoCao == thangdangchon &&
                                _bcmd.NamBaoCao == namdangchon
                               )
+                            {
                                 CanAdd = false;
+                                NotifyDialog = "Lấy báo cáo thành công";
+                            }
                         if (CanAdd == true)
                         {
                             BAOCAOMODONG baocaoMD = new BAOCAOMODONG()
@@ -548,17 +569,25 @@ namespace MasterSaveDemo.ViewModel
                                 CTBCMODONG baocao = new CTBCMODONG()
                                 {
                                     MaBaoCaoMoDong = mabaocao,
-                                    NgayXet = DateTime.ParseExact(ngaykt, "dd-MM-yyyy",
+                                    NgayXet = DateTime.ParseExact(ngaykt, "dd/MM/yyyy",
                                                    CultureInfo.InvariantCulture),
                                     SoLuongSoMo = SLSoMo,
                                     SoLuongSoDong = SLSoDong,
                                     ChenhLech = Math.Abs(SLSoMo - SLSoDong)
                                 };
                                 DataProvider.Ins.DB.CTBCMODONGs.Add(baocao);
+                                MessageBox.Show("ditme1");
                                 DataProvider.Ins.DB.SaveChanges();
+                                MessageBox.Show("ditme2");
                             }
                         }
+                        MessageBox.Show("ditme3");
                         BindingListDaBaoCao();
+                        MessageBox.Show("ditme4");
+                        if (CanAdd)
+                            NotifyDialog = "Tạo báo cáo thành công";
+                        DialogOpen = true;
+                        
                     }
                 }
                 catch (Exception ex)

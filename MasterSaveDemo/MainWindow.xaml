@@ -133,7 +133,7 @@
                             </i:Interaction.Triggers>
                         </HamburgerMenu:HamburgerMenuItem>
 
-                    <HamburgerMenu:HamburgerMenuItem IsEnabled="False" Height="146">
+                    <HamburgerMenu:HamburgerMenuItem IsEnabled="False" Height="134">
                     </HamburgerMenu:HamburgerMenuItem>
                     <HamburgerMenu:HamburgerMenuItem x:Name="Logout_Button" Icon="/Images/11-logout.png" Text="Đăng xuất">
                         <i:Interaction.Triggers>

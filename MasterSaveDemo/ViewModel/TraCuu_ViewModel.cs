@@ -172,7 +172,7 @@ namespace MasterSaveDemo.ViewModel
                                 && (String.IsNullOrEmpty(SoDu) || Delete_ThapPhan(stk.SoDu.ToString()) == SoDu)
                                 && (String.IsNullOrEmpty(SelectedLTK) || ltk.TenLoaiTietKiem == SelectedLTK || SelectedLTK == "Tất cả")
                                 && (stk.SoDu >= min && (stk.SoDu <= max || max == -1))
-                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), 
+                          select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, ChinhSoDu(stk.SoDu), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), 
                           stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"),ltk.KyHan,stk.NgayDongSo);
 
             ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
@@ -185,6 +185,20 @@ namespace MasterSaveDemo.ViewModel
             }
             #endregion
         }
+
+        //Thang them vao
+        private string ChinhSoDu(decimal s)
+        {
+            if(s < 1000)
+            {
+                return s.ToString();
+            }
+            else
+            {
+                return s.ToString("0,000");
+            }
+        }
+        //
 
         private SOTIETKIEM get_STK(string maSTK)
         {
@@ -273,7 +287,7 @@ namespace MasterSaveDemo.ViewModel
             var results = from stk in STK_TABLE
                           join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                           select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
-                          Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"),ltk.KyHan, stk.NgayDongSo) ;
+                          ChinhSoDu(stk.SoDu), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"),ltk.KyHan, stk.NgayDongSo) ;
             ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
             #region fill id 
             int count = 1;
@@ -433,7 +447,7 @@ namespace MasterSaveDemo.ViewModel
                 var results = from stk in STK_TABLE
                               join ltk in LTK_TABLE on stk.MaLoaiTietKiem equals ltk.MaLoaiTietKiem
                               select new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang,
-                              Delete_ThapPhan(stk.SoDu.ToString()), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
+                              ChinhSoDu(stk.SoDu), stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
                 ListSoTietKiem = new ObservableCollection<STKDuocTraCuu>(results);
                 #region fill id 
                 int count = 1;
@@ -504,7 +518,7 @@ namespace MasterSaveDemo.ViewModel
                         {
                             SOTIETKIEM stk = STK_TABLE.Where(x => x.MaSoTietKiem == mstk).Single();
                             LOAITIETKIEM ltk = LTK_TABLE.Where(x => x.MaLoaiTietKiem == stk.MaLoaiTietKiem).Single();
-                            STKDuocTraCuu temp = new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, Delete_ThapPhan(stk.SoDu.ToString()), 
+                            STKDuocTraCuu temp = new STKDuocTraCuu(stk.MaSoTietKiem, ltk.TenLoaiTietKiem, stk.TenKhachHang, ChinhSoDu(stk.SoDu), 
                                 stk.NgayDaoHanKeTiep.ToString("dd-MM-yyyy"), stk.LaiSuatApDung.ToString(),stk.NgayMoSo.ToString("dd-MM-yyyy"), ltk.KyHan, stk.NgayDongSo);
                             ListSoTietKiem.Add(temp);
                         }

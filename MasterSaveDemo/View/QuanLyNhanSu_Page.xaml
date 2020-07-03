@@ -124,7 +124,14 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding txtTenNhomQuyen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding txtTenNhomQuyen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding ConfirmCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="3">

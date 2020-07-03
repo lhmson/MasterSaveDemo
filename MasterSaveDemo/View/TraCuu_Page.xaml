@@ -87,6 +87,12 @@
                                 <TextBox Text="{Binding TenKHSua}" materialDesign:HintAssist.Hint="Tên Khách Hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}">
                                 </TextBox>
                                 <TextBox Text="{Binding MaSTK}" materialDesign:HintAssist.Hint="Mã sổ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding SearchCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
                                             <i:InvokeCommandAction Command="{Binding MaSTK_TextChangedCommand}"/>
@@ -126,8 +132,22 @@
                                 </materialDesign:PopupBox>
                             </Grid>
                             <Grid Grid.Column="0">
-                                <TextBox Text="{Binding TenKH}" materialDesign:HintAssist.Hint="Khách hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}"/>
-                                <TextBox Text="{Binding DiaChiSua}" materialDesign:HintAssist.Hint="Địa chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}"/>
+                                <TextBox Text="{Binding TenKH}" materialDesign:HintAssist.Hint="Khách hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding SearchCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <TextBox Text="{Binding DiaChiSua}" materialDesign:HintAssist.Hint="Địa chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding SearchCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="4">

@@ -113,7 +113,7 @@
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ" IsEnabled="False"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"                         
                              Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                                <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon ClipboardArrowDown}" ToolTip="Tạo mã sổ" />
+                                                <Button Command ="{Binding GetCodeSTKcommand}" Margin="5" Width="50" Content="{materialDesign:PackIcon ClipboardArrowDown}" ToolTip="Tạo mã sổ" KeyboardNavigation.TabIndex="0"/>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="2">
@@ -124,7 +124,7 @@
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Khách hàng"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyboardNavigation.TabIndex="2" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="TextChanged">
@@ -142,7 +142,7 @@
                                                         <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Địa chỉ"
+                                                <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Địa chỉ" KeyboardNavigation.TabIndex="4"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     <i:Interaction.Triggers>
@@ -162,8 +162,14 @@
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền ban đầu (VND)"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyboardNavigation.TabIndex="6" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding SoTienGuiBanDau, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewTextInput="TextBox_PreviewTextInput">
+                                                    <TextBox.InputBindings>
+                                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding CheckValidCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                                    </TextBox.InputBindings>
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="TextChanged">
                                                             <i:InvokeCommandAction Command="{Binding SoTienGui_TextChangedCommand}"/>
@@ -210,7 +216,7 @@
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <ComboBox Width="200" materialDesign:HintAssist.Hint="Loại tiết kiệm" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  ItemsSource="{Binding TenLoaiTietKiem}" Text ="{Binding CbxTenLoaiTietKiem}" SelectedItem="{Binding SelectedTenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
+                                  ItemsSource="{Binding TenLoaiTietKiem}" KeyboardNavigation.TabIndex="1" Text ="{Binding CbxTenLoaiTietKiem}" SelectedItem="{Binding SelectedTenLoaiTietKiem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" >
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="SelectionChanged">
                                                             <i:InvokeCommandAction Command="{Binding LTK_SelectionChangedCommand}"/>
@@ -228,7 +234,7 @@
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox Width="200" FontSize="18" materialDesign:HintAssist.Hint="CMND"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" KeyboardNavigation.TabIndex="3" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                              Text="{Binding CMND}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="TextChanged">

@@ -111,7 +111,7 @@
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
                                                 <TextBox
-                                x:Name="Masotietkiem_textbox"
+                                x:Name="Masotietkiem_textbox" KeyboardNavigation.TabIndex="0"
                                 Width="200" FontSize="18" materialDesign:HintAssist.Hint="Mã sổ"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                                  Text="{Binding MaSoTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -169,7 +169,7 @@
                                                         <materialDesign:PackIcon Foreground="Red"  Kind="{Binding SoTienGui_check,Mode=TwoWay}" />
                                                     </materialDesign:PopupBox.ToggleContent>
                                                 </materialDesign:PopupBox>
-                                                <TextBox  Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền gửi (VND)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                                                <TextBox  Width="200" FontSize="18" KeyboardNavigation.TabIndex="1" materialDesign:HintAssist.Hint="Số tiền gửi (VND)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
                                                   PreviewTextInput="TextBox_PreviewTextInput"
                                                   Text="{Binding SoTienGui, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
                                                     <TextBox.InputBindings>

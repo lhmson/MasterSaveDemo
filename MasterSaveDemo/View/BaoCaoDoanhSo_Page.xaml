@@ -69,8 +69,9 @@
 
                             </DatePicker>
                             <materialDesign:PopupBox Visibility="{Binding VisibilityDatePickerPopup}"  VerticalAlignment="Center" Margin="5" PopupContent="{Binding PopupContent}" >
+
                                 <materialDesign:PopupBox.ToggleContent>
-                                    <materialDesign:PackIcon Kind="Error" />
+                                    <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                 </materialDesign:PopupBox.ToggleContent>
                             </materialDesign:PopupBox>
                         </StackPanel>
@@ -121,7 +122,7 @@
                                             <GridViewColumn Width="200" Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
                                             <GridViewColumn Width="200" Header="Tổng thu (VND)" DisplayMemberBinding="{Binding TongThu}"/>
                                             <GridViewColumn Width="200" Header="Tổng chi (VND)" DisplayMemberBinding="{Binding TongChi}"/>
-                                            <GridViewColumn Width="200" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"/>
+                                            <GridViewColumn Width="200" Header="Chênh lệch (VND)" DisplayMemberBinding="{Binding ChenhLech}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

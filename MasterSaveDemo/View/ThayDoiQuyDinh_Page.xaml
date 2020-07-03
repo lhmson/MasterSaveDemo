@@ -101,7 +101,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding VisibilityPopup1}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent1}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -138,7 +138,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding VisibilityPopup2}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent2}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -155,13 +155,27 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding ConfirmCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
                                 <TextBox materialDesign:HintAssist.Hint="Giá trị"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding GiaTri, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                         Text="{Binding GiaTri, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                                    Key="Enter" 
+                                                    Command="{Binding ConfirmCommand}" 
+                                                    CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="4">
@@ -172,7 +186,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding VisibilityPopup3}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent3}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -194,7 +208,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding VisibilityPopup4}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent4}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -216,7 +230,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding VisibilityPopup5}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent5}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -242,13 +256,13 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding VisibilityPopup6}"  HorizontalAlignment="Right" PopupContent="{Binding PopupContent6}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
                             <Grid Grid.Column="0">
                                 <ComboBox x:Name="cbbQuyDinh" materialDesign:HintAssist.Hint="Quy định số tiền được rút"
-                          Visibility="{Binding VisibilityOfAdd}"
+                          Visibility="{Binding VisibilityOfAdd}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                           ItemsSource="{Binding ListQuyDinh}"
                           SelectedItem="{Binding SelectedQuyDinh}"
                           IsHitTestVisible="{Binding HitTestVisibleCbb}">
@@ -288,12 +302,14 @@
                   Background="{DynamicResource PrimaryHueDarkBrush}"
                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                   Padding="5">
-                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding NameOfList}"></TextBlock>
-                            </materialDesign:Card>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="5">
-                            <materialDesign:Card Margin="0,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListLTK}">
-                                <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+
+
+                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding NameOfList}"></TextBlock>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Row="1" Margin="5">
+                    <materialDesign:Card Margin="0,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListLTK}">
+                        <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" ScrollViewer.VerticalScrollBarVisibility="Auto"
                           HorizontalAlignment="Center" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
                           SelectionMode="Single" FontSize="18">
                                     <ListView.View>

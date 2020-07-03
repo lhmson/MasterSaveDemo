@@ -31,10 +31,11 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand Click_CopySoDuSTRCommand { get; set; }
 		public ICommand DialogOK { get; set; }
 		public ICommand DialogCancel { get; set; }
+        public ICommand Refresh { get; set; }
 
-		#region Binding tu view
-		//Ngay Rut, kieu string
-		private string _NgayRut;
+        #region Binding tu view
+        //Ngay Rut, kieu string
+        private string _NgayRut;
 		public string NgayRut
 		{
 			get => _NgayRut;
@@ -414,7 +415,15 @@ namespace MasterSaveDemo.ViewModel
 				Result_Dialog = "Cancel";
 				DialogOpen = false;
 			});
-		}
+
+            Refresh = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Reset_Check();
+                MaSoTietKiem = "";
+                SoTienRut = "";
+                TenKhachHang = "";
+            });
+        }
 		public void Reset_Check()
 		{
 			SoTietKiem_Check = "None";

@@ -157,6 +157,13 @@ namespace MasterSaveDemo.ViewModel
             get => _Notify;
             set { _Notify = value; OnPropertyChanged(); }
         }
+
+        private string _PopupContent;
+        public string PopupContent
+        {
+            get => _PopupContent;
+            set { _PopupContent = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -285,6 +292,12 @@ namespace MasterSaveDemo.ViewModel
                     if(SelectedDateReport > DateTime.Today)
                     {
                         VisibilityDatePickerPopup = Visibility.Visible;
+                        PopupContent = "Không thể lập báo cáo cho ngày sau ngày hiện tại";
+                    }
+                    else if(SelectedDateReport.Year < 1990)
+                    {
+                        VisibilityDatePickerPopup = Visibility.Visible;
+                        PopupContent = "Không thể lập báo cáo cho những ngày trước năm 1990";
                     }
                     else
                     {

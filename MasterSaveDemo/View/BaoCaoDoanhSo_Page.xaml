@@ -68,7 +68,7 @@
                                 </i:Interaction.Triggers>
 
                             </DatePicker>
-                            <materialDesign:PopupBox Visibility="{Binding VisibilityDatePickerPopup}"  VerticalAlignment="Center" Margin="5" PopupContent="Ngày được chọn không thể lớn hơn ngày hiện tại" >
+                            <materialDesign:PopupBox Visibility="{Binding VisibilityDatePickerPopup}"  VerticalAlignment="Center" Margin="5" PopupContent="{Binding PopupContent}" >
                                 <materialDesign:PopupBox.ToggleContent>
                                     <materialDesign:PackIcon Kind="Error" />
                                 </materialDesign:PopupBox.ToggleContent>

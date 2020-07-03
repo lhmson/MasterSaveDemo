@@ -729,7 +729,7 @@ namespace MasterSaveDemo.ViewModel
                         {
                             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                             TenThamSo = SelectedItemThamSo.TenThamSo;
-                            GiaTri = SelectedItemThamSo.GiaTri.ToString();
+                            GiaTri = SelectedItemThamSo.GiaTri.ToString("0");
 
                             VisibilityOfEditThamSo = Visibility.Visible;
                         }

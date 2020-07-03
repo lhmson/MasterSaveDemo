@@ -336,7 +336,7 @@
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Width="250" Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
-                                            <GridViewColumn Width="210" Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
+                                            <GridViewColumn Width="210" Header="Giá trị" DisplayMemberBinding="{Binding GiaTri, StringFormat='#,##0;(#,##0)'}"/>
 
                                         </GridView>
                                     </ListView.View>

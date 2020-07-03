@@ -211,7 +211,7 @@ namespace MasterSaveDemo.ViewModel
             TongChi += baoCao.TongChi;
             ChenhLech = baoCao.ChenhLech;
 
-            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu.ToString("0"), TongChi.ToString("0"), ChenhLech.ToString("0"));
+            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
             ListBaoCaoDisplay.Add(baoCaoDisplay);
         }
         private BAOCAODOANHSO CreateBaoCao(int i, LOAITIETKIEM ltk)
@@ -237,7 +237,7 @@ namespace MasterSaveDemo.ViewModel
 
             ChenhLech = (TongThu - TongChi);
 
-            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu.ToString("0"), TongChi.ToString("0"), ChenhLech.ToString("0"));
+            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
             ListBaoCaoDisplay.Add(baoCaoDisplay);
 
             BAOCAODOANHSO baoCao = new BAOCAODOANHSO()
@@ -341,6 +341,10 @@ namespace MasterSaveDemo.ViewModel
                                     if (SelectedDateReport > ListNgayBaoCao[i])
                                     {
                                         ListNgayBaoCao.Insert(i, SelectedDateReport);
+                                        break;
+                                    }
+                                    else if(SelectedDateReport == ListNgayBaoCao[i])
+                                    {
                                         break;
                                     }
                                 }

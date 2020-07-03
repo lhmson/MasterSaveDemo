@@ -222,15 +222,24 @@ namespace MasterSaveDemo.ViewModel
             }
             else
             {
-                foreach (var item in listThamSo)
+                if (check_hasaWhiteSpace(SoTienGuiBanDau))
                 {
-                    if (item.TenThamSo == "SoTienGuiToiThieu")
+                    //error += "\nSố tiền gửi của khách hàng chưa được nhập";
+                    Visibility_TienGui = Visibility.Visible;
+                    Error_TienGui = "Số tiền không được có khoảng trắng";
+                }
+                else
+                {
+                    foreach (var item in listThamSo)
                     {
-                        if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+                        if (item.TenThamSo == "SoTienGuiToiThieu")
                         {
-                            //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
-                            Visibility_TienGui = Visibility.Visible;
-                            Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                            if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+                            {
+                                //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                                Visibility_TienGui = Visibility.Visible;
+                                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                            }
                         }
                     }
                 }
@@ -249,12 +258,7 @@ namespace MasterSaveDemo.ViewModel
             {
 
             }
-            //if (check_hasallWhiteSpace(SoTienGuiBanDau))
-            //{
-            //    //error += "\nSố tiền gửi của khách hàng chưa được nhập";
-            //    Visibility_TienGui = Visibility.Visible;
-            //    Error_TienGui = "Số tiền không được có khoảng trắng";
-            //}
+
             //if (CheckAllNumber(SoTienGuiBanDau) == false)
             //{
             //    Visibility_TienGui = Visibility.Visible;

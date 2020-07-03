@@ -253,7 +253,16 @@ namespace MasterSaveDemo.ViewModel
             foreach (var ls in lichsu)
                 ListLichSuGD.Add(ls);
         }
-        
+        //Ham ben duoi duoc lay tu MoSo
+        private bool check_hasaWhiteSpace(string chuoi)
+        {
+            if (chuoi == null) return false;
+            foreach (var item in chuoi)
+                if (item == ' ')
+                    return true;
+            return false;
+        }
+
         private bool KiemTraNhapLai()
         {
             try
@@ -358,6 +367,12 @@ namespace MasterSaveDemo.ViewModel
                         if (String.IsNullOrWhiteSpace(SoTienGui))
                         {
                             Notify_money = "Chưa nhập số tiền gửi";
+                            SoTienGui_check = "Error";
+                        }
+                        else
+                        if (check_hasaWhiteSpace(SoTienGui))
+                        {
+                            Notify_money = "Số tiền không thể chứa khoảng trắng";
                             SoTienGui_check = "Error";
                         }
                         else

@@ -11,6 +11,7 @@ using MasterSaveDemo.Helper;
 using System.Data;
 using System.Windows.Documents;
 using MaterialDesignColors;
+using System.Windows.Controls;
 
 namespace MasterSaveDemo.ViewModel
 {
@@ -107,13 +108,14 @@ namespace MasterSaveDemo.ViewModel
                 if (item.MaSoTietKiem == SelectedSTK.Ma)
                     STK = item;
 
-            DataProvider.Ins.DB.SOTIETKIEMs.Remove(STK);
+            //DataProvider.Ins.DB.SOTIETKIEMs.Remove(STK);
+            //DataProvider.Ins.DB.SaveChanges();
 
             STK.TenKhachHang = TenKHSua;
             STK.SoCMND = CMNDSua;
             STK.DiaChi = DiaChiSua;
 
-            DataProvider.Ins.DB.SOTIETKIEMs.Add(STK);
+            DataProvider.Ins.DB.SaveChanges();
 
             DialogOpen = true;
             ThongBao = "Chỉnh sửa tên khách hàng thành công";
@@ -384,6 +386,7 @@ namespace MasterSaveDemo.ViewModel
         //lenh ben duoi do Thang them vao
         public ICommand DialogOK { get; set; }
         public ICommand MaSTK_TextChangedCommand { get; set; }
+        public ICommand TenKH_TextChangedCommand { get; set; }
 
 
         public TraCuu_ViewModel()
@@ -534,12 +537,24 @@ namespace MasterSaveDemo.ViewModel
             SeeAllCommand.Execute(new object());
 
             #region TextChange
-            MaSTK_TextChangedCommand = new RelayCommand<object>((p) =>
+            MaSTK_TextChangedCommand = new RelayCommand<TextBox>((p) =>
             {
                 return true;
             }, (p) =>
             {
-                
+                if (p.Text == null)
+                    return;
+                MaSTK = p.Text;
+            });
+
+            TenKH_TextChangedCommand = new RelayCommand<TextBox>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (p.Text == null)
+                    return;
+                TenKH = p.Text;
             });
             #endregion
         }

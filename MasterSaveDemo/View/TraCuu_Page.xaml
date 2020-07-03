@@ -86,10 +86,10 @@
                             <Grid Grid.Column="0">
                                 <TextBox Text="{Binding TenKHSua}" materialDesign:HintAssist.Hint="Tên Khách Hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}">
                                 </TextBox>
-                                <TextBox Text="{Binding MaSTK}" materialDesign:HintAssist.Hint="Mã sổ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}">
+                                <TextBox x:Name="TextBoxMaSTK" Text="{Binding MaSTK}" materialDesign:HintAssist.Hint="Mã sổ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding MaSTK_TextChangedCommand}"/>
+                                            <i:InvokeCommandAction Command="{Binding MaSTK_TextChangedCommand}" CommandParameter="{Binding  ElementName=TextBoxMaSTK}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TextBox>
@@ -126,7 +126,13 @@
                                 </materialDesign:PopupBox>
                             </Grid>
                             <Grid Grid.Column="0">
-                                <TextBox Text="{Binding TenKH}" materialDesign:HintAssist.Hint="Khách hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}"/>
+                                <TextBox x:Name="TextBoxTenKH" Text="{Binding TenKH}" materialDesign:HintAssist.Hint="Tên Khách Hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="TextChanged">
+                                            <i:InvokeCommandAction Command="{Binding TenKH_TextChangedCommand}" CommandParameter="{Binding  ElementName=TextBoxTenKH}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
                                 <TextBox Text="{Binding DiaChiSua}" materialDesign:HintAssist.Hint="Địa chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}"/>
                             </Grid>
                         </Grid>
@@ -203,8 +209,8 @@
                                             <GridViewColumn Header="Số dư (VND)" DisplayMemberBinding="{Binding SoDu}"></GridViewColumn>
                                             <GridViewColumn Header="Ngày mở sổ" DisplayMemberBinding="{Binding NgayMoSo}"></GridViewColumn>
                                             <GridViewColumn Header="Ngày đáo hạn kế tiếp" DisplayMemberBinding="{Binding NgayDaoHan}"></GridViewColumn>
-                                            <GridViewColumn Header="Ngày đóng sổ" DisplayMemberBinding="{Binding NgayDongSo}"></GridViewColumn>
                                             <GridViewColumn Header="Lãi suất áp dụng (%)" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
+                                            <GridViewColumn Header="Ngày đóng sổ" DisplayMemberBinding="{Binding NgayDongSo}"></GridViewColumn>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

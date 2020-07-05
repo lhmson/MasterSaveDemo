@@ -49,7 +49,7 @@ namespace MasterSaveDemo.ViewModel
         {
             ObservableCollection<LOAITIETKIEM> temp = new ObservableCollection<LOAITIETKIEM>();
             foreach (var item in List)
-                if (item.DangSuDung == 1)
+                if (item.DangSuDung == "Có")
                     temp.Add(item);
             List = temp;
         }
@@ -109,7 +109,7 @@ namespace MasterSaveDemo.ViewModel
             SelectedTenLoaiTietKiem = "";
             TenLoaiTietKiem = new ObservableCollection<string>();
             foreach (LOAITIETKIEM LTK in List)
-                if (LTK.DangSuDung == 1)
+                if (LTK.DangSuDung == "Có")
                     TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
         }
 
@@ -222,15 +222,24 @@ namespace MasterSaveDemo.ViewModel
             }
             else
             {
-                foreach (var item in listThamSo)
+                if (check_hasaWhiteSpace(SoTienGuiBanDau))
                 {
-                    if (item.TenThamSo == "SoTienGuiToiThieu")
+                    //error += "\nSố tiền gửi của khách hàng chưa được nhập";
+                    Visibility_TienGui = Visibility.Visible;
+                    Error_TienGui = "Số tiền không được có khoảng trắng";
+                }
+                else
+                {
+                    foreach (var item in listThamSo)
                     {
-                        if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+                        if (item.TenThamSo == "Số tiền gửi tối thiểu")
                         {
-                            //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
-                            Visibility_TienGui = Visibility.Visible;
-                            Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                            if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+                            {
+                                //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                                Visibility_TienGui = Visibility.Visible;
+                                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                            }
                         }
                     }
                 }
@@ -249,12 +258,7 @@ namespace MasterSaveDemo.ViewModel
             {
 
             }
-            //if (check_hasallWhiteSpace(SoTienGuiBanDau))
-            //{
-            //    //error += "\nSố tiền gửi của khách hàng chưa được nhập";
-            //    Visibility_TienGui = Visibility.Visible;
-            //    Error_TienGui = "Số tiền không được có khoảng trắng";
-            //}
+
             //if (CheckAllNumber(SoTienGuiBanDau) == false)
             //{
             //    Visibility_TienGui = Visibility.Visible;
@@ -336,7 +340,7 @@ namespace MasterSaveDemo.ViewModel
             {
                 foreach (var item in listThamSo)
                 {
-                    if (item.TenThamSo == "SoTienGuiToiThieu")
+                    if (item.TenThamSo == "Số tiền gửi tối thiểu")
                     {
                         if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
                         {
@@ -686,13 +690,13 @@ namespace MasterSaveDemo.ViewModel
         private void CapNhatQuyDinh()
         {
             QuyDinhMoSo = "Số tiền gửi ban đầu tối thiếu là: ";
-            if (GetThamSo("SoTienGuiToiThieu") < 1000)
+            if (GetThamSo("Số tiền gửi tối thiểu") < 1000)
             {
-                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString() + " đồng";
+                QuyDinhMoSo += GetThamSo("Số tiền gửi tối thiểu").ToString() + " đồng";
             }
             else
             {
-                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString("0,000") + " đồng";
+                QuyDinhMoSo += GetThamSo("Số tiền gửi tối thiểu").ToString("0,000") + " đồng";
             }
         }
 

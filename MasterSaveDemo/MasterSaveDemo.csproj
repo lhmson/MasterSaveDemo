@@ -188,9 +188,6 @@
     <Compile Include="Model\SOTIETKIEM.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\sysdiagram.cs">
-      <DependentUpon>QLSTKModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\THAMSO.cs">
       <DependentUpon>QLSTKModel.tt</DependentUpon>
     </Compile>
@@ -360,7 +357,6 @@
     </EmbeddedResource>
     <EntityDeploy Include="Model\QLSTKModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>QLSTKModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Model\QLSTKModel.edmx.diagram">
       <DependentUpon>QLSTKModel.edmx</DependentUpon>

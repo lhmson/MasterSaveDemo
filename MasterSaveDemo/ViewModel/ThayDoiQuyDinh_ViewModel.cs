@@ -271,6 +271,13 @@ namespace MasterSaveDemo.ViewModel
             set { _MaLoaiTietKiemReadOnly = value; OnPropertyChanged(); }
         }
 
+        private bool _EnableTenThamSo;
+        public bool EnableTenThamSo
+        {
+            get => _EnableTenThamSo;
+            set { _EnableTenThamSo = value; OnPropertyChanged(); }
+        }
+
         private bool _HitTestVisibleCbb;
         public bool HitTestVisibleCbb
         {
@@ -333,6 +340,27 @@ namespace MasterSaveDemo.ViewModel
             get => _Notify;
             set { _Notify = value; OnPropertyChanged(); }
         }
+
+        private bool _IsCheckedToggle;
+        public bool IsCheckedToggle
+        {
+            get => _IsCheckedToggle;
+            set { _IsCheckedToggle = value; OnPropertyChanged(); }
+        }
+
+        private bool _EnableGiaTri;
+        public bool EnableGiaTri
+        {
+            get => _EnableGiaTri;
+            set { _EnableGiaTri = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _VisibilityOfToggle;
+        public Visibility VisibilityOfToggle
+        {
+            get => _VisibilityOfToggle;
+            set { _VisibilityOfToggle = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -353,16 +381,11 @@ namespace MasterSaveDemo.ViewModel
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
             ListQuyDinh = new ObservableCollection<string>();
-            ListQuyDinh.Add("0");
-            ListQuyDinh.Add("1");
+            ListQuyDinh.Add("Rút nhỏ hơn hoặc bằng");
+            ListQuyDinh.Add("Rút hết");
 
-            VisibilityOfAdd = Visibility.Hidden;
-            VisibilityOfEditLTK = Visibility.Hidden;
-            VisibilityOfEditThamSo = Visibility.Hidden;
+            ResetAll();
             VisibilityOfListThamSo = Visibility.Hidden;
-            VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
-
-            HiddenPopupBox();
 
             // choosing list LTK
             SelectedIndexCbb = 0;
@@ -461,12 +484,6 @@ namespace MasterSaveDemo.ViewModel
             }
             else if (VisibilityOfEditThamSo == Visibility.Visible)
             {
-                if (string.IsNullOrWhiteSpace(TenThamSo))
-                {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Chưa nhập tên tham số";
-                    flag = false;
-                }
                 if (string.IsNullOrWhiteSpace(GiaTri))
                 {
                     VisibilityPopup2 = Visibility.Visible;
@@ -474,16 +491,27 @@ namespace MasterSaveDemo.ViewModel
                     flag = false;
                 }
 
-                decimal giaTri = decimal.Parse(GiaTri);
-                if (TenThamSo == SelectedItemThamSo.TenThamSo && giaTri == SelectedItemThamSo.GiaTri)
+                if(TenThamSo != "Đóng sổ tự động")
                 {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Tên tham số đang được áp dụng";
+                    decimal giaTri = decimal.Parse(GiaTri);
+                    if (TenThamSo == SelectedItemThamSo.TenThamSo && giaTri == SelectedItemThamSo.GiaTri)
+                    {
+                        VisibilityPopup2 = Visibility.Visible;
+                        PopupContent2 = "Giá trị của tham số đang được áp dụng";
 
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Giá trị của tham số đang được áp dụng";
+                        flag = false;
+                    }
+                }
+                else
+                {
+                    decimal isChecked = IsCheckedToggle ? 1 : 0;
+                    if(isChecked == SelectedItemThamSo.GiaTri)
+                    {
+                        VisibilityPopup2 = Visibility.Visible;
+                        PopupContent2 = "Giá trị của tham số đang được áp dụng";
 
-                    flag = false;
+                        flag = false;
+                    }
                 }
                 return flag;
             }
@@ -516,8 +544,8 @@ namespace MasterSaveDemo.ViewModel
                 KyHan = Int32.Parse(KyHan),
                 LaiSuat = double.Parse(LaiSuat),
                 ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                QuyDinhSoTienRut = Int32.Parse(SelectedQuyDinh),
-                DangSuDung = 1
+                QuyDinhSoTienRut = SelectedQuyDinh,
+                DangSuDung = "Có"
             };
             DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
             DataProvider.Ins.DB.SaveChanges();
@@ -550,7 +578,17 @@ namespace MasterSaveDemo.ViewModel
         private void EditThamSo()
         {
             SelectedItemThamSo.TenThamSo = TenThamSo;
-            SelectedItemThamSo.GiaTri = decimal.Parse(GiaTri);
+            if(TenThamSo == "Đóng sổ tự động")
+            {
+                if(GiaTri == "Bật")
+                    SelectedItemThamSo.GiaTri = 1;
+                else
+                    SelectedItemThamSo.GiaTri = 0;
+            }
+            else
+            {
+                SelectedItemThamSo.GiaTri = decimal.Parse(GiaTri);
+            }
             DataProvider.Ins.DB.SaveChanges();
 
             var temp = SelectedItemThamSo;
@@ -582,7 +620,7 @@ namespace MasterSaveDemo.ViewModel
             // if not used by any STKs
             if( listSTK.Count() == 0)
             {
-                SelectedItemLTK.DangSuDung = 0;
+                SelectedItemLTK.DangSuDung = "Không";
                 DataProvider.Ins.DB.SaveChanges();
 
                 var temp = SelectedItemLTK;
@@ -596,10 +634,15 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
                 ResetTextbox();
+                ResetAll();
+
+                DialogOpen = true;
+                Notify = "Xóa loại tiết kiệm thành công.";
             }
             else
             {
-                System.Windows.MessageBox.Show("Can't");
+                VisibilityPopup1 = Visibility.Visible;
+                PopupContent1 = "Không thế xóa vì còn sổ tiết kiệm đang mở thuộc loại này";
             }
         }
         private string Create_MaLTK(int stt)
@@ -625,14 +668,17 @@ namespace MasterSaveDemo.ViewModel
             VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
             VisibilityOfEditThamSo = Visibility.Hidden;
             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
+            VisibilityOfToggle = Visibility.Hidden;
             HiddenPopupBox();
 
             IsDeleting = false;
             SelectedItemLTK = null;
             SelectedItemThamSo = null;
-            TextBoxReadOnly = false;
+            TextBoxReadOnly = true;
             HitTestVisibleCbb = true;
-            MaLoaiTietKiemReadOnly = false;
+            MaLoaiTietKiemReadOnly = true;
+            EnableTenThamSo = true;
+            EnableGiaTri = true;
         }
         
         #endregion
@@ -646,6 +692,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CbbSelectionChangedCommand { get; set; }
         public ICommand GetThoiGianGuiToiThieuCommand { get; set; }
         public ICommand DialogOK { get; set; }
+        public ICommand ClickToggleCommand { get; set; }
 
         #endregion
 
@@ -674,7 +721,7 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                     HiddenPopupBox();
                     SelectedItemLTK = null;
-                    MaLoaiTietKiemReadOnly = true;
+                    MaLoaiTietKiemReadOnly = false;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
@@ -690,7 +737,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if(SelectedIndexCbb == 0)
                     {
-                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == 1)
+                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                         {
                             int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
                             if (disable == 13 || disable == 0)
@@ -723,10 +770,30 @@ namespace MasterSaveDemo.ViewModel
                         if( SelectedItemThamSo != null)
                         {
                             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
-                            TenThamSo = SelectedItemThamSo.TenThamSo;
-                            GiaTri = SelectedItemThamSo.GiaTri.ToString();
-
                             VisibilityOfEditThamSo = Visibility.Visible;
+                            EnableTenThamSo = false;
+
+                            TenThamSo = SelectedItemThamSo.TenThamSo;
+                            if (SelectedItemThamSo.TenThamSo != "Đóng sổ tự động")
+                            {
+                                GiaTri = SelectedItemThamSo.GiaTri.ToString("0");
+                            }
+                            else
+                            {
+                                VisibilityOfToggle = Visibility.Visible;
+                                EnableGiaTri = false;
+                                if(SelectedItemThamSo.GiaTri == 1)
+                                {
+                                    GiaTri = "Bật";
+                                    IsCheckedToggle = true;
+                                }
+                                else
+                                {
+                                    GiaTri = "Tắt";
+                                    IsCheckedToggle = false;
+                                }
+                            }
+
                         }
                     }
                 }
@@ -737,7 +804,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (SelectedIndexCbb == 0)
                     {
-                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == 1)
+                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                         {
                             int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
                             if (disable == 12 || disable == 0)
@@ -756,8 +823,8 @@ namespace MasterSaveDemo.ViewModel
 
                         IsDeleting = true;
                         SetTextboxValue();
-                        TextBoxReadOnly = true;
-                        MaLoaiTietKiemReadOnly = true;
+                        TextBoxReadOnly = false;
+                        MaLoaiTietKiemReadOnly = false;
                         HitTestVisibleCbb = false;
                         VisibilityOfAdd = Visibility.Visible;
                         VisibilityOfEditLTK = Visibility.Hidden;
@@ -792,10 +859,6 @@ namespace MasterSaveDemo.ViewModel
                         else
                         {
                             DeleteLTK();
-                            ResetAll();
-
-                            DialogOpen = true;
-                            Notify = "Xóa loại tiết kiệm thành công.";
                         }
                     } 
                     else if(VisibilityOfEditLTK == Visibility.Visible)
@@ -879,6 +942,21 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 DialogOpen = false;
+            });
+
+            ClickToggleCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (IsCheckedToggle)
+                {
+                    GiaTri = "Bật";
+                }
+                else
+                {
+                    GiaTri = "Tắt";
+                }
             });
         }
     }

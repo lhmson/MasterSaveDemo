@@ -112,20 +112,21 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding MaLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                         ToolTip="Error" IsReadOnly="{Binding MaLoaiTietKiemReadOnly}"/>
+                         ToolTip="Error" IsEnabled="{Binding MaLoaiTietKiemReadOnly}"/>
                                 <TextBox materialDesign:HintAssist.Hint="Thời gian gửi tối thiểu (ngày)" 
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
-                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                         Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         PreviewTextInput="TextBox_PreviewTextInput"/>
                                 <TextBox materialDesign:HintAssist.Hint="Tên tham số"
                          Visibility="{Binding VisibilityOfEditThamSo}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding TenThamSo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsEnabled="{Binding EnableTenThamSo}"/>
                             </Grid>
 
 
@@ -149,12 +150,13 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding TenLoaiTietKiem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                         IsEnabled="{Binding TextBoxReadOnly}"/>
                                 <TextBox materialDesign:HintAssist.Hint="Lãi suất (%)"
                          Visibility="{Binding VisibilityOfEditLTK}"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
+                         PreviewTextInput="TextBox_PreviewTextInput_1"                
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                     <TextBox.InputBindings>
                                         <KeyBinding 
@@ -168,6 +170,8 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
+                         PreviewTextInput="TextBox_PreviewTextInput_1"
+                         IsEnabled="{Binding EnableGiaTri}"
                          Text="{Binding GiaTri, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                     <TextBox.InputBindings>
                                         <KeyBinding 
@@ -197,7 +201,15 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding KyHan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         IsEnabled="{Binding TextBoxReadOnly}"/>
+                                <ToggleButton 
+                                    Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
+                                    IsChecked="{Binding IsCheckedToggle}"
+                                    Visibility="{Binding VisibilityOfToggle}"
+                                    Command="{Binding ClickToggleCommand}">
+                                    
+                                </ToggleButton>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="5">
@@ -219,7 +231,8 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                         PreviewTextInput="TextBox_PreviewTextInput_1"
+                                         IsEnabled="{Binding TextBoxReadOnly}"/>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="6">
@@ -241,7 +254,8 @@
                          Foreground="{StaticResource SecondaryAccentBrush}" 
                          VerticalAlignment="Center"
                          Text="{Binding ThoiGianGuiToiThieu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                         IsReadOnly="{Binding TextBoxReadOnly}"/>
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         IsEnabled="{Binding TextBoxReadOnly}"/>
                                 <Button Style="{StaticResource MaterialDesignRaisedButton}" HorizontalAlignment="Right" 
                             Margin="5,0,5,0" Content="{materialDesign:PackIcon ArrowDownDropCircle}"
                             Command="{Binding GetThoiGianGuiToiThieuCommand}" ToolTip="Sao chép kì hạn"
@@ -265,7 +279,7 @@
                           Visibility="{Binding VisibilityOfAdd}" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                           ItemsSource="{Binding ListQuyDinh}"
                           SelectedItem="{Binding SelectedQuyDinh}"
-                          IsHitTestVisible="{Binding HitTestVisibleCbb}">
+                          IsEnabled="{Binding TextBoxReadOnly}">
                                 </ComboBox>
                             </Grid>
                         </Grid>
@@ -304,12 +318,12 @@
                   Padding="5">
 
 
-                        <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding NameOfList}"></TextBlock>
-                    </materialDesign:Card>
-                </Grid>
-                <Grid Grid.Row="1" Margin="5">
-                    <materialDesign:Card Margin="0,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListLTK}">
-                        <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                <TextBlock FontWeight="SemiBold" TextAlignment="Center" FontSize="20" Text="{Binding NameOfList}"></TextBlock>
+                            </materialDesign:Card>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="5">
+                            <materialDesign:Card Margin="0,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding VisibilityOfListLTK}">
+                                <ListView x:Name="listViewLTK" ItemsSource="{Binding ListLTK}" ScrollViewer.VerticalScrollBarVisibility="Auto"
                           HorizontalAlignment="Center" SelectedItem="{Binding SelectedItemLTK, Mode=TwoWay}"
                           SelectionMode="Single" FontSize="18">
                                     <ListView.View>
@@ -332,7 +346,7 @@
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Width="250" Header="Tên tham số" DisplayMemberBinding="{Binding TenThamSo}"/>
-                                            <GridViewColumn Width="210" Header="Giá trị" DisplayMemberBinding="{Binding GiaTri}"/>
+                                            <GridViewColumn Width="210" Header="Giá trị" DisplayMemberBinding="{Binding GiaTri, StringFormat='#,##0;(#,##0)'}"/>
 
                                         </GridView>
                                     </ListView.View>

@@ -10,11 +10,11 @@ namespace MasterSaveDemo.Model
     {
         public int SoThuTu { get; set; }
         public string TenLoaiTietKiem { get; set; }
-        public string TongThu { get; set; }
-        public string TongChi { get; set; }
-        public string ChenhLech { get; set; }
+        public decimal TongThu { get; set; }
+        public decimal TongChi { get; set; }
+        public decimal ChenhLech { get; set; }
 
-        public BaoCaoDS(int stt, string tenLoaiTK, string thu, string chi, string chenhLech)
+        public BaoCaoDS(int stt, string tenLoaiTK, decimal thu, decimal chi, decimal chenhLech)
         {
             this.SoThuTu = stt;
             this.TenLoaiTietKiem = tenLoaiTK;

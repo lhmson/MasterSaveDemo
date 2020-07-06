@@ -255,6 +255,13 @@ namespace MasterSaveDemo.ViewModel
 
         #endregion
 
+        #region Test Function
+        public string TestCreate_MaBCDS(int stt)
+        {
+            return Create_MaBCDS(stt);
+        }
+        #endregion
+
         #region ICommand
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand CreateReportCommand { get; set; }

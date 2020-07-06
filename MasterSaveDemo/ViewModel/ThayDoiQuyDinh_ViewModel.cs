@@ -364,7 +364,7 @@ namespace MasterSaveDemo.ViewModel
         #endregion
 
         #region Function
-        private void HiddenPopupBox()
+        public void HiddenPopupBox()
         {
             VisibilityPopup1 = Visibility.Hidden;
             VisibilityPopup2 = Visibility.Hidden;
@@ -391,128 +391,145 @@ namespace MasterSaveDemo.ViewModel
             SelectedIndexCbb = 0;
             NameOfList = "Danh sách loại tiết kiệm";
         }
+        public void CheckValidData_Add(ref bool flag)
+        {
+            if (string.IsNullOrWhiteSpace(TenLoaiTietKiem))
+            {
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Chưa nhập tên loại tiết kiệm";
+                flag = false;
+            }
+            // check if null, return false
+            if (string.IsNullOrWhiteSpace(KyHan))
+            {
+                VisibilityPopup3 = Visibility.Visible;
+                PopupContent3 = "Chưa nhập kỳ hạn";
+                flag = false;
+            }
+            if (string.IsNullOrWhiteSpace(LaiSuat))
+            {
+                VisibilityPopup4 = Visibility.Visible;
+                PopupContent4 = "Chưa nhập lãi suất";
+                flag = false;
+            }
+            if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
+            {
+                VisibilityPopup5 = Visibility.Visible;
+                PopupContent5 = "Chưa nhập thời gian gửi tối thiểu";
+                flag = false;
+            }
+            if (SelectedQuyDinh == null)
+            {
+                VisibilityPopup6 = Visibility.Visible;
+                PopupContent6 = "Chưa chọn quy định về số tiền rút";
+                flag = false;
+            }
+        }
+        private void CheckDuplicatedData_Add(ref bool flag)
+        {
+            if (!IsDeleting)
+            {
+                var maLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == MaLoaiTietKiem);
+                var tenLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == TenLoaiTietKiem);
+
+                if (maLoai.Count() != 0)
+                {
+                    VisibilityPopup1 = Visibility.Visible;
+                    PopupContent1 = "Mã loại tiết kiệm đã tồn tại";
+                    flag = false;
+                }
+                if (tenLoai.Count() != 0)
+                {
+                    VisibilityPopup2 = Visibility.Visible;
+                    PopupContent2 = "Tên loại tiết kiệm đã tồn tại";
+                    flag = false;
+                }
+            }
+        }
+        private void CheckValidData_EditLTK(ref bool flag)
+        {
+            if (string.IsNullOrWhiteSpace(LaiSuat))
+            {
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Chưa nhập lãi suất mới";
+                flag = false;
+            }
+            if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
+            {
+                VisibilityPopup1 = Visibility.Visible;
+                PopupContent1 = "Chưa nhập thời gian gửi tối thiểu mới";
+                flag = false;
+            }
+        }
+        private void CheckDuplicatedData_EditLTK(ref bool flag)
+        {
+            // check if more than 1 value are the same
+            double laiSuat = double.Parse(LaiSuat);
+            int thoiGianGuiToiThieu = int.Parse(ThoiGianGuiToiThieu);
+            if (laiSuat == SelectedItemLTK.LaiSuat && thoiGianGuiToiThieu == SelectedItemLTK.ThoiGianGuiToiThieu)
+            {
+                VisibilityPopup1 = Visibility.Visible;
+                PopupContent1 = "Thời gian gửi tối thiểu đang được áp dụng";
+
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Lãi suất đang được áp dụng";
+
+                flag = false;
+            }
+        }
+        private void CheckValidData_EditThamSo(ref bool flag)
+        {
+            if (string.IsNullOrWhiteSpace(GiaTri))
+            {
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Chưa nhập giá trị của tham số";
+                flag = false;
+            }
+        }
+        private void CheckDuplicatedData_EditThamSo(ref bool flag)
+        {
+            if (TenThamSo != "Đóng sổ tự động")
+            {
+                decimal giaTri = decimal.Parse(GiaTri);
+                if (TenThamSo == SelectedItemThamSo.TenThamSo && giaTri == SelectedItemThamSo.GiaTri)
+                {
+                    VisibilityPopup2 = Visibility.Visible;
+                    PopupContent2 = "Giá trị của tham số đang được áp dụng";
+
+                    flag = false;
+                }
+            }
+            else
+            {
+                decimal isChecked = IsCheckedToggle ? 1 : 0;
+                if (isChecked == SelectedItemThamSo.GiaTri)
+                {
+                    VisibilityPopup2 = Visibility.Visible;
+                    PopupContent2 = "Giá trị của tham số đang được áp dụng";
+
+                    flag = false;
+                }
+            }
+        }
         private bool CheckValidData()
         {
             bool flag = true;
             if (VisibilityOfAdd == Visibility.Visible)
             {
-                //if (string.IsNullOrEmpty(MaLoaiTietKiem))
-                //{
-                    
-                //}
-                if (string.IsNullOrWhiteSpace(TenLoaiTietKiem))
-                {
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Chưa nhập tên loại tiết kiệm";
-                    flag = false;
-                }
-                // check if null, return false
-                if (string.IsNullOrWhiteSpace(KyHan))
-                {
-                    VisibilityPopup3 = Visibility.Visible;
-                    PopupContent3 = "Chưa nhập kỳ hạn";
-                    flag = false;
-                }
-                if (string.IsNullOrWhiteSpace(LaiSuat))
-                {
-                    VisibilityPopup4 = Visibility.Visible;
-                    PopupContent4 = "Chưa nhập lãi suất";
-                    flag = false;
-                }
-                if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
-                {
-                    VisibilityPopup5 = Visibility.Visible;
-                    PopupContent5 = "Chưa nhập thời gian gửi tối thiểu";
-                    flag = false;
-                }
-                if (SelectedQuyDinh == null)
-                {
-                    VisibilityPopup6 = Visibility.Visible;
-                    PopupContent6 = "Chưa chọn quy định về số tiền rút";
-                    flag = false;
-                }
-
-                if ( !IsDeleting)
-                {
-                    var maLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == MaLoaiTietKiem);
-                    var tenLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == TenLoaiTietKiem);
-
-                    if (maLoai.Count() != 0)
-                    {
-                        VisibilityPopup1 = Visibility.Visible;
-                        PopupContent1 = "Mã loại tiết kiệm đã tồn tại";
-                        flag = false;
-                    }
-                    if(tenLoai.Count() != 0)
-                    {
-                        VisibilityPopup2 = Visibility.Visible;
-                        PopupContent2 = "Tên loại tiết kiệm đã tồn tại";
-                        flag = false;
-                    }
-                }
+                CheckValidData_Add(ref flag);
+                CheckDuplicatedData_Add(ref flag);
                 return flag;
             } 
             else if (VisibilityOfEditLTK == Visibility.Visible)
             {
-                if (string.IsNullOrWhiteSpace(LaiSuat))
-                {
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Chưa nhập lãi suất mới";
-                    flag = false;
-                }
-                if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
-                {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Chưa nhập thời gian gửi tối thiểu mới";
-                    flag = false;
-                }
-
-                // check if more than 1 value are the same
-                double laiSuat = double.Parse(LaiSuat);
-                int thoiGianGuiToiThieu = int.Parse(ThoiGianGuiToiThieu);
-                if (laiSuat == SelectedItemLTK.LaiSuat && thoiGianGuiToiThieu == SelectedItemLTK.ThoiGianGuiToiThieu)
-                {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Thời gian gửi tối thiểu đang được áp dụng";
-
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Lãi suất đang được áp dụng";
-
-                    flag = false;
-                }
+                CheckValidData_EditLTK(ref flag);
+                CheckDuplicatedData_EditLTK(ref flag);
                 return flag;
             }
             else if (VisibilityOfEditThamSo == Visibility.Visible)
             {
-                if (string.IsNullOrWhiteSpace(GiaTri))
-                {
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Chưa nhập giá trị của tham số";
-                    flag = false;
-                }
-
-                if(TenThamSo != "Đóng sổ tự động")
-                {
-                    decimal giaTri = decimal.Parse(GiaTri);
-                    if (TenThamSo == SelectedItemThamSo.TenThamSo && giaTri == SelectedItemThamSo.GiaTri)
-                    {
-                        VisibilityPopup2 = Visibility.Visible;
-                        PopupContent2 = "Giá trị của tham số đang được áp dụng";
-
-                        flag = false;
-                    }
-                }
-                else
-                {
-                    decimal isChecked = IsCheckedToggle ? 1 : 0;
-                    if(isChecked == SelectedItemThamSo.GiaTri)
-                    {
-                        VisibilityPopup2 = Visibility.Visible;
-                        PopupContent2 = "Giá trị của tham số đang được áp dụng";
-
-                        flag = false;
-                    }
-                }
+                CheckValidData_EditThamSo(ref flag);
+                CheckDuplicatedData_EditThamSo(ref flag);
                 return flag;
             }
             return false;
@@ -554,7 +571,7 @@ namespace MasterSaveDemo.ViewModel
         }
         private void EditLTK()
         {
-            SelectedItemLTK.LaiSuat = float.Parse(LaiSuat);
+            SelectedItemLTK.LaiSuat = double.Parse(LaiSuat);
             SelectedItemLTK.ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu);
             DataProvider.Ins.DB.SaveChanges();
             var temp = SelectedItemLTK;

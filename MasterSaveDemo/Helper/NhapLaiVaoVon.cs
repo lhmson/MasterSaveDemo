@@ -102,6 +102,10 @@ namespace MasterSaveDemo.Helper
                 }
                 else
                 {
+
+
+
+
                     //Truong hop chua toi ngay dao han, nhung van rut ngay (da du so ngay toi thieu)
                     if (stk.NgayDaoHanKeTiep > DateTime.Today && (stk.NgayDaoHanKeTiep - DateTime.Today).TotalDays < ltk.KyHan)
                     {

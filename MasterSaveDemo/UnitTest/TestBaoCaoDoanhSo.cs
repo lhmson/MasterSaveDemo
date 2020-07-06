@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MasterSaveDemo.UnitTest
 {
     [TestFixture]
-    class BaoCaoDoanhSoTest
+    class TestBaoCaoDoanhSo
     {
         BaoCaoDoanhSo_ViewModel viewModel;
         

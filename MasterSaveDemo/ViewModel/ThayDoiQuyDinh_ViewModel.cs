@@ -425,7 +425,7 @@ namespace MasterSaveDemo.ViewModel
                 flag = false;
             }
         }
-        private void CheckDuplicatedData_Add(ref bool flag)
+        public void CheckDuplicatedData_Add(ref bool flag)
         {
             if (!IsDeleting)
             {
@@ -438,7 +438,7 @@ namespace MasterSaveDemo.ViewModel
                     PopupContent1 = "Mã loại tiết kiệm đã tồn tại";
                     flag = false;
                 }
-                if (tenLoai.Count() != 0)
+                if (tenLoai.Where(x=> x.DangSuDung == "Có").Count() != 0)
                 {
                     VisibilityPopup2 = Visibility.Visible;
                     PopupContent2 = "Tên loại tiết kiệm đã tồn tại";
@@ -446,7 +446,7 @@ namespace MasterSaveDemo.ViewModel
                 }
             }
         }
-        private void CheckValidData_EditLTK(ref bool flag)
+        public void CheckValidData_EditLTK(ref bool flag)
         {
             if (string.IsNullOrWhiteSpace(LaiSuat))
             {
@@ -461,7 +461,7 @@ namespace MasterSaveDemo.ViewModel
                 flag = false;
             }
         }
-        private void CheckDuplicatedData_EditLTK(ref bool flag)
+        public void CheckDuplicatedData_EditLTK(ref bool flag)
         {
             // check if more than 1 value are the same
             double laiSuat = double.Parse(LaiSuat);
@@ -477,7 +477,7 @@ namespace MasterSaveDemo.ViewModel
                 flag = false;
             }
         }
-        private void CheckValidData_EditThamSo(ref bool flag)
+        public void CheckValidData_EditThamSo(ref bool flag)
         {
             if (string.IsNullOrWhiteSpace(GiaTri))
             {
@@ -486,7 +486,7 @@ namespace MasterSaveDemo.ViewModel
                 flag = false;
             }
         }
-        private void CheckDuplicatedData_EditThamSo(ref bool flag)
+        public void CheckDuplicatedData_EditThamSo(ref bool flag)
         {
             if (TenThamSo != "Đóng sổ tự động")
             {
@@ -534,7 +534,7 @@ namespace MasterSaveDemo.ViewModel
             }
             return false;
         }
-        private void ResetTextbox()
+        public void ResetTextbox()
         {
             MaLoaiTietKiem = "";
             TenLoaiTietKiem = "";
@@ -662,7 +662,7 @@ namespace MasterSaveDemo.ViewModel
                 PopupContent1 = "Không thế xóa vì còn sổ tiết kiệm đang mở thuộc loại này";
             }
         }
-        private string Create_MaLTK(int stt)
+        public string Create_MaLTK(int stt)
         {
             string res = "LTK";
             for (int i = 4; i <= 6 - stt.ToString().Length; i++)
@@ -670,7 +670,7 @@ namespace MasterSaveDemo.ViewModel
             res += stt.ToString();
             return res;
         }
-        private int DisableButton(Visibility add, Visibility edit, bool delete)
+        public int DisableButton(Visibility add, Visibility edit, bool delete)
         {
             if (edit == Visibility.Visible)
                 return 13;

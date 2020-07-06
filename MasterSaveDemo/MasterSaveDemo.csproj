@@ -18,6 +18,23 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Admin\Desktop\setup\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +54,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>E175850F1B8D30643C7DF25DF0B5EBA2CAA90E36</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MasterSaveDemo_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Data.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -201,8 +230,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ThayDoiQuyDinh_Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="UnitTest\BaoCaoDoanhSoTest.cs" />
-    <Compile Include="UnitTest\ThayDoiQuyDinhTest.cs" />
+    <Compile Include="UnitTest\TestBaoCaoDoanhSo.cs" />
+    <Compile Include="UnitTest\TestNhapLaiVaoVon.cs" />
+    <Compile Include="UnitTest\TestThayDoiQuyDinh.cs" />
     <Compile Include="ViewModel\BaoCaoDoanhSo_PrintPreview_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoDoanhSo_ViewModel.cs" />
     <Compile Include="ViewModel\BaoCaoMoDong_PrintPreview_ViewModel.cs" />
@@ -365,6 +395,7 @@
     <EntityDeploy Include="Model\QLSTKModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
     </EntityDeploy>
+    <None Include="MasterSaveDemo_TemporaryKey.pfx" />
     <None Include="Model\QLSTKModel.edmx.diagram">
       <DependentUpon>QLSTKModel.edmx</DependentUpon>
     </None>
@@ -379,7 +410,23 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SqlServer.Express.11.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2012 Express</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logoms.png" />
   </ItemGroup>

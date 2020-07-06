@@ -238,7 +238,7 @@ namespace MasterSaveDemo.ViewModel
                             {
                                 //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
                                 Visibility_TienGui = Visibility.Visible;
-                                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString("0,000") + " đồng";
                             }
                         }
                     }

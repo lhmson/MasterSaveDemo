@@ -121,6 +121,70 @@ namespace MasterSaveDemo.ViewModel
             set { _Enable_QLNS = value; OnPropertyChanged(); }
         }
 
+        // tool tip of navigation
+        private string _Home_Tooltip;
+        public string Home_Tooltip
+        {
+            get => _Home_Tooltip;
+            set { _Home_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _MoSo_Tooltip;
+        public string MoSo_Tooltip
+        {
+            get => _MoSo_Tooltip;
+            set { _MoSo_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _GuiTien_Tooltip;
+        public string GuiTien_Tooltip
+        {
+            get => _GuiTien_Tooltip;
+            set { _GuiTien_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _RutTien_Tooltip;
+        public string RutTien_Tooltip
+        {
+            get => _RutTien_Tooltip;
+            set { _RutTien_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _TraCuu_Tooltip;
+        public string TraCuu_Tooltip
+        {
+            get => _TraCuu_Tooltip;
+            set { _TraCuu_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _BaoCaoDS_Tooltip;
+        public string BaoCaoDS_Tooltip
+        {
+            get => _BaoCaoDS_Tooltip;
+            set { _BaoCaoDS_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _BaoCaoMD_Tooltip;
+        public string BaoCaoMD_Tooltip
+        {
+            get => _BaoCaoMD_Tooltip;
+            set { _BaoCaoMD_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _TDQD_Tooltip;
+        public string TDQD_Tooltip
+        {
+            get => _TDQD_Tooltip;
+            set { _TDQD_Tooltip = value; OnPropertyChanged(); }
+        }
+
+        private string _QLNS_Tooltip;
+        public string QLNS_Tooltip
+        {
+            get => _QLNS_Tooltip;
+            set { _QLNS_Tooltip = value; OnPropertyChanged(); }
+        }
+
         #endregion
 
         public bool isLoaded = false;
@@ -131,16 +195,22 @@ namespace MasterSaveDemo.ViewModel
             Init_Button();
             ObservableCollection<PHANQUYEN> list_PhanQuyen= new ObservableCollection<PHANQUYEN>(DataProvider.Ins.DB.PHANQUYENs);
             foreach (var item in list_PhanQuyen)
+            {
                 if (item.MaNhom == user.MaNhom)
                 {
                     Init_Valid_Button(item.MaChucNang);
+                    Init_Valid_Tooltip(item.MaChucNang);
                 }
+            }
         }
 
         private void Init_Button()
         {
-            Enable_Home = Enable_GuiTien = Enable_RutTien = Enable_TraCuu = Enable_BCDS = Enable_BCMD = Enable_QLNS = _Enable_TDQD = Enable_MoSo =  false;
+            Enable_Home = Enable_GuiTien = Enable_RutTien = Enable_TraCuu = Enable_BCDS = Enable_BCMD = Enable_QLNS = Enable_TDQD = Enable_MoSo =  false;
             Enable_Home = true;
+            // tooltip handle
+            MoSo_Tooltip = GuiTien_Tooltip = RutTien_Tooltip = TraCuu_Tooltip = BaoCaoDS_Tooltip = BaoCaoMD_Tooltip = QLNS_Tooltip = TDQD_Tooltip = "Không thể truy cập";
+            Home_Tooltip = "Có thể truy cập";
         }
 
         private void Init_Valid_Button(int maChucNang)
@@ -170,6 +240,40 @@ namespace MasterSaveDemo.ViewModel
                     break;
                 case 8:
                     Enable_TDQD = true;
+                    break;
+                case 9:
+                    break;
+            }
+        }
+
+        // tool tip
+        private void Init_Valid_Tooltip(int maChucNang)
+        {
+            switch (maChucNang)
+            {
+                case 1:
+                    QLNS_Tooltip = "Có thể truy cập";
+                    break;
+                case 2:
+                    MoSo_Tooltip = "Có thể truy cập";
+                    break;
+                case 3:
+                    GuiTien_Tooltip = "Có thể truy cập";
+                    break;
+                case 4:
+                    RutTien_Tooltip = "Có thể truy cập";
+                    break;
+                case 5:
+                    TraCuu_Tooltip = "Có thể truy cập";
+                    break;
+                case 6:
+                    BaoCaoDS_Tooltip = "Có thể truy cập";
+                    break;
+                case 7:
+                    BaoCaoMD_Tooltip = "Có thể truy cập";
+                    break;
+                case 8:
+                    TDQD_Tooltip = "Có thể truy cập";
                     break;
                 case 9:
                     break;

@@ -31,10 +31,11 @@ namespace MasterSaveDemo.ViewModel
 		public ICommand Click_CopySoDuSTRCommand { get; set; }
 		public ICommand DialogOK { get; set; }
 		public ICommand DialogCancel { get; set; }
+        public ICommand Refresh { get; set; }
 
-		#region Binding tu view
-		//Ngay Rut, kieu string
-		private string _NgayRut;
+        #region Binding tu view
+        //Ngay Rut, kieu string
+        private string _NgayRut;
 		public string NgayRut
 		{
 			get => _NgayRut;
@@ -105,9 +106,9 @@ namespace MasterSaveDemo.ViewModel
 			set { _ThongBao = value; OnPropertyChanged(); }
 		}
 		//listView
-		private List<ListLichSuPhieuRut> _ListLichSuGD;
+		private ObservableCollection<ListLichSuPhieuRut> _ListLichSuGD;
 
-		public List<ListLichSuPhieuRut> ListLichSuGD
+		public ObservableCollection<ListLichSuPhieuRut> ListLichSuGD
 		{
 			get { return _ListLichSuGD; }
 			set { _ListLichSuGD = value; OnPropertyChanged(); }
@@ -280,7 +281,7 @@ namespace MasterSaveDemo.ViewModel
 					ThongBao = "";
 					Result_KiemTraHopLe = false;
 					Result_KiemTraNhapLai = true;
-					ListLichSuGD = new List<ListLichSuPhieuRut>();
+					ListLichSuGD = new ObservableCollection<ListLichSuPhieuRut>();
 				}
 				catch (Exception e)
 				{
@@ -414,7 +415,15 @@ namespace MasterSaveDemo.ViewModel
 				Result_Dialog = "Cancel";
 				DialogOpen = false;
 			});
-		}
+
+            Refresh = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Reset_Check();
+                MaSoTietKiem = "";
+                SoTienRut = "";
+                TenKhachHang = "";
+            });
+        }
 		public void Reset_Check()
 		{
 			SoTietKiem_Check = "None";
@@ -430,7 +439,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
-				ListLichSuGD = new List<ListLichSuPhieuRut>();
+				ListLichSuGD = new ObservableCollection<ListLichSuPhieuRut>();
 
 				ObservableCollection<PHIEURUT> List_PR = new ObservableCollection<PHIEURUT>(DataProvider.Ins.DB.PHIEURUTs);
 				var lichsu = from list in List_PR
@@ -549,8 +558,8 @@ namespace MasterSaveDemo.ViewModel
 				if(info_stk.NgayMoSo.AddDays(info_loaitietkiem.ThoiGianGuiToiThieu) > DateTime.Today )
 				{
 					NgayRut_Check = "Error";
-					ThongBao_NgayRut = "Chưa đủ số ngày gửi tối thiểu.";
-					ThongBao += "Chưa đủ số ngày gửi tối thiểu.\n";
+                    ThongBao_NgayRut = "Ngày mở sổ là: " + info_stk.NgayMoSo.ToString("dd/MM/yyyy") + ". Chưa đủ số ngày gửi tối thiểu (" + info_loaitietkiem.ThoiGianGuiToiThieu.ToString() + " ngày)"; ;
+					//ThongBao += "Chưa đủ số ngày gửi tối thiểu.\n";
 					Result_KiemTraHopLe = false;
 				}
 				else
@@ -589,34 +598,43 @@ namespace MasterSaveDemo.ViewModel
 				}
 				else
 				{
-					if (decimal.Parse(SoTienRut) < 1000)
+					if (check_hasaWhiteSpace(SoTienRut))
 					{
 						SoTienRut_Check = "Error";
-						ThongBao_TienRut += "Không thể rút số tiền ít hơn 1000 đồng.";
+						ThongBao_TienRut += "Số tiền không thể chứa khoảng trắng";
 						Result_KiemTraHopLe = false;
 					}
 					else
 					{
-						if (info_loaitietkiem.QuyDinhSoTienRut == 1 && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
+						if (decimal.Parse(SoTienRut) < 1000)
 						{
 							SoTienRut_Check = "Error";
-							ThongBao_TienRut += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
-							ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
+							ThongBao_TienRut += "Không thể rút số tiền ít hơn 1000 đồng.";
 							Result_KiemTraHopLe = false;
 						}
 						else
 						{
-							if (decimal.Parse(SoTienRut) > decimal.Parse(SoDu))
+							if (info_loaitietkiem.QuyDinhSoTienRut == "Rút hết" && decimal.Parse(SoTienRut) < decimal.Parse(SoDu))
 							{
 								SoTienRut_Check = "Error";
-								ThongBao_TienRut += "Không thể rút nhiều hơn số dư tài khoản.\n";
-								ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
+								ThongBao_TienRut += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
+								ThongBao += "Loại tiết kiệm có kì hạn phải rút toàn bộ.\n";
 								Result_KiemTraHopLe = false;
 							}
 							else
 							{
-								//SoTienRut_Check = "Check";
-								//ThongBao_TienRut = "Có thể rút số tiền này.";
+								if (decimal.Parse(SoTienRut) > decimal.Parse(SoDu))
+								{
+									SoTienRut_Check = "Error";
+									ThongBao_TienRut += "Không thể rút nhiều hơn số dư tài khoản.\n";
+									ThongBao += "Không thể rút nhiều hơn số dư tài khoản.\n";
+									Result_KiemTraHopLe = false;
+								}
+								else
+								{
+									//SoTienRut_Check = "Check";
+									//ThongBao_TienRut = "Có thể rút số tiền này.";
+								}
 							}
 						}
 					}
@@ -690,7 +708,7 @@ namespace MasterSaveDemo.ViewModel
 				DataProvider.Ins.DB.PHIEURUTs.Add(info_PhieuRut);
 				DataProvider.Ins.DB.SaveChanges();
 
-				SOTIETKIEM stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == this.MaSoTietKiem).SingleOrDefault();
+				SOTIETKIEM stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == this.MaSoTietKiem).Single();
 				stk.SoDu -= decimal.Parse(this.SoTienRut);
 				if(stk.SoDu<1)
 				{
@@ -705,7 +723,7 @@ namespace MasterSaveDemo.ViewModel
 					PhieuRut.ShowDialog();
 				}
 
-				if (stk.SoDu == 0)
+				if (stk.SoDu < 1)
 				{
 					DongSoTuDong(info_PhieuRut.MaSoTietKiem);
 				}
@@ -730,9 +748,9 @@ namespace MasterSaveDemo.ViewModel
 		{
 			try
 			{
-				if(GetThamSo("DongSoTuDong")==1)
+				if(GetThamSo("Đóng sổ tự động") == 1)
 				{
-					SOTIETKIEM temp = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == mstk).SingleOrDefault();
+					SOTIETKIEM temp = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSoTietKiem == mstk).Single();
 					temp.NgayDongSo = DateTime.Today;
 					DataProvider.Ins.DB.SaveChanges();
 					ThongBao = "Đã đóng sổ tiết kiệm.\n";
@@ -764,7 +782,7 @@ namespace MasterSaveDemo.ViewModel
 		{
 			QuyDinhRutTien = "Loại tiết kiệm có kỳ hạn chỉ được rút khi quá kỳ hạn và phải rút hết toàn bộ, khi này tiền lãi được tính với mức lãi suất của loại không kỳ hạn.\n"
 							+ "Loại tiết kiệm không kỳ hạn được rút khi gửi trên số ngày tối thiểu theo quy định và có thể rút số tiền nhỏ hơn hoặc bằng số dư hiện có.\n";
-			if (GetThamSo("DongSoTuDong") == 1)
+			if (GetThamSo("Đóng sổ tự động") == 1)
 			{
 				QuyDinhRutTien += "Sổ sau khi rút hết tiền sẽ tự động đóng.";
 			}
@@ -772,10 +790,19 @@ namespace MasterSaveDemo.ViewModel
 			{
 			}
 		}
-        #endregion
-        #region Cac ham xu li database
-        //lay ra so tiet kiem khi biet Ma so tiet kiem 
-        private SOTIETKIEM Tim_MSTK(string mstk)
+		//Ham ben duoi duoc lay tu MoSo
+		private bool check_hasaWhiteSpace(string chuoi)
+		{
+			if (chuoi == null) return false;
+			foreach (var item in chuoi)
+				if (item == ' ')
+					return true;
+			return false;
+		}
+		#endregion
+		#region Cac ham xu li database
+		//lay ra so tiet kiem khi biet Ma so tiet kiem 
+		private SOTIETKIEM Tim_MSTK(string mstk)
 		{
 			List<SOTIETKIEM> List_SoTietKiem = DataProvider.Ins.DB.SOTIETKIEMs.ToList();
 			foreach (SOTIETKIEM stk in List_SoTietKiem)

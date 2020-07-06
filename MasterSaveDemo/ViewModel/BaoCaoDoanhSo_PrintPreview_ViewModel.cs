@@ -29,6 +29,15 @@ namespace MasterSaveDemo.ViewModel
             get { return _MaBaoCao; }
             set { _MaBaoCao = value; OnPropertyChanged(); }
         }
+
+        private string _NguoiTaoPhieu;
+
+        public string NguoiTaoPhieu
+        {
+            get { return _NguoiTaoPhieu; }
+            set { _NguoiTaoPhieu = value; OnPropertyChanged(); }
+        }
+
         //---------------
         private ObservableCollection<BaoCaoDS> _ListBaoCaoDoanhSo;
 
@@ -49,6 +58,7 @@ namespace MasterSaveDemo.ViewModel
             //    ListBaoCaoDoanhSo[i].SoThuTu = i + 1;
                 
             NgayBaoCao = ngayBaoCao;
+            NguoiTaoPhieu = LoginViewModel.TaiKhoanSuDung.HoTen;
 
             CloseWindowCommand = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) => {
                 var ex = p as Window;

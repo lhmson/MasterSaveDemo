@@ -320,6 +320,19 @@ namespace MasterSaveDemo.ViewModel
             set { _PopupContent6 = value; OnPropertyChanged(); }
         }
 
+        private bool _DialogOpen;
+        public bool DialogOpen
+        {
+            get => _DialogOpen;
+            set { _DialogOpen = value; OnPropertyChanged(); }
+        }
+
+        private string _Notify;
+        public string Notify
+        {
+            get => _Notify;
+            set { _Notify = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
@@ -340,8 +353,8 @@ namespace MasterSaveDemo.ViewModel
             ListThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
             ListQuyDinh = new ObservableCollection<string>();
-            ListQuyDinh.Add("0");
-            ListQuyDinh.Add("1");
+            ListQuyDinh.Add("Rút nhỏ hơn hoặc bằng");
+            ListQuyDinh.Add("Rút hết");
 
             VisibilityOfAdd = Visibility.Hidden;
             VisibilityOfEditLTK = Visibility.Hidden;
@@ -503,8 +516,8 @@ namespace MasterSaveDemo.ViewModel
                 KyHan = Int32.Parse(KyHan),
                 LaiSuat = double.Parse(LaiSuat),
                 ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu),
-                QuyDinhSoTienRut = Int32.Parse(SelectedQuyDinh),
-                DangSuDung = 1
+                QuyDinhSoTienRut = SelectedQuyDinh,
+                DangSuDung = "Có"
             };
             DataProvider.Ins.DB.LOAITIETKIEMs.Add(loaiTietKiem);
             DataProvider.Ins.DB.SaveChanges();
@@ -537,7 +550,7 @@ namespace MasterSaveDemo.ViewModel
         private void EditThamSo()
         {
             SelectedItemThamSo.TenThamSo = TenThamSo;
-            SelectedItemThamSo.GiaTri = Decimal.Parse(GiaTri);
+            SelectedItemThamSo.GiaTri = decimal.Parse(GiaTri);
             DataProvider.Ins.DB.SaveChanges();
 
             var temp = SelectedItemThamSo;
@@ -569,7 +582,7 @@ namespace MasterSaveDemo.ViewModel
             // if not used by any STKs
             if( listSTK.Count() == 0)
             {
-                SelectedItemLTK.DangSuDung = 0;
+                SelectedItemLTK.DangSuDung = "Không";
                 DataProvider.Ins.DB.SaveChanges();
 
                 var temp = SelectedItemLTK;
@@ -583,10 +596,15 @@ namespace MasterSaveDemo.ViewModel
                     }
                 }
                 ResetTextbox();
+                ResetAll();
+
+                DialogOpen = true;
+                Notify = "Xóa loại tiết kiệm thành công.";
             }
             else
             {
-                System.Windows.MessageBox.Show("Can't");
+                VisibilityPopup1 = Visibility.Visible;
+                PopupContent1 = "Không thế xóa vì còn sổ tiết kiệm đang mở thuộc loại này";
             }
         }
         private string Create_MaLTK(int stt)
@@ -632,6 +650,7 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CancelCommand { get; set; }
         public ICommand CbbSelectionChangedCommand { get; set; }
         public ICommand GetThoiGianGuiToiThieuCommand { get; set; }
+        public ICommand DialogOK { get; set; }
 
         #endregion
 
@@ -676,7 +695,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if(SelectedIndexCbb == 0)
                     {
-                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == 1)
+                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                         {
                             int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
                             if (disable == 13 || disable == 0)
@@ -710,7 +729,7 @@ namespace MasterSaveDemo.ViewModel
                         {
                             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                             TenThamSo = SelectedItemThamSo.TenThamSo;
-                            GiaTri = SelectedItemThamSo.GiaTri.ToString();
+                            GiaTri = SelectedItemThamSo.GiaTri.ToString("0");
 
                             VisibilityOfEditThamSo = Visibility.Visible;
                         }
@@ -723,7 +742,7 @@ namespace MasterSaveDemo.ViewModel
                 {
                     if (SelectedIndexCbb == 0)
                     {
-                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == 1)
+                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                         {
                             int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
                             if (disable == 12 || disable == 0)
@@ -770,12 +789,14 @@ namespace MasterSaveDemo.ViewModel
                             {
                                 AddLTK();
                                 ResetAll();
+
+                                DialogOpen = true;
+                                Notify = "Thêm loại tiết kiệm thành công.";
                             }
                         }
                         else
                         {
                             DeleteLTK();
-                            ResetAll();
                         }
                     } 
                     else if(VisibilityOfEditLTK == Visibility.Visible)
@@ -784,6 +805,9 @@ namespace MasterSaveDemo.ViewModel
                         {
                             EditLTK();
                             ResetAll();
+
+                            DialogOpen = true;
+                            Notify = "Sửa thông tin loại tiết kiệm thành công.";
                         }
                     }
                     else if (VisibilityOfEditThamSo == Visibility.Visible)
@@ -792,6 +816,9 @@ namespace MasterSaveDemo.ViewModel
                         {
                             EditThamSo();
                             ResetAll();
+
+                            DialogOpen = true;
+                            Notify = "Sửa thông tin tham số thành công.";
                         }
                     }
                 }
@@ -845,6 +872,14 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 ThoiGianGuiToiThieu = KyHan;
+            });
+
+            DialogOK = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                DialogOpen = false;
             });
         }
     }

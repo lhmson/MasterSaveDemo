@@ -263,7 +263,7 @@ namespace MasterSaveDemo.ViewModel
             SelectedPhanQuyen = null;
         }
 
-        private bool check_hasaWhiteSpace(string chuoi)
+        public bool check_hasaWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
             foreach (var item in chuoi)
@@ -272,7 +272,7 @@ namespace MasterSaveDemo.ViewModel
             return false;
         }
 
-        private bool check_hasallWhiteSpace(string chuoi)
+        public bool check_hasallWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
             foreach (var item in chuoi)
@@ -281,7 +281,7 @@ namespace MasterSaveDemo.ViewModel
             return true;
         }
 
-        private bool Check_TenNhomQuyen(string name)
+        public bool Check_TenNhomQuyen(string name)
         {
             ObservableCollection<NHOMNGUOIDUNG> nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
 
@@ -292,7 +292,7 @@ namespace MasterSaveDemo.ViewModel
             return false;
         }
 
-        private int CreateCodeNhomNguoiDung()
+        public int CreateCodeNhomNguoiDung()
         {
             ObservableCollection<NHOMNGUOIDUNG> listNhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
             int max = 0;
@@ -323,7 +323,7 @@ namespace MasterSaveDemo.ViewModel
                 CbxTenNhom.Add(Nhom.TenNhom);
         }
 
-        private int search_MaNhom(string TenNhom)
+        public int search_MaNhom(string TenNhom)
         {
             int ma = 0;
 
@@ -373,7 +373,7 @@ namespace MasterSaveDemo.ViewModel
             VisibilityOfEdit = vsEdit;
         }
 
-        private bool CheckValidData()
+        public bool CheckValidData()
         {
             if (VisibilityOfAdd == Visibility.Visible)
             {

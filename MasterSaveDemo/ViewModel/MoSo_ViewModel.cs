@@ -49,12 +49,12 @@ namespace MasterSaveDemo.ViewModel
         {
             ObservableCollection<LOAITIETKIEM> temp = new ObservableCollection<LOAITIETKIEM>();
             foreach (var item in List)
-                if (item.DangSuDung == 1)
+                if (item.DangSuDung == "Có")
                     temp.Add(item);
             List = temp;
         }
 
-        private bool check_hasaWhiteSpace(string chuoi)
+        public bool check_hasaWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
             foreach (var item in chuoi)
@@ -63,7 +63,7 @@ namespace MasterSaveDemo.ViewModel
             return false;
         }
 
-        private bool check_hasallWhiteSpace(string chuoi)
+        public bool check_hasallWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
             foreach (var item in chuoi)
@@ -83,7 +83,7 @@ namespace MasterSaveDemo.ViewModel
             NgayDaoHanKeTiep = "";
             SoTienGuiBanDau = "";
         }
-        private bool CheckAllNumber(string number)
+        public bool CheckAllNumber(string number)
         {
             if (number == null || number == "") return false;
             for (int i = 0; i < number.Length; i++)
@@ -92,7 +92,7 @@ namespace MasterSaveDemo.ViewModel
             return true;
         }
 
-        private string FormatDateTime(string date)
+        public string FormatDateTime(string date)
         {
             string res = "";
             for (int i = 0; i < date.Length; i++)
@@ -109,11 +109,11 @@ namespace MasterSaveDemo.ViewModel
             SelectedTenLoaiTietKiem = "";
             TenLoaiTietKiem = new ObservableCollection<string>();
             foreach (LOAITIETKIEM LTK in List)
-                if (LTK.DangSuDung == 1)
+                if (LTK.DangSuDung == "Có")
                     TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
         }
 
-        private int analysis_CodeSTK(string code)
+        public int analysis_CodeSTK(string code)
         {
             string res = "";
             for (int i = 3; i < code.Length; i++)
@@ -121,7 +121,7 @@ namespace MasterSaveDemo.ViewModel
             return int.Parse(res);
         }
 
-        private string create_CodeSTK(int stt)
+        public string create_CodeSTK(int stt)
         {
             string res = "STK";
             for (int i = 4; i <= 10 - stt.ToString().Length; i++)
@@ -130,7 +130,7 @@ namespace MasterSaveDemo.ViewModel
             return res;
         }
 
-        private string GetCodeSTK()
+        public string GetCodeSTK()
         {
             ObservableCollection<SOTIETKIEM> List_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
 
@@ -143,7 +143,7 @@ namespace MasterSaveDemo.ViewModel
             return res;
         }
 
-        private int search_KyHan(string TenLTK)
+        public int search_KyHan(string TenLTK)
         {
             ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
 
@@ -158,7 +158,7 @@ namespace MasterSaveDemo.ViewModel
             }
             return 0;
         }
-        private string search_MaLTK(string TenLTK)
+        public string search_MaLTK(string TenLTK)
         {
             ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
 
@@ -172,7 +172,7 @@ namespace MasterSaveDemo.ViewModel
             return "0";
         }
 
-        private double search_LaiSuat(string MaLTK)
+        public double search_LaiSuat(string MaLTK)
         {
             double ls = 0;
             ObservableCollection<LOAITIETKIEM> List_MaLTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -221,33 +221,64 @@ namespace MasterSaveDemo.ViewModel
                 Error_TienGui = "Số tiền chưa được nhập";
             }
             else
-            if (check_hasallWhiteSpace(SoTienGuiBanDau))
             {
-                //error += "\nSố tiền gửi của khách hàng chưa được nhập";
-                Visibility_TienGui = Visibility.Visible;
-                Error_TienGui = "Số tiền không được có khoảng trắng";
-            }
-            else
-            if (CheckAllNumber(SoTienGuiBanDau) == false)
-            {
-                Visibility_TienGui = Visibility.Visible;
-                Error_TienGui = "Tiền gửi chỉ chứa kí tự số";
-            }
-            else
-            {
-                foreach (var item in listThamSo)
+                if (check_hasaWhiteSpace(SoTienGuiBanDau))
                 {
-                    if (item.TenThamSo == "SoTienGuiToiThieu")
+                    //error += "\nSố tiền gửi của khách hàng chưa được nhập";
+                    Visibility_TienGui = Visibility.Visible;
+                    Error_TienGui = "Số tiền không được có khoảng trắng";
+                }
+                else
+                {
+                    foreach (var item in listThamSo)
                     {
-                        if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+                        if (item.TenThamSo == "Số tiền gửi tối thiểu")
                         {
-                            //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
-                            Visibility_TienGui = Visibility.Visible;
-                            Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                            if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+                            {
+                                //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+                                Visibility_TienGui = Visibility.Visible;
+                                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                            }
                         }
                     }
                 }
             }
+            try
+            {
+                if (decimal.Parse(SoTienGuiBanDau) < 1000)
+                {
+                }
+                else
+                {
+                    SoTienGuiBanDau = decimal.Parse(SoTienGuiBanDau).ToString("0,000");
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            //if (CheckAllNumber(SoTienGuiBanDau) == false)
+            //{
+            //    Visibility_TienGui = Visibility.Visible;
+            //    Error_TienGui = "Tiền gửi chỉ chứa kí tự số";
+            //}
+            //else
+            //{
+            //    foreach (var item in listThamSo)
+            //    {
+            //        if (item.TenThamSo == "SoTienGuiToiThieu")
+            //        {
+            //            if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
+            //            {
+            //                //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
+            //                Visibility_TienGui = Visibility.Visible;
+            //                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+            //            }
+            //        }
+            //    }
+            //}
 
             if (MaSoTietKiem == "" || MaSoTietKiem == null)
             {
@@ -301,7 +332,7 @@ namespace MasterSaveDemo.ViewModel
             string error = "";
             ObservableCollection<THAMSO> listThamSo = new ObservableCollection<THAMSO>(DataProvider.Ins.DB.THAMSOes);
 
-            if (SoTienGuiBanDau == "" || SoTienGuiBanDau == null)
+            if (String.IsNullOrWhiteSpace(SoTienGuiBanDau))
             {
                 error += "\nSố tiền gửi của khách hàng chưa được nhập";
             }
@@ -309,7 +340,7 @@ namespace MasterSaveDemo.ViewModel
             {
                 foreach (var item in listThamSo)
                 {
-                    if (item.TenThamSo == "SoTienGuiToiThieu")
+                    if (item.TenThamSo == "Số tiền gửi tối thiểu")
                     {
                         if (item.GiaTri > decimal.Parse(SoTienGuiBanDau))
                         {
@@ -335,11 +366,10 @@ namespace MasterSaveDemo.ViewModel
 
         }
 
-        private string Cal_NgayDaoHan(int days)
+        private DateTime Cal_NgayDaoHan(int days)
         {
             double d = Double.Parse(days.ToString());
-            string date_NgayDaoHan = DateTime.Today.AddDays(d).ToString();
-            date_NgayDaoHan = FormatDateTime(date_NgayDaoHan);
+            DateTime date_NgayDaoHan = DateTime.Today.AddDays(d);
             return date_NgayDaoHan;
         }
 
@@ -429,7 +459,14 @@ namespace MasterSaveDemo.ViewModel
                 OnPropertyChanged();
                 if (SelectedTenLoaiTietKiem != null && SelectedTenLoaiTietKiem != "")
                 {
-                    NgayDaoHanKeTiep = Cal_NgayDaoHan(search_KyHan(SelectedTenLoaiTietKiem));
+                    if (search_KyHan(SelectedTenLoaiTietKiem) == 0)
+                    {
+                        NgayDaoHanKeTiep = "Không xác định";
+                    }
+                    else
+                    {
+                        NgayDaoHanKeTiep = Cal_NgayDaoHan(search_KyHan(SelectedTenLoaiTietKiem)).ToString("dd/MM/yyyy");
+                    }
                 }
             }
         }
@@ -472,6 +509,8 @@ namespace MasterSaveDemo.ViewModel
         public ICommand LTK_SelectionChangedCommand { get; set; }
         public ICommand CMND_TextChangedCommand { get; set; }
         public ICommand DialogOK { get; set; }
+        public ICommand Refresh { get; set; }
+
 
         // Test change page
         public ICommand LostFocusPageCommand { get; set; }
@@ -578,7 +617,14 @@ namespace MasterSaveDemo.ViewModel
                     SoTietKiem.NgayMoSo = DateTime.Today;
                     SoTietKiem.SoDu = Decimal.Parse(SoTienGuiBanDau);
                     //SoTietKiem.NgayDongSo = new DateTime(2030, 1, 1);
-                    SoTietKiem.NgayDaoHanKeTiep = DateTime.Parse(NgayDaoHanKeTiep);
+                    if (search_KyHan(SelectedTenLoaiTietKiem) == 0)
+                    {
+                        SoTietKiem.NgayDaoHanKeTiep = Cal_NgayDaoHan(1);
+                    }
+                    else
+                    {
+                        SoTietKiem.NgayDaoHanKeTiep = Cal_NgayDaoHan(search_KyHan(SelectedTenLoaiTietKiem));
+                    }
                     SoTietKiem.MaLoaiTietKiem = search_MaLTK(SelectedTenLoaiTietKiem);
                     SoTietKiem.LaiSuatApDung = search_LaiSuat(search_MaLTK(SelectedTenLoaiTietKiem));
                     DataProvider.Ins.DB.SOTIETKIEMs.Add(SoTietKiem);
@@ -589,6 +635,12 @@ namespace MasterSaveDemo.ViewModel
 
 
             LostFocusPageCommand = new RelayCommand<Page>((p) => { return true; }, (p) => {
+            });
+
+            Refresh = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Reset();
+                Reset_ToolTip();
             });
 
 
@@ -638,17 +690,17 @@ namespace MasterSaveDemo.ViewModel
         private void CapNhatQuyDinh()
         {
             QuyDinhMoSo = "Số tiền gửi ban đầu tối thiếu là: ";
-            if (GetThamSo("SoTienGuiToiThieu") < 1000)
+            if (GetThamSo("Số tiền gửi tối thiểu") < 1000)
             {
-                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString() + " đồng";
+                QuyDinhMoSo += GetThamSo("Số tiền gửi tối thiểu").ToString() + " đồng";
             }
             else
             {
-                QuyDinhMoSo += GetThamSo("SoTienGuiToiThieu").ToString("0,000") + " đồng";
+                QuyDinhMoSo += GetThamSo("Số tiền gửi tối thiểu").ToString("0,000") + " đồng";
             }
         }
 
-        private decimal GetThamSo(string tenthamso)
+        public decimal GetThamSo(string tenthamso)
         {
             List<THAMSO> List_ThamSo = DataProvider.Ins.DB.THAMSOes.ToList();
             foreach (THAMSO ts in List_ThamSo)
@@ -658,5 +710,6 @@ namespace MasterSaveDemo.ViewModel
             }
             return -1;
         }
+
     }
 }

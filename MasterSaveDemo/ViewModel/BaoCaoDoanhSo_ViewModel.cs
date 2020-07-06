@@ -137,20 +137,41 @@ namespace MasterSaveDemo.ViewModel
         }
 
         //
-        private Visibility _VisibilityDatePicker;
-        public Visibility VisibilityDatePicker
+        private Visibility _VisibilityDatePickerPopup;
+        public Visibility VisibilityDatePickerPopup
         {
-            get => _VisibilityDatePicker;
-            set { _VisibilityDatePicker = value; OnPropertyChanged(); }
+            get => _VisibilityDatePickerPopup;
+            set { _VisibilityDatePickerPopup = value; OnPropertyChanged(); }
+        }
+
+        private bool _DialogOpen;
+        public bool DialogOpen
+        {
+            get => _DialogOpen;
+            set { _DialogOpen = value; OnPropertyChanged(); }
+        }
+
+        private string _Notify;
+        public string Notify
+        {
+            get => _Notify;
+            set { _Notify = value; OnPropertyChanged(); }
+        }
+
+        private string _PopupContent;
+        public string PopupContent
+        {
+            get => _PopupContent;
+            set { _PopupContent = value; OnPropertyChanged(); }
         }
         #endregion
 
         #region Function
         private void LoadData()
         {
-            VisibilityDatePicker = Visibility.Hidden;
+            VisibilityDatePickerPopup = Visibility.Hidden;
 
-            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung != 0);
+            var listLTK_Using = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.DangSuDung == "Có");
             ListLTK = new ObservableCollection<LOAITIETKIEM>(listLTK_Using);
 
             ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
@@ -170,8 +191,8 @@ namespace MasterSaveDemo.ViewModel
         private BAOCAODOANHSO FindBaoCao(LOAITIETKIEM ltk)
         {
             var baoCao = (from bc in ListBaoCaoDoanhSo
-                         where bc.MaLoaiTietKiem == ltk.MaLoaiTietKiem && bc.NgayDoanhSo == SelectedDateReport
-                         select bc).SingleOrDefault();
+                          where bc.MaLoaiTietKiem == ltk.MaLoaiTietKiem && bc.NgayDoanhSo == SelectedDateReport
+                          select bc).SingleOrDefault();
             return baoCao;
         }
         private string Create_MaBCDS(int stt)
@@ -190,7 +211,7 @@ namespace MasterSaveDemo.ViewModel
             TongChi += baoCao.TongChi;
             ChenhLech = baoCao.ChenhLech;
 
-            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu.ToString("0"), TongChi.ToString("0"), ChenhLech.ToString("0"));
+            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
             ListBaoCaoDisplay.Add(baoCaoDisplay);
         }
         private BAOCAODOANHSO CreateBaoCao(int i, LOAITIETKIEM ltk)
@@ -204,19 +225,19 @@ namespace MasterSaveDemo.ViewModel
 
             var listThu = from phieuGui in ListPhieuGui
                           join stk in ListSTK on phieuGui.MaSoTietKiem equals stk.MaSoTietKiem
-                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuGui.NgayGui == SelectedDateReport)
+                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuGui.NgayGui.Date == SelectedDateReport.Date)
                           select phieuGui.SoTienGui;
             TongThu += listThu.Sum();
 
             var listChi = from phieuRut in ListPhieuRut
                           join stk in ListSTK on phieuRut.MaSoTietKiem equals stk.MaSoTietKiem
-                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuRut.NgayRut == SelectedDateReport)
+                          where (stk.MaLoaiTietKiem == ltk.MaLoaiTietKiem && phieuRut.NgayRut.Date == SelectedDateReport.Date)
                           select phieuRut.SoTienRut;
             TongChi += listChi.Sum();
 
             ChenhLech = (TongThu - TongChi);
 
-            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu.ToString("0"), TongChi.ToString("0"), ChenhLech.ToString("0"));
+            BaoCaoDS baoCaoDisplay = new BaoCaoDS(SoThuTu, TenLoaiTietKiem, TongThu, TongChi, ChenhLech);
             ListBaoCaoDisplay.Add(baoCaoDisplay);
 
             BAOCAODOANHSO baoCao = new BAOCAODOANHSO()
@@ -230,6 +251,8 @@ namespace MasterSaveDemo.ViewModel
             };
             return baoCao;
         }
+
+
         #endregion
 
         #region ICommand
@@ -250,9 +273,9 @@ namespace MasterSaveDemo.ViewModel
                     ListBaoCaoDisplay.Clear();
                     SelectedDateReport = SelectedDateReportDisplay;
                     var listBaoCao = (from bc in ListBaoCaoDoanhSo
-                                     where bc.NgayDoanhSo == SelectedDateReport
-                                     select bc).ToList();
-                    for(int i=0; i<listBaoCao.Count(); i++)
+                                      where bc.NgayDoanhSo == SelectedDateReport
+                                      select bc).ToList();
+                    for (int i = 0; i < listBaoCao.Count(); i++)
                     {
                         TongThu = TongChi = 0;
                         GetBaoCaoToDisplay(i, listBaoCao[i].LOAITIETKIEM, listBaoCao[i]);
@@ -265,14 +288,20 @@ namespace MasterSaveDemo.ViewModel
                 (p) => {
                     // clear all elements of ListBaoCaoDisplay to clear screen
                     ListBaoCaoDisplay.Clear();
-                    
-                    if(SelectedDateReport > DateTime.Today)
+
+                    if (SelectedDateReport > DateTime.Today)
                     {
-                        VisibilityDatePicker = Visibility.Visible;
+                        VisibilityDatePickerPopup = Visibility.Visible;
+                        PopupContent = "Không thể lập báo cáo cho ngày sau ngày hiện tại";
+                    }
+                    else if (SelectedDateReport.Year < 1990)
+                    {
+                        VisibilityDatePickerPopup = Visibility.Visible;
+                        PopupContent = "Không thể lập báo cáo cho những ngày trước năm 1990";
                     }
                     else
                     {
-                        VisibilityDatePicker = Visibility.Hidden;
+                        VisibilityDatePickerPopup = Visibility.Hidden;
                         bool isNew = false;
 
                         for (int i = 0; i < ListLTK.Count(); i++)
@@ -284,6 +313,9 @@ namespace MasterSaveDemo.ViewModel
                             {
                                 isNew = false;
                                 GetBaoCaoToDisplay(i, ListLTK[i], baoCao);
+
+                                DialogOpen = true;
+                                Notify = "Lấy báo cáo doanh số thành công.";
                             }
                             else
                             {
@@ -293,6 +325,9 @@ namespace MasterSaveDemo.ViewModel
                                 DataProvider.Ins.DB.SaveChanges();
 
                                 ListBaoCaoDoanhSo.Add(baoCao);
+
+                                DialogOpen = true;
+                                Notify = "Tạo báo cáo doanh số mới thành công.";
                             }
                         }
                         if (isNew)
@@ -308,21 +343,24 @@ namespace MasterSaveDemo.ViewModel
                                         ListNgayBaoCao.Insert(i, SelectedDateReport);
                                         break;
                                     }
+                                    else if(SelectedDateReport == ListNgayBaoCao[i])
+                                    {
+                                        break;
+                                    }
                                 }
                             }
-                            
                         }
                     }
                 }
 
             );
 
-            PrintCommand = new RelayCommand<object>((p) => 
-                {
-                    if (SelectedDateReportDisplay == DateTime.MinValue || ListBaoCaoDisplay.Count == 0)
-                        return false;
-                    return true;
-                },
+            PrintCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedDateReportDisplay == DateTime.MinValue || ListBaoCaoDisplay.Count == 0)
+                    return false;
+                return true;
+            },
                 (p) => {
                     BaoCaoDoanhSo_PrintPreview_ViewModel printPreviewBaoCaoDoanhSo = new BaoCaoDoanhSo_PrintPreview_ViewModel(ListBaoCaoDisplay, SelectedDateReport);
                     BaoCaoDoanhSo_PrintPreview BaoCao = new BaoCaoDoanhSo_PrintPreview(printPreviewBaoCaoDoanhSo);

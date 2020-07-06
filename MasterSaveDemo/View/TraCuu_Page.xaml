@@ -79,7 +79,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding Visibility_TenKH}"  HorizontalAlignment="Right" PopupContent="{Binding Error_KH}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -87,6 +87,12 @@
                                 <TextBox Text="{Binding TenKHSua}" materialDesign:HintAssist.Hint="Tên Khách Hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}">
                                 </TextBox>
                                 <TextBox x:Name="TextBoxMaSTK" Text="{Binding MaSTK}" materialDesign:HintAssist.Hint="Mã sổ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                        Key="Enter" 
+                                        Command="{Binding SearchCommand}" 
+                                        CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
                                             <i:InvokeCommandAction Command="{Binding MaSTK_TextChangedCommand}" CommandParameter="{Binding  ElementName=TextBoxMaSTK}"/>
@@ -103,7 +109,7 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding Visibility_CMND}"  HorizontalAlignment="Right" PopupContent="{Binding Error_CMND}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
@@ -121,19 +127,32 @@
                             <Grid Grid.Column="1">
                                 <materialDesign:PopupBox Visibility="{Binding Visibility_DiaChi}"  HorizontalAlignment="Right" PopupContent="{Binding Error_DiaChi}" >
                                     <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="Error" />
+                                        <materialDesign:PackIcon Foreground="Red" Kind="Error" />
                                     </materialDesign:PopupBox.ToggleContent>
                                 </materialDesign:PopupBox>
                             </Grid>
                             <Grid Grid.Column="0">
                                 <TextBox x:Name="TextBoxTenKH" Text="{Binding TenKH}" materialDesign:HintAssist.Hint="Tên Khách Hàng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Search}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                        Key="Enter" 
+                                        Command="{Binding SearchCommand}" 
+                                        CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="TextChanged">
                                             <i:InvokeCommandAction Command="{Binding TenKH_TextChangedCommand}" CommandParameter="{Binding  ElementName=TextBoxTenKH}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TextBox>
-                                <TextBox Text="{Binding DiaChiSua}" materialDesign:HintAssist.Hint="Địa chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}"/>
+                                <TextBox Text="{Binding DiaChiSua}" materialDesign:HintAssist.Hint="Địa chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10" VerticalAlignment="Center" Visibility="{Binding Visibility_Edit}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding 
+                                        Key="Enter" 
+                                        Command="{Binding SearchCommand}" 
+                                        CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="4">
@@ -151,7 +170,7 @@
                             <Grid Grid.Column="0">
                                 <ComboBox ItemsSource="{Binding MucSoDu}" SelectedItem="{Binding SelectedMucSoDu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" materialDesign:HintAssist.Hint="Mức số dư" Margin="10" materialDesign:HintAssist.HintOpacity=".55" IsEditable="True" Visibility="{Binding Visibility_Search}">
                                 </ComboBox>
-                 
+
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="5">

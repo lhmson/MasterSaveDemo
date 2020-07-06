@@ -79,6 +79,7 @@ namespace MasterSaveDemo.ViewModel
             MaPhieuRut = MaPR;
             TenKhachhang = TenKH;
             NgayRut = Ngay;
+            NguoiTaoPhieu = LoginViewModel.TaiKhoanSuDung.HoTen;
             SoTienRut = Tien;
             NgayTaoPhieu = DateTime.Now.ToString("dd/MM/yyyy");
             CloseWindowCommand = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) => {
@@ -86,6 +87,7 @@ namespace MasterSaveDemo.ViewModel
                 ex.Close();
 
             });
+
             Print_Command = new RelayCommand<object>((p) => { return p == null ? false : true; }, (p) =>
             {
                 var ex = p as Window;

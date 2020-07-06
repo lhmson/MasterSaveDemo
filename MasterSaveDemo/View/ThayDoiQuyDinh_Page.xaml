@@ -208,7 +208,6 @@
                                     IsChecked="{Binding IsCheckedToggle}"
                                     Visibility="{Binding VisibilityOfToggle}"
                                     Command="{Binding ClickToggleCommand}">
-                                    
                                 </ToggleButton>
                             </Grid>
                         </Grid>

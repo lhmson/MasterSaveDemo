@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace MasterSaveDemo.ViewModel
 {
-    
+
     public class ThayDoiQuyDinh_ViewModel : BaseViewModel
     {
         #region Variables
@@ -635,7 +635,7 @@ namespace MasterSaveDemo.ViewModel
                           select stk;
 
             // if not used by any STKs
-            if( listSTK.Count() == 0)
+            if (listSTK.Count() == 0)
             {
                 SelectedItemLTK.DangSuDung = "Không";
                 DataProvider.Ins.DB.SaveChanges();
@@ -697,7 +697,7 @@ namespace MasterSaveDemo.ViewModel
             EnableTenThamSo = true;
             EnableGiaTri = true;
         }
-        
+
         #endregion
 
         #region ICommand
@@ -715,21 +715,21 @@ namespace MasterSaveDemo.ViewModel
 
         public ThayDoiQuyDinh_ViewModel()
         {
-            LoadData();                 
+            LoadData();
 
             // show elements used for adding
-            AddLTKCommand = new RelayCommand<object>((p) => 
+            AddLTKCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedIndexCbb == 0)
                 {
-                    if (SelectedIndexCbb == 0)
-                    {
-                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                        if (disable == 23 || disable == 0)
-                            return true;
-                        return false;
-                    }
+                    int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                    if (disable == 23 || disable == 0)
+                        return true;
                     return false;
-                    //return true;
-                }, 
+                }
+                return false;
+                //return true;
+            },
                 (p) => {
                     IsDeleting = false;
                     HitTestVisibleCbb = true;
@@ -750,26 +750,26 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // show elements used for editing
-            EditLTKCommand = new RelayCommand<object>((p) => 
+            EditLTKCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedIndexCbb == 0)
                 {
-                    if(SelectedIndexCbb == 0)
+                    if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                     {
-                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
-                        {
-                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                            if (disable == 13 || disable == 0)
-                                return true;
-                            return false;
-                        }
+                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                        if (disable == 13 || disable == 0)
+                            return true;
                         return false;
                     }
-                    if (SelectedItemThamSo != null)
-                        return true;
                     return false;
-                },
+                }
+                if (SelectedItemThamSo != null)
+                    return true;
+                return false;
+            },
                 (p) => {
                     HiddenPopupBox();
-                    if ( SelectedIndexCbb == 0)
+                    if (SelectedIndexCbb == 0)
                     {
                         if (SelectedItemLTK != null)
                         {
@@ -784,7 +784,7 @@ namespace MasterSaveDemo.ViewModel
                     }
                     else
                     {
-                        if( SelectedItemThamSo != null)
+                        if (SelectedItemThamSo != null)
                         {
                             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                             VisibilityOfEditThamSo = Visibility.Visible;
@@ -817,24 +817,24 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // show elements used for deleting
-            DeleteLTKCommand = new RelayCommand<object>((p) => 
+            DeleteLTKCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedIndexCbb == 0)
                 {
-                    if (SelectedIndexCbb == 0)
+                    if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                     {
-                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
-                        {
-                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                            if (disable == 12 || disable == 0)
-                                return true;
-                            return false;
-                        }
+                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                        if (disable == 12 || disable == 0)
+                            return true;
                         return false;
                     }
                     return false;
-                    //return true;
-                },
+                }
+                return false;
+                //return true;
+            },
                 (p) => {
-                    if(SelectedItemLTK != null)
+                    if (SelectedItemLTK != null)
                     {
                         VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
 
@@ -851,20 +851,20 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // Button: Confirm for adding LOAITIETKIEM
-            ConfirmCommand = new RelayCommand<object>((p) => 
+            ConfirmCommand = new RelayCommand<object>((p) =>
             {
                 return true;
 
-            }, (p) => 
+            }, (p) =>
             {
                 try
                 {
                     HiddenPopupBox();
                     if (VisibilityOfAdd == Visibility.Visible)
                     {
-                        if(!IsDeleting)
+                        if (!IsDeleting)
                         {
-                            if(CheckValidData())
+                            if (CheckValidData())
                             {
                                 AddLTK();
                                 ResetAll();
@@ -877,10 +877,10 @@ namespace MasterSaveDemo.ViewModel
                         {
                             DeleteLTK();
                         }
-                    } 
-                    else if(VisibilityOfEditLTK == Visibility.Visible)
+                    }
+                    else if (VisibilityOfEditLTK == Visibility.Visible)
                     {
-                        if(CheckValidData())
+                        if (CheckValidData())
                         {
                             EditLTK();
                             ResetAll();
@@ -905,7 +905,7 @@ namespace MasterSaveDemo.ViewModel
             });
 
             CancelCommand = new RelayCommand<object>((p) =>
-            {                
+            {
                 return true;
             }, (p) =>
             {
@@ -930,7 +930,8 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfEditThamSo = Visibility.Hidden;
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
                     HiddenPopupBox();
-                } else
+                }
+                else
                 {
                     NameOfList = "Danh sách tham số";
                     SelectedItemThamSo = null;
@@ -944,7 +945,7 @@ namespace MasterSaveDemo.ViewModel
                 }
 
             });
-            
+
             GetThoiGianGuiToiThieuCommand = new RelayCommand<object>((p) =>
             {
                 return !IsDeleting; // disable button when deleting

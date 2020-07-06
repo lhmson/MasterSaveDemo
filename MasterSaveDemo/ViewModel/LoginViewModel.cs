@@ -44,6 +44,7 @@ namespace MasterSaveDemo.ViewModel
                     {
                         //Gan static TaiKhoanSuDung
                         TaiKhoanSuDung = item;
+                        //MessageBox.Show("Đăng nhập thành công");
                         p.Close();
                         return;
                     }

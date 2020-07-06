@@ -506,7 +506,7 @@ namespace MasterSaveDemo.ViewModel
 					if (!String.IsNullOrWhiteSpace(MaSoTietKiem))
 					{
 						SoTietKiem_Check = "Error";
-						ThongBao_MaSo = "Không tìm thấy sổ tiết kiệm phù hợp!";
+						ThongBao_MaSo = "Mã STK không đúng hoặc không tồn tại, kiểm tra xem đã đúng định dạng hay chưa";
 						ThongBao = "Không tìm thấy sổ tiết kiệm phù hợp!";
 					}
 					else

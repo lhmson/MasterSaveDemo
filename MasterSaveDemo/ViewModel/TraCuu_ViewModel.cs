@@ -187,7 +187,7 @@ namespace MasterSaveDemo.ViewModel
         }
 
         //Thang them vao
-        private string ChinhSoDu(decimal s)
+        public string ChinhSoDu(decimal s)
         {
             if (s < 1000)
             {
@@ -200,7 +200,7 @@ namespace MasterSaveDemo.ViewModel
         }
         //
 
-        private SOTIETKIEM get_STK(string maSTK)
+        public SOTIETKIEM get_STK(string maSTK)
         {
             ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
 
@@ -269,7 +269,7 @@ namespace MasterSaveDemo.ViewModel
                 }
         }
 
-        private string Delete_ThapPhan(string number)
+        public string Delete_ThapPhan(string number)
         {
             string res = "";
             for (int i = 0; i < number.Length; i++)

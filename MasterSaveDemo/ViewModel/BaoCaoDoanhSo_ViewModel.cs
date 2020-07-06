@@ -195,7 +195,7 @@ namespace MasterSaveDemo.ViewModel
                           select bc).SingleOrDefault();
             return baoCao;
         }
-        private string Create_MaBCDS(int stt)
+        public string Create_MaBCDS(int stt)
         {
             string res = "BCDS";
             for (int i = 5; i <= 11 - stt.ToString().Length; i++)

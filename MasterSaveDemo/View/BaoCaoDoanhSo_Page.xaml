@@ -122,7 +122,7 @@
                                             <GridViewColumn Width="200" Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
                                             <GridViewColumn Width="200" Header="Tổng thu (VND)" DisplayMemberBinding="{Binding TongThu, StringFormat='#,##0;(#,##0)'}"/>
                                             <GridViewColumn Width="200" Header="Tổng chi (VND)" DisplayMemberBinding="{Binding TongChi, StringFormat='#,##0;(#,##0)'}"/>
-                                            <GridViewColumn Width="200" Header="Chênh lệch (VND)" DisplayMemberBinding="{Binding ChenhLech, StringFormat='#,##0;(#,##0)'}"/>
+                                            <GridViewColumn Width="200" Header="Chênh lệch (VND)" DisplayMemberBinding="{Binding ChenhLech, StringFormat='#,##0;#,##0'}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

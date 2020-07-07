@@ -31,7 +31,7 @@ namespace MasterSaveDemo.UnitTest
         [Test]
         public void Test_TaoMaNhomNguoiDung_1()
         {
-            Assert.AreEqual(5, _QLNS.CreateCodeNhomNguoiDung());
+            Assert.AreEqual(6, _QLNS.CreateCodeNhomNguoiDung());
         }
 
         [TestCase(1, "Quản Trị Viên")]

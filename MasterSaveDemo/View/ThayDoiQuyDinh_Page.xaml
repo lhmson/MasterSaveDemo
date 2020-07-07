@@ -328,13 +328,13 @@
                           SelectionMode="Single" FontSize="18">
                                     <ListView.View>
                                         <GridView>
+                                            <GridViewColumn Header="Đang sử dụng" DisplayMemberBinding="{Binding DangSuDung}"/>
                                             <GridViewColumn Header="Mã loại tiết kiệm" DisplayMemberBinding="{Binding MaLoaiTietKiem}" />
                                             <GridViewColumn Header="Tên loại tiết kiệm" DisplayMemberBinding="{Binding TenLoaiTietKiem}"/>
                                             <GridViewColumn Header="Kỳ hạn (ngày)" DisplayMemberBinding="{Binding KyHan}"/>
                                             <GridViewColumn Header="Lãi suất (%)" DisplayMemberBinding="{Binding LaiSuat}"/>
                                             <GridViewColumn Header="Thời gian gửi tối thiểu (ngày)" DisplayMemberBinding="{Binding ThoiGianGuiToiThieu}"/>
                                             <GridViewColumn Header="Quy định số tiền được rút" DisplayMemberBinding="{Binding QuyDinhSoTienRut}"/>
-                                            <GridViewColumn Header="Đang sử dụng" DisplayMemberBinding="{Binding DangSuDung}"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

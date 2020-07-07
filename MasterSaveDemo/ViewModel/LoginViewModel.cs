@@ -27,7 +27,7 @@ namespace MasterSaveDemo.ViewModel
 
         public LoginViewModel()
         {
-            DatabaseCheck.Ins.Check();
+            //DatabaseCheck.Ins.Check();
             UserName = "";
             Password = "";
 

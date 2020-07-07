@@ -222,6 +222,12 @@ namespace MasterSaveDemo.ViewModel
             int index = ListBaoCaoDoanhSo.Count() + 1;
             string maBaoCao = Create_MaBCDS(index);
             string maLoai = ltk.MaLoaiTietKiem;
+            var soMoToday = ListSTK.Where(x => x.NgayMoSo.Date == DateTime.Today && x.MaLoaiTietKiem == ltk.MaLoaiTietKiem).ToList();
+
+            foreach (var temp in soMoToday)
+            {
+                TongThu += temp.SoTienGuiBanDau;
+            }
 
             var listThu = from phieuGui in ListPhieuGui
                           join stk in ListSTK on phieuGui.MaSoTietKiem equals stk.MaSoTietKiem

@@ -55,6 +55,12 @@ namespace MasterSaveDemo.ViewModel
                     sum += item.SoTienGui;
                     count++;
                 }
+            ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+            foreach (var item in list_STK)
+                if (item.NgayMoSo.ToString("dd-MM-yyyy") == DateTime.Today.ToString("dd-MM-yyyy"))
+                {
+                    sum += item.SoTienGuiBanDau;
+                }
 
             if (sum < 1000)
             {

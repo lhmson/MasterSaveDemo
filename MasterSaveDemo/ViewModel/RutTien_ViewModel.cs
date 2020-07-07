@@ -662,7 +662,7 @@ namespace MasterSaveDemo.ViewModel
 				{
 					if (info_loaitietkiem.KyHan != 0)
 					{
-						if (info_stk.NgayDaoHanKeTiep <= DateTime.Today.AddDays(info_loaitietkiem.KyHan))
+						if (info_stk.NgayDaoHanKeTiep < DateTime.Today.AddDays(info_loaitietkiem.KyHan))
 						{
 							Result_KiemTraHopLe = false;
 							Result_KiemTraNhapLai = false;

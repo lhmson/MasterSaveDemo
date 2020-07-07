@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace MasterSaveDemo.ViewModel
 {
-    
+
     public class ThayDoiQuyDinh_ViewModel : BaseViewModel
     {
         #region Variables
@@ -271,6 +271,13 @@ namespace MasterSaveDemo.ViewModel
             set { _MaLoaiTietKiemReadOnly = value; OnPropertyChanged(); }
         }
 
+        private bool _EnableTenThamSo;
+        public bool EnableTenThamSo
+        {
+            get => _EnableTenThamSo;
+            set { _EnableTenThamSo = value; OnPropertyChanged(); }
+        }
+
         private bool _HitTestVisibleCbb;
         public bool HitTestVisibleCbb
         {
@@ -333,10 +340,31 @@ namespace MasterSaveDemo.ViewModel
             get => _Notify;
             set { _Notify = value; OnPropertyChanged(); }
         }
+
+        private bool _IsCheckedToggle;
+        public bool IsCheckedToggle
+        {
+            get => _IsCheckedToggle;
+            set { _IsCheckedToggle = value; OnPropertyChanged(); }
+        }
+
+        private bool _EnableGiaTri;
+        public bool EnableGiaTri
+        {
+            get => _EnableGiaTri;
+            set { _EnableGiaTri = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _VisibilityOfToggle;
+        public Visibility VisibilityOfToggle
+        {
+            get => _VisibilityOfToggle;
+            set { _VisibilityOfToggle = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Function
-        private void HiddenPopupBox()
+        public void HiddenPopupBox()
         {
             VisibilityPopup1 = Visibility.Hidden;
             VisibilityPopup2 = Visibility.Hidden;
@@ -356,140 +384,157 @@ namespace MasterSaveDemo.ViewModel
             ListQuyDinh.Add("Rút nhỏ hơn hoặc bằng");
             ListQuyDinh.Add("Rút hết");
 
-            VisibilityOfAdd = Visibility.Hidden;
-            VisibilityOfEditLTK = Visibility.Hidden;
-            VisibilityOfEditThamSo = Visibility.Hidden;
+            ResetAll();
             VisibilityOfListThamSo = Visibility.Hidden;
-            VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
-
-            HiddenPopupBox();
 
             // choosing list LTK
             SelectedIndexCbb = 0;
             NameOfList = "Danh sách loại tiết kiệm";
+        }
+        public void CheckValidData_Add(ref bool flag)
+        {
+            if (string.IsNullOrWhiteSpace(TenLoaiTietKiem))
+            {
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Chưa nhập tên loại tiết kiệm";
+                flag = false;
+            }
+            // check if null, return false
+            if (string.IsNullOrWhiteSpace(KyHan))
+            {
+                VisibilityPopup3 = Visibility.Visible;
+                PopupContent3 = "Chưa nhập kỳ hạn";
+                flag = false;
+            }
+            if (string.IsNullOrWhiteSpace(LaiSuat))
+            {
+                VisibilityPopup4 = Visibility.Visible;
+                PopupContent4 = "Chưa nhập lãi suất";
+                flag = false;
+            }
+            if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
+            {
+                VisibilityPopup5 = Visibility.Visible;
+                PopupContent5 = "Chưa nhập thời gian gửi tối thiểu";
+                flag = false;
+            }
+            if (SelectedQuyDinh == null)
+            {
+                VisibilityPopup6 = Visibility.Visible;
+                PopupContent6 = "Chưa chọn quy định về số tiền rút";
+                flag = false;
+            }
+        }
+        public void CheckDuplicatedData_Add(ref bool flag)
+        {
+            if (!IsDeleting)
+            {
+                var maLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == MaLoaiTietKiem);
+                var tenLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == TenLoaiTietKiem);
+
+                if (maLoai.Count() != 0)
+                {
+                    VisibilityPopup1 = Visibility.Visible;
+                    PopupContent1 = "Mã loại tiết kiệm đã tồn tại";
+                    flag = false;
+                }
+                if (tenLoai.Where(x => x.DangSuDung == "Có").Count() != 0)
+                {
+                    VisibilityPopup2 = Visibility.Visible;
+                    PopupContent2 = "Tên loại tiết kiệm đã tồn tại";
+                    flag = false;
+                }
+            }
+        }
+        public void CheckValidData_EditLTK(ref bool flag)
+        {
+            if (string.IsNullOrWhiteSpace(LaiSuat))
+            {
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Chưa nhập lãi suất mới";
+                flag = false;
+            }
+            if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
+            {
+                VisibilityPopup1 = Visibility.Visible;
+                PopupContent1 = "Chưa nhập thời gian gửi tối thiểu mới";
+                flag = false;
+            }
+        }
+        public void CheckDuplicatedData_EditLTK(ref bool flag)
+        {
+            // check if more than 1 value are the same
+            double laiSuat = double.Parse(LaiSuat);
+            int thoiGianGuiToiThieu = int.Parse(ThoiGianGuiToiThieu);
+            if (laiSuat == SelectedItemLTK.LaiSuat && thoiGianGuiToiThieu == SelectedItemLTK.ThoiGianGuiToiThieu)
+            {
+                VisibilityPopup1 = Visibility.Visible;
+                PopupContent1 = "Thời gian gửi tối thiểu đang được áp dụng";
+
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Lãi suất đang được áp dụng";
+
+                flag = false;
+            }
+        }
+        public void CheckValidData_EditThamSo(ref bool flag)
+        {
+            if (string.IsNullOrWhiteSpace(GiaTri))
+            {
+                VisibilityPopup2 = Visibility.Visible;
+                PopupContent2 = "Chưa nhập giá trị của tham số";
+                flag = false;
+            }
+        }
+        public void CheckDuplicatedData_EditThamSo(ref bool flag)
+        {
+            if (TenThamSo != "Đóng sổ tự động")
+            {
+                decimal giaTri = decimal.Parse(GiaTri);
+                if (TenThamSo == SelectedItemThamSo.TenThamSo && giaTri == SelectedItemThamSo.GiaTri)
+                {
+                    VisibilityPopup2 = Visibility.Visible;
+                    PopupContent2 = "Giá trị của tham số đang được áp dụng";
+
+                    flag = false;
+                }
+            }
+            else
+            {
+                decimal isChecked = IsCheckedToggle ? 1 : 0;
+                if (isChecked == SelectedItemThamSo.GiaTri)
+                {
+                    VisibilityPopup2 = Visibility.Visible;
+                    PopupContent2 = "Giá trị của tham số đang được áp dụng";
+
+                    flag = false;
+                }
+            }
         }
         private bool CheckValidData()
         {
             bool flag = true;
             if (VisibilityOfAdd == Visibility.Visible)
             {
-                //if (string.IsNullOrEmpty(MaLoaiTietKiem))
-                //{
-                    
-                //}
-                if (string.IsNullOrWhiteSpace(TenLoaiTietKiem))
-                {
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Chưa nhập tên loại tiết kiệm";
-                    flag = false;
-                }
-                // check if null, return false
-                if (string.IsNullOrWhiteSpace(KyHan))
-                {
-                    VisibilityPopup3 = Visibility.Visible;
-                    PopupContent3 = "Chưa nhập kỳ hạn";
-                    flag = false;
-                }
-                if (string.IsNullOrWhiteSpace(LaiSuat))
-                {
-                    VisibilityPopup4 = Visibility.Visible;
-                    PopupContent4 = "Chưa nhập lãi suất";
-                    flag = false;
-                }
-                if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
-                {
-                    VisibilityPopup5 = Visibility.Visible;
-                    PopupContent5 = "Chưa nhập thời gian gửi tối thiểu";
-                    flag = false;
-                }
-                if (SelectedQuyDinh == null)
-                {
-                    VisibilityPopup6 = Visibility.Visible;
-                    PopupContent6 = "Chưa chọn quy định về số tiền rút";
-                    flag = false;
-                }
-
-                if ( !IsDeleting)
-                {
-                    var maLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == MaLoaiTietKiem);
-                    var tenLoai = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == TenLoaiTietKiem);
-
-                    if (maLoai.Count() != 0)
-                    {
-                        VisibilityPopup1 = Visibility.Visible;
-                        PopupContent1 = "Mã loại tiết kiệm đã tồn tại";
-                        flag = false;
-                    }
-                    if(tenLoai.Count() != 0)
-                    {
-                        VisibilityPopup2 = Visibility.Visible;
-                        PopupContent2 = "Tên loại tiết kiệm đã tồn tại";
-                        flag = false;
-                    }
-                }
+                CheckValidData_Add(ref flag);
+                CheckDuplicatedData_Add(ref flag);
                 return flag;
-            } 
+            }
             else if (VisibilityOfEditLTK == Visibility.Visible)
             {
-                if (string.IsNullOrWhiteSpace(LaiSuat))
-                {
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Chưa nhập lãi suất mới";
-                    flag = false;
-                }
-                if (string.IsNullOrWhiteSpace(ThoiGianGuiToiThieu))
-                {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Chưa nhập thời gian gửi tối thiểu mới";
-                    flag = false;
-                }
-
-                // check if more than 1 value are the same
-                double laiSuat = double.Parse(LaiSuat);
-                int thoiGianGuiToiThieu = int.Parse(ThoiGianGuiToiThieu);
-                if (laiSuat == SelectedItemLTK.LaiSuat && thoiGianGuiToiThieu == SelectedItemLTK.ThoiGianGuiToiThieu)
-                {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Thời gian gửi tối thiểu đang được áp dụng";
-
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Lãi suất đang được áp dụng";
-
-                    flag = false;
-                }
+                CheckValidData_EditLTK(ref flag);
+                CheckDuplicatedData_EditLTK(ref flag);
                 return flag;
             }
             else if (VisibilityOfEditThamSo == Visibility.Visible)
             {
-                if (string.IsNullOrWhiteSpace(TenThamSo))
-                {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Chưa nhập tên tham số";
-                    flag = false;
-                }
-                if (string.IsNullOrWhiteSpace(GiaTri))
-                {
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Chưa nhập giá trị của tham số";
-                    flag = false;
-                }
-
-                decimal giaTri = decimal.Parse(GiaTri);
-                if (TenThamSo == SelectedItemThamSo.TenThamSo && giaTri == SelectedItemThamSo.GiaTri)
-                {
-                    VisibilityPopup1 = Visibility.Visible;
-                    PopupContent1 = "Tên tham số đang được áp dụng";
-
-                    VisibilityPopup2 = Visibility.Visible;
-                    PopupContent2 = "Giá trị của tham số đang được áp dụng";
-
-                    flag = false;
-                }
+                CheckValidData_EditThamSo(ref flag);
+                CheckDuplicatedData_EditThamSo(ref flag);
                 return flag;
             }
             return false;
         }
-        private void ResetTextbox()
+        public void ResetTextbox()
         {
             MaLoaiTietKiem = "";
             TenLoaiTietKiem = "";
@@ -526,7 +571,7 @@ namespace MasterSaveDemo.ViewModel
         }
         private void EditLTK()
         {
-            SelectedItemLTK.LaiSuat = float.Parse(LaiSuat);
+            SelectedItemLTK.LaiSuat = double.Parse(LaiSuat);
             SelectedItemLTK.ThoiGianGuiToiThieu = Int32.Parse(ThoiGianGuiToiThieu);
             DataProvider.Ins.DB.SaveChanges();
             var temp = SelectedItemLTK;
@@ -550,7 +595,17 @@ namespace MasterSaveDemo.ViewModel
         private void EditThamSo()
         {
             SelectedItemThamSo.TenThamSo = TenThamSo;
-            SelectedItemThamSo.GiaTri = decimal.Parse(GiaTri);
+            if (TenThamSo == "Đóng sổ tự động")
+            {
+                if (GiaTri == "Bật")
+                    SelectedItemThamSo.GiaTri = 1;
+                else
+                    SelectedItemThamSo.GiaTri = 0;
+            }
+            else
+            {
+                SelectedItemThamSo.GiaTri = decimal.Parse(GiaTri);
+            }
             DataProvider.Ins.DB.SaveChanges();
 
             var temp = SelectedItemThamSo;
@@ -580,7 +635,7 @@ namespace MasterSaveDemo.ViewModel
                           select stk;
 
             // if not used by any STKs
-            if( listSTK.Count() == 0)
+            if (listSTK.Count() == 0)
             {
                 SelectedItemLTK.DangSuDung = "Không";
                 DataProvider.Ins.DB.SaveChanges();
@@ -607,7 +662,7 @@ namespace MasterSaveDemo.ViewModel
                 PopupContent1 = "Không thế xóa vì còn sổ tiết kiệm đang mở thuộc loại này";
             }
         }
-        private string Create_MaLTK(int stt)
+        public string Create_MaLTK(int stt)
         {
             string res = "LTK";
             for (int i = 4; i <= 6 - stt.ToString().Length; i++)
@@ -615,7 +670,7 @@ namespace MasterSaveDemo.ViewModel
             res += stt.ToString();
             return res;
         }
-        private int DisableButton(Visibility add, Visibility edit, bool delete)
+        public int DisableButton(Visibility add, Visibility edit, bool delete)
         {
             if (edit == Visibility.Visible)
                 return 13;
@@ -630,16 +685,19 @@ namespace MasterSaveDemo.ViewModel
             VisibilityOfAdd = VisibilityOfEditLTK = Visibility.Hidden;
             VisibilityOfEditThamSo = Visibility.Hidden;
             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
+            VisibilityOfToggle = Visibility.Hidden;
             HiddenPopupBox();
 
             IsDeleting = false;
             SelectedItemLTK = null;
             SelectedItemThamSo = null;
-            TextBoxReadOnly = false;
+            TextBoxReadOnly = true;
             HitTestVisibleCbb = true;
-            MaLoaiTietKiemReadOnly = false;
+            MaLoaiTietKiemReadOnly = true;
+            EnableTenThamSo = true;
+            EnableGiaTri = true;
         }
-        
+
         #endregion
 
         #region ICommand
@@ -651,26 +709,27 @@ namespace MasterSaveDemo.ViewModel
         public ICommand CbbSelectionChangedCommand { get; set; }
         public ICommand GetThoiGianGuiToiThieuCommand { get; set; }
         public ICommand DialogOK { get; set; }
+        public ICommand ClickToggleCommand { get; set; }
 
         #endregion
 
         public ThayDoiQuyDinh_ViewModel()
         {
-            LoadData();                 
+            LoadData();
 
             // show elements used for adding
-            AddLTKCommand = new RelayCommand<object>((p) => 
+            AddLTKCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedIndexCbb == 0)
                 {
-                    if (SelectedIndexCbb == 0)
-                    {
-                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                        if (disable == 23 || disable == 0)
-                            return true;
-                        return false;
-                    }
+                    int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                    if (disable == 23 || disable == 0)
+                        return true;
                     return false;
-                    //return true;
-                }, 
+                }
+                return false;
+                //return true;
+            },
                 (p) => {
                     IsDeleting = false;
                     HitTestVisibleCbb = true;
@@ -679,7 +738,7 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
                     HiddenPopupBox();
                     SelectedItemLTK = null;
-                    MaLoaiTietKiemReadOnly = true;
+                    MaLoaiTietKiemReadOnly = false;
 
                     // reset value for textbox because these textbox still keep value if you are editing and then change to add
                     ResetTextbox();
@@ -691,26 +750,26 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // show elements used for editing
-            EditLTKCommand = new RelayCommand<object>((p) => 
+            EditLTKCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedIndexCbb == 0)
                 {
-                    if(SelectedIndexCbb == 0)
+                    if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                     {
-                        if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
-                        {
-                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                            if (disable == 13 || disable == 0)
-                                return true;
-                            return false;
-                        }
+                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                        if (disable == 13 || disable == 0)
+                            return true;
                         return false;
                     }
-                    if (SelectedItemThamSo != null)
-                        return true;
                     return false;
-                },
+                }
+                if (SelectedItemThamSo != null)
+                    return true;
+                return false;
+            },
                 (p) => {
                     HiddenPopupBox();
-                    if ( SelectedIndexCbb == 0)
+                    if (SelectedIndexCbb == 0)
                     {
                         if (SelectedItemLTK != null)
                         {
@@ -725,44 +784,64 @@ namespace MasterSaveDemo.ViewModel
                     }
                     else
                     {
-                        if( SelectedItemThamSo != null)
+                        if (SelectedItemThamSo != null)
                         {
                             VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
-                            TenThamSo = SelectedItemThamSo.TenThamSo;
-                            GiaTri = SelectedItemThamSo.GiaTri.ToString("0");
-
                             VisibilityOfEditThamSo = Visibility.Visible;
+                            EnableTenThamSo = false;
+
+                            TenThamSo = SelectedItemThamSo.TenThamSo;
+                            if (SelectedItemThamSo.TenThamSo != "Đóng sổ tự động")
+                            {
+                                GiaTri = SelectedItemThamSo.GiaTri.ToString("0");
+                            }
+                            else
+                            {
+                                VisibilityOfToggle = Visibility.Visible;
+                                EnableGiaTri = false;
+                                if (SelectedItemThamSo.GiaTri == 1)
+                                {
+                                    GiaTri = "Bật";
+                                    IsCheckedToggle = true;
+                                }
+                                else
+                                {
+                                    GiaTri = "Tắt";
+                                    IsCheckedToggle = false;
+                                }
+                            }
+
                         }
                     }
                 }
             );
 
             // show elements used for deleting
-            DeleteLTKCommand = new RelayCommand<object>((p) => 
+            DeleteLTKCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedIndexCbb == 0)
                 {
-                    if (SelectedIndexCbb == 0)
+                    if (SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
                     {
-                        if( SelectedItemLTK != null && SelectedItemLTK.DangSuDung == "Có")
-                        {
-                            int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
-                            if (disable == 12 || disable == 0)
-                                return true;
-                            return false;
-                        }
+                        int disable = DisableButton(VisibilityOfAdd, VisibilityOfEditLTK, IsDeleting);
+                        if (disable == 12 || disable == 0)
+                            return true;
                         return false;
                     }
                     return false;
-                    //return true;
-                },
+                }
+                return false;
+                //return true;
+            },
                 (p) => {
-                    if(SelectedItemLTK != null)
+                    if (SelectedItemLTK != null)
                     {
                         VisibilityOfConfirm = VisibilityOfCancel = Visibility.Visible;
 
                         IsDeleting = true;
                         SetTextboxValue();
-                        TextBoxReadOnly = true;
-                        MaLoaiTietKiemReadOnly = true;
+                        TextBoxReadOnly = false;
+                        MaLoaiTietKiemReadOnly = false;
                         HitTestVisibleCbb = false;
                         VisibilityOfAdd = Visibility.Visible;
                         VisibilityOfEditLTK = Visibility.Hidden;
@@ -772,20 +851,20 @@ namespace MasterSaveDemo.ViewModel
             );
 
             // Button: Confirm for adding LOAITIETKIEM
-            ConfirmCommand = new RelayCommand<object>((p) => 
+            ConfirmCommand = new RelayCommand<object>((p) =>
             {
                 return true;
 
-            }, (p) => 
+            }, (p) =>
             {
                 try
                 {
                     HiddenPopupBox();
                     if (VisibilityOfAdd == Visibility.Visible)
                     {
-                        if(!IsDeleting)
+                        if (!IsDeleting)
                         {
-                            if(CheckValidData())
+                            if (CheckValidData())
                             {
                                 AddLTK();
                                 ResetAll();
@@ -798,10 +877,10 @@ namespace MasterSaveDemo.ViewModel
                         {
                             DeleteLTK();
                         }
-                    } 
-                    else if(VisibilityOfEditLTK == Visibility.Visible)
+                    }
+                    else if (VisibilityOfEditLTK == Visibility.Visible)
                     {
-                        if(CheckValidData())
+                        if (CheckValidData())
                         {
                             EditLTK();
                             ResetAll();
@@ -826,7 +905,7 @@ namespace MasterSaveDemo.ViewModel
             });
 
             CancelCommand = new RelayCommand<object>((p) =>
-            {                
+            {
                 return true;
             }, (p) =>
             {
@@ -851,7 +930,8 @@ namespace MasterSaveDemo.ViewModel
                     VisibilityOfEditThamSo = Visibility.Hidden;
                     VisibilityOfConfirm = VisibilityOfCancel = Visibility.Hidden;
                     HiddenPopupBox();
-                } else
+                }
+                else
                 {
                     NameOfList = "Danh sách tham số";
                     SelectedItemThamSo = null;
@@ -865,7 +945,7 @@ namespace MasterSaveDemo.ViewModel
                 }
 
             });
-            
+
             GetThoiGianGuiToiThieuCommand = new RelayCommand<object>((p) =>
             {
                 return !IsDeleting; // disable button when deleting
@@ -880,6 +960,21 @@ namespace MasterSaveDemo.ViewModel
             }, (p) =>
             {
                 DialogOpen = false;
+            });
+
+            ClickToggleCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                if (IsCheckedToggle)
+                {
+                    GiaTri = "Bật";
+                }
+                else
+                {
+                    GiaTri = "Tắt";
+                }
             });
         }
     }

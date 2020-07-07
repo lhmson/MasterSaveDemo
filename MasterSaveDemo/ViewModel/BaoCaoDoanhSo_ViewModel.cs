@@ -195,7 +195,7 @@ namespace MasterSaveDemo.ViewModel
                           select bc).SingleOrDefault();
             return baoCao;
         }
-        private string Create_MaBCDS(int stt)
+        public string Create_MaBCDS(int stt)
         {
             string res = "BCDS";
             for (int i = 5; i <= 11 - stt.ToString().Length; i++)
@@ -222,6 +222,12 @@ namespace MasterSaveDemo.ViewModel
             int index = ListBaoCaoDoanhSo.Count() + 1;
             string maBaoCao = Create_MaBCDS(index);
             string maLoai = ltk.MaLoaiTietKiem;
+            var soMoToday = ListSTK.Where(x => x.NgayMoSo.Date == DateTime.Today && x.MaLoaiTietKiem == ltk.MaLoaiTietKiem).ToList();
+
+            foreach (var temp in soMoToday)
+            {
+                TongThu += temp.SoTienGuiBanDau;
+            }
 
             var listThu = from phieuGui in ListPhieuGui
                           join stk in ListSTK on phieuGui.MaSoTietKiem equals stk.MaSoTietKiem

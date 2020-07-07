@@ -333,7 +333,7 @@ namespace MasterSaveDemo.ViewModel
                 
                 if ( String.IsNullOrWhiteSpace(MaSoTietKiem))
                 {
-                    Notify_Ma="Sổ chưa được tạo mã sổ";
+                    Notify_Ma= "Hãy nhập mã sổ tiết kiệm trước khi bấm kiểm tra!";
                     MaSoTietKiem_check = "Error";
                 }
                 else

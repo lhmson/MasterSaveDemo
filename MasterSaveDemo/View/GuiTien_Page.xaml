@@ -330,8 +330,7 @@
                                               Chỉ nhận gởi thêm tiền khi đến kỳ hạn tính lãi suất của các loại tiết kiệm tương ứng.
                                                 </TextBlock>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock LineHeight="30" TextWrapping="Wrap"> 
-                                                 Số tiền gởi thêm tối thiểu là: 
+                                                    <TextBlock LineHeight="30" TextWrapping="Wrap" Text="Số tiền gởi thêm tối thiểu là: "> 
                                                     </TextBlock>
                                                     <TextBlock LineHeight="30" Text="{Binding SoTienGuiToiThieu}" TextWrapping="Wrap"/>
                                                     <TextBlock LineHeight="30" Text=" đồng" TextWrapping="Wrap"/>

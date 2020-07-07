@@ -506,7 +506,7 @@ namespace MasterSaveDemo.ViewModel
 					if (!String.IsNullOrWhiteSpace(MaSoTietKiem))
 					{
 						SoTietKiem_Check = "Error";
-						ThongBao_MaSo = "Không tìm thấy sổ tiết kiệm phù hợp!";
+						ThongBao_MaSo = "Mã STK không đúng hoặc không tồn tại, kiểm tra xem đã đúng định dạng hay chưa";
 						ThongBao = "Không tìm thấy sổ tiết kiệm phù hợp!";
 					}
 					else
@@ -662,7 +662,7 @@ namespace MasterSaveDemo.ViewModel
 				{
 					if (info_loaitietkiem.KyHan != 0)
 					{
-						if (info_stk.NgayDaoHanKeTiep <= DateTime.Today.AddDays(info_loaitietkiem.KyHan))
+						if (info_stk.NgayDaoHanKeTiep < DateTime.Today.AddDays(info_loaitietkiem.KyHan))
 						{
 							Result_KiemTraHopLe = false;
 							Result_KiemTraNhapLai = false;

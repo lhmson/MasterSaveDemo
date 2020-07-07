@@ -31,7 +31,7 @@ namespace MasterSaveDemo.ViewModel
 
         #region Functions made by Sanhcutedeptraivodoi
 
-        private void Tinh_SoMo()
+        public void Tinh_SoMo()
         {
             ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
             int count = 0;
@@ -43,7 +43,7 @@ namespace MasterSaveDemo.ViewModel
             SL_SoMo = count.ToString();
         }
 
-        private void Tinh_SoPhieuGui_TongThu()
+        public void Tinh_SoPhieuGui_TongThu()
         {
             ObservableCollection<PHIEUGUI> list_PhieuGui = new ObservableCollection<PHIEUGUI>(DataProvider.Ins.DB.PHIEUGUIs);
             int count = 0;
@@ -54,6 +54,12 @@ namespace MasterSaveDemo.ViewModel
                 {
                     sum += item.SoTienGui;
                     count++;
+                }
+            ObservableCollection<SOTIETKIEM> list_STK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+            foreach (var item in list_STK)
+                if (item.NgayMoSo.ToString("dd-MM-yyyy") == DateTime.Today.ToString("dd-MM-yyyy"))
+                {
+                    sum += item.SoTienGuiBanDau;
                 }
 
             if (sum < 1000)
@@ -67,7 +73,7 @@ namespace MasterSaveDemo.ViewModel
             SL_PhieuGui = count.ToString();
         }
 
-        private void Tinh_SoPhieuRut_TongChi()
+        public void Tinh_SoPhieuRut_TongChi()
         {
             ObservableCollection<PHIEURUT> list_PhieuRut = new ObservableCollection<PHIEURUT>(DataProvider.Ins.DB.PHIEURUTs);
             int count = 0;

@@ -281,7 +281,7 @@ namespace MasterSaveDemo.ViewModel
             return true;
         }
 
-        private bool Check_TenNhomQuyen(string name)
+        public bool Check_TenNhomQuyen(string name)
         {
             ObservableCollection<NHOMNGUOIDUNG> nhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
 
@@ -292,7 +292,7 @@ namespace MasterSaveDemo.ViewModel
             return false;
         }
 
-        private int CreateCodeNhomNguoiDung()
+        public int CreateCodeNhomNguoiDung()
         {
             ObservableCollection<NHOMNGUOIDUNG> listNhom = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
             int max = 0;
@@ -323,7 +323,7 @@ namespace MasterSaveDemo.ViewModel
                 CbxTenNhom.Add(Nhom.TenNhom);
         }
 
-        private int search_MaNhom(string TenNhom)
+        public int search_MaNhom(string TenNhom)
         {
             int ma = 0;
 

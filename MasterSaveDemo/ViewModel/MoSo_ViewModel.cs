@@ -54,7 +54,7 @@ namespace MasterSaveDemo.ViewModel
             List = temp;
         }
 
-        private bool check_hasaWhiteSpace(string chuoi)
+        public bool check_hasaWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
             foreach (var item in chuoi)
@@ -63,7 +63,7 @@ namespace MasterSaveDemo.ViewModel
             return false;
         }
 
-        private bool check_hasallWhiteSpace(string chuoi)
+        public bool check_hasallWhiteSpace(string chuoi)
         {
             if (chuoi == null) return false;
             foreach (var item in chuoi)
@@ -83,7 +83,7 @@ namespace MasterSaveDemo.ViewModel
             NgayDaoHanKeTiep = "";
             SoTienGuiBanDau = "";
         }
-        private bool CheckAllNumber(string number)
+        public bool CheckAllNumber(string number)
         {
             if (number == null || number == "") return false;
             for (int i = 0; i < number.Length; i++)
@@ -92,7 +92,7 @@ namespace MasterSaveDemo.ViewModel
             return true;
         }
 
-        private string FormatDateTime(string date)
+        public string FormatDateTime(string date)
         {
             string res = "";
             for (int i = 0; i < date.Length; i++)
@@ -113,7 +113,7 @@ namespace MasterSaveDemo.ViewModel
                     TenLoaiTietKiem.Add(LTK.TenLoaiTietKiem);
         }
 
-        private int analysis_CodeSTK(string code)
+        public int analysis_CodeSTK(string code)
         {
             string res = "";
             for (int i = 3; i < code.Length; i++)
@@ -121,7 +121,7 @@ namespace MasterSaveDemo.ViewModel
             return int.Parse(res);
         }
 
-        private string create_CodeSTK(int stt)
+        public string create_CodeSTK(int stt)
         {
             string res = "STK";
             for (int i = 4; i <= 10 - stt.ToString().Length; i++)
@@ -143,7 +143,7 @@ namespace MasterSaveDemo.ViewModel
             return res;
         }
 
-        private int search_KyHan(string TenLTK)
+        public int search_KyHan(string TenLTK)
         {
             ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
 
@@ -158,7 +158,7 @@ namespace MasterSaveDemo.ViewModel
             }
             return 0;
         }
-        private string search_MaLTK(string TenLTK)
+        public string search_MaLTK(string TenLTK)
         {
             ObservableCollection<LOAITIETKIEM> List_LTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
 
@@ -172,7 +172,7 @@ namespace MasterSaveDemo.ViewModel
             return "0";
         }
 
-        private double search_LaiSuat(string MaLTK)
+        public double search_LaiSuat(string MaLTK)
         {
             double ls = 0;
             ObservableCollection<LOAITIETKIEM> List_MaLTK = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
@@ -238,7 +238,7 @@ namespace MasterSaveDemo.ViewModel
                             {
                                 //error += "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString() + "\n";
                                 Visibility_TienGui = Visibility.Visible;
-                                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString();
+                                Error_TienGui = "Số tiền gửi ban đầu phải lớn hơn hoặc bằng " + item.GiaTri.ToString("0,000") + " đồng";
                             }
                         }
                     }
@@ -687,7 +687,7 @@ namespace MasterSaveDemo.ViewModel
             #endregion
         }
 
-        private void CapNhatQuyDinh()
+        public void CapNhatQuyDinh()
         {
             QuyDinhMoSo = "Số tiền gửi ban đầu tối thiếu là: ";
             if (GetThamSo("Số tiền gửi tối thiểu") < 1000)
@@ -700,7 +700,7 @@ namespace MasterSaveDemo.ViewModel
             }
         }
 
-        private decimal GetThamSo(string tenthamso)
+        public decimal GetThamSo(string tenthamso)
         {
             List<THAMSO> List_ThamSo = DataProvider.Ins.DB.THAMSOes.ToList();
             foreach (THAMSO ts in List_ThamSo)

@@ -173,7 +173,7 @@
                                                 </materialDesign:PopupBox>
                                                 <TextBox x:Name="SoTienRutTB" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Số tiền rút (VND)" KeyboardNavigation.TabIndex="1"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
-                                 Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-1,2,1,5" PreviewTextInput="SoTienRutTB_PreviewTextInput">
+                                 Text="{Binding SoTienRut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewTextInput="SoTienRutTB_PreviewTextInput">
                                                     <TextBox.InputBindings>
                                                         <KeyBinding 
                                         Key="Enter" 
